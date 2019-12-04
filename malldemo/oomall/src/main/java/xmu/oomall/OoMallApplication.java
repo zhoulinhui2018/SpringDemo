@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("xmu.oomall.mapper")
-public class OoMallApplication {
+public class OoMallApplication {//5151
 
 	public static void main(String[] args) {
 		SpringApplication.run(OoMallApplication.class, args);
