@@ -31,4 +31,12 @@
     <delete id="deleteAdbyId" parameterType="Integer">
         delete from ad where id=#{id};
     </delete>
+
+    <insert id="addAds" parameterType="Ad">
+        insert into ad
+        values (#{id}, #{link}, #{name},
+        #{content}, #{picUrl}, #{beDefault},
+        #{beEnable}, #{startTime}, #{endTime},
+        #{gmtCreate}, #{gmtModified},#{isDeleted})
+    </insert>
 </mapper>

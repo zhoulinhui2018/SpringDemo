@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.Ad;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest(classes = OoMallApplication.class)
@@ -36,5 +37,20 @@ public class AdControllerTest {
     public void deleteAdbyIdTest(){
         adController.deleteAdbyId(200006);
         System.out.println("删除成功");
+    }
+
+    @Test
+    public void addAdsTest(){
+        Ad ad =new Ad();
+        ad.setId(900001);
+        ad.setLink("test");
+        ad.setName("芒果test");
+        ad.setContent("芒果大促销了");
+        ad.setBeDefault(true);
+        ad.setStartTime(LocalDateTime.now());
+        ad.setEndTime(LocalDateTime.now());
+
+        adController.addAds(ad);
+        System.out.println("插入成功");
     }
 }

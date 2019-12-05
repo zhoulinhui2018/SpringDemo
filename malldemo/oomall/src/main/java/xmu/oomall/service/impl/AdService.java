@@ -25,6 +25,11 @@ public class AdService implements IAdService {
     }
 
     @Override
+    public void addAds(Ad ad) {
+        adDao.addAds(ad);
+    }
+
+    @Override
     public void deleteAdbyId(Integer id){
         adDao.deleteAdbyId(id);
     }
