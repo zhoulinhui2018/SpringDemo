@@ -95,7 +95,7 @@ class OrderTest {
         Coupon coupon = new Coupon();
         coupon.setBeginTime(LocalDateTime.now().minusHours(1));
         coupon.setEndTime(LocalDateTime.now().plusHours(1));
-        coupon.setCouponRule(couponRule);
+//        coupon.setCouponRule(couponRule);
         coupon.setCouponSn("test01");
 
         orderPo.setCoupon(coupon);

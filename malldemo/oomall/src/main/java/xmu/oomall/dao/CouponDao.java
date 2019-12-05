@@ -25,7 +25,7 @@ public class CouponDao {
         Coupon coupon = couponMapper.findCouponById(id);
         CouponRulePo couponRulePo = couponMapper.findCouponRuleById(coupon.getCouponRuleId());
         CouponRule couponRule = new CouponRule(couponRulePo);
-        coupon.setCouponRule(couponRule);
+//        coupon.setCouponRule(couponRule);
         return coupon;
     }
 

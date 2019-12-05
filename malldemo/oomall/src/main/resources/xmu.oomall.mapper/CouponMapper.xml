@@ -3,31 +3,12 @@
 <mapper namespace="xmu.oomall.mapper.CouponMapper">
 
     <select id="findCouponById" parameterType="Integer" resultType="coupon">
-            select id,
-                   coupon_sn,
-                    begin_time,
-                    end_time,
-                    status,
-                    add_time,
-                    update_time,
-                    be_deleted,
-                    coupon_rule_id
+            select *
                     from coupon where id = #{id}
     </select>
 
     <select id="findCouponRuleById" parameterType="Integer" resultType="couponRulePo">
-            select id,
-                   name,
-                   descr,
-                   begin_time,
-                   pic_url,
-                   brief,
-                   valid_period,
-                   goods_ids1 as goods_ids,
-                   add_time,
-                   update_time,
-                   be_deleted,
-                    strategy
+            select *
                     from coupon_rule where id = #{id}
     </select>
 

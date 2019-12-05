@@ -264,9 +264,9 @@ public class Order {
         logger.debug("cacuDealPrice参数");
         //目前设计只支持一个订单中同类优惠卷只能使用一张优惠卷，一个货品只能选择使用一张优惠卷
         Coupon coupon = this.getCoupon();
-        if (coupon != null) {
-            coupon.cacuCouponPrice(this);
-        }
+//        if (coupon != null) {
+//            coupon.cacuCouponPrice(this);
+//        }
     }
 
     /**
