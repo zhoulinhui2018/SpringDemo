@@ -24,4 +24,6 @@ public interface IAdService {
     * @Date: 2019/12/5
     */
     public List<Ad> findAllAds();
+
+    public void deleteAdbyId(Integer id);
 }

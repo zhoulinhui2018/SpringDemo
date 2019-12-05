@@ -26,4 +26,9 @@ public class AdDao {
         List<Ad> allAds = adMapper.findAllAds();
         return allAds;
     }
+
+    public void deleteAdbyId(Integer id){
+        adMapper.deleteAdbyId(id);
+    }
+
 }

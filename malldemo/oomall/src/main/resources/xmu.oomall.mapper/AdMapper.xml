@@ -27,4 +27,8 @@
         select *
         from ad;
     </select>
+
+    <delete id="deleteAdbyId" parameterType="Integer">
+        delete from ad where id=#{id};
+    </delete>
 </mapper>

@@ -23,4 +23,9 @@ public class AdService implements IAdService {
         List<Ad> allAds = adDao.findAllAds();
         return allAds;
     }
+
+    @Override
+    public void deleteAdbyId(Integer id){
+        adDao.deleteAdbyId(id);
+    }
 }

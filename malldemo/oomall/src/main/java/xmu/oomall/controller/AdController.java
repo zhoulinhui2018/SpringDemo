@@ -2,6 +2,7 @@ package xmu.oomall.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,10 @@ public class AdController {
     public List<Ad> getAllAds(){
         List<Ad> allAds = adService.findAllAds();
         return allAds;
+    }
+
+    @DeleteMapping("/ads/{id}")
+    public void deleteAdbyId(Integer id){
+        adService.deleteAdbyId(id);
     }
 }

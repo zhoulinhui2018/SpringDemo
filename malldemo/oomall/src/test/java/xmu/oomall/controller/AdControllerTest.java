@@ -32,4 +32,9 @@ public class AdControllerTest {
             System.out.println(ad);
         }
     }
+    @Test
+    public void deleteAdbyIdTest(){
+        adController.deleteAdbyId(200006);
+        System.out.println("删除成功");
+    }
 }
