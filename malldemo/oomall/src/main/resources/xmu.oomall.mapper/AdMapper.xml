@@ -18,4 +18,9 @@
             from ad where id = #{id}
     </select>
 
+    <select id="findAdsDefault" resultType="ad">
+        select *
+        from ad where is_default=1;
+    </select>
+
 </mapper>
