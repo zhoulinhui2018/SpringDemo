@@ -18,6 +18,7 @@ class CouponServiceImplTest {
     @Test
     public void findCouponById1(){
         Coupon coupon = couponService.findCouponById(1);
+        System.out.println(coupon);
         assertEquals(coupon.getId(), 1);
 //        assertEquals(coupon.getCouponSn(), "SF0001");
         assertEquals(coupon.getCouponRuleId(), 1);

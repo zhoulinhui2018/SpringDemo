@@ -3,9 +3,12 @@ package xmu.oomall.service.impl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import xmu.oomall.OoMallApplication;
 
 import javax.sound.midi.Soundbank;
 
+@SpringBootTest(classes = OoMallApplication.class)
 public class AdServiceTest {
 
     @Autowired
