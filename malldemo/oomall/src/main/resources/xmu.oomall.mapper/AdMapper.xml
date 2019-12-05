@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.oomall.mapper.AdMapper">
+    <select id="findAdById" parameterType="Integer" resultType="ad">
+            select id,
+                   link,
+                   name,
+                   content,
+                   pic_url,
+                   is_default,
+                   is_enabled,
+                   start_time,
+                   end_time,
+                   gmt_create,
+                   gmt_modified,
+                   is_deleted
+
+            from ad where id = #{id}
+    </select>
+
+</mapper>
