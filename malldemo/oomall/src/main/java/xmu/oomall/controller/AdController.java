@@ -1,11 +1,14 @@
 package xmu.oomall.controller;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xmu.oomall.domain.Ad;
 import xmu.oomall.service.impl.AdService;
+
+import java.util.List;
 
 
 @RestController
@@ -25,5 +28,11 @@ public class AdController {
     public Ad getAdDetail(Integer id){
         Ad adById = adService.findAdById(id);
         return adById;
+    }
+
+    @GetMapping("/admin/ads")
+    public List<Ad> getAllAds(){
+        List<Ad> allAds = adService.findAllAds();
+        return allAds;
     }
 }

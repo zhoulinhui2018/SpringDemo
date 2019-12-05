@@ -21,4 +21,9 @@ public class AdDao {
         List<Ad> adsDefault = adMapper.findAdsDefault();
         return adsDefault;
     }
+
+    public List<Ad> findAllAds(){
+        List<Ad> allAds = adMapper.findAllAds();
+        return allAds;
+    }
 }

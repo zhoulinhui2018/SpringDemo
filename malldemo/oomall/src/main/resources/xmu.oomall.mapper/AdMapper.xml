@@ -23,4 +23,8 @@
         from ad where is_default=1;
     </select>
 
+    <select id="findAllAds" resultType="ad">
+        select *
+        from ad;
+    </select>
 </mapper>
