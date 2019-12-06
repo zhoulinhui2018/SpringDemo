@@ -17,4 +17,5 @@ public interface AdMapper {
     public void deleteAdbyId(Integer id);
 
     public void addAds(Ad ad);
+    public void updateAdById(Ad newAd);
 }

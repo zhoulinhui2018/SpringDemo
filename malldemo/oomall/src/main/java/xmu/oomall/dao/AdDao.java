@@ -35,4 +35,8 @@ public class AdDao {
         adMapper.deleteAdbyId(id);
     }
 
+    public void updateAdById(Ad newAd)
+    {
+        adMapper.updateAdById(newAd);
+    }
 }
