@@ -57,6 +57,10 @@ public class OrderControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andReturn().getResponse().getContentAsString();
 
+        String responseString1= this.mockMvc.perform(post("/ads").contentType("application/json;charset=UTF-8").content(jsonString))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andReturn().getResponse().getContentAsString();
 
         String errMsg = JacksonUtil.parseObject(responseString,"errmsg", String.class);
         Integer errNo = JacksonUtil.parseObject(responseString,"errno", Integer.class);

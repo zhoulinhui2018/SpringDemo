@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xmu.oomall.controller.vo.OrderSubmitVo;
 import xmu.oomall.domain.cart.CartItem;
-import xmu.oomall.domain.coupon.Coupon;
 import xmu.oomall.domain.order.Order;
 import xmu.oomall.domain.user.Address;
 import xmu.oomall.domain.user.User;
