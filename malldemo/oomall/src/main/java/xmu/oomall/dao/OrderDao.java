@@ -1,21 +1,12 @@
 package xmu.oomall.dao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.domain.cart.CartItem;
-import xmu.oomall.domain.order.Order;
-import xmu.oomall.domain.order.OrderItem;
-import xmu.oomall.mapper.OrderMapper;
-import xmu.oomall.service.GoodsService;
+import xmu.oomall.service.IGoodsService;
 import xmu.oomall.service.PaymentService;
 //import xmu.oomall.service.impl.OrderServiceImpl;
 import xmu.oomall.util.Config;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 订单Dao
@@ -40,7 +31,7 @@ public class OrderDao {
     private Config config;
 
     @Autowired
-    private GoodsService goodsService;
+    private IGoodsService goodsService;
 
     /**
      * 新增订单，包括订单明细
