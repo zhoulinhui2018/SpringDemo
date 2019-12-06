@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.Ad;
+import xmu.oomall.service.IAdService;
 import xmu.oomall.service.impl.AdService;
 import xmu.oomall.util.ResponseUtil;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping("")
 public class AdController {
     @Autowired
-    private AdService adService;
+    private IAdService adService;
 
     /**
     * @Description: 用户获得按照时间排序的10条广告列表

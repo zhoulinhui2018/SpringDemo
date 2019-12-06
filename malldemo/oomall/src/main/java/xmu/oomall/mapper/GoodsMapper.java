@@ -17,31 +17,11 @@ import java.util.List;
 public interface GoodsMapper {
 
     /**
-     * 用id获得货品
-     * @param id 货品id
-     * @return 货品,带商品一起返回
+     * 获取商品列表
+     * @param
+     * @return 商品列表
      */
-    Product findProductById(Integer id);
-
-    /**
-     * 用id获得商品
-     * @param id 商品id
-     * @return 商品
-     */
-    Goods findGoodsById(Integer id);
-
-    /**
-     * 用商品id获取商品的所有优惠活动
-     * @param id
-     * @return 优惠对象列表
-     */
-    List<PromotionPo> findPromotionByGoodsId(Integer id);
-
-    /**
-     * 获得数据库中的货品库存量
-     * @param id 货品id
-     * @return 库存量
-     */
+    public List<Goods> getGoodList();
     Integer getStockInDB(Integer id);
 
     /**
