@@ -22,7 +22,6 @@ public class AdControllerTest {
     @Autowired
     private AdController adController;
 
-    private MockMvc mockMvc;
 
     @Rollback(false)
     @Test

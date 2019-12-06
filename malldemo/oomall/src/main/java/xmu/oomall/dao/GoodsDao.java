@@ -39,9 +39,9 @@ public class GoodsDao {
         return 1;
     }
     /**
-     * 用商品更新数据库
+     * 获取商品列表
      * @param
-     * @return 无
+     * @return List<Goods>
      */
     public List<Goods> getGoodList()
     {
@@ -49,6 +49,16 @@ public class GoodsDao {
         return AllGoods;
 
     }
+    /**
+     * 新增商品
+     * @param good
+     * @return
+     */
+    public void addGoods(Goods good)
+    {
+        goodsMapper.addGoods(good);
+    }
+
 
 
 

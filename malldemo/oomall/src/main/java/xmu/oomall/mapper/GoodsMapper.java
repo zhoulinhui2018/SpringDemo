@@ -32,4 +32,12 @@ public interface GoodsMapper {
     int updateProduct(Product product);
 
     int updateGoods(Goods goods);
+    List<Goods> getGoodList();
+
+    /**
+     * 新建商品
+     * @param good
+     * @return
+     */
+    void addGoods(Goods good);
 }

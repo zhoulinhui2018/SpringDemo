@@ -96,4 +96,19 @@
         </trim>
         where id=#{id}
     </update>
+
+    <select id="getGoodList" resultType="Goods">
+        select *
+        from goods;
+    </select>
+
+    <insert id="addGoods" parameterType="Goods">
+        insert into goods
+        values (#{id}, #{gmtCreate}, #{gmtModified},
+                #{name}, #{nameSn}, #{shortName},
+                #{description}, #{brief}, #{picUrl},
+                #{detail}, #{status},#{shareUrl},#{gallery},
+                #{goodsCategoryId},#{brandId},
+                #{weight},#{volume},#{specialFreightId},#{beSpecial},#{beDeleted})
+    </insert>
 </mapper>

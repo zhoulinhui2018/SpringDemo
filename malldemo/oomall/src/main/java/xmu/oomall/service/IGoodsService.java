@@ -15,10 +15,17 @@ import java.util.List;
 public interface IGoodsService {
 
     /**
-          * 更新商品信息
+          * 获取商品列表
           * @param
           * @return 商品列表
      */
      List<Goods> getGoodsList();
+
+    /**
+     * 新建商品
+     * @param good
+     * @return
+     */
+    void addGoods(Goods good);
 
 }
