@@ -1,12 +1,10 @@
 package xmu.oomall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.service.IGoodsService;
+import xmu.oomall.service.impl.GoodsServiceImpl;
 
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
 @RequestMapping("")
 public class GoodController {
     @Autowired
-    private IGoodsService goodsService;
+    private GoodsServiceImpl goodsService;
 
     /**
      * @Description: 用户获得商品列表
@@ -43,4 +41,6 @@ public class GoodController {
         goodsService.addGoods(good);
     }
 
+    @DeleteMapping("/goods/{id}")
+    public void deleteGoodsbyId(Integer id){goodsService.deleteGoodsbyId(id);}
 }

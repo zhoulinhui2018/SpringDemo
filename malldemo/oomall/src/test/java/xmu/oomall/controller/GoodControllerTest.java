@@ -40,4 +40,10 @@ public class GoodControllerTest {
         System.out.println("插入数据成功");
     }
 
+    @Rollback(false)
+    @Test
+    public void deleteGoodsbyId(){
+        goodController.deleteGoodsbyId(100001);
+    }
+
 }
