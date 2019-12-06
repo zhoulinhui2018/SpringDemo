@@ -24,6 +24,7 @@ public class AdControllerTest {
 
     private MockMvc mockMvc;
 
+    @Rollback(false)
     @Test
     public void updateTest1()
     {
@@ -32,8 +33,7 @@ public class AdControllerTest {
         newAd.setName("团购");
         newAd.setLink("www");
         newAd.setContent("降价团购活动");
-
-
+        adController.updateAd(newAd);
     }
 
     @Test

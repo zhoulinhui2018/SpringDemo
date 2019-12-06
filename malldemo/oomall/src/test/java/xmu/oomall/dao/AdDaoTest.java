@@ -12,8 +12,6 @@ import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.Ad;
 
 import java.time.LocalDateTime;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @SpringBootTest(classes = OoMallApplication.class)
