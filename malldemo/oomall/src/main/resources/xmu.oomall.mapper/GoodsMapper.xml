@@ -72,6 +72,28 @@
     </update>
 
     <update id="updateGoodsbyId"  parameterType="Integer" >
-
+        update goods
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gmtcreate !=null">gmt_create=#{gmtcreate},</if>
+            <if test="gmtmodified !=null">gmt_modified=#{gmtmodified},</if>
+            <if test="name !=null">name=#{name},</if>
+            <if test="goodsn !=null">good_sn=#{goodsn},</if>
+            <if test="shortname !=null">short_name=#{shortname},</if>
+            <if test="description !=null">description=#{description},</if>
+            <if test="brief !=null">brief=#{brief},</if>
+            <if test="picurl !=null">pic_url=#{picurl},</if>
+            <if test="detail !=null">detail=#{detail},</if>
+            <if test="status !=null">status=#{status},</if>
+            <if test="shareurl !=null">share_url=#{shareurl},</if>
+            <if test="gallery !=null">gallery=#{gallery},</if>
+            <if test="goodscategoryids !=null">goods_category_ids=#{goodscategoryids},</if>
+            <if test="brandid !=null">brand_id=#{brandid},</if>
+            <if test="isdeleted !=null">is_deleted=#{isdeleted},</if>
+            <if test="weight !=null">weight=#{weight},</if>
+            <if test="volume !=null">volume=#{volume},</if>
+            <if test="specialfreightid !=null">special_freight_id=#{specialfreightid},</if>
+            <if test="isspecial !=null">is_special=#{isspecial},</if>
+        </trim>
+        where id=#{id}
     </update>
 </mapper>
