@@ -22,4 +22,11 @@ public interface GoodsMapper {
      * @return 商品列表
      */
     List<Goods> getGoodList();
+
+    /**
+     * 新建商品
+     * @param good
+     * @return
+     */
+    void addGoods(Goods good);
 }
