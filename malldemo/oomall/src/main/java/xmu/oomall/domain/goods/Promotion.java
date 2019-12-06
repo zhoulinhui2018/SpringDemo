@@ -23,15 +23,15 @@ public class Promotion implements Serializable {
 
     private PromotionPo realObj;
 
-    /**
-     * 计算活动付款
-     * @param order 订单
-     * @param maxPayTime 付款间隔
-     * @return 付款列表
-     */
-    public List<Payment> getPayment(Order order, Integer maxPayTime){
-        return this.getPayStrategy().getPayment(order, maxPayTime);
-    }
+//    /**
+//     * 计算活动付款
+//     * @param order 订单
+//     * @param maxPayTime 付款间隔
+//     * @return 付款列表
+//     */
+//    public List<Payment> getPayment(Order order, Integer maxPayTime){
+//        return this.getPayStrategy().getPayment(order, maxPayTime);
+//    }
 
     public AbstractPaymentStrategy getPayStrategy() {
         String jsonString = realObj.getPayStrategy();

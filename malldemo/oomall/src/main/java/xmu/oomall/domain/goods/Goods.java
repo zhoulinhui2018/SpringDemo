@@ -1,194 +1,120 @@
 package xmu.oomall.domain.goods;
 
-import org.apache.ibatis.type.Alias;
-import xmu.oomall.util.Common;
-
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 /**
- * 商品信息
- * 该对象不可以删除
- * @author Ming Qiu
- */
-@Alias("goods")
-public class Goods implements Serializable {
+ * @Author: 数据库与对象模型标准组
+ * @Description:商品信息
+ * @Data:Created in 14:50 2019/11/29
+ * @Modified By:
+ **/
+
+public class Goods {
     private Integer id;
-    /**
-     * 商品编码
-     */
-    private String goodsSn;
-    /**
-     * 商品名称
-     */
+
+    private LocalDateTime gmtCreate;
+    private LocalDateTime gmtModified;
+    /*
+    *商品名称
+    * */
     private String name;
-    /**
-     * 简称
-     */
+    /*
+    *商品序列号
+    * */
+    private String nameSn;
+    /*
+    *商品简称
+    * */
     private String shortName;
-    /**
-     * 英文名称
-     */
-    private String englishName;
-    /**
-     * 条码
-     */
-    private String barCode;
-    /**
-     * 库存单位
-     */
-    private String stockUnit;
-    /**
-     * 长 单位mm
-     */
-    private Integer length;
-    /**
-     * 宽 单位mm
-     */
-    private Integer width;
-    /**
-     * 高 单位mm
-     */
-    private Integer height;
-    /**
-     * 毛重 单位克
-     */
-    private Integer grossWeight;
-    /**
-     * 净重 单位克
-     */
-    private Integer netWeight;
-    /**
-     * 分类名称
-     */
-    private String categoryName;
-    /**
-     * 品牌名称
-     */
-    private String brandName;
-    /**
-     * 商品状态，下架，上架，
-     */
-    private Integer status;
-    /**
-     * 是否人气推荐，如果设置则可以在人气推荐页面展示
-     */
-    private Boolean beHot = false;
-    /**
-     * 是否新品首发，如果设置则可以在新品首发页面展示
-     */
-    private Boolean beNew = false;
-    /**
-     * 商品宣传图片列表，采用JSON数组格式
-     */
-    private String gallery;
-    /**
-     * 商品简介
-     */
+    /*
+    *商品描述
+    * */
+    private String description;
+    /*
+    *商品简介
+    * */
     private String brief;
-    /**
-     * 商品页面商品图片
-     */
+    /*
+    *图片链接
+    * */
     private String picUrl;
-    /**
-     * 商品分享朋友圈图片
-     */
+    /*
+    *商品详情
+    * */
+    private String detail;
+    /*
+    * 0：上架 1：下架
+    * */
+    private Boolean status;
+    /*
+    * 分享链接
+    * */
     private String shareUrl;
-    /**
-     * 商品的不同规格货品
-     */
-    private List<Product> products;
-    /**
-     * 商品的促销活动
-     */
-    private List<Promotion> promotions;
+    /*
+    * 商品图片展示廊，就是像淘宝点进商品，滚动展示很多图片
+    * */
+    private String gallery;
+    /*
+    *商品分类ID
+    * */
+    private String goodsCategoryId;
+    /*
+    *品牌ID
+    * */
+    private Integer brandId;
+    /*
+    *商品重量
+    * */
+    private BigDecimal weight;
+    /*
+    *商品体积
+    * */
+    private String volume;
+    /*
+    *特殊邮费计算模板ID
+    * */
+    private Integer specialFreightId;
+    /*
+    *0：默认模板计算邮费 1：特殊模板计算邮费
+    * */
+    private Boolean beSpecial;
 
-    private LocalDateTime addTime;
-    private LocalDateTime updateTime = Common.DEFAULT_TIME;
-    private Boolean beDeleted = false;
-
-
-    public static Goods ALL_GOODS = new Goods(0);
-
-    /**
-     * 用id构造Goods
-     * @param id
-     */
-    public Goods(Integer id) {
-        this.id = id;
-        this.setAddTime(LocalDateTime.now());
-    }
-
-    public Goods(){
-    }
-
-    /**
-     * 获得可用的Promotion
-     * @return null 无可用，否则可用的Promotion
-     */
-    public Promotion validPromotion(){
-        Promotion ret = null;
-        if (this.promotions != null){
-            LocalDateTime now = LocalDateTime.now();
-            for (Promotion item : this.promotions){
-                if (now.compareTo(item.getBeginTime())>=0 && now.compareTo(item.getEndTime())<0 ){
-                    ret = item;
-                    break;
-                }
-            }
-        }
-        return ret;
-    }
-
-
-    /****************************************************
-     * 生成代码
-     ****************************************************/
+    private Boolean beDeleted;
 
     @Override
     public String toString() {
         return "Goods{" +
                 "id=" + id +
-                ", goodsSn='" + goodsSn + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
                 ", name='" + name + '\'' +
+                ", nameSn='" + nameSn + '\'' +
                 ", shortName='" + shortName + '\'' +
-                ", englishName='" + englishName + '\'' +
-                ", barCode='" + barCode + '\'' +
-                ", stockUnit='" + stockUnit + '\'' +
-                ", length=" + length +
-                ", width=" + width +
-                ", height=" + height +
-                ", grossWeight=" + grossWeight +
-                ", netWeight=" + netWeight +
-                ", categoryName='" + categoryName + '\'' +
-                ", brandName='" + brandName + '\'' +
-                ", status=" + status +
-                ", beHot=" + beHot +
-                ", beNew=" + beNew +
-                ", gallery='" + gallery + '\'' +
+                ", description='" + description + '\'' +
                 ", brief='" + brief + '\'' +
                 ", picUrl='" + picUrl + '\'' +
+                ", detail='" + detail + '\'' +
+                ", status=" + status +
                 ", shareUrl='" + shareUrl + '\'' +
-                ", products=" + products +
-                ", addTime=" + addTime +
-                ", updateTime=" + updateTime +
+                ", gallery='" + gallery + '\'' +
+                ", goodsCategoryId='" + goodsCategoryId + '\'' +
+                ", brandId=" + brandId +
+                ", weight=" + weight +
+                ", volume='" + volume + '\'' +
+                ", specialFreightId=" + specialFreightId +
+                ", beSpecial=" + beSpecial +
                 ", beDeleted=" + beDeleted +
                 '}';
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
         Goods goods = (Goods) o;
-        return id.equals(goods.getId());
+        return Objects.equals(id, goods.id);
     }
 
     @Override
@@ -204,12 +130,20 @@ public class Goods implements Serializable {
         this.id = id;
     }
 
-    public String getGoodsSn() {
-        return goodsSn;
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
     }
 
-    public void setGoodsSn(String goodsSn) {
-        this.goodsSn = goodsSn;
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
     }
 
     public String getName() {
@@ -220,6 +154,14 @@ public class Goods implements Serializable {
         this.name = name;
     }
 
+    public String getNameSn() {
+        return nameSn;
+    }
+
+    public void setNameSn(String nameSn) {
+        this.nameSn = nameSn;
+    }
+
     public String getShortName() {
         return shortName;
     }
@@ -228,132 +170,12 @@ public class Goods implements Serializable {
         this.shortName = shortName;
     }
 
-    public String getEnglishName() {
-        return englishName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEnglishName(String englishName) {
-        this.englishName = englishName;
-    }
-
-    public String getBarCode() {
-        return barCode;
-    }
-
-    public void setBarCode(String barCode) {
-        this.barCode = barCode;
-    }
-
-    public String getStockUnit() {
-        return stockUnit;
-    }
-
-    public void setStockUnit(String stockUnit) {
-        this.stockUnit = stockUnit;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    public Integer getWidth() {
-        return width;
-    }
-
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    public Integer getGrossWeight() {
-        return grossWeight;
-    }
-
-    public void setGrossWeight(Integer grossWeight) {
-        this.grossWeight = grossWeight;
-    }
-
-    public Integer getNetWeight() {
-        return netWeight;
-    }
-
-    public void setNetWeight(Integer netWeight) {
-        this.netWeight = netWeight;
-    }
-
-    public Boolean getNew() {
-        return beNew;
-    }
-
-    public void setNew(Boolean aNew) {
-        beNew = aNew;
-    }
-
-    public LocalDateTime getAddTime() {
-        return addTime;
-    }
-
-    public void setAddTime(LocalDateTime addTime) {
-        this.addTime = addTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Boolean getHot() {
-        return beHot;
-    }
-
-    public void setHot(Boolean hot) {
-        beHot = hot;
-    }
-
-    public String getGallery() {
-        return gallery;
-    }
-
-    public void setGallery(String gallery) {
-        this.gallery = gallery;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getBrief() {
@@ -372,6 +194,22 @@ public class Goods implements Serializable {
         this.picUrl = picUrl;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     public String getShareUrl() {
         return shareUrl;
     }
@@ -380,28 +218,60 @@ public class Goods implements Serializable {
         this.shareUrl = shareUrl;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public String getGallery() {
+        return gallery;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setGallery(String gallery) {
+        this.gallery = gallery;
     }
 
-    public Boolean getBeHot() {
-        return beHot;
+    public String getGoodsCategoryId() {
+        return goodsCategoryId;
     }
 
-    public void setBeHot(Boolean beHot) {
-        this.beHot = beHot;
+    public void setGoodsCategoryId(String goodsCategoryId) {
+        this.goodsCategoryId = goodsCategoryId;
     }
 
-    public Boolean getBeNew() {
-        return beNew;
+    public Integer getBrandId() {
+        return brandId;
     }
 
-    public void setBeNew(Boolean beNew) {
-        this.beNew = beNew;
+    public void setBrandId(Integer brandId) {
+        this.brandId = brandId;
+    }
+
+    public BigDecimal getWeight() {
+        return weight;
+    }
+
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public Integer getSpecialFreightId() {
+        return specialFreightId;
+    }
+
+    public void setSpecialFreightId(Integer specialFreightId) {
+        this.specialFreightId = specialFreightId;
+    }
+
+    public Boolean getBeSpecial() {
+        return beSpecial;
+    }
+
+    public void setBeSpecial(Boolean beSpecial) {
+        this.beSpecial = beSpecial;
     }
 
     public Boolean getBeDeleted() {
@@ -410,13 +280,5 @@ public class Goods implements Serializable {
 
     public void setBeDeleted(Boolean beDeleted) {
         this.beDeleted = beDeleted;
-    }
-
-    public List<Promotion> getPromotion() {
-        return promotions;
-    }
-
-    public void setPromotion(List<Promotion> promotion) {
-        this.promotions = promotion;
     }
 }

@@ -10,7 +10,6 @@ import xmu.oomall.domain.goods.Product;
 import xmu.oomall.mapper.CartItemMapper;
 import xmu.oomall.service.CartItemService;
 import xmu.oomall.service.GoodsService;
-import xmu.oomall.service.impl.OrderServiceImpl;
 import xmu.oomall.util.Config;
 
 import java.util.concurrent.TimeUnit;
@@ -23,25 +22,25 @@ import java.util.concurrent.TimeUnit;
 
 @Repository
 public class CartItemDao {
-    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
-
-    @Autowired
-    private CartItemMapper cartItemMapper;
-
-    @Autowired
-    private GoodsService goodsService;
-
-
-
-    /**
-     * 用id返回购物车明细
-     * @param id 购物车id
-     * @return 购物车明细，带关联的货品和商品
-     */
-    public CartItem findCartItemById(Integer id){
-        CartItem item = cartItemMapper.findCartItemById(id);
-        Product product = goodsService.findProductById(item.getProductId());
-        item.setProduct(product);
-        return item;
-    }
+//    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+//
+//    @Autowired
+//    private CartItemMapper cartItemMapper;
+//
+//    @Autowired
+//    private GoodsService goodsService;
+//
+//
+//
+//    /**
+//     * 用id返回购物车明细
+//     * @param id 购物车id
+//     * @return 购物车明细，带关联的货品和商品
+//     */
+//    public CartItem findCartItemById(Integer id){
+//        CartItem item = cartItemMapper.findCartItemById(id);
+//        Product product = goodsService.findProductById(item.getProductId());
+//        item.setProduct(product);
+//        return item;
+//    }
 }

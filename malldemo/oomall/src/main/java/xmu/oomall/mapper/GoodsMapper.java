@@ -1,6 +1,7 @@
 package xmu.oomall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.domain.goods.Product;
 import xmu.oomall.domain.goods.PromotionPo;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Ming Qiu
  */
 @Mapper
+@Service
 public interface GoodsMapper {
 
     /**

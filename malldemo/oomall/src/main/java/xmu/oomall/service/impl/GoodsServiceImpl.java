@@ -13,29 +13,29 @@ import xmu.oomall.service.GoodsService;
  **/
 @Service
 public class GoodsServiceImpl implements GoodsService {
-    @Autowired
-    private GoodsDao goodsDao;
-
-    @Autowired
-    private GoodsMapper goodsMapper;
-
-    @Override
-    public Product findProductById(Integer id) {
-        return goodsDao.findProductById(id);
-    }
-
-    @Override
-    public Integer getStockInDB(Integer id) {
-        return goodsMapper.getStockInDB(id);
-    }
-
-    @Override
-    public void updateStockInDB(Integer id, Integer quantity) {
-        Product product = new Product();
-        product.setNull();
-        product.setId(id);
-        product.setStock(quantity);
-        goodsMapper.updateProduct(product);
-    }
+//    @Autowired
+//    private GoodsDao goodsDao;
+//
+//    @Autowired
+//    private GoodsMapper goodsMapper;
+//
+//    @Override
+//    public Product findProductById(Integer id) {
+//        return goodsDao.findProductById(id);
+//    }
+//
+//    @Override
+//    public Integer getStockInDB(Integer id) {
+//        return goodsMapper.getStockInDB(id);
+//    }
+//
+//    @Override
+//    public void updateStockInDB(Integer id, Integer quantity) {
+//        Product product = new Product();
+//        product.setNull();
+//        product.setId(id);
+//        product.setStock(quantity);
+//        goodsMapper.updateProduct(product);
+//    }
 
 }

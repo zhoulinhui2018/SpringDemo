@@ -17,5 +17,5 @@ public interface AbstractPaymentStrategy{
      * @param maxPayTime 最长付款间隔
      * @return  付款列表（预售可能会返回多个付款）
      */
-    List<Payment> getPayment(Order order, Integer maxPayTime);
+//    List<Payment> getPayment(Order order, Integer maxPayTime);
 }
