@@ -32,7 +32,8 @@ public interface GoodsMapper {
     int updateProduct(Product product);
 
     int updateGoods(Goods goods);
-    List<Goods> getGoodList();
+
+
 
     /**
      * 新建商品
@@ -40,4 +41,6 @@ public interface GoodsMapper {
      * @return
      */
     void addGoods(Goods good);
+
+    void deleteGoodsbyId(Integer id);
 }

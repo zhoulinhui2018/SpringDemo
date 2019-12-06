@@ -30,6 +30,7 @@ public class GoodsServiceImpl implements IGoodsService {
         goodsDao.addGoods(good);
     }
 
-
+    @Override
+    public void deleteGoodsbyId(Integer id){goodsDao.deleteGoodsById(id);}
 
 }

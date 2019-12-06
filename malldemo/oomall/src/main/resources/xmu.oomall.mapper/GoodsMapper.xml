@@ -111,4 +111,8 @@
                 #{goodsCategoryId},#{brandId},
                 #{weight},#{volume},#{specialFreightId},#{beSpecial},#{beDeleted})
     </insert>
+
+    <delete id="deleteGoodsbyId" parameterType="Integer">
+        delete from goods where id=#{id};
+    </delete>
 </mapper>

@@ -59,7 +59,7 @@ public class GoodsDao {
         goodsMapper.addGoods(good);
     }
 
-
+    public void deleteGoodsById(Integer id){goodsMapper.deleteGoodsbyId(id);}
 
 
 

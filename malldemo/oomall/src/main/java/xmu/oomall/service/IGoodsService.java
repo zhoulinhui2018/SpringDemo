@@ -27,5 +27,5 @@ public interface IGoodsService {
      * @return
      */
     void addGoods(Goods good);
-
+    void deleteGoodsbyId(Integer id);
 }
