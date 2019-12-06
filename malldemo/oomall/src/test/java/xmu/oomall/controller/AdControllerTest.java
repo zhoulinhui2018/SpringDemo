@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.Ad;
@@ -39,10 +40,11 @@ public class AdControllerTest {
         System.out.println("删除成功");
     }
 
+    @Rollback(false)
     @Test
     public void addAdsTest(){
         Ad ad =new Ad();
-        ad.setId(900001);
+        ad.setId(900002);
         ad.setLink("test");
         ad.setName("芒果test");
         ad.setContent("芒果大促销了");
