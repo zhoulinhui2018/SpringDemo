@@ -71,7 +71,7 @@
         WHERE id=#{id}
     </update>
 
-    <update id="updateGoodsbyId"  parameterType="Integer" >
+    <update id="updateGoodsbyId"  parameterType="Goods" >
         update goods
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtcreate !=null">gmt_create=#{gmtcreate},</if>

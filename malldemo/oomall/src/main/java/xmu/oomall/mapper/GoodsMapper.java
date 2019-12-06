@@ -50,4 +50,6 @@ public interface GoodsMapper {
      * @return 行数
      */
     int updateProduct(Product product);
+
+    int updateGoods(Goods goods);
 }

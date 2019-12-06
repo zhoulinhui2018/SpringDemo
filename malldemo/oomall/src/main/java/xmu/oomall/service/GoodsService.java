@@ -1,6 +1,7 @@
 package xmu.oomall.service;
 
 import org.springframework.stereotype.Service;
+import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.domain.goods.Product;
 
 /**
@@ -11,6 +12,7 @@ import xmu.oomall.domain.goods.Product;
 @Service
 public interface GoodsService {
 
+        Integer updateGoodsbyId(Goods goods);
 //    /**
 //     * 用id获得货品
 //     * @param id 货品io

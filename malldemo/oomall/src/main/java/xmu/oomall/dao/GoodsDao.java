@@ -34,6 +34,10 @@ public class GoodsDao {
     @Autowired
     private Config config;
 
+    public Integer updateGoodsbyId(Goods onegoods){
+        goodsMapper.updateGoods(onegoods);
+        return 1;
+    }
     /**
      * 用ID获取货品
      * @param id 货品id
