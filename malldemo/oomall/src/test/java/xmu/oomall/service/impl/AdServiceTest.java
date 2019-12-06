@@ -24,4 +24,9 @@ public class AdServiceTest {
         }
     }
 
+    @Test
+    public void deleteAdbyIdTest(){
+        adService.deleteAdbyId(200004);
+    }
+
 }

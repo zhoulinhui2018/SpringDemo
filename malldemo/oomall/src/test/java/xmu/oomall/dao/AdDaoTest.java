@@ -26,4 +26,10 @@ public class AdDaoTest {
             System.out.println(ad);
         }
     }
+
+    @Test
+    public void deleteAdbyIdTest(){
+        adDao.deleteAdbyId(200005);
+        System.out.println("删除成功");
+    }
 }

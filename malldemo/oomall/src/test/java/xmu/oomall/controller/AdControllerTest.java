@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.Ad;
@@ -32,9 +33,12 @@ public class AdControllerTest {
             System.out.println(ad);
         }
     }
+
+    @Rollback(false)
     @Test
     public void deleteAdbyIdTest(){
-        adController.deleteAdbyId(200006);
+        adController.deleteAdbyId(200001);
         System.out.println("删除成功");
     }
+
 }

@@ -2,6 +2,7 @@ package xmu.oomall.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,7 @@ import xmu.oomall.service.impl.AdService;
 
 import java.util.List;
 
-
+@Transactional(rollbackFor = Exception.class)
 @RestController
 @RequestMapping("")
 public class AdController {

@@ -2,12 +2,13 @@ package xmu.oomall.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.dao.AdDao;
 import xmu.oomall.domain.Ad;
 import xmu.oomall.service.IAdService;
 
 import java.util.List;
-
+@Transactional
 @Service
 public class AdService implements IAdService {
     @Autowired
