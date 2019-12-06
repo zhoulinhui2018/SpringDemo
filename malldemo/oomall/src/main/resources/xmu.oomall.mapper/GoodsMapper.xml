@@ -70,4 +70,8 @@
         </trim>
         WHERE id=#{id}
     </update>
+
+    <update id="updateGoodsbyId"  parameterType="Integer" >
+
+    </update>
 </mapper>
