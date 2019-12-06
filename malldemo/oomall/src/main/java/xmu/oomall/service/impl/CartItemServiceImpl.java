@@ -18,19 +18,19 @@ import java.util.List;
 @Service
 public class CartItemServiceImpl implements CartItemService {
 
-    @Autowired
-    CartItemMapper cartItemMapper;
-
-    @Autowired
-    CartItemDao cartItemDao;
-
-    @Override
-    public CartItem findCartItemById(Integer id) {
-        return cartItemDao.findCartItemById(id);
-    }
-
-    @Override
-    public void clearCartItem(List<CartItem> cartItems) {
-        cartItemMapper.clearCartItem(cartItems);
-    }
+//    @Autowired
+//    CartItemMapper cartItemMapper;
+//
+//    @Autowired
+//    CartItemDao cartItemDao;
+//
+//    @Override
+//    public CartItem findCartItemById(Integer id) {
+//        return cartItemDao.findCartItemById(id);
+//    }
+//
+//    @Override
+//    public void clearCartItem(List<CartItem> cartItems) {
+//        cartItemMapper.clearCartItem(cartItems);
+//    }
 }

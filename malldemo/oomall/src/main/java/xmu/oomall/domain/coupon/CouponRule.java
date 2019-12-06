@@ -29,19 +29,19 @@ public class CouponRule {
      * @param items 订单明细
      * @return 适用的订单明细
      */
-    private List<OrderItem> getValidItems(List<OrderItem> items){
-        logger.debug("getValidItems参数：items = "+items);
-        List<OrderItem> validItems = new ArrayList<OrderItem>(items.size());
-        for (OrderItem item: items){
-            Goods goods = item.getProduct().getDesc();
-            logger.debug("goods = "+goods);
-            if (this.isUsedOnGoods(goods.getId())){
-                validItems.add(item);
-            }
-        }
-        return validItems;
-
-    }
+//    private List<OrderItem> getValidItems(List<OrderItem> items){
+//        logger.debug("getValidItems参数：items = "+items);
+//        List<OrderItem> validItems = new ArrayList<OrderItem>(items.size());
+//        for (OrderItem item: items){
+//            Goods goods = item.getProduct().getDesc();
+//            logger.debug("goods = "+goods);
+//            if (this.isUsedOnGoods(goods.getId())){
+//                validItems.add(item);
+//            }
+//        }
+//        return validItems;
+//
+//    }
 
     /**
      * 获得折扣策略
@@ -86,18 +86,18 @@ public class CouponRule {
      * @param goodsId 商品的id
      * @return
      */
-    public boolean isUsedOnGoods(Integer goodsId) {
-
-        Set<Integer> goodsIds = new TreeSet<>();
-        goodsIds.clear();
-        goodsIds.addAll(this.getGoodsIds());
-
-        if (goodsIds.contains(Goods.ALL_GOODS.getId())){
-            return true;
-        } else {
-            return goodsIds.contains(goodsId);
-        }
-    }
+//    public boolean isUsedOnGoods(Integer goodsId) {
+//
+//        Set<Integer> goodsIds = new TreeSet<>();
+//        goodsIds.clear();
+//        goodsIds.addAll(this.getGoodsIds());
+//
+//        if (goodsIds.contains(Goods.ALL_GOODS.getId())){
+//            return true;
+//        } else {
+//            return goodsIds.contains(goodsId);
+//        }
+//    }
 
     /**
      * 获得适用商品id列表
@@ -128,18 +128,18 @@ public class CouponRule {
      * @param couponSn 优惠卷号
      * @return
      */
-    public void cacuCouponPrice(Order order, String couponSn){
-
-        logger.debug("cacuCouponPrice参数: Order = "+ order+ "couponSn = "+couponSn);
-
-        List<OrderItem> validItems = this.getValidItems(order.getItems());
-
-        if (validItems.size() != 0) {
-            List<OrderItem> newItems = this.getStrategy().cacuDiscount(validItems, couponSn);
-            order.getItems().addAll(newItems);
-        }
-        logger.debug("cacuCouponPrice返回");
-    }
+//    public void cacuCouponPrice(Order order, String couponSn){
+//
+//        logger.debug("cacuCouponPrice参数: Order = "+ order+ "couponSn = "+couponSn);
+//
+//        List<OrderItem> validItems = this.getValidItems(order.getItems());
+//
+//        if (validItems.size() != 0) {
+//            List<OrderItem> newItems = this.getStrategy().cacuDiscount(validItems, couponSn);
+//            order.getItems().addAll(newItems);
+//        }
+//        logger.debug("cacuCouponPrice返回");
+//    }
 
     /**
      * 构造函数

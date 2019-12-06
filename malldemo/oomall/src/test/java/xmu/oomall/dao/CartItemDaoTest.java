@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = OoMallApplication.class)
 class CartItemDaoTest {
 
-    @Autowired
-    private CartItemDao cartItemDao;
-
-    @Test
-    void findCartItemById(){
-        CartItem item = cartItemDao.findCartItemById(1);
-        assertEquals(item.getId(), 1);
-
-    }
+//    @Autowired
+//    private CartItemDao cartItemDao;
+//
+//    @Test
+//    void findCartItemById(){
+//        CartItem item = cartItemDao.findCartItemById(1);
+//        assertEquals(item.getId(), 1);
+//
+//    }
 }

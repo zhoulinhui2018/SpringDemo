@@ -27,52 +27,52 @@ import java.util.List;
 @RequestMapping(value = "/orders", produces = "application/json;charset=UTF-8", consumes = "application/json;charset=UTF-8")
 public class OrderController {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
-
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private CartItemService cartItemService;
-
-    @Autowired
-    private CouponService couponService;
-
-    /**
-     * 提交订单
-     *
-     * @param submitVo   订单信息
-     * @return 提交订单操作结果
-     */
-    @PostMapping("")
-    public Object submit(@RequestBody OrderSubmitVo submitVo) {
-
-        logger.debug("submit参数："+submitVo);
-
-        //例子代码中把用户id强制设定为1
-        User user = new User();
-        user.setId(1);
-        //**************
-
-        Address address = submitVo.getAddress();
-        Order newOrder = new Order(user, address);
-
-        Coupon coupon = couponService.findCouponById(submitVo.getCouponId());
-
-        if (null != coupon){
-            newOrder.setCoupon(coupon);
-        }
-
-        List<CartItem> cartItems = new ArrayList<CartItem>(submitVo.getCartItemIds().size());
-        for (Integer cartId: submitVo.getCartItemIds() ){
-            CartItem item = cartItemService.findCartItemById(cartId);
-            cartItems.add(item);
-        }
-
-        Order retOrder = orderService.submit(newOrder, cartItems);
-        Object retObj = ResponseUtil.ok(retOrder);
-
-        logger.debug("submit的返回值："+retObj);
-        return retObj;
-    }
+//    private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+//
+//    @Autowired
+//    private OrderService orderService;
+//
+//    @Autowired
+//    private CartItemService cartItemService;
+//
+//    @Autowired
+//    private CouponService couponService;
+//
+//    /**
+//     * 提交订单
+//     *
+//     * @param submitVo   订单信息
+//     * @return 提交订单操作结果
+//     */
+//    @PostMapping("")
+//    public Object submit(@RequestBody OrderSubmitVo submitVo) {
+//
+//        logger.debug("submit参数："+submitVo);
+//
+//        //例子代码中把用户id强制设定为1
+//        User user = new User();
+//        user.setId(1);
+//        //**************
+//
+//        Address address = submitVo.getAddress();
+//        Order newOrder = new Order(user, address);
+//
+//        Coupon coupon = couponService.findCouponById(submitVo.getCouponId());
+//
+//        if (null != coupon){
+//            newOrder.setCoupon(coupon);
+//        }
+//
+//        List<CartItem> cartItems = new ArrayList<CartItem>(submitVo.getCartItemIds().size());
+//        for (Integer cartId: submitVo.getCartItemIds() ){
+//            CartItem item = cartItemService.findCartItemById(cartId);
+//            cartItems.add(item);
+//        }
+//
+//        Order retOrder = orderService.submit(newOrder, cartItems);
+//        Object retObj = ResponseUtil.ok(retOrder);
+//
+//        logger.debug("submit的返回值："+retObj);
+//        return retObj;
+//    }
 }

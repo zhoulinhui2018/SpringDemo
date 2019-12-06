@@ -14,20 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = OoMallApplication.class)
 class GoodsServiceImplTest {
 
-    @Autowired
-    private CartItemService goodsService;
-
-    @Test
-    void findCartItemById() {
-        CartItem item = goodsService.findCartItemById(1);
-        assertEquals(item.getId(),1);
-        assertEquals(item.getQuantity(),2);
-        assertEquals(item.getUserId(),1);
-        assertEquals(item.getProduct().getId(), 1);
-        assertEquals(item.getProduct().getPurchasePrice(), BigDecimal.valueOf(99));
-    }
-
-    @Test
-    void clearCartItem() {
-    }
+//    @Autowired
+//    private CartItemService goodsService;
+//
+//    @Test
+//    void findCartItemById() {
+//        CartItem item = goodsService.findCartItemById(1);
+//        assertEquals(item.getId(),1);
+//        assertEquals(item.getQuantity(),2);
+//        assertEquals(item.getUserId(),1);
+//        assertEquals(item.getProduct().getId(), 1);
+//        assertEquals(item.getProduct().getPurchasePrice(), BigDecimal.valueOf(99));
+//    }
+//
+//    @Test
+//    void clearCartItem() {
+//    }
 }
