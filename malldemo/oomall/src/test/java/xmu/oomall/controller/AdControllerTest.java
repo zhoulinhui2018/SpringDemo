@@ -64,7 +64,7 @@ public class AdControllerTest {
     @Test
     public void addAdsTest(){
         Ad ad =new Ad();
-        ad.setId(900002);
+        ad.setId(900003);
         ad.setLink("test");
         ad.setName("芒果test");
         ad.setContent("芒果大促销了");
