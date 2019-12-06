@@ -14,6 +14,7 @@ public interface IAdService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/4
     */
+
     public Ad findAdById(Integer id);
 
     /**
@@ -28,4 +29,13 @@ public interface IAdService {
     public void deleteAdbyId(Integer id);
 
     public void addAds(Ad ad);
+
+    /**
+     * @Description: 修改ad的信息
+     * @Param: [id]
+     * @return: xmu.oomall.domain.Ad
+     * @Author: Xu Huangchao
+     * @Date: 2019/12/5
+     */
+    public void updateAdById(Ad newAd);
 }

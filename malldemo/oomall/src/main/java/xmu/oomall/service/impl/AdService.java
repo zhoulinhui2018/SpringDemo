@@ -34,4 +34,10 @@ public class AdService implements IAdService {
     public void deleteAdbyId(Integer id){
         adDao.deleteAdbyId(id);
     }
+
+    @Override
+    public void updateAdById(Ad newAd)
+    {
+        adDao.updateAdById(newAd);
+    }
 }

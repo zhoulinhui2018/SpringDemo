@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.Ad;
@@ -13,11 +14,27 @@ import xmu.oomall.domain.Ad;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+
 @SpringBootTest(classes = OoMallApplication.class)
 @Transactional
 public class AdControllerTest {
     @Autowired
     private AdController adController;
+
+    private MockMvc mockMvc;
+
+    @Rollback(false)
+    @Test
+    public void updateTest1()
+    {
+        Ad newAd=new Ad();
+        newAd.setId(300002);
+        newAd.setName("团购");
+        newAd.setLink("www");
+        newAd.setContent("降价团购活动");
+        adController.updateAd(newAd);
+    }
 
     @Test
     public void test1(){
@@ -58,4 +75,5 @@ public class AdControllerTest {
         adController.addAds(ad);
         System.out.println("插入成功");
     }
+
 }

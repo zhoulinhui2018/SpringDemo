@@ -1,5 +1,10 @@
 package xmu.oomall.dao;
 
+import com.alibaba.druid.mock.MockConnection;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +18,21 @@ import java.util.List;
 public class AdDaoTest {
     @Autowired
     private  AdDao adDao;
+
     @Test
-    public void test(){
+    public void updateAdTest() {
+
+        Ad ad = new Ad();
+        ad.setId(300001);
+        ad.setName("团购");
+        ad.setLink("www");
+        ad.setContent("降价大团购");
+        adDao.updateAdById(ad);
+
+    }
+
+    @Test
+        public void test(){
         Ad adById = adDao.findAdById(1);
         System.out.println(adById);
     }
@@ -47,4 +65,5 @@ public class AdDaoTest {
         adDao.deleteAdbyId(200005);
         System.out.println("删除成功");
     }
+
 }
