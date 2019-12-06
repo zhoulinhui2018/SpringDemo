@@ -65,20 +65,20 @@ import java.util.Objects;
      * 由购物车对象构造订单明细对象
      * @param cartItem 购物车对象
      */
-    public OrderItem(CartItem cartItem) {
-        this.setQuantity(cartItem.getQuantity());
-        Product product = cartItem.getProduct();
-        this.setProduct(product);
-        this.setPrice(product.getPurchasePrice());
-        this.setDealPrice(this.getPrice());
-
-        StringBuffer productName = new StringBuffer(product.getDesc().getName());
-        productName.append(" ");
-        productName.append(product.getProductProperty());
-        this.setProductName(productName.toString());
-
-        this.setAddTime(LocalDateTime.now());
-    }
+//    public OrderItem(CartItem cartItem) {
+//        this.setQuantity(cartItem.getQuantity());
+//        Product product = cartItem.getProduct();
+//        this.setProduct(product);
+//        this.setPrice(product.getPurchasePrice());
+//        this.setDealPrice(this.getPrice());
+//
+//        StringBuffer productName = new StringBuffer(product.getDesc().getName());
+//        productName.append(" ");
+//        productName.append(product.getProductProperty());
+//        this.setProductName(productName.toString());
+//
+//        this.setAddTime(LocalDateTime.now());
+//    }
 
     /**
      * 默认构造函数
