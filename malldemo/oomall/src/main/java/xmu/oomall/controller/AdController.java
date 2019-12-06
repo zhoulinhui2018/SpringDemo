@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("")
 public class AdController {
     @Autowired
-    private IAdService adService;
+    private AdService adService;
 
     /**
     * @Description: 用户获得按照时间排序的10条广告列表
@@ -34,6 +34,13 @@ public class AdController {
         return adById;
     }
 
+    /** 
+    * @Description: 管理员获得所有广告
+    * @Param: [] 
+    * @return: java.util.List<xmu.oomall.domain.Ad> 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/6 
+    */ 
     @GetMapping("/admin/ads")
     public List<Ad> getAllAds(){
         List<Ad> allAds = adService.findAllAds();
