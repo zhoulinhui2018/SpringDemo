@@ -26,4 +26,6 @@ public interface IAdService {
     public List<Ad> findAllAds();
 
     public void deleteAdbyId(Integer id);
+
+    public void addAds(Ad ad);
 }

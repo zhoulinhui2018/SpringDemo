@@ -12,6 +12,10 @@ public class AdDao {
     @Autowired
     private AdMapper adMapper;
 
+    public void addAds(Ad ad){
+        adMapper.addAds(ad);
+    }
+
     public Ad findAdById(Integer id){
         Ad ad = adMapper.findAdById(id);
         return ad;
