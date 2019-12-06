@@ -21,5 +21,5 @@ public interface GoodsMapper {
      * @param
      * @return 商品列表
      */
-    public List<Goods> getGoodList();
+    List<Goods> getGoodList();
 }

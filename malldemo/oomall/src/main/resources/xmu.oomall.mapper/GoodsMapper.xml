@@ -70,4 +70,9 @@
         </trim>
         WHERE id=#{id}
     </update>
+
+    <select id="getGoodList" resultType="Goods">
+        select *
+        from goods;
+    </select>
 </mapper>
