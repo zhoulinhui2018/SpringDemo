@@ -1,6 +1,7 @@
 package xmu.oomall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.service.IGoodsService;
@@ -36,7 +37,7 @@ public class GoodController {
      * @Date: 2019/12/6
      */
     @PostMapping("/goods")
-    public void addNewGoods(Goods good)
+    public void addNewGoods(@RequestBody Goods good)
     {
         goodsService.addGoods(good);
     }

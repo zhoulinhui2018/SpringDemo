@@ -3,8 +3,8 @@ package xmu.oomall.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.dao.CouponDao;
-import xmu.oomall.domain.coupon.Coupon;
 
+import xmu.oomall.domain.goods.Coupon;
 import xmu.oomall.service.CouponService;
 
 /**
@@ -16,11 +16,11 @@ import xmu.oomall.service.CouponService;
 @Service
 public class CouponServiceImpl implements CouponService {
 
-    @Autowired
-    private CouponDao couponDao;
-
-    @Override
-    public Coupon findCouponById(Integer id) {
-        return couponDao.findCouponById(id);
-    }
+//    @Autowired
+//    private CouponDao couponDao;
+//
+//    @Override
+//    public Coupon findCouponById(Integer id) {
+//        return couponDao.findCouponById(id);
+//    }
 }

@@ -4,7 +4,7 @@ import org.apache.ibatis.type.Alias;
 import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xmu.oomall.domain.coupon.Coupon;
+import xmu.oomall.domain.goods.Coupon;
 import xmu.oomall.domain.goods.Promotion;
 import xmu.oomall.domain.payment.Payment;
 import xmu.oomall.domain.user.Address;

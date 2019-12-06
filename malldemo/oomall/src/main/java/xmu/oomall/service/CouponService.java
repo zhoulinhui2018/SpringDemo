@@ -1,7 +1,6 @@
 package xmu.oomall.service;
 
 import org.springframework.stereotype.Service;
-import xmu.oomall.domain.coupon.Coupon;
 
 /**
  * @Author: Ming Qiu
@@ -17,5 +16,5 @@ public interface CouponService {
      * @param id
      * @return
      */
-    public Coupon findCouponById(Integer id);
+//    public Coupon findCouponById(Integer id);
 }

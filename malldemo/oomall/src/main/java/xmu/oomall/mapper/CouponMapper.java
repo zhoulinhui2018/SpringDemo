@@ -1,8 +1,8 @@
 package xmu.oomall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import xmu.oomall.domain.coupon.Coupon;
 import xmu.oomall.domain.coupon.CouponRulePo;
+import xmu.oomall.domain.goods.Coupon;
 
 /**
  * @Author: Ming Qiu
