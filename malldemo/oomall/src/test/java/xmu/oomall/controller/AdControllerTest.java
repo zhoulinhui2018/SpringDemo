@@ -47,7 +47,7 @@ public class AdControllerTest {
 
     @Test
     public void test1(){
-        Ad ad=adController.getAdDetail(1);
+        Ad ad=adController.getAdDetail(100001);
         System.out.println("ad name"+ad.getName());
         System.out.println("ad content"+ad.getContent());
     }

@@ -3,30 +3,7 @@
 <mapper namespace="xmu.oomall.mapper.GoodsMapper">
 
     <select id="findGoodsById" resultType="goods" parameterType="Integer">
-        select id,
-              goods_sn,
-              name,
-              short_name,
-              english_name,
-              bar_code,
-              stock_unit,
-              length,
-              width,
-              height,
-              gross_weight,
-              net_weight,
-              category_name,
-              brand_name,
-              status,
-              be_new,
-              be_hot,
-              gallery,
-              brief,
-              pic_url,
-              share_url,
-              add_time,
-              update_time,
-              be_deleted
+        select *
         from goods where id = #{id}
     </select>
 

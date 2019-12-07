@@ -28,4 +28,11 @@ public interface IGoodsService {
      */
     void addGoods(Goods good);
     void deleteGoodsbyId(Integer id);
+
+    /**
+     * 获取某个商品
+     * @param id
+     * @return
+     */
+    Goods findGoodsById(Integer id);
 }

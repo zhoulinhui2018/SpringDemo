@@ -34,13 +34,19 @@ public interface GoodsMapper {
     int updateGoods(Goods goods);
 
 
-
     /**
      * 新建商品
-     * @param good
+     * @param goods
      * @return
      */
-    void addGoods(Goods good);
+    void addGoods(Goods goods);
 
     void deleteGoodsbyId(Integer id);
+
+    /**
+     * 获取某商品的信息
+     * @param id
+     * @return goods
+     */
+    Goods findGoodsById(Integer id);
 }

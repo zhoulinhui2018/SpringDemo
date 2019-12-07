@@ -44,4 +44,18 @@ public class GoodController {
 
     @DeleteMapping("/goods/{id}")
     public void deleteGoodsbyId(Integer id){goodsService.deleteGoodsbyId(id);}
+
+    /**
+     * @Description: 获取分类和品牌
+     * @Param: Integer id
+     * @return: Goods
+     * @Author: Zhang Yaqing
+     * @Date: 2019/12/6
+     */
+    @GetMapping("/goods/{id}")
+    public Goods findGoodsById(Integer id){
+        Goods goods=goodsService.findGoodsById(id);
+        return goods;
+    }
+
 }

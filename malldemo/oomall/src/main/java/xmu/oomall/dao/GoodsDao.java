@@ -62,5 +62,14 @@ public class GoodsDao {
     public void deleteGoodsById(Integer id){goodsMapper.deleteGoodsbyId(id);}
 
 
+    /**
+     * 获取某个商品详细信息
+     * @param id
+     * @return
+     */
+    public Goods findGoodsById(Integer id){
+        Goods goods=goodsMapper.findGoodsById(id);
+        return goods;
+    }
 
 }
