@@ -18,7 +18,7 @@ public class GoodControllerTest {
 
     @Test
     public void findAllGoodsTest() {
-        List<Goods> goodsList = goodController.getAllGoods();
+        List<Goods> goodsList = (List<Goods>) goodController.list();
         for (int i = 0; i < goodsList.size(); i++) {
             Goods good= goodsList.get(i);
             System.out.println(good);
@@ -36,7 +36,7 @@ public class GoodControllerTest {
         newgood.setBrandId(100001);
         newgood.setGoodsCategoryId("100001");
 
-        goodController.addNewGoods(newgood);
+        goodController.create(newgood);
         System.out.println("插入数据成功");
     }
 
@@ -47,7 +47,7 @@ public class GoodControllerTest {
         newgood.setId(300001);
         newgood.setName("大衣");
 
-        goodController.deleteGoodsbyId(newgood);
+        goodController.delete(newgood);
     }
 
 }

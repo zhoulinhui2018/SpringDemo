@@ -1,9 +1,12 @@
 package xmu.oomall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import xmu.oomall.domain.coupon.CouponRule;
 import xmu.oomall.domain.coupon.CouponRulePo;
 import xmu.oomall.domain.coupon.Coupon;
+
+import java.util.List;
 
 /**
  * @Author: Ming Qiu
@@ -13,20 +16,39 @@ import xmu.oomall.domain.coupon.Coupon;
  **/
 
 @Mapper
+@Service
 public interface CouponMapper {
-    /**
-     * 用id找一张优惠卷
-     * @param id 一张优惠卷id
-     * @return 优惠卷
-     */
-    Coupon findCouponById(Integer id);
 
     /**
      * 用id找优惠卷规则
      * @param id 优惠卷规则id
      * @return 优惠
      */
-    CouponRulePo findCouponRuleById(Integer id);
+    CouponRule findCouponRuleById(Integer id);
 
+    /**
+     * 管理员增加优惠券
+     * @param couponRule
+     */
     void addCouponRule(CouponRule couponRule);
+
+    /**
+     * 获取优惠劵列表
+     * @return List<CouponRule>
+     */
+    List<CouponRule> getCouponList();
+
+    /**
+     * 删除优惠券
+     * @param id
+     * @return
+     */
+    Integer deleteCouponRuleById(Integer id);
+
+    /**
+     * 更新优惠券信息
+     * @param couponRule
+     * @return
+     */
+    Integer updateCouponRuleById(CouponRule couponRule);
 }

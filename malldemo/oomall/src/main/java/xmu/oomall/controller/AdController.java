@@ -1,4 +1,5 @@
 package xmu.oomall.controller;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import io.netty.util.internal.StringUtil;
@@ -84,8 +85,6 @@ public class AdController {
         return ResponseUtil.ok(newAd);
     }
 
-
-
     /**
     * @Description: 管理员删除广告
     * @Param: [id]
@@ -93,6 +92,8 @@ public class AdController {
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
+
+
     @DeleteMapping("/ads/{id}")
     public Object delete(@RequestBody Ad ad){
         Integer id=ad.getId();

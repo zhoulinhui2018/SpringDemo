@@ -26,7 +26,7 @@ public interface ICouponService {
      * @param id
      * @return
      */
-   Integer updateCouponRuleById(Integer id);
+   Integer updateCouponRuleById(CouponRule couponRule);
 
     /**
      * 根据id删除CouponRule对象

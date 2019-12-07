@@ -8,9 +8,9 @@ import xmu.oomall.mapper.CouponMapper;
 import java.util.List;
 
 /**
- * @Author: Ming Qiu
+ * @Author: Xu Huangchao
  * @Description: 优惠卷的DAO
- * @Date: Created in 17:02 2019/11/5
+ * @Date: Created in 17:02 2019/12/7
  * @Modified By:
  **/
 
@@ -25,15 +25,20 @@ public class CouponDao {
 
 
     public List<CouponRule> getCouponList() {
-        List<CouponRule> cooupon
+        List<CouponRule> couponRuleList=couponMapper.getCouponList();
+        return couponRuleList;
     }
 
     public Integer deleteCouponRuleById(Integer id) {
+        return couponMapper.deleteCouponRuleById(id);
     }
 
-    public Integer updateCouponRuleById(Integer id) {
+    public Integer updateCouponRuleById(CouponRule couponRule) {
+        return couponMapper.updateCouponRuleById(couponRule);
     }
 
     public CouponRule findCouponRuleById(Integer id) {
+        CouponRule couponRule=couponMapper.findCouponRuleById(id);
+        return couponRule;
     }
 }

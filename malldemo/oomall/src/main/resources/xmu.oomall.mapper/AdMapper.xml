@@ -46,6 +46,14 @@
             <if test="name!=null">name=#{name},</if>
             <if test="link!=null">link=#{link},</if>
             <if test="content!=null">content=#{content},</if>
+            <if test="picUrl!=null">picUrl=#{picUrl},</if>
+            <if test="isDefault!=null">isDefault=#{isDefault},</if>
+            <if test="isEnabled!=null">isEnabled=#{isEnabled},</if>
+            <if test="startTime!=null">startTime=#{startTime},</if>
+            <if test="endTime!=null">endTime=#{endTime},</if>
+            <if test="gmtCreate!=null">gmtCreate=#{gmtCreate},</if>
+            <if test="gmtModified!=null">gmtModified=#{gmtModified},</if>
+            <if test="isDeleted!=null">isDeleted=#{isDeleted},</if>
         </trim>
         WHERE id=#{id}
     </update>

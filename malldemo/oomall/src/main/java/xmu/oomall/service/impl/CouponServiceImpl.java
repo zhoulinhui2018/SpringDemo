@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xmu.oomall.dao.CouponDao;
+import xmu.oomall.domain.coupon.Coupon;
 import xmu.oomall.domain.coupon.CouponRule;
 import xmu.oomall.service.ICouponService;
 
@@ -27,8 +28,8 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public Integer updateCouponRuleById(Integer id) {
-        return couponDao.updateCouponRuleById(id);
+    public Integer updateCouponRuleById(CouponRule couponRule) {
+        return couponDao.updateCouponRuleById(couponRule);
     }
 
     @Override

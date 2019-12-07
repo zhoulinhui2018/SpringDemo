@@ -47,17 +47,21 @@ public class AdControllerTest {
 
     @Test
     public void test1(){
-        Ad ad= (Ad) adController.read(1);
-        System.out.println("ad name"+ad.getName());
-        System.out.println("ad content"+ad.getContent());
+        Object object= adController.read(1);
+        System.out.println(object.toString());
     }
 
     @Test
     public void getAllAdsTest(){
-        Object object=adController.list();
-        System.out.println(object.toString());
+        List<Ad> allAds = (List<Ad>) adController.list();
+        for (int i = 0; i < allAds.size(); i++) {
+            Ad ad =  allAds.get(i);
+            System.out.println(ad);
+        }
     }
-
+    /*
+    由于参数变成了Object 但是强制类型转换不成功，所以这里有问题~~
+     */
     @Rollback(false)
     @Test
     public void deleteAdbyIdTest(){
