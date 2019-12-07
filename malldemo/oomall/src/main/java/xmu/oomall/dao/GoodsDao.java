@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.domain.goods.Goods;
-import xmu.oomall.domain.goods.Product;
-import xmu.oomall.domain.goods.Promotion;
-import xmu.oomall.domain.goods.PromotionPo;
+import xmu.oomall.domain.goods.*;
 import xmu.oomall.mapper.GoodsMapper;
 import xmu.oomall.util.Config;
 
@@ -72,4 +69,24 @@ public class GoodsDao {
         return goods;
     }
 
+    /**
+     * 获取商品分类列表
+     * @param
+     * @return List<GoodsCategory>
+     */
+    public List<GoodsCategory> getAllGoodsCategories()
+    {
+        List<GoodsCategory> AllGoodsCategory=goodsMapper.getAllGoodsCategories();
+        return AllGoodsCategory;
+    }
+
+    /**
+     * 新建商品分类
+     * @param goodsCategory
+     * @return
+     */
+    public void addNewCategory(GoodsCategory goodsCategory)
+    {
+        goodsMapper.addNewCategory(goodsCategory);
+    }
 }

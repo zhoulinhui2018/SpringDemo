@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.dao.GoodsDao;
 import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.service.IGoodsService;
 
 import java.util.List;
@@ -39,4 +40,16 @@ public class GoodsServiceImpl implements IGoodsService {
         return goods;
     }
 
+    @Override
+    public List<GoodsCategory> getAllGoodsCategories()
+    {
+        List<GoodsCategory> AllGoodsCategories=goodsDao.getAllGoodsCategories();
+        return AllGoodsCategories;
+    }
+
+    @Override
+    public void addNewCategory(GoodsCategory goodsCategory)
+    {
+        goodsDao.addNewCategory(goodsCategory);
+    }
 }

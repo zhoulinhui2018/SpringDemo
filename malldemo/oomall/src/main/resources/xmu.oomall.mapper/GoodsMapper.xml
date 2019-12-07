@@ -92,4 +92,18 @@
     <delete id="deleteGoodsbyId" parameterType="Integer">
         delete from goods where id=#{id};
     </delete>
+
+    <select id="getAllGoodsCategories" resultType="GoodsCategory">
+        select *
+        from goods_category;
+    </select>
+
+    <insert id="addNewCategory" parameterType="GoodsCategory">
+        insert into goods_category
+        values (
+        #{id},#{name},#{pid},#{gmtCreate}, #{gmtModified},#{beDelete}
+        )
+    </insert>
+
+
 </mapper>

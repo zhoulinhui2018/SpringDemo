@@ -3,6 +3,7 @@ package xmu.oomall.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.domain.goods.Product;
 import xmu.oomall.domain.goods.PromotionPo;
 
@@ -41,6 +42,11 @@ public interface GoodsMapper {
      */
     void addGoods(Goods goods);
 
+    /**
+     * 删除某商品
+     * @param id
+     * @return
+     */
     void deleteGoodsbyId(Integer id);
 
     /**
@@ -49,4 +55,20 @@ public interface GoodsMapper {
      * @return goods
      */
     Goods findGoodsById(Integer id);
+
+
+    /**
+     * 获取商品分类列表
+     * @param
+     * @return List<GoodsCategory>
+     */
+    List<GoodsCategory> getAllGoodsCategories();
+
+    /**
+     * 获取商品分类列表
+     * @param goodsCategory
+     * @return
+     */
+    void addNewCategory(GoodsCategory goodsCategory);
+
 }
