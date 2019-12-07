@@ -13,4 +13,17 @@ public interface IGroupOnRuleService {
     * @Date: 2019/12/6
     */
     public void add(GroupOnRule groupOnRule);
+
+    /**
+    * @Description: 查询单张优惠券
+    * @Param: [id]
+    * @return: xmu.oomall.domain.goods.GroupOnRule
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7
+    */
+    public GroupOnRule findById(Integer id);
+
+    public int update(GroupOnRule groupOnRule);
+
+    public int delete(GroupOnRule groupOnRule);
 }

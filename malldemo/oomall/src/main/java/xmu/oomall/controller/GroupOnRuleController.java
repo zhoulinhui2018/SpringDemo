@@ -1,10 +1,7 @@
 package xmu.oomall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import xmu.oomall.controller.vo.OrderSubmitVo;
+import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.goods.GroupOnRule;
 import xmu.oomall.service.impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
@@ -15,8 +12,56 @@ public class GroupOnRuleController {
     @Autowired
     private GroupOnRuleService groupOnRuleService;
 
+    /**
+    * @Description: 管理员新增优惠券
+    * @Param: [groupOnRule]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7
+    */
+    @PostMapping("/grouponRules")
     public Object create(@RequestBody GroupOnRule groupOnRule){
         groupOnRuleService.add(groupOnRule);
+        return ResponseUtil.ok(groupOnRule);
+    }
+
+    /**
+    * @Description: 管理员查看优惠券详情
+    * @Param: [id]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7
+    */
+    @GetMapping("/grouponRules/{id}")
+    public Object detail(@PathVariable Integer id){
+        GroupOnRule groupOnRule = groupOnRuleService.findById(id);
+        return ResponseUtil.ok(groupOnRule);
+    }
+
+    /** 
+    * @Description: 管理员修改团购信息 
+    * @Param: [id, groupOnRule] 
+    * @return: java.lang.Object 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7 
+    */ 
+    @PutMapping("/grouponRules/{id}")
+    public Object update(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
+        groupOnRuleService.update(groupOnRule);
+        return ResponseUtil.ok(groupOnRule);
+    }
+
+
+    /**
+    * @Description: 管理员删除团购
+    * @Param: [id, groupOnRule]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7
+    */
+    @DeleteMapping("/grouponRules/{id}")
+    public Object delete(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
+        groupOnRuleService.delete(groupOnRule);
         return ResponseUtil.ok(groupOnRule);
     }
 }

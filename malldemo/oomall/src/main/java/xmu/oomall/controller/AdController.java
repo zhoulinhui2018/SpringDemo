@@ -1,14 +1,8 @@
 package xmu.oomall.controller;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.Ad;
-import xmu.oomall.service.IAdService;
 import xmu.oomall.service.impl.AdService;
 import xmu.oomall.util.ResponseUtil;
 
@@ -47,11 +41,25 @@ public class AdController {
         return allAds;
     }
 
+    /**
+    * @Description: 管理员修改广告信息
+    * @Param: [newAd]
+    * @return: void
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7
+    */
     @PutMapping("/ads/{id}")
     public void  updateAd(Ad newAd) {
         adService.updateAdById(newAd);
     }
 
+    /**
+    * @Description: 管理员删除广告
+    * @Param: [id]
+    * @return: void
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/7
+    */
     @DeleteMapping("/ads/{id}")
     public void deleteAdbyId(Integer id){
         adService.deleteAdbyId(id);

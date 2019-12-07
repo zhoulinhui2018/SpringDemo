@@ -15,4 +15,16 @@ public class GroupOnDao {
         System.out.println("id "+String.valueOf(id));
         return groupOnRule;
     }
+
+    public GroupOnRule findById(Integer id){
+        return groupOnRuleMapper.findGroupOnRuleById(id);
+    }
+
+    public int update(GroupOnRule groupOnRule){
+        return groupOnRuleMapper.updateById(groupOnRule);
+    }
+
+    public int delete(GroupOnRule groupOnRule){
+        return groupOnRuleMapper.delete(groupOnRule);
+    }
 }
