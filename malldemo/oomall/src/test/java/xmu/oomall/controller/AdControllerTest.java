@@ -47,7 +47,7 @@ public class AdControllerTest {
 
     @Test
     public void test1(){
-        Ad ad=adController.getAdDetail(1);
+        Ad ad= (Ad) adController.getAdDetail(1);
         System.out.println("ad name"+ad.getName());
         System.out.println("ad content"+ad.getContent());
     }
@@ -64,7 +64,15 @@ public class AdControllerTest {
     @Rollback(false)
     @Test
     public void deleteAdbyIdTest(){
-        adController.deleteAdbyId(200001);
+        Ad ad=new Ad();
+        ad.setId(300002);
+        ad.setLink("test");
+        ad.setName("棉袄test");
+        ad.setContent("棉袄大促销了");
+        ad.setBeDefault(true);
+        ad.setStartTime(LocalDateTime.now());
+        ad.setEndTime(LocalDateTime.now());
+        adController.deleteAdbyId(ad);
         System.out.println("删除成功");
     }
 

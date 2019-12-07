@@ -1,19 +1,15 @@
 package xmu.oomall.service.impl;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.OoMallApplication;
-import xmu.oomall.domain.goods.Coupon;
-import xmu.oomall.service.CouponService;
-
-import static org.junit.jupiter.api.Assertions.*;
+import xmu.oomall.service.ICouponService;
 
 @SpringBootTest(classes = OoMallApplication.class)
 class CouponServiceImplTest {
 
     @Autowired
-    private CouponService couponService;
+    private ICouponService couponService;
 
 //    @Test
 //    public void findCouponById1(){

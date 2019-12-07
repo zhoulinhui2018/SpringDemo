@@ -1,15 +1,8 @@
 package xmu.oomall.dao;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.OoMallApplication;
-import xmu.oomall.domain.coupon.CashOffStrategy;
-import xmu.oomall.domain.goods.Coupon;
-
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = OoMallApplication.class)
 class CouponDaoTest {

@@ -43,7 +43,11 @@ public class GoodControllerTest {
     @Rollback(false)
     @Test
     public void deleteGoodsbyId(){
-        goodController.deleteGoodsbyId(100001);
+        Goods newgood=new Goods();
+        newgood.setId(300001);
+        newgood.setName("大衣");
+
+        goodController.deleteGoodsbyId(newgood);
     }
 
 }

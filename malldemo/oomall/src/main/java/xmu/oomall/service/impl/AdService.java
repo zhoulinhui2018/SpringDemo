@@ -31,13 +31,15 @@ public class AdService implements IAdService {
     }
 
     @Override
-    public void deleteAdbyId(Integer id){
+    public Integer deleteAdbyId(Integer id){
         adDao.deleteAdbyId(id);
+        return 1;
     }
 
     @Override
-    public void updateAdById(Ad newAd)
+    public Integer updateAdById(Ad newAd)
     {
         adDao.updateAdById(newAd);
+        return 1;
     }
 }

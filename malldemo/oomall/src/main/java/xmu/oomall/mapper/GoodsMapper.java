@@ -40,7 +40,7 @@ public interface GoodsMapper {
      * @param good
      * @return
      */
-    void addGoods(Goods good);
+    Integer addGoods(Goods good);
 
-    void deleteGoodsbyId(Integer id);
+    Integer deleteGoodsbyId(Integer id);
 }

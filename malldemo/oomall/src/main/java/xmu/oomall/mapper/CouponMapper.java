@@ -1,8 +1,9 @@
 package xmu.oomall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import xmu.oomall.domain.coupon.CouponRule;
 import xmu.oomall.domain.coupon.CouponRulePo;
-import xmu.oomall.domain.goods.Coupon;
+import xmu.oomall.domain.coupon.Coupon;
 
 /**
  * @Author: Ming Qiu
@@ -26,4 +27,6 @@ public interface CouponMapper {
      * @return 优惠
      */
     CouponRulePo findCouponRuleById(Integer id);
+
+    void addCouponRule(CouponRule couponRule);
 }

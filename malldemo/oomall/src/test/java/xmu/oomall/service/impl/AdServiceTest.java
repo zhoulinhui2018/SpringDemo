@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.Ad;
 
@@ -37,7 +38,7 @@ public class AdServiceTest {
 
     @Test
     public void deleteAdbyIdTest(){
-        adService.deleteAdbyId(200004);
+        adService.deleteAdbyId(300002);
     }
 
 }

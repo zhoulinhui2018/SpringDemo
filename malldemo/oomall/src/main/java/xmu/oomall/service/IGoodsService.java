@@ -26,6 +26,6 @@ public interface IGoodsService {
      * @param good
      * @return
      */
-    void addGoods(Goods good);
-    void deleteGoodsbyId(Integer id);
+    Integer addGoods(Goods good);
+    Integer deleteGoodsbyId(Integer id);
 }

@@ -1,10 +1,9 @@
 package xmu.oomall.domain.order;
 
 import org.apache.ibatis.type.Alias;
-import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xmu.oomall.domain.goods.Coupon;
+import xmu.oomall.domain.coupon.Coupon;
 import xmu.oomall.domain.goods.Promotion;
 import xmu.oomall.domain.payment.Payment;
 import xmu.oomall.domain.user.Address;
@@ -13,7 +12,6 @@ import xmu.oomall.util.Common;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

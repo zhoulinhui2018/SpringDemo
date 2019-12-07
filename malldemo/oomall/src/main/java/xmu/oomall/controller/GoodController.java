@@ -15,6 +15,7 @@ public class GoodController {
     @Autowired
     private GoodsServiceImpl goodsService;
 
+
     /**
      * @Description: 用户获得商品列表
      * @Param: []
@@ -23,7 +24,7 @@ public class GoodController {
      * @Date: 2019/12/6
      */
     @GetMapping("/goods")
-    public List<Goods> getAllGoods()
+    public Object list()
     {
        List<Goods> AllGoods=goodsService.getGoodsList();
        return AllGoods;
@@ -37,11 +38,14 @@ public class GoodController {
      * @Date: 2019/12/6
      */
     @PostMapping("/goods")
-    public void addNewGoods(@RequestBody Goods good)
+    public Object create(@RequestBody Goods goods)
     {
-        goodsService.addGoods(good);
+        return goodsService.addGoods(goods);
     }
 
     @DeleteMapping("/goods/{id}")
-    public void deleteGoodsbyId(Integer id){goodsService.deleteGoodsbyId(id);}
+    public Object delete(@RequestBody Goods goods){
+        Integer id=goods.getId();
+        return goodsService.deleteGoodsbyId(id);
+    }
 }

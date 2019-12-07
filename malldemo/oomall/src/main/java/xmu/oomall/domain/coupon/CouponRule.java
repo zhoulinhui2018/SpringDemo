@@ -1,4 +1,4 @@
-package xmu.oomall.domain.goods;
+package xmu.oomall.domain.coupon;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class CouponRule {
     /**
      * 优惠券规则名称
      */
-    private Integer name;
+    private String name;
     /**
      * 优惠券简介
      */
@@ -104,7 +104,7 @@ public class CouponRule {
         this.id = id;
     }
 
-    public Integer getName() {
+    public String getName() {
         return name;
     }
 
@@ -212,7 +212,7 @@ public class CouponRule {
         this.beDelete = beDelete;
     }
 
-    public void setName(Integer name) {
+    public void setName(String name) {
         this.name = name;
     }
 }
