@@ -31,7 +31,7 @@ public class GroupOnRule {
     /*
     * 团购等级（满多少人组团多少折扣）
     * */
-    private String grouponLevelStragety;
+    private String grouponLevelStrategy;
     /*
     *团购产品id
     * */
@@ -47,7 +47,7 @@ public class GroupOnRule {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", statusCode=" + statusCode +
-                ", grouponLevelStragety='" + grouponLevelStragety + '\'' +
+                ", grouponLevelStrategy='" + grouponLevelStrategy + '\'' +
                 ", productId=" + productId +
                 '}';
     }
@@ -121,12 +121,12 @@ public class GroupOnRule {
         this.statusCode = statusCode;
     }
 
-    public String getGrouponLevelStragety() {
-        return grouponLevelStragety;
+    public String getGrouponLevelStrategy() {
+        return grouponLevelStrategy;
     }
 
-    public void setGrouponLevelStragety(String grouponLevelStragety) {
-        this.grouponLevelStragety = grouponLevelStragety;
+    public void setGrouponLevelStrategy(String grouponLevelStrategy) {
+        this.grouponLevelStrategy = grouponLevelStrategy;
     }
 
     public Integer getProductId() {

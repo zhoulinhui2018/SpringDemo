@@ -16,4 +16,20 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         groupOnDao.add(groupOnRule);
     }
 
+    @Override
+    public GroupOnRule findById(Integer id) {
+        return groupOnDao.findById(id);
+    }
+
+    @Override
+    public int delete(GroupOnRule groupOnRule) {
+        return groupOnDao.delete(groupOnRule);
+    }
+
+    @Override
+    public int update(GroupOnRule groupOnRule) {
+        return groupOnDao.update(groupOnRule);
+    }
+
+
 }
