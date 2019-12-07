@@ -6,6 +6,8 @@ import xmu.oomall.domain.goods.GroupOnRule;
 import xmu.oomall.service.impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("")
 public class GroupOnRuleController {
@@ -63,5 +65,16 @@ public class GroupOnRuleController {
     public Object delete(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
         groupOnRuleService.delete(groupOnRule);
         return ResponseUtil.ok(groupOnRule);
+    }
+
+
+    @GetMapping("/goods/{id}/grouponRules")
+    public Object list(@PathVariable Integer id, String goodsId,
+                       @RequestParam(defaultValue = "1") Integer page,
+                       @RequestParam(defaultValue = "10") Integer limit,
+                       @RequestParam(defaultValue = "add_time") String sort,
+                       @RequestParam(defaultValue = "desc") String order) {
+        List<GroupOnRule> rulesList = groupOnRuleService.searchGrouponGoods(Integer.valueOf(goodsId));
+        return ResponseUtil.ok(rulesList);
     }
 }

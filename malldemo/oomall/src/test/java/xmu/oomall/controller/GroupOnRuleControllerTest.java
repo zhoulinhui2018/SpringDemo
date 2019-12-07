@@ -118,4 +118,10 @@ public class GroupOnRuleControllerTest {
         groupOnRule.setId(100021);
         System.out.println(groupOnRuleController.delete(100001,groupOnRule));
     }
+
+    @Test
+    public void searchGrouponGoodsTest(){
+        Object list = groupOnRuleController.list(10, "100001", 5, 10, "lal", "jfj");
+        System.out.println(list);
+    }
 }

@@ -3,6 +3,8 @@ package xmu.oomall.service;
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.GroupOnRule;
 
+import java.util.List;
+
 @Service
 public interface IGroupOnRuleService {
     /**
@@ -26,4 +28,6 @@ public interface IGroupOnRuleService {
     public int update(GroupOnRule groupOnRule);
 
     public int delete(GroupOnRule groupOnRule);
+
+    public List<GroupOnRule> searchGrouponGoods(Integer goodsId);
 }
