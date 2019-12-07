@@ -89,4 +89,46 @@ public class GoodsDao {
     {
         goodsMapper.addNewCategory(goodsCategory);
     }
+
+    /**
+     * 获取所有一级商品分类
+     * @param
+     * @return List<GoodsCategory>
+     */
+    public List<GoodsCategory> getFirstLevelCategories()
+    {
+        List<GoodsCategory> FirstLevelCategories=goodsMapper.getFirstLevelCategories();
+        return FirstLevelCategories;
+    }
+
+    /**
+     * 根据id获取某分类
+     * @param
+     * @return GoodsCategory
+     */
+    public GoodsCategory getCategoryById(Integer id)
+    {
+        GoodsCategory goodsCategory=goodsMapper.getCategoryById(id);
+        return goodsCategory;
+    }
+
+    /**
+     * 修改某分类
+     * @param goodsCategory
+     * @return
+     */
+    public void updateCategory(GoodsCategory goodsCategory)
+    {
+        goodsMapper.updateCategory(goodsCategory);
+    }
+
+    /**
+     * 删除某个分类
+     * @param id
+     * @return
+     */
+    public void deleteCategoryById(Integer id)
+    {
+        goodsMapper.deleteCategoryById(id);
+    }
 }
