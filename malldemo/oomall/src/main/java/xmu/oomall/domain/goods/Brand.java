@@ -78,7 +78,7 @@ public class Brand {
         this.describe = describe;
     }
 
-    public String getPicUrl() {
+    public String getpicUrl() {
         return picUrl;
     }
 
