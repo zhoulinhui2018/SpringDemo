@@ -42,23 +42,20 @@ public class AdControllerTest {
         newAd.setName("团购");
         newAd.setLink("www");
         newAd.setContent("降价团购活动");
-        adController.updateAd(newAd);
+        adController.update(newAd);
     }
 
     @Test
     public void test1(){
-        Ad ad= (Ad) adController.getAdDetail(1);
+        Ad ad= (Ad) adController.read(1);
         System.out.println("ad name"+ad.getName());
         System.out.println("ad content"+ad.getContent());
     }
 
     @Test
     public void getAllAdsTest(){
-        List<Ad> allAds = adController.getAllAds();
-        for (int i = 0; i < allAds.size(); i++) {
-            Ad ad =  allAds.get(i);
-            System.out.println(ad);
-        }
+        Object object=adController.list();
+        System.out.println(object.toString());
     }
 
     @Rollback(false)
@@ -72,7 +69,7 @@ public class AdControllerTest {
         ad.setBeDefault(true);
         ad.setStartTime(LocalDateTime.now());
         ad.setEndTime(LocalDateTime.now());
-        adController.deleteAdbyId(ad);
+        adController.delete(ad);
         System.out.println("删除成功");
     }
 
@@ -96,7 +93,7 @@ public class AdControllerTest {
 //                .andReturn().getResponse().getContentAsString();
 
 
-        adController.addAds(ad);
+        adController.create(ad);
         System.out.println("插入成功");
     }
 
