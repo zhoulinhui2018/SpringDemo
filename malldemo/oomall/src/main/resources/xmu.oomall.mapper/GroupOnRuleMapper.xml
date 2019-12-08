@@ -46,37 +46,12 @@
         </trim>
         where id=#{id}
     </update>
-<!--    <update id="updateById" parameterType="GroupOnRule">-->
-<!--        update groupon_rule-->
-<!--        <set>-->
-<!--            <if test="gmtCreate != null">-->
-<!--                gmt_create = #{gmtCreate},-->
-<!--            </if>-->
-<!--            <if test="gmtModified != null">-->
-<!--                gmt_modified = #{gmtModified},-->
-<!--            </if>-->
-<!--            <if test="beDeleted != null">-->
-<!--                is_deleted = #{beDeleted},-->
-<!--            </if>-->
-<!--            <if test="startTime != null">-->
-<!--                start_time = #{startTime},-->
-<!--            </if>-->
-<!--            <if test="endTime != null">-->
-<!--                end_time = #{endTime},-->
-<!--            </if>-->
-<!--            <if test="statusCode != null">-->
-<!--                status = #{statusCode},-->
-<!--            </if>-->
-<!--            <if test="grouponLevelStrategy != null">-->
-<!--                groupon_level_stragety=#{grouponLevelStrategy}-->
-<!--            </if>-->
-<!--            <if test="productId != null">-->
-<!--                goods_id=#{productId}-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        where id = #{id}-->
-<!--    </update>-->
 
+    <select id="searchGrouponGoods" resultType="GroupOnRule" parameterType="Integer">
+        select *
+        from groupon_rule
+        where goods_id=#{goodsId}
+    </select>
 
     <insert id="add" parameterType="GroupOnRule" useGeneratedKeys="true" keyProperty="id">
         insert into groupon_rule (gmt_create, gmt_modified, is_deleted,

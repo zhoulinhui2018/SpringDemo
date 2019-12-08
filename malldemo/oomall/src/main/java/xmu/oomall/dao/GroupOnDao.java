@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import xmu.oomall.domain.goods.GroupOnRule;
 import xmu.oomall.mapper.GroupOnRuleMapper;
 
+import java.util.List;
+
 @Repository
 public class GroupOnDao {
     @Autowired
@@ -26,5 +28,9 @@ public class GroupOnDao {
 
     public int delete(GroupOnRule groupOnRule){
         return groupOnRuleMapper.delete(groupOnRule);
+    }
+
+    public List<GroupOnRule> searchGrouponGoods(Integer goodsId){
+        return groupOnRuleMapper.searchGrouponGoods(goodsId);
     }
 }
