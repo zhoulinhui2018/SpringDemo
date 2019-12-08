@@ -18,4 +18,5 @@ public interface AdMapper {
 
     public Integer addAds(Ad ad);
     public Integer updateAdById(Ad newAd);
+
 }

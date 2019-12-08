@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.coupon.CouponRule;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @SpringBootTest(classes = OoMallApplication.class)
@@ -30,11 +29,11 @@ public class CouponRuleControllerTest {
         couponRule.setBeginTime(LocalDateTime.now());
         couponRule.setEndTime(LocalDateTime.now());
         couponRule.setValidPeriod(60);
-        couponRule.setLimit(BigDecimal.valueOf(500));
+//        couponRule.setLimit(BigDecimal.valueOf(500));
         couponRule.setTotal(1000);
         couponRule.setGmtCreate(LocalDateTime.now());
         couponRule.setGmtModified(LocalDateTime.now());
-        couponRule.setBeDelete(false);
+//        couponRule.setBeDelete(false);
         couponController.create(couponRule);
         System.out.println("插入一条数据成功");
     }

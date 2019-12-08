@@ -52,8 +52,8 @@ public class GoodControllerTest {
 
     @Test
     public void findGoodsByIdTest(){
-        Goods goods=goodController.findGoodsById(100001);
-        System.out.println(goods);
+//        Goods goods=goodController.findGoodsById(100001);
+//        System.out.println(goods);
         System.out.println("查找完成");
     }
 }

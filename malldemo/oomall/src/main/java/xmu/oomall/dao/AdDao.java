@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import xmu.oomall.domain.Ad;
 import xmu.oomall.mapper.AdMapper;
 
+import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -39,5 +41,18 @@ public class AdDao {
     {
        return adMapper.updateAdById(newAd);
 
+    }
+
+    public List<Ad> findUserAds(){
+        List<Ad> allAds = adMapper.findAllAds();
+        LocalDateTime now = LocalDateTime.now();
+        Iterator<Ad> iterator = allAds.iterator();
+        while (iterator.hasNext()){
+            Ad next = iterator.next();
+            if (now.isAfter(next.getEndTime()) || now.isBefore(next.getStartTime())){
+                iterator.remove();
+            }
+        }
+        return allAds;
     }
 }
