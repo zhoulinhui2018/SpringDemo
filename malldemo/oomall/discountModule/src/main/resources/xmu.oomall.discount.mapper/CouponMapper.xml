@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
+
+    <select id="findCouponById" parameterType="Integer" resultType="coupon">
+            select *
+                    from coupon where id = #{id}
+    </select>
+
+    <select id="findCouponRuleById" parameterType="Integer" resultType="couponRule">
+            select *
+                    from coupon_rule where id = #{id}
+    </select>
+
+
+    <insert id="addCouponRule" parameterType="couponRule" useGeneratedKeys="true" keyProperty="id">
+        insert into coupon_rule
+        values ( #{name}, #{brief},
+                #{beginTime},#{endTime},#{picUrl},
+                #{validPeriod},#{discount},#{limit},
+                #{total},#{goodsList1},#{goodsList2},
+                #{gmtCreate}, #{gmtModified},#{beDelete})
+    </insert>
+
+    <select id="getCouponList" resultType="couponRule">
+        select *
+        from coupon_rule;
+    </select>
+
+    <delete id="deleteCouponRuleById" parameterType="Integer">
+        delete from coupon_rule where id = #{id};
+    </delete>
+
+    <update id="updateCouponRuleById" parameterType="couponRule" >
+        update coupon_rule
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null">name=#{name},</if>
+            <if test="brief!=null">brief=#{brief},</if>
+            <if test="beginTime!=null">beginTime=#{beginTime},</if>
+            <if test="endTime!=null">endTime=#{endTime},</if>
+            <if test="picUrl!=null">picUrl=#{picUrl},</if>
+            <if test="validPeriod!=null">validPeriod=#{validPeriod},</if>
+            <if test="discount!=null">discount=#{discount},</if>
+            <if test="limit!=null">limit=#{limit},</if>
+            <if test="total!=null">total=#{total},</if>
+            <if test="goodsList1!=null">goodsList1=#{goodsList1},</if>
+            <if test="goodsList2!=null">goodsList2=#{goodsList2},</if>
+            <if test="gmtCreate!=null">gmtCreate=#{gmtCreate},</if>
+            <if test="gmtModified!=null">gmtModified=#{gmtModified},</if>
+            <if test="beDelete!=null">beDelete=#{beDelete},</if>
+
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+</mapper>
