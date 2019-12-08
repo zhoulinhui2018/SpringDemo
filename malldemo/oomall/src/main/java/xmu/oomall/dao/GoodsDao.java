@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.domain.goods.Goods;
-import xmu.oomall.domain.goods.Product;
-import xmu.oomall.domain.goods.Promotion;
-import xmu.oomall.domain.goods.PromotionPo;
+import xmu.oomall.domain.goods.*;
 import xmu.oomall.mapper.GoodsMapper;
 import xmu.oomall.util.Config;
 
@@ -64,5 +61,76 @@ public class GoodsDao {
     }
 
 
+    /**
+     * 获取某个商品详细信息
+     * @param id
+     * @return
+     */
+    public Goods findGoodsById(Integer id){
+        Goods goods=goodsMapper.findGoodsById(id);
+        return goods;
+    }
 
+    /**
+     * 获取商品分类列表
+     * @param
+     * @return List<GoodsCategory>
+     */
+    public List<GoodsCategory> getAllGoodsCategories()
+    {
+        List<GoodsCategory> AllGoodsCategory=goodsMapper.getAllGoodsCategories();
+        return AllGoodsCategory;
+    }
+
+    /**
+     * 新建商品分类
+     * @param goodsCategory
+     * @return
+     */
+    public void addNewCategory(GoodsCategory goodsCategory)
+    {
+        goodsMapper.addNewCategory(goodsCategory);
+    }
+
+    /**
+     * 获取所有一级商品分类
+     * @param
+     * @return List<GoodsCategory>
+     */
+    public List<GoodsCategory> getFirstLevelCategories()
+    {
+        List<GoodsCategory> FirstLevelCategories=goodsMapper.getFirstLevelCategories();
+        return FirstLevelCategories;
+    }
+
+    /**
+     * 根据id获取某分类
+     * @param
+     * @return GoodsCategory
+     */
+    public GoodsCategory getCategoryById(Integer id)
+    {
+        GoodsCategory goodsCategory=goodsMapper.getCategoryById(id);
+        return goodsCategory;
+    }
+
+    /**
+     * 修改某分类
+     * @param goodsCategory
+     * @return
+     */
+    public void updateCategory(GoodsCategory goodsCategory)
+    {
+        goodsMapper.updateCategory(goodsCategory);
+    }
+
+    /**
+     * 删除某个分类
+     * @param id
+     * @return
+     */
+    public void deleteCategoryById(Integer id)
+    {
+        goodsMapper.deleteCategoryById(id);
+    }
 }

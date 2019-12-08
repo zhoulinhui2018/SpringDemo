@@ -35,4 +35,10 @@ public class GoodDaoTest {
         goodDao.addGoods(newgood);
         System.out.println("插入一条数据成功");
     }
+    @Test
+    public void findGoodsByIdTest()
+    {
+        Goods goods=goodDao.findGoodsById(300099);
+        System.out.println(goods);
+    }
 }
