@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/malldemo/.mvn/.mvn.iml" filepath="$PROJECT_DIR$/malldemo/.mvn/.mvn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Servlet/Servlet.iml" filepath="$PROJECT_DIR$/Servlet/Servlet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Servlet/src/main/main.iml" filepath="$PROJECT_DIR$/Servlet/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Servlet_Maven/src/main/main1.iml" filepath="$PROJECT_DIR$/Servlet_Maven/src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RestFulDemo/src/main/main2.iml" filepath="$PROJECT_DIR$/RestFulDemo/src/main/main2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo - MyBatis/src/main/main3.iml" filepath="$PROJECT_DIR$/demo - MyBatis/src/main/main3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/malldemo/oomall/src/main/main4.iml" filepath="$PROJECT_DIR$/malldemo/oomall/src/main/main4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/malldemo/litemall/src/main/main5.iml" filepath="$PROJECT_DIR$/malldemo/litemall/src/main/main5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/malldemo/oomall/src/test/test.iml" filepath="$PROJECT_DIR$/malldemo/oomall/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo - MyBatis/src/test/test1.iml" filepath="$PROJECT_DIR$/demo - MyBatis/src/test/test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RestFulDemo/src/test/test2.iml" filepath="$PROJECT_DIR$/RestFulDemo/src/test/test2.iml" />
+    </modules>
+  </component>
+</project>
