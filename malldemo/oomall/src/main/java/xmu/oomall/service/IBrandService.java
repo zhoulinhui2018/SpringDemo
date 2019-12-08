@@ -21,4 +21,6 @@ public interface IBrandService {
     public int deleteBrand(Brand newbrand);
 
     public Brand findBrandById(Integer id);
+
+    public List<Brand> getBrandList();
 }

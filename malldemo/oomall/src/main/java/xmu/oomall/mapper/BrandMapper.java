@@ -17,4 +17,11 @@ public interface BrandMapper {
     public int deleteBrand(Brand newbrand);
 
     public Brand findBrandById(Integer id);
+
+    /**
+     * 获取品牌列表
+     * @param
+     * @return 品牌列表
+     */
+    public List<Brand> getBrandList();
 }
