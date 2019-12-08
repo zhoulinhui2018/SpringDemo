@@ -51,12 +51,14 @@ public class GoodsDao {
      * @param good
      * @return
      */
-    public void addGoods(Goods good)
+    public Integer addGoods(Goods good)
     {
-        goodsMapper.addGoods(good);
+        return goodsMapper.addGoods(good);
     }
 
-    public void deleteGoodsById(Integer id){goodsMapper.deleteGoodsbyId(id);}
+    public Integer deleteGoodsById(Integer id){
+        return goodsMapper.deleteGoodsbyId(id);
+    }
 
 
     /**

@@ -31,12 +31,13 @@ public class AdDao {
         return allAds;
     }
 
-    public void deleteAdbyId(Integer id){
-        adMapper.deleteAdbyId(id);
+    public Integer deleteAdbyId(Integer id){
+       return adMapper.deleteAdbyId(id);
     }
 
-    public void updateAdById(Ad newAd)
+    public Integer updateAdById(Ad newAd)
     {
-        adMapper.updateAdById(newAd);
+       return adMapper.updateAdById(newAd);
+
     }
 }

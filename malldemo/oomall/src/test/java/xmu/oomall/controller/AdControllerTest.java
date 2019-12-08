@@ -42,29 +42,38 @@ public class AdControllerTest {
         newAd.setName("团购");
         newAd.setLink("www");
         newAd.setContent("降价团购活动");
-        adController.updateAd(newAd);
+        adController.update(newAd);
     }
 
     @Test
     public void test1(){
-        Ad ad=adController.getAdDetail(100001);
-        System.out.println("ad name"+ad.getName());
-        System.out.println("ad content"+ad.getContent());
+        Object object= adController.read(1);
+        System.out.println(object.toString());
     }
 
     @Test
     public void getAllAdsTest(){
-        List<Ad> allAds = adController.getAllAds();
+        List<Ad> allAds = (List<Ad>) adController.list();
         for (int i = 0; i < allAds.size(); i++) {
             Ad ad =  allAds.get(i);
             System.out.println(ad);
         }
     }
-
+    /*
+    由于参数变成了Object 但是强制类型转换不成功，所以这里有问题~~
+     */
     @Rollback(false)
     @Test
     public void deleteAdbyIdTest(){
-        adController.deleteAdbyId(200001);
+        Ad ad=new Ad();
+        ad.setId(300002);
+        ad.setLink("test");
+        ad.setName("棉袄test");
+        ad.setContent("棉袄大促销了");
+        ad.setBeDefault(true);
+        ad.setStartTime(LocalDateTime.now());
+        ad.setEndTime(LocalDateTime.now());
+        adController.delete(ad);
         System.out.println("删除成功");
     }
 
@@ -88,7 +97,7 @@ public class AdControllerTest {
 //                .andReturn().getResponse().getContentAsString();
 
 
-        adController.addAds(ad);
+        adController.create(ad);
         System.out.println("插入成功");
     }
 

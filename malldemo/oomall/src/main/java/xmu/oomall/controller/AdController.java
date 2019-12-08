@@ -1,19 +1,43 @@
 package xmu.oomall.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.druid.support.json.JSONUtils;
+import io.netty.util.internal.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.Ad;
 import xmu.oomall.service.impl.AdService;
 import xmu.oomall.util.ResponseUtil;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("")
+@Validated
 public class AdController {
     @Autowired
     private AdService adService;
+
+    private Object validate(Ad newAd) {
+        String name=newAd.getName();
+        if(StringUtils.isEmpty(name))
+        {
+            return ResponseUtil.badArgument();
+        }
+        String content = newAd.getContent();
+        if (StringUtils.isEmpty(content)) {
+            return ResponseUtil.badArgument();
+        }
+        return null;
+    }
 
     /**
     * @Description: 用户获得按照时间排序的10条广告列表
@@ -23,9 +47,9 @@ public class AdController {
     * @Date: 2019/12/5
     */
     @GetMapping("/ads/{id}")
-    public Ad getAdDetail(Integer id){
+    public Object read(@NotNull Integer id){
         Ad adById = adService.findAdById(id);
-        return adById;
+        return  ResponseUtil.ok(adById);
     }
 
     /** 
@@ -36,7 +60,7 @@ public class AdController {
     * @Date: 2019/12/6 
     */ 
     @GetMapping("/admin/ads")
-    public List<Ad> getAllAds(){
+    public Object list(){
         List<Ad> allAds = adService.findAllAds();
         return allAds;
     }
@@ -49,8 +73,16 @@ public class AdController {
     * @Date: 2019/12/7
     */
     @PutMapping("/ads/{id}")
-    public void  updateAd(Ad newAd) {
-        adService.updateAdById(newAd);
+    public Object update(@RequestBody Ad newAd) {
+        Object error=validate(newAd);
+        if (error != null) {
+            return error;
+        }
+        if(adService.updateAdById(newAd)==0)
+        {
+            return ResponseUtil.updatedDataFailed();
+        }
+        return ResponseUtil.ok(newAd);
     }
 
     /**
@@ -60,9 +92,16 @@ public class AdController {
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
+
+
     @DeleteMapping("/ads/{id}")
-    public void deleteAdbyId(Integer id){
+    public Object delete(@RequestBody Ad ad){
+        Integer id=ad.getId();
+        if (id == null) {
+            return ResponseUtil.badArgument();
+        }
         adService.deleteAdbyId(id);
+        return ResponseUtil.ok();
     }
 
     /**
@@ -73,11 +112,11 @@ public class AdController {
     * @Date: 2019/12/5
     */
     @PostMapping("/ads")
-    public Object addAds(@RequestBody Ad ad) {
-//        Object error = validate(ad);
-//        if (error != null) {
-//            return error;
-//        }
+    public Object create(@RequestBody Ad ad) {
+      Object error = validate(ad);
+        if (error != null) {
+           return error;
+       }
         adService.addAds(ad);
         return ResponseUtil.ok(ad);
     }

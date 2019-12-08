@@ -26,7 +26,7 @@ public interface IAdService {
     */
     public List<Ad> findAllAds();
 
-    public void deleteAdbyId(Integer id);
+    public Integer deleteAdbyId(Integer id);
 
     public void addAds(Ad ad);
 
@@ -37,5 +37,5 @@ public interface IAdService {
      * @Author: Xu Huangchao
      * @Date: 2019/12/5
      */
-    public void updateAdById(Ad newAd);
+    public Integer updateAdById(Ad newAd);
 }

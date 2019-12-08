@@ -26,13 +26,15 @@ public class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
-    public void addGoods(Goods good)
+    public Integer addGoods(Goods good)
     {
-        goodsDao.addGoods(good);
+        return goodsDao.addGoods(good);
     }
 
     @Override
-    public void deleteGoodsbyId(Integer id){goodsDao.deleteGoodsById(id);}
+    public Integer deleteGoodsbyId(Integer id){
+        return goodsDao.deleteGoodsById(id);
+    }
 
     @Override
     public Goods findGoodsById(Integer id){

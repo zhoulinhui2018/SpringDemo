@@ -1,4 +1,4 @@
-package xmu.oomall.domain.goods;
+package xmu.oomall.domain.coupon;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

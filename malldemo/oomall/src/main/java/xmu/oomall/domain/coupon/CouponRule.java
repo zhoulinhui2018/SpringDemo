@@ -1,4 +1,4 @@
-package xmu.oomall.domain.goods;
+package xmu.oomall.domain.coupon;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class CouponRule {
     /**
      * 优惠券规则名称
      */
-    private Integer name;
+    private String name;
     /**
      * 优惠券简介
      */
@@ -32,7 +32,7 @@ public class CouponRule {
     /**
      * 优惠券规则的图片
      */
-    private String pciUrl;
+    private String picUrl;
     /**
      * 优惠券规则的有效期(即有效的天数)
      */
@@ -78,7 +78,7 @@ public class CouponRule {
                 ", name='" + name + '\'' +
                 ", beginTime=" + beginTime +
                 ", endTime=" + endTime +
-                ", pciUrl='" + pciUrl + '\'' +
+                ", pciUrl='" + picUrl + '\'' +
                 ", validPeriod=" + validPeriod +
                 ", discount=" + discount +
                 ", limit=" + limit +
@@ -87,7 +87,7 @@ public class CouponRule {
                 ", goodsList2='" + goodsList2 + '\'' +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", beDelete=" + beDelete +
+                ", beDeleted=" + beDelete +
                 '}';
     }
 
@@ -104,7 +104,7 @@ public class CouponRule {
         this.id = id;
     }
 
-    public Integer getName() {
+    public String getName() {
         return name;
     }
 
@@ -133,11 +133,11 @@ public class CouponRule {
     }
 
     public String getPciUrl() {
-        return pciUrl;
+        return picUrl;
     }
 
     public void setPciUrl(String pciUrl) {
-        this.pciUrl = pciUrl;
+        this.picUrl = pciUrl;
     }
 
     public Integer getValidPeriod() {
@@ -212,7 +212,9 @@ public class CouponRule {
         this.beDelete = beDelete;
     }
 
-    public void setName(Integer name) {
+    public void setName(String name) {
         this.name = name;
     }
+
+
 }

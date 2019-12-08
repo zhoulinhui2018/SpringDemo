@@ -6,6 +6,8 @@ import xmu.oomall.dao.GroupOnDao;
 import xmu.oomall.domain.goods.GroupOnRule;
 import xmu.oomall.service.IGroupOnRuleService;
 
+import java.util.List;
+
 @Service
 public class GroupOnRuleService implements IGroupOnRuleService {
     @Autowired
@@ -31,5 +33,8 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         return groupOnDao.update(groupOnRule);
     }
 
-
+    @Override
+    public List<GroupOnRule> searchGrouponGoods(Integer goodsId) {
+        return groupOnDao.searchGrouponGoods(goodsId);
+    }
 }
