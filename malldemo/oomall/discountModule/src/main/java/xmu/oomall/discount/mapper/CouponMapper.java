@@ -1,9 +1,11 @@
 package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: XuHuangchao
@@ -39,14 +41,20 @@ public interface CouponMapper {
      * @param id
      * @return
      */
-    Integer deleteCouponRuleById(Integer id);
+    int deleteCouponRuleById(Integer id);
 
     /**
      * 更新优惠券信息
      * @param couponRule
      * @return
      */
-    Integer updateCouponRuleById(CouponRule couponRule);
+    int updateCouponRuleById(CouponRule couponRule);
 
-    List<CouponRule> getCouponMyList(Integer userId);
+    List<Coupon> getCouponMyList(Integer userId);
+
+    Integer getProductId(Integer itemId);
+
+    Integer getGoodsId(Integer productId);
+
+    CouponRule getCouponRule(Integer couponRuleId);
 }

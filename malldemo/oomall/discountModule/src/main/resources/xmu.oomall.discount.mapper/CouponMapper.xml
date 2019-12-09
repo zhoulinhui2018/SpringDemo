@@ -48,9 +48,26 @@
         WHERE id=#{id}
     </update>
 
-    <select id="getCouponMyList" parameterType="Integer" resultType="couponRule">
+    <select id="getCouponMyList" parameterType="Integer" resultType="coupon">
         select *
         from coupon where user_id=#{userId};
     </select>
+
+    <select id="getProductId" parameterType="Integer" resultType="Integer">
+        select product_id
+        from cart_item where id=#{itemId};
+    </select>
+
+    <select id="getGoodsId" parameterType="Integer" resultType="Integer">
+        select goods_id
+        from product where id=#{productId};
+    </select>
+
+    <select id="getCouponRule" parameterType="Integer" resultType="couponRule">
+        select *
+        from coupon_rule where id=#{couponRuleId};
+    </select>
+
+
 
 </mapper>

@@ -1,10 +1,12 @@
 package xmu.oomall.discount.service.Impl;
 
 import org.springframework.stereotype.Service;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: Ming Qiu
@@ -27,7 +29,7 @@ public interface ICouponService {
      * @param couponRule
      * @return
      */
-   Integer updateCouponRuleById(CouponRule couponRule);
+   int updateCouponRuleById(CouponRule couponRule);
 
     /**
      * 根据id删除CouponRule对象
@@ -35,7 +37,7 @@ public interface ICouponService {
      * @return
      */
 
-   Integer deleteCouponRuleById(Integer id);
+   int deleteCouponRuleById(Integer id);
 
     /**
      * 获取CouponRule列表
@@ -49,5 +51,11 @@ public interface ICouponService {
      */
    void addCouponRule(CouponRule couponRule);
 
-    List<CouponRule> getCouponMyList(Integer userId);
+    List<Coupon> getCouponMyList(Integer userId);
+
+    Integer getProductId(Integer itemId);
+
+    Integer getGoodsId(Integer productId);
+
+    Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
 }
