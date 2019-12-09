@@ -52,6 +52,10 @@ public class AdDao {
                 iterator.remove();
             }
         }
+        if (allAds.size()==0){
+            List<Ad> DefaultAds=adMapper.findDefaultAds();
+            return DefaultAds;
+        }
         return allAds;
     }
 }

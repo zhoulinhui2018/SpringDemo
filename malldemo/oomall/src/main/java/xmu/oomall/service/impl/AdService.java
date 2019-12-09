@@ -44,8 +44,7 @@ public class AdService implements IAdService {
     }
 
     @Override
-    public int updateAdStartEndTime(Ad newAd)
-    {
-        return adDao.updateAdById(newAd);
+    public List<Ad> findUserAds() {
+        return adDao.findUserAds();
     }
 }

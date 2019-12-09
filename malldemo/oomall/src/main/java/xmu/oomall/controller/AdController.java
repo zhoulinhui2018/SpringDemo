@@ -32,6 +32,18 @@ public class AdController {
         return null;
     }
 
+    /**
+    * @Description: 用户端获得广告，获取在当前时间点可以播放的广告列表，如果为0，则返回默认广告
+    * @Param: []
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/9
+    */
+    @GetMapping("/ads")
+    public Object userFindAd(){
+        return adService.findUserAds();
+    }
+
 //    @GetMapping("/ads")
 //    public Object userFindAd(){
 //
