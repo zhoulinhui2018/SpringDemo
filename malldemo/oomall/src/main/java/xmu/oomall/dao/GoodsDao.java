@@ -29,7 +29,7 @@ public class GoodsDao {
     private Config config;
 
     public Integer updateGoodsbyId(Goods onegoods){
-        goodsMapper.updateGoods(onegoods);
+        goodsMapper.updateGoodsById(onegoods);
         return 1;
     }
     /**
@@ -54,7 +54,7 @@ public class GoodsDao {
     }
 
     public Integer deleteGoodsById(Integer id){
-        return goodsMapper.deleteGoodsbyId(id);
+        return goodsMapper.deleteGoodsById(id);
     }
 
 
