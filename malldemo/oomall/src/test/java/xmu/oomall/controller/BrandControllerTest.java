@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.goods.Brand;
 import xmu.oomall.util.JacksonUtil;
+import java.util.List;
+import java.lang.Object;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -33,7 +35,7 @@ public class BrandControllerTest {
     public void addbrand()
     {
         Brand newbrand=new Brand();
-        newbrand.setName("Air Jordan");
+        newbrand.setName("Air");
         newbrand.setDescribe("好看");
         newbrand.setPicUrl("url");
         newbrand.setBeDeleted(false);
@@ -69,10 +71,18 @@ public class BrandControllerTest {
         brandController.delete(100007,newbrand);
     }
 
-    //查找品牌信息测试
+    //根据id查找某个品牌信息测试
     @Test
     public void findBrandByIdTest()
     {
         System.out.println(brandController.detail(100001));
     }
+
+    //根据id查看所有品牌
+    @Test
+    public void getBrandList(){
+        System.out.println(brandController.list());
+
+    }
+
 }

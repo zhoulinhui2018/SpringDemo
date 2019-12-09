@@ -19,4 +19,6 @@ public class BrandDao {
     public int deleteBrand(Brand newbrand){return brandMapper.deleteBrand(newbrand);}
 
     public Brand findBrandById(Integer id){return brandMapper.findBrandById(id);}
+
+    public List<Brand> getBrandList(){return brandMapper.getBrandList();}
 }

@@ -40,4 +40,9 @@
         from brand
         where id= #{id}
     </select>
+
+    <select id="getBrandList" resultType="Brand">
+        select *
+        from brand;
+    </select>
 </mapper>

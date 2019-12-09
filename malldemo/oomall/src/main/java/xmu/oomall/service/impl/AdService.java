@@ -42,4 +42,9 @@ public class AdService implements IAdService {
         adDao.updateAdById(newAd);
         return 1;
     }
+
+    @Override
+    public List<Ad> findUserAds() {
+        return adDao.findUserAds();
+    }
 }

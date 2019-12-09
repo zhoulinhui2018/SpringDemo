@@ -76,4 +76,16 @@ public class BrandController {
         Brand newbrand = brandService.findBrandById(id);
         return ResponseUtil.ok(newbrand);
     }
+
+    /**
+     * @Description: 管理员查看所有品牌
+     * @Param: [brand]
+     * @Author: Ren tianhe
+     * @Date: 2019/12/8
+     */
+    @GetMapping("/brands")
+    public List<Brand> list(){
+        List<Brand> list = brandService.getBrandList();
+        return list;
+    }
 }

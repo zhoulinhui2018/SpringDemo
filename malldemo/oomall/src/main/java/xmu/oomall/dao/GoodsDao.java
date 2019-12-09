@@ -1,17 +1,14 @@
 package xmu.oomall.dao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.domain.goods.*;
+import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.mapper.GoodsMapper;
 import xmu.oomall.util.Config;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 商品Dao
@@ -51,12 +48,12 @@ public class GoodsDao {
      * @param good
      * @return
      */
-    public int addGoods(Goods good)
+    public Integer addGoods(Goods good)
     {
         return goodsMapper.addGoods(good);
     }
 
-    public int deleteGoodsById(Integer id){
+    public Integer deleteGoodsById(Integer id){
         return goodsMapper.deleteGoodsbyId(id);
     }
 
@@ -90,5 +87,47 @@ public class GoodsDao {
     public void addNewCategory(GoodsCategory goodsCategory)
     {
         goodsMapper.addNewCategory(goodsCategory);
+    }
+
+    /**
+     * 获取所有一级商品分类
+     * @param
+     * @return List<GoodsCategory>
+     */
+    public List<GoodsCategory> getFirstLevelCategories()
+    {
+        List<GoodsCategory> FirstLevelCategories=goodsMapper.getFirstLevelCategories();
+        return FirstLevelCategories;
+    }
+
+    /**
+     * 根据id获取某分类
+     * @param
+     * @return GoodsCategory
+     */
+    public GoodsCategory getCategoryById(Integer id)
+    {
+        GoodsCategory goodsCategory=goodsMapper.getCategoryById(id);
+        return goodsCategory;
+    }
+
+    /**
+     * 修改某分类
+     * @param goodsCategory
+     * @return
+     */
+    public void updateCategory(GoodsCategory goodsCategory)
+    {
+        goodsMapper.updateCategory(goodsCategory);
+    }
+
+    /**
+     * 删除某个分类
+     * @param id
+     * @return
+     */
+    public void deleteCategoryById(Integer id)
+    {
+        goodsMapper.deleteCategoryById(id);
     }
 }

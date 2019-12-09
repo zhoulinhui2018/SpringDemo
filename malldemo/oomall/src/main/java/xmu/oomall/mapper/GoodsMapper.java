@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.domain.goods.Product;
-import xmu.oomall.domain.goods.PromotionPo;
 
 import java.util.List;
 
@@ -40,14 +39,14 @@ public interface GoodsMapper {
      * @param goods
      * @return
      */
-    void addGoods(Goods goods);
+    int addGoods(Goods goods);
 
     /**
      * 删除某商品
      * @param id
      * @return
      */
-    void deleteGoodsbyId(Integer id);
+    int deleteGoodsbyId(Integer id);
 
     /**
      * 获取某商品的信息
@@ -70,5 +69,35 @@ public interface GoodsMapper {
      * @return
      */
     void addNewCategory(GoodsCategory goodsCategory);
+
+
+    /**
+     * 获取所有一级商品分类
+     * @param
+     * @return List<GoodsCategory>
+     */
+    List<GoodsCategory> getFirstLevelCategories();
+
+    /**
+     * 根据id获取某分类
+     * @param id
+     * @return GoodsCategory
+     */
+    GoodsCategory getCategoryById(Integer id);
+
+    /**
+     * 删除某分类
+     * @param id
+     * @return
+     */
+    void deleteCategoryById(Integer id);
+
+    /**
+     * 修改某分类
+     * @param goodsCategory
+     * @return
+     */
+    void updateCategory(GoodsCategory goodsCategory);
+
 
 }

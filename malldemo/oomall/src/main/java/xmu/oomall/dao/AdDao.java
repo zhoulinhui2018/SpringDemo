@@ -40,7 +40,6 @@ public class AdDao {
     public Integer updateAdById(Ad newAd)
     {
        return adMapper.updateAdById(newAd);
-
     }
 
     public List<Ad> findUserAds(){
@@ -52,6 +51,10 @@ public class AdDao {
             if (now.isAfter(next.getEndTime()) || now.isBefore(next.getStartTime())){
                 iterator.remove();
             }
+        }
+        if (allAds.size()==0){
+            List<Ad> DefaultAds=adMapper.findDefaultAds();
+            return DefaultAds;
         }
         return allAds;
     }
