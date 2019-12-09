@@ -14,7 +14,7 @@ import java.util.List;
  * @date: Created in 21:29 2019/11/25
  **/
 @Service
-public class GoodsServiceImpl implements IGoodsService {
+public abstract class GoodsServiceImpl implements IGoodsService {
     @Autowired
     private GoodsDao goodsDao;
 
@@ -53,31 +53,5 @@ public class GoodsServiceImpl implements IGoodsService {
     public void addNewCategory(GoodsCategory goodsCategory)
     {
         goodsDao.addNewCategory(goodsCategory);
-    }
-
-    @Override
-    public List<GoodsCategory> getFirstLevelCategories()
-    {
-        List<GoodsCategory> firstLevelCategories=goodsDao.getFirstLevelCategories();
-        return firstLevelCategories;
-    }
-
-    @Override
-    public GoodsCategory getCategoryById(Integer id)
-    {
-        GoodsCategory goodsCategory=goodsDao.getCategoryById(id);
-        return goodsCategory;
-    }
-
-    @Override
-    public void updateCategory(GoodsCategory goodsCategory)
-    {
-        goodsDao.updateCategory(goodsCategory);
-    }
-
-    @Override
-    public void deleteCategoryById(Integer id)
-    {
-        goodsDao.deleteCategoryById(id);
     }
 }
