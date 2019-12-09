@@ -36,32 +36,34 @@ public class AdController {
 //    public Object userFindAd(){
 //
 //    }
+    /**
+     * @Description: 管理员查看所有的广告
+     * @Param: []
+     * @return: java.util.List<xmu.oomall.domain.Ad>
+     * @Author: Zhou Linhui
+     * @Date: 2019/12/6
+     */
+    @GetMapping("/admin/ads")
+    public Object adminFindAdList(){
+        List<Ad> allAds = adService.findAllAds();
+        return allAds;
+    }
+
 
     /**
-    * @Description: 用户和管理员查看某条广告信息
+    * @Description: 管理员查看单条广告
     * @Param: []
     * @return: xmu.oomall.domain.Ad
     * @Author: Zhou Linhui
     * @Date: 2019/12/5
     */
     @GetMapping("/ads/{id}")
-    public Object read(@NotNull Integer id){
+    public Object adminFindAd(@NotNull Integer id){
         Ad adById = adService.findAdById(id);
         return  ResponseUtil.ok(adById);
     }
 
-    /** 
-    * @Description: 管理员获得所有广告
-    * @Param: [] 
-    * @return: java.util.List<xmu.oomall.domain.Ad> 
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/6 
-    */ 
-    @GetMapping("/admin/ads")
-    public Object list(){
-        List<Ad> allAds = adService.findAllAds();
-        return allAds;
-    }
+
 
     /**
     * @Description: 管理员修改广告信息
@@ -71,7 +73,7 @@ public class AdController {
     * @Date: 2019/12/7
     */
     @PutMapping("/ads/{id}")
-    public Object update(@RequestBody Ad newAd) {
+    public Object adminUpdateAd(@RequestBody Ad newAd) {
         Object error=validate(newAd);
         if (error != null) {
             return error;
@@ -85,14 +87,14 @@ public class AdController {
 
 
     /**
-    * @Description: 管理员删除广告
+    * @Description: 管理员删除一条广告
     * @Param: [id]
     * @return: void
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
     @DeleteMapping("/ads/{id}")
-    public Object delete(@RequestBody Ad ad){
+    public Object adminDeleteAd(@RequestBody Ad ad){
         Integer id=ad.getId();
         if (id == null) {
             return ResponseUtil.badArgument();
@@ -102,14 +104,14 @@ public class AdController {
     }
 
     /**
-    * @Description: 管理员添加广告
+    * @Description: 管理员新建一条广告
     * @Param: [ad]
     * @return: java.lang.Object
     * @Author: Zhou Linhui
     * @Date: 2019/12/5
     */
     @PostMapping("/ads")
-    public Object create(@RequestBody Ad ad) {
+    public Object adminCreateAad(@RequestBody Ad ad) {
       Object error = validate(ad);
         if (error != null) {
            return error;
