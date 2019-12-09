@@ -14,7 +14,7 @@ import java.util.List;
  * @date: Created in 21:29 2019/11/25
  **/
 @Service
-public class GoodsServiceImpl implements IGoodsService {
+public abstract class GoodsServiceImpl implements IGoodsService {
     @Autowired
     private GoodsDao goodsDao;
 

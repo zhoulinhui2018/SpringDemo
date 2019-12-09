@@ -98,7 +98,5 @@ public interface GoodsMapper {
      * @return
      */
     void updateCategory(GoodsCategory goodsCategory);
-    Integer addGoods(Goods good);
 
-    Integer deleteGoodsbyId(Integer id);
 }
