@@ -1,8 +1,17 @@
 package xmu.oomall.discount.domain.coupon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.util.JacksonUtil;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @Author: 数据库与对象模型标准组
@@ -11,7 +20,9 @@ import java.util.Objects;
  * @Modified By:
  **/
 
-public class CouponRule {
+public class CouponRule implements Comparable<CouponRule>{
+
+
     private Integer id;
     /**
      * 优惠券规则名称
@@ -56,6 +67,19 @@ public class CouponRule {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
     private Boolean beDeleted;
+
+
+    @Override
+    public int compareTo(CouponRule c) {
+        if(this.id>c.id) {
+            return 1;
+        }else if(this.id==c.id) {
+            return this.name.compareTo(c.name);
+        }else {
+            return -1;
+        }
+
+    }
 
 
     @Override

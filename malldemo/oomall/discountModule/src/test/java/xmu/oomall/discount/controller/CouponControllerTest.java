@@ -8,16 +8,18 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest(classes = DiscountApplication.class)
 @AutoConfigureMockMvc
 @Transactional
-public class CouponRuleControllerTest {
+public class CouponControllerTest {
     @Autowired
     private CouponController couponController;
 
@@ -73,7 +75,19 @@ public class CouponRuleControllerTest {
     }
     @Test
     public  void myListTest(){
-        List<CouponRule> myList=couponController.mylist(100001);
+        List<Coupon> myList=couponController.mylist(100001);
         System.out.println(myList);
+    }
+
+    @Test
+    public void selectlist()
+    {
+        //参数：Integer userId,List<Integer> cartItemIds
+        List<Integer> cartItemIds=new ArrayList<Integer>();
+        for(int i=1;i<6;i++){
+            cartItemIds.add(i);
+        }
+        Object object=couponController.selectlist(100001,cartItemIds);
+        System.out.println(object.toString());
     }
 }

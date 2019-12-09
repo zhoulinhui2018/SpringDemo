@@ -83,6 +83,19 @@ public class Goods {
 
     private Boolean beDeleted;
 
+    public static Goods ALL_GOODS = new Goods(0);
+
+    /**
+     * 用id构造Goods
+     * @param id
+     */
+    public Goods(Integer id) {
+        this.id = id;
+        this.setGmtCreate(LocalDateTime.now());
+    }
+
+    public Goods(){
+    }
     @Override
     public String toString() {
         return "Goods{" +
