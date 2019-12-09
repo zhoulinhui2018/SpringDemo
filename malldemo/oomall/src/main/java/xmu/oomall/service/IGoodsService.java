@@ -3,8 +3,6 @@ package xmu.oomall.service;
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.domain.goods.GoodsCategory;
-import xmu.oomall.domain.goods.Product;
-import xmu.oomall.domain.goods.GoodsCategory;
 
 import java.util.List;
 
@@ -28,7 +26,6 @@ public interface IGoodsService {
      * @param good
      * @return
      */
-
     int addGoods(Goods good);
 
     /**
@@ -36,7 +33,6 @@ public interface IGoodsService {
      * @param id
      * @return
      */
-
     int deleteGoodsbyId(Integer id);
 
     /**

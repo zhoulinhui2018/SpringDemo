@@ -44,10 +44,7 @@ public class AdController {
         return adService.findUserAds();
     }
 
-//    @GetMapping("/ads")
-//    public Object userFindAd(){
-//
-//    }
+
     /**
      * @Description: 管理员查看所有的广告
      * @Param: []
