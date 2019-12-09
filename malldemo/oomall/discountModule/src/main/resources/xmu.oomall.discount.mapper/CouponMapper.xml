@@ -14,12 +14,11 @@
 
 
     <insert id="addCouponRule" parameterType="couponRule" useGeneratedKeys="true" keyProperty="id">
-        insert into coupon_rule
-        values ( #{name}, #{brief},
-                #{beginTime},#{endTime},#{picUrl},
-                #{validPeriod},#{discount},#{limit},
-                #{total},#{goodsList1},#{goodsList2},
-                #{gmtCreate}, #{gmtModified},#{beDelete})
+        insert into coupon_rule(name,descr,beginTime,picUrl,brief,validPeriod,goodsIds1,addTime,updateTime,beDeleted,strategy)
+        values ( #{name}, #{decsr},
+                #{beginTime},#{picUrl},#{brief}
+                #{validPeriod},#{goodsIds1},#{addTime},
+                #{updateTime}#{beDelete},#{strategy})
     </insert>
 
     <select id="getCouponList" resultType="couponRule">
@@ -35,9 +34,8 @@
         update coupon_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
-            <if test="brief!=null">brief=#{brief},</if>
+            <if test="descr!=null">descr=#{descr},</if>
             <if test="beginTime!=null">beginTime=#{beginTime},</if>
-            <if test="endTime!=null">endTime=#{endTime},</if>
             <if test="picUrl!=null">picUrl=#{picUrl},</if>
             <if test="validPeriod!=null">validPeriod=#{validPeriod},</if>
             <if test="discount!=null">discount=#{discount},</if>

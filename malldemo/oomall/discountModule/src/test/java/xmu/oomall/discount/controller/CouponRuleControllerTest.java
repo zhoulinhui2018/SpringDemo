@@ -25,7 +25,7 @@ public class CouponRuleControllerTest {
     public void createTest()
     {
         CouponRule couponRule=new CouponRule();
-        couponRule.setId(100006);
+
         couponRule.setName("全场买三赠一");
         couponRule.setBrief("多买多送");
         couponRule.setBeginTime(LocalDateTime.now());
