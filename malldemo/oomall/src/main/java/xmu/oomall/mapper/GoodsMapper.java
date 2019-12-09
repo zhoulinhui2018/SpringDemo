@@ -40,14 +40,14 @@ public interface GoodsMapper {
      * @param goods
      * @return
      */
-    void addGoods(Goods goods);
+    int addGoods(Goods goods);
 
     /**
      * 删除某商品
      * @param id
      * @return
      */
-    void deleteGoodsbyId(Integer id);
+    int deleteGoodsbyId(Integer id);
 
     /**
      * 获取某商品的信息
