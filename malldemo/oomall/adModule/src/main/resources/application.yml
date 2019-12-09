@@ -17,38 +17,38 @@ management:
         include: health, info
 
 mybatis:
-  #domain¶ÔÏóµÄ°ü
+  #domainå¯¹è±¡çš„åŒ…
   type-aliases-package: xmu.oomall.ad.domain
-  #mapper¡£xmlËùÔÚµÄÎ»ÖÃ
+  #mapperã€‚xmlæ‰€åœ¨çš„ä½ç½®
   mapper-locations: classpath:xmu.oomall.ad.mapper/*.xml
   configuration:
-    #×Ô¶¯½«SQLÖĞ²é³öÀ´µÄ´øÏÂ»®ÏßµÄ×Ö¶Î£¬×ª»»ÎªÍÕ·å±êÖ¾£¬ÔÙÈ¥Æ¥ÅäÀàÖĞµÄÊôĞÔ
+    #è‡ªåŠ¨å°†SQLä¸­æŸ¥å‡ºæ¥çš„å¸¦ä¸‹åˆ’çº¿çš„å­—æ®µï¼Œè½¬æ¢ä¸ºé©¼å³°æ ‡å¿—ï¼Œå†å»åŒ¹é…ç±»ä¸­çš„å±æ€§
     map-underscore-to-camel-case: true
 
 logging:
-  #ÉèÖÃÈÕÖ¾´òÓ¡¼¶±ğ
+  #è®¾ç½®æ—¥å¿—æ‰“å°çº§åˆ«
   level:
-    #Spring¿ò¼ÜÖĞµÄÈÕÖ¾¼¶±ğ
+    #Springæ¡†æ¶ä¸­çš„æ—¥å¿—çº§åˆ«
     org.springframework.web: info
     root: error
-    #×Ô¼ºÏîÄ¿°üÃûÏÂµÄÈÕÖ¾¼¶±ğ
+    #è‡ªå·±é¡¹ç›®åŒ…åä¸‹çš„æ—¥å¿—çº§åˆ«
     xmu.oomall.controller: debug
     xmu.oomall.service: debug
     xmu.oomall.dao: debug
     xmu.oomall.mapper: error
     xmu.oomall.domain: debug
     xmu.oomall.util: debug
-  #Ê¹ÓÃlogbackÈÕÖ¾£¬È¡´úÄ¬ÈÏµÄcommonÈÕÖ¾
+  #ä½¿ç”¨logbackæ—¥å¿—ï¼Œå–ä»£é»˜è®¤çš„commonæ—¥å¿—
   file:
     path: C:\Users\Ming Qiu\log
   config: classpath:logback-spring.xml
 
 oomall:
-  #×î´ó¸¶¿îÊ±¼ä, µ¥Î»·ÖÖÓ
+  #æœ€å¤§ä»˜æ¬¾æ—¶é—´, å•ä½åˆ†é’Ÿ
   maxpaytime: 30
-  #redis»º´æÊ§Ğ§Ê±¼ä£¬µ¥Î»·ÖÖÓ
+  #redisç¼“å­˜å¤±æ•ˆæ—¶é—´ï¼Œå•ä½åˆ†é’Ÿ
   redisexpiretime: 1
-  #Ô¤Ìá¿â´æÊıÁ¿
+  #é¢„æåº“å­˜æ•°é‡
   predeductQty: 3
 
 

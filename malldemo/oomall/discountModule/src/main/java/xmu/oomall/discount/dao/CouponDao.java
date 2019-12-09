@@ -42,4 +42,9 @@ public class CouponDao {
         CouponRule couponRule=couponMapper.findCouponRuleById(id);
         return couponRule;
     }
+
+    public List<CouponRule> getCouponMyList(Integer userId) {
+        List<CouponRule> myList=couponMapper.getCouponMyList(userId);
+        return myList;
+    }
 }

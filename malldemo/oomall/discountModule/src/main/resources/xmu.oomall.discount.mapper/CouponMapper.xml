@@ -14,11 +14,8 @@
 
 
     <insert id="addCouponRule" parameterType="couponRule" useGeneratedKeys="true" keyProperty="id">
-        insert into coupon_rule(name,descr,beginTime,picUrl,brief,validPeriod,goodsIds1,addTime,updateTime,beDeleted,strategy)
-        values ( #{name}, #{decsr},
-                #{beginTime},#{picUrl},#{brief}
-                #{validPeriod},#{goodsIds1},#{addTime},
-                #{updateTime}#{beDelete},#{strategy})
+        insert into coupon_rule(name,brief,begin_time,end_time,pic_url,valid_period,strategy,goods_list1,goods_list2,gmt_create,gmt_modified,is_deleted)
+        values (#{name},#{brief},#{beginTime},#{endTime},#{picUrl},#{validPeriod},#{strategy},#{goodsList1},#{goodsList2},#{gmtCreate},#{gmtModified},#{beDeleted})
     </insert>
 
     <select id="getCouponList" resultType="couponRule">
@@ -34,21 +31,26 @@
         update coupon_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
-            <if test="descr!=null">descr=#{descr},</if>
+            <if test="brief!=null">brief=#{brief},</if>
             <if test="beginTime!=null">beginTime=#{beginTime},</if>
+            <if test="endTime!=null">endTime=#{endTime},</if>
             <if test="picUrl!=null">picUrl=#{picUrl},</if>
             <if test="validPeriod!=null">validPeriod=#{validPeriod},</if>
-            <if test="discount!=null">discount=#{discount},</if>
-            <if test="limit!=null">limit=#{limit},</if>
+            <if test="strategy!=null">strategy=#{strategy},</if>
             <if test="total!=null">total=#{total},</if>
             <if test="goodsList1!=null">goodsList1=#{goodsList1},</if>
             <if test="goodsList2!=null">goodsList2=#{goodsList2},</if>
             <if test="gmtCreate!=null">gmtCreate=#{gmtCreate},</if>
             <if test="gmtModified!=null">gmtModified=#{gmtModified},</if>
-            <if test="beDelete!=null">beDelete=#{beDelete},</if>
+            <if test="beDeleted!=null">beDeleted=#{beDeleted},</if>
 
         </trim>
         WHERE id=#{id}
     </update>
+
+    <select id="getCouponMyList" parameterType="Integer" resultType="couponRule">
+        select *
+        from coupon where user_id=#{userId};
+    </select>
 
 </mapper>

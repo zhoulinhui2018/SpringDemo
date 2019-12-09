@@ -12,6 +12,7 @@ import xmu.oomall.discount.domain.coupon.CouponRule;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest(classes = DiscountApplication.class)
 @AutoConfigureMockMvc
@@ -31,11 +32,12 @@ public class CouponRuleControllerTest {
         couponRule.setBeginTime(LocalDateTime.now());
         couponRule.setEndTime(LocalDateTime.now());
         couponRule.setValidPeriod(60);
-        couponRule.setLimit(BigDecimal.valueOf(500));
         couponRule.setTotal(1000);
+        couponRule.setGoodsList1("hhhhhhh");
+        couponRule.setGoodsList2("xixixixi");
         couponRule.setGmtCreate(LocalDateTime.now());
         couponRule.setGmtModified(LocalDateTime.now());
-        couponRule.setBeDelete(false);
+        couponRule.setBeDeleted(false);
         couponController.create(couponRule);
         System.out.println("插入一条数据成功");
     }
@@ -68,5 +70,10 @@ public class CouponRuleControllerTest {
 
         couponController.update(couponRule);
         System.out.println("更新一条数据成功");
+    }
+    @Test
+    public  void myListTest(){
+        List<CouponRule> myList=couponController.mylist(100001);
+        System.out.println(myList);
     }
 }
