@@ -54,30 +54,4 @@ public class GoodsServiceImpl implements IGoodsService {
     {
         goodsDao.addNewCategory(goodsCategory);
     }
-
-    @Override
-    public List<GoodsCategory> getFirstLevelCategories()
-    {
-        List<GoodsCategory> firstLevelCategories=goodsDao.getFirstLevelCategories();
-        return firstLevelCategories;
-    }
-
-    @Override
-    public GoodsCategory getCategoryById(Integer id)
-    {
-        GoodsCategory goodsCategory=goodsDao.getCategoryById(id);
-        return goodsCategory;
-    }
-
-    @Override
-    public void updateCategory(GoodsCategory goodsCategory)
-    {
-        goodsDao.updateCategory(goodsCategory);
-    }
-
-    @Override
-    public void deleteCategoryById(Integer id)
-    {
-        goodsDao.deleteCategoryById(id);
-    }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.domain.goods.Product;
+import xmu.oomall.domain.goods.PromotionPo;
 
 import java.util.List;
 
@@ -39,14 +40,14 @@ public interface GoodsMapper {
      * @param goods
      * @return
      */
-    int addGoods(Goods goods);
+    void addGoods(Goods goods);
 
     /**
      * 删除某商品
      * @param id
      * @return
      */
-    int deleteGoodsbyId(Integer id);
+    void deleteGoodsbyId(Integer id);
 
     /**
      * 获取某商品的信息
@@ -97,5 +98,7 @@ public interface GoodsMapper {
      * @return
      */
     void updateCategory(GoodsCategory goodsCategory);
+    Integer addGoods(Goods good);
 
+    Integer deleteGoodsbyId(Integer id);
 }
