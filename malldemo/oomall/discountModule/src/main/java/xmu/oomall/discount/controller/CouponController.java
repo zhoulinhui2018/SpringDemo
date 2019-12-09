@@ -28,13 +28,18 @@ public class CouponController {
      * 获取优惠券列表
      * @return list<Coupon>
      */
-    @GetMapping("/couponRules")
-    public Object list()
+    @GetMapping("/admin/couponRules")
+    public List<CouponRule> list()
     {
         List<CouponRule> couponList=couponService.getCouponList();
         return couponList;
     }
 
+    public List<CouponRule> mylist(Integer userId)
+    {
+        List<CouponRule> myList=couponService.getCouponMyList(userId);
+        return myList;
+    }
     /**
      * 管理员新建优惠券
      * @param couponRule
@@ -91,4 +96,5 @@ public class CouponController {
         couponService.deleteCouponRuleById(couponRule.getId());
         return ResponseUtil.ok();
     }
+
 }

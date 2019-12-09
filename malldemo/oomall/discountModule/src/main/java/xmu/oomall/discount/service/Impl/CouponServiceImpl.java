@@ -47,4 +47,10 @@ public class CouponServiceImpl implements ICouponService {
 
     }
 
+    @Override
+    public List<CouponRule> getCouponMyList(Integer userId){
+        List<CouponRule> mylist=couponDao.getCouponMyList(userId);
+        return mylist;
+    }
+
 }

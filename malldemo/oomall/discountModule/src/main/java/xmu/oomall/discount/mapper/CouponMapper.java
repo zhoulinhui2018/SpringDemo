@@ -47,4 +47,6 @@ public interface CouponMapper {
      * @return
      */
     Integer updateCouponRuleById(CouponRule couponRule);
+
+    List<CouponRule> getCouponMyList(Integer userId);
 }

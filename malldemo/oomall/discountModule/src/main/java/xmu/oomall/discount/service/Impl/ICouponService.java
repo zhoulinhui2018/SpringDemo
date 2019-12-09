@@ -48,4 +48,6 @@ public interface ICouponService {
      * @param couponRule
      */
    void addCouponRule(CouponRule couponRule);
+
+    List<CouponRule> getCouponMyList(Integer userId);
 }
