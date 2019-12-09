@@ -32,6 +32,11 @@
         delete from ad where id = #{id};
     </delete>
 
+    <select id="findDefaultAds" resultType="ad">
+        select *
+        from ad where is_default=1
+    </select>
+
     <insert id="addAds" parameterType="Ad">
         insert into ad
         values (#{id}, #{link}, #{name},
@@ -57,4 +62,9 @@
         </trim>
         WHERE id=#{id}
     </update>
+
+<!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
+<!--        select * from ad-->
+<!--        where #{now} between start_time and end_time-->
+<!--    </select>-->
 </mapper>

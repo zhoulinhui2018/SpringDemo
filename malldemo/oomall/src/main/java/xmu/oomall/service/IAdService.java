@@ -38,4 +38,6 @@ public interface IAdService {
      * @Date: 2019/12/5
      */
     public Integer updateAdById(Ad newAd);
+
+    public List<Ad> findUserAds();
 }

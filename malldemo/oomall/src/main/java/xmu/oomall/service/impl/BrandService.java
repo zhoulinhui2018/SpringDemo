@@ -29,4 +29,7 @@ public class BrandService implements IBrandService {
 
     @Override
     public Brand findBrandById(Integer id){return brandDao.findBrandById(id);}
+
+    @Override
+    public List<Brand> getBrandList(){return brandDao.getBrandList();}
 }

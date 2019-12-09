@@ -1,17 +1,14 @@
 package xmu.oomall.dao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.domain.goods.*;
+import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.mapper.GoodsMapper;
 import xmu.oomall.util.Config;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 商品Dao
@@ -51,12 +48,12 @@ public class GoodsDao {
      * @param good
      * @return
      */
-    public int addGoods(Goods good)
+    public Integer addGoods(Goods good)
     {
         return goodsMapper.addGoods(good);
     }
 
-    public int deleteGoodsById(Integer id){
+    public Integer deleteGoodsById(Integer id){
         return goodsMapper.deleteGoodsbyId(id);
     }
 

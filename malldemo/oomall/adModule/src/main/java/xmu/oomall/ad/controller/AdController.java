@@ -1,13 +1,19 @@
-package xmu.oomall.ad.controller;
+package xmu.oomall.controller;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-import xmu.oomall.ad.domain.Ad;
-import xmu.oomall.ad.service.impl.AdService;
+import xmu.oomall.domain.Ad;
+import xmu.oomall.service.impl.AdService;
 import xmu.oomall.util.ResponseUtil;
-
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -42,8 +48,8 @@ public class AdController {
     */
     @GetMapping("/ads/{id}")
     public Object read(@NotNull Integer id){
-        Ad ad = adService.findAdById(id);
-        return  ResponseUtil.ok(ad);
+        Ad adById = adService.findAdById(id);
+        return  ResponseUtil.ok(adById);
     }
 
     /** 

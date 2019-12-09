@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.domain.goods.GoodsCategory;
 import xmu.oomall.domain.goods.Product;
-import xmu.oomall.domain.goods.PromotionPo;
 
 import java.util.List;
 
@@ -71,6 +70,7 @@ public interface GoodsMapper {
      */
     void addNewCategory(GoodsCategory goodsCategory);
 
+
     /**
      * 获取所有一级商品分类
      * @param
@@ -98,5 +98,6 @@ public interface GoodsMapper {
      * @return
      */
     void updateCategory(GoodsCategory goodsCategory);
+
 
 }

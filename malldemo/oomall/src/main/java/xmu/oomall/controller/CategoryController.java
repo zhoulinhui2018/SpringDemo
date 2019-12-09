@@ -3,9 +3,7 @@ package xmu.oomall.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.goods.GoodsCategory;
-import xmu.oomall.domain.goods.GroupOnRule;
 import xmu.oomall.service.impl.GoodsServiceImpl;
-import xmu.oomall.service.impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
 
 import java.util.List;

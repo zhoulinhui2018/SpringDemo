@@ -105,44 +105,5 @@
         )
     </insert>
 
-    <select id="getFirstLevelCategories" resultType="GoodsCategory">
-        select *
-        from goods_category
-        where pid is null;
-    </select>
 
-    <select id="getCategoryById" resultType="GoodsCategory">
-        select *
-        from goods_category
-        where id=#{id};
-    </select>
-
-    <update id="updateCategory"  parameterType="GoodsCategory" >
-        update goods_category
-        <trim prefix="set" suffixOverrides=",">
-            <if test="gmtCreate != null">
-                gmt_create = #{gmtCreate},
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified = #{gmtModified},
-            </if>
-            <if test="beDelete != null">
-                is_deleted = #{beDelete},
-            </if>
-            <if test="name != null">
-                name = #{name},
-            </if>
-            <if test="pid != null">
-                pid = #{pid},
-            </if>
-        </trim>
-
-        where id=#{id}
-    </update>
-
-    <delete id="deleteCategoryById" parameterType="Integer">
-        delete
-        from goods_category
-        where id=#{id};
-    </delete>
 </mapper>

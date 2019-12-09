@@ -1,10 +1,5 @@
 package xmu.oomall.dao;
 
-import com.alibaba.druid.mock.MockConnection;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +13,15 @@ import java.util.List;
 public class AdDaoTest {
     @Autowired
     private  AdDao adDao;
+
+    @Test
+    public void findUserAdsTest(){
+        List<Ad> userAds = adDao.findUserAds();
+        System.out.println("获取的广告个数"+userAds.size());
+        for (Ad userAd : userAds) {
+            System.out.println(userAd);
+        }
+    }
 
     @Test
     public void updateAdTest() {
