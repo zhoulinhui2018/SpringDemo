@@ -22,6 +22,10 @@
 
 	<modules>
 		<module>oomall</module>
+		<module>oomall/serverModule</module>
+		<module>oomall/goodsModule</module>
+		<module>oomall/discountModule</module>
+		<module>oomall/adModule</module>
 	</modules>
 
 	<dependencies>
