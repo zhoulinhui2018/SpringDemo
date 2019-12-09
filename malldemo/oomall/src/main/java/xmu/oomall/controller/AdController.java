@@ -1,16 +1,8 @@
 package xmu.oomall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.alibaba.druid.support.json.JSONUtils;
-import io.netty.util.internal.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.Ad;
 import xmu.oomall.service.impl.AdService;
@@ -40,8 +32,13 @@ public class AdController {
         return null;
     }
 
+//    @GetMapping("/ads")
+//    public Object userFindAd(){
+//
+//    }
+
     /**
-    * @Description: 用户获得按照时间排序的10条广告列表
+    * @Description: 用户和管理员查看某条广告信息
     * @Param: []
     * @return: xmu.oomall.domain.Ad
     * @Author: Zhou Linhui
@@ -94,8 +91,6 @@ public class AdController {
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
-
-
     @DeleteMapping("/ads/{id}")
     public Object delete(@RequestBody Ad ad){
         Integer id=ad.getId();

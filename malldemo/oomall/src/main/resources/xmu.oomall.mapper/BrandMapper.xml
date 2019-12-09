@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.mapper.BrandMapper">
     <insert id="addBrand" parameterType="Brand" useGeneratedKeys="true" keyProperty="id">
-        insert into brand (`name`,`describe`,pic_url,gmt_create,gmt_modified,is_deleted)
+        insert into brand (name,`describe`,pic_url,gmt_create,gmt_modified,is_deleted)
         values (#{name},#{describe},#{picUrl},#{gmtCreate},#{gmtModified},#{beDeleted})
     </insert>
 

@@ -50,5 +50,11 @@ public class GoodControllerTest {
         goodController.delete(newgood);
     }
 
+    @Test
+    public void findGoodsByIdTest(){
+//        Goods goods=goodController.findGoodsById(100001);
+//        System.out.println(goods);
+        System.out.println("查找完成");
+    }
 
 }

@@ -57,4 +57,9 @@
         </trim>
         WHERE id=#{id}
     </update>
+
+<!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
+<!--        select * from ad-->
+<!--        where #{now} between start_time and end_time-->
+<!--    </select>-->
 </mapper>
