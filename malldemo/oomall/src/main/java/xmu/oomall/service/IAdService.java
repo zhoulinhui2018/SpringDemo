@@ -38,4 +38,13 @@ public interface IAdService {
      * @Date: 2019/12/5
      */
     public Integer updateAdById(Ad newAd);
+
+    /**
+     * @Description: 修改ad的上下线时间
+     * @Param: [id]
+     * @return: xmu.oomall.domain.Ad
+     * @Author: Ren Tianhe
+     * @Date: 2019/12/8
+     */
+    public int updateAdStartEndTime(Ad newAd);
 }

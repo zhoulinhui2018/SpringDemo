@@ -38,6 +38,5 @@ public class AdDao {
     public Integer updateAdById(Ad newAd)
     {
        return adMapper.updateAdById(newAd);
-
     }
 }

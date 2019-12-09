@@ -1,4 +1,5 @@
 package xmu.oomall.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.druid.support.json.JSONUtils;
@@ -85,6 +86,7 @@ public class AdController {
         return ResponseUtil.ok(newAd);
     }
 
+
     /**
     * @Description: 管理员删除广告
     * @Param: [id]
@@ -120,4 +122,6 @@ public class AdController {
         adService.addAds(ad);
         return ResponseUtil.ok(ad);
     }
+
+
 }

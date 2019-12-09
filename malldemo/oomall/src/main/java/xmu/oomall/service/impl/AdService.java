@@ -42,4 +42,10 @@ public class AdService implements IAdService {
         adDao.updateAdById(newAd);
         return 1;
     }
+
+    @Override
+    public int updateAdStartEndTime(Ad newAd)
+    {
+        return adDao.updateAdById(newAd);
+    }
 }
