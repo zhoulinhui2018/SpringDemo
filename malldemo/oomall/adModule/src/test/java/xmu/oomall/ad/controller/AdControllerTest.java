@@ -21,11 +21,12 @@ public class AdControllerTest {
     @Autowired
     private AdController adController;
 
+
     @Autowired
     private MockMvc mockMvc;
 
 
-    @Rollback(false)
+//    @Rollback(false)
     @Test
     public void updateTest1()
     {
@@ -34,18 +35,18 @@ public class AdControllerTest {
         newAd.setName("团购");
         newAd.setLink("www");
         newAd.setContent("降价团购活动");
-        adController.update(newAd);
+        adController.adminUpdateAd(100001,newAd);
     }
 
     @Test
-    public void test1(){
-        Object object= adController.read(1);
-        System.out.println(object.toString());
+    public void findTest1(){
+        Object object= adController.adminFindAdById(100001);
+        System.out.println(object);
     }
 
     @Test
     public void getAllAdsTest(){
-        List<Ad> allAds = (List<Ad>) adController.list();
+        List<Ad> allAds = (List<Ad>) adController.adminFindAdList(1,5);
         for (int i = 0; i < allAds.size(); i++) {
             Ad ad =  allAds.get(i);
             System.out.println(ad);
@@ -57,15 +58,7 @@ public class AdControllerTest {
     @Rollback(false)
     @Test
     public void deleteAdbyIdTest(){
-        Ad ad=new Ad();
-        ad.setId(300002);
-        ad.setLink("test");
-        ad.setName("棉袄test");
-        ad.setContent("棉袄大促销了");
-        ad.setBeDefault(true);
-        ad.setStartTime(LocalDateTime.now());
-        ad.setEndTime(LocalDateTime.now());
-        adController.delete(ad);
+        adController.adminDeleteAd(100001);
         System.out.println("删除成功");
     }
 
@@ -74,7 +67,6 @@ public class AdControllerTest {
     @Test
     public void addAdsTest(){
         Ad ad =new Ad();
-        ad.setId(900003);
         ad.setLink("test");
         ad.setName("芒果test");
         ad.setContent("芒果大促销了");
@@ -89,8 +81,15 @@ public class AdControllerTest {
 //                .andReturn().getResponse().getContentAsString();
 
 
-        adController.create(ad);
+        adController.adminCreateAd(ad);
         System.out.println("插入成功");
+    }
+
+
+    @Test
+    public void userFindAdsTest(){
+        Object adsList = adController.userFindAdsList();
+        System.out.println(adsList);
     }
 
 }
