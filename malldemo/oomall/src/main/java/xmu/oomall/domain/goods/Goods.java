@@ -59,7 +59,7 @@ public class Goods {
     /*
     *商品分类ID
     * */
-    private String goodsCategoryId;
+    private Integer goodsCategoryId;
     /*
     *品牌ID
     * */
@@ -239,11 +239,11 @@ public class Goods {
         this.gallery = gallery;
     }
 
-    public String getGoodsCategoryId() {
+    public Integer getGoodsCategoryId() {
         return goodsCategoryId;
     }
 
-    public void setGoodsCategoryId(String goodsCategoryId) {
+    public void setGoodsCategoryId(Integer goodsCategoryId) {
         this.goodsCategoryId = goodsCategoryId;
     }
 

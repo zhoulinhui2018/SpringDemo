@@ -56,31 +56,12 @@ public interface IGoodsService {
      */
     void addNewCategory(GoodsCategory goodsCategory);
 
-    /**
-     * 获取一级商品类别
-     * @param
-     * @return 所有一级分类
-     */
+
     List<GoodsCategory> getFirstLevelCategories();
 
-    /**
-     * 根据id获取类别
-     * @param
-     * @return GoodsCategory
-     */
     GoodsCategory getCategoryById(Integer id);
 
-     /** 修改某类别
-     * @param goodsCategory
-     * @return
-     */
     void updateCategory(GoodsCategory goodsCategory);
 
-
-    /**
-     * 删除某个商品
-     * @param id
-     * @return
-     */
     void deleteCategoryById(Integer id);
 }
