@@ -31,7 +31,6 @@ public interface GoodsMapper {
      */
     int updateProduct(Product product);
 
-    int updateGoodsById(Goods goods);
     int updateGoodsbyId(Goods goods);
 
 

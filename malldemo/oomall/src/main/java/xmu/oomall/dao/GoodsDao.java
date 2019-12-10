@@ -30,7 +30,6 @@ public class GoodsDao {
 
     public Integer updateGoodsbyId(Goods onegoods){
         goodsMapper.updateGoodsbyId(onegoods);
-        goodsMapper.updateGoodsById(onegoods);
         return 1;
     }
     /**
