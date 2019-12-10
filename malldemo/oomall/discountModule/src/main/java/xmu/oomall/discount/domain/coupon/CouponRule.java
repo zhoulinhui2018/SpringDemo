@@ -1,8 +1,17 @@
 package xmu.oomall.discount.domain.coupon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.util.JacksonUtil;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @Author: 数据库与对象模型标准组
@@ -11,7 +20,9 @@ import java.util.Objects;
  * @Modified By:
  **/
 
-public class CouponRule {
+public class CouponRule implements Comparable<CouponRule>{
+
+
     private Integer id;
     /**
      * 优惠券规则名称
@@ -38,13 +49,9 @@ public class CouponRule {
      */
     private Integer validPeriod;
     /**
-     * 折扣金额（满减金额）
+     * 该优惠券规则的使用策略
      */
-    private BigDecimal discount;
-    /**
-     * 优惠规则生效需达到的满减上限
-     */
-    private BigDecimal limit;
+    private String strategy;
     /**
      * 该优惠券规则下优惠券的总张数
      */
@@ -59,7 +66,20 @@ public class CouponRule {
     private String goodsList2;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean beDelete;
+    private Boolean beDeleted;
+
+
+    @Override
+    public int compareTo(CouponRule c) {
+        if(this.id>c.id) {
+            return 1;
+        }else if(this.id==c.id) {
+            return this.name.compareTo(c.name);
+        }else {
+            return -1;
+        }
+
+    }
 
 
     @Override
@@ -74,20 +94,19 @@ public class CouponRule {
     public String toString() {
         return "CouponRule{" +
                 "id=" + id +
-                ", name=" + name +
                 ", name='" + name + '\'' +
+                ", brief='" + brief + '\'' +
                 ", beginTime=" + beginTime +
                 ", endTime=" + endTime +
-                ", pciUrl='" + picUrl + '\'' +
+                ", picUrl='" + picUrl + '\'' +
                 ", validPeriod=" + validPeriod +
-                ", discount=" + discount +
-                ", limit=" + limit +
+                ", strategy='" + strategy + '\'' +
                 ", total=" + total +
                 ", goodsList1='" + goodsList1 + '\'' +
                 ", goodsList2='" + goodsList2 + '\'' +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", beDeleted=" + beDelete +
+                ", beDeleted=" + beDeleted +
                 '}';
     }
 
@@ -106,6 +125,10 @@ public class CouponRule {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBrief() {
@@ -132,12 +155,12 @@ public class CouponRule {
         this.endTime = endTime;
     }
 
-    public String getPciUrl() {
+    public String getPicUrl() {
         return picUrl;
     }
 
-    public void setPciUrl(String pciUrl) {
-        this.picUrl = pciUrl;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     public Integer getValidPeriod() {
@@ -148,20 +171,12 @@ public class CouponRule {
         this.validPeriod = validPeriod;
     }
 
-    public BigDecimal getDiscount() {
-        return discount;
+    public String getStrategy() {
+        return strategy;
     }
 
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
-    }
-
-    public BigDecimal getLimit() {
-        return limit;
-    }
-
-    public void setLimit(BigDecimal limit) {
-        this.limit = limit;
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
     }
 
     public Integer getTotal() {
@@ -204,17 +219,11 @@ public class CouponRule {
         this.gmtModified = gmtModified;
     }
 
-    public Boolean getBeDelete() {
-        return beDelete;
+    public Boolean getBeDeleted() {
+        return beDeleted;
     }
 
-    public void setBeDelete(Boolean beDelete) {
-        this.beDelete = beDelete;
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
 }

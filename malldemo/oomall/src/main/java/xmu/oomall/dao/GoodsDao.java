@@ -30,6 +30,7 @@ public class GoodsDao {
 
     public Integer updateGoodsbyId(Goods onegoods){
         goodsMapper.updateGoodsbyId(onegoods);
+        goodsMapper.updateGoodsById(onegoods);
         return 1;
     }
     /**
@@ -54,7 +55,7 @@ public class GoodsDao {
     }
 
     public Integer deleteGoodsById(Integer id){
-        return goodsMapper.deleteGoodsbyId(id);
+        return goodsMapper.deleteGoodsById(id);
     }
 
 

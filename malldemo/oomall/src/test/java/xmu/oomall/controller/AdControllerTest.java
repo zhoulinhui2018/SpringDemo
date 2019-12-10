@@ -38,6 +38,17 @@ public class AdControllerTest {
         adController.adminUpdateAd(newAd);
     }
 
+    @Rollback(false)
+    @Test
+    public void findAdbyTime()
+    {
+        List<Ad> AdbyTime =(List<Ad>) adController.userFindAd();
+        for(Ad a:AdbyTime){
+            System.out.println(a);
+        }
+    }
+
+
     @Test
     public void test1(){
         Object object= adController.adminFindAd(1);

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.goods.Brand;
 import xmu.oomall.service.impl.BrandService;
 import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.domain.goods.Goods;
 
 import java.util.List;
 
@@ -53,11 +54,8 @@ public class BrandController {
      */
     @DeleteMapping("/brands/{id}")
     public Object delete(@PathVariable Integer id,@RequestBody Brand newbrand){
-//        Object error = validate(ad);
-//        if (error != null) {
-//            return error;
-//        }
         brandService.deleteBrand(newbrand);
+
         return ResponseUtil.ok(newbrand);
     }
 

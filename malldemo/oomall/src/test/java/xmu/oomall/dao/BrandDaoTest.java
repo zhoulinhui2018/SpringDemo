@@ -3,6 +3,7 @@ package xmu.oomall.dao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.goods.Brand;
 
@@ -14,21 +15,12 @@ public class BrandDaoTest {
     @Autowired
     private  BrandDao brandDao;
 
+    @Rollback(false)
     @Test
-    public void updateBrandTest() {
-
-        Brand newbrand=new Brand();
-        newbrand.setName("bbab");
-        newbrand.setPicUrl("new_url");
-        newbrand.setGmtModified(LocalDateTime.now());
-        newbrand.setGmtCreate(LocalDateTime.now());
-        newbrand.setBeDeleted(true);
-        newbrand.setDescribe("锤子好看");
-        newbrand.setId(100001);
-
-        brandDao.updateBrand(newbrand);
-
+    public void deleteTest(){
+        Brand b=new Brand();
+        b.setId(100007);
+        brandDao.deleteBrand(b);
     }
-
 
 }

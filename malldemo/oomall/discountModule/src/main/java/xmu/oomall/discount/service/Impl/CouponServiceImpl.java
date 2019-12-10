@@ -3,10 +3,12 @@ package xmu.oomall.discount.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: Ming Qiu
@@ -26,12 +28,12 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public Integer updateCouponRuleById(CouponRule couponRule) {
+    public int updateCouponRuleById(CouponRule couponRule) {
         return couponDao.updateCouponRuleById(couponRule);
     }
 
     @Override
-    public Integer deleteCouponRuleById(Integer id) {
+    public int deleteCouponRuleById(Integer id) {
         return couponDao.deleteCouponRuleById(id);
     }
 
@@ -47,4 +49,27 @@ public class CouponServiceImpl implements ICouponService {
 
     }
 
+    @Override
+    public List<Coupon> getCouponMyList(Integer userId){
+        List<Coupon> mylist=couponDao.getCouponMyList(userId);
+        return mylist;
+    }
+
+    @Override
+    public Integer getProductId(Integer itemId){
+          Integer productId=couponDao.getProductId(itemId);
+          return productId;
+    }
+
+    @Override
+    public Integer getGoodsId(Integer productId){
+        Integer goodsId=couponDao.getGoodsId(productId);
+        return goodsId;
+    }
+
+    @Override
+    public Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
+        Set<CouponRule> canUsedCoupons=couponDao.getCanUsedCoupons(goodsIdList,userId);
+        return canUsedCoupons;
+    }
 }

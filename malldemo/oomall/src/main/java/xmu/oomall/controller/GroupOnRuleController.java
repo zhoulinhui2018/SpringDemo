@@ -15,7 +15,7 @@ public class GroupOnRuleController {
     private GroupOnRuleService groupOnRuleService;
 
     /**
-    * @Description: 管理员新增优惠券
+    * @Description: 管理员新增团购规则
     * @Param: [groupOnRule]
     * @return: java.lang.Object
     * @Author: Zhou Linhui
@@ -28,7 +28,7 @@ public class GroupOnRuleController {
     }
 
     /**
-    * @Description: 管理员查看优惠券详情
+    * @Description: 管理员查看某个团购规则详情
     * @Param: [id]
     * @return: java.lang.Object
     * @Author: Zhou Linhui
@@ -67,7 +67,13 @@ public class GroupOnRuleController {
         return ResponseUtil.ok(groupOnRule);
     }
 
-
+    /**
+     * @Description: 用户开团或者入团情况
+     * @Param: [id, groupOnRule]
+     * @return: java.lang.Object
+     * @Author: Zhou Linhui
+     * @Date: 2019/12/7
+     */
     @GetMapping("/goods/{id}/grouponRules")
     public Object list(@PathVariable Integer id, String goodsId,
                        @RequestParam(defaultValue = "1") Integer page,

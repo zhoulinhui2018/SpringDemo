@@ -1,8 +1,19 @@
 package xmu.oomall.discount.domain.coupon;
 
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import xmu.oomall.util.JacksonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class CouponRuleTest {
-//    private CouponRule coupon;
+    @Autowired
+    private CouponRule coupon;
 //
 //    @BeforeEach
 //    void setUp() {
@@ -30,8 +41,12 @@ class CouponRuleTest {
 //    }
 //
 //    @Test
-//    void getGoodsIds() {
-//        List<Integer> goodsIds = this.coupon.getGoodsIds();
+//    void getGoodsIdsInCouponRule() {
+//        String jsonString=this.coupon.getGoodsList1()+this.coupon.getGoodsList2();
+//        jsonString = org.apache.commons.text.StringEscapeUtils.unescapeJson(jsonString);
+//
+//        List<Integer> goodsIds =JacksonUtil.parseIntegerList(jsonString, "gIDs");
+//
 //        assertEquals(goodsIds.get(0), 1);
 //        assertEquals(goodsIds.get(1), 2);
 //        assertEquals(goodsIds.get(2), 3);
@@ -49,17 +64,5 @@ class CouponRuleTest {
 //        assertEquals(realObj.getGoodsIds(),"{\"gIDs\":[7,8,9]}");
 //    }
 //
-//    @Test
-//    void isUsedOnGoods() {
-//        assertTrue(this.coupon.isUsedOnGoods(1));
-//        assertTrue(this.coupon.isUsedOnGoods(2));
-//        assertTrue(this.coupon.isUsedOnGoods(3));
-//
-//        List<Integer> goodsIds = new ArrayList<Integer>(1);
-//        goodsIds.add(Integer.valueOf(0));
-//        this.coupon.setGoodsIds(goodsIds);
-//        assertTrue(this.coupon.isUsedOnGoods(11));
-//        assertTrue(this.coupon.isUsedOnGoods(133));
-//
-//    }
+
 }

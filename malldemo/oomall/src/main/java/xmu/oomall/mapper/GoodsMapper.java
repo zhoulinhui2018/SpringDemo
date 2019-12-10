@@ -31,6 +31,7 @@ public interface GoodsMapper {
      */
     int updateProduct(Product product);
 
+    int updateGoodsById(Goods goods);
     int updateGoodsbyId(Goods goods);
 
 
@@ -46,7 +47,7 @@ public interface GoodsMapper {
      * @param id
      * @return
      */
-    int deleteGoodsbyId(Integer id);
+    int deleteGoodsById(Integer id);
 
     /**
      * 获取某商品的信息
