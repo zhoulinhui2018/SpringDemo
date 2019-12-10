@@ -1,5 +1,6 @@
 package xmu.oomall.ad.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,7 @@ public class AdService implements IAdService {
     }
     @Override
     public List<Ad> adminFindAllAds(Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
         return adDao.adminFindAllAds();
     }
 }

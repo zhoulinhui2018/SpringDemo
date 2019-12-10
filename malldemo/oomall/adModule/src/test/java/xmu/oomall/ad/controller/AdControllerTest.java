@@ -45,8 +45,8 @@ public class AdControllerTest {
     }
 
     @Test
-    public void getAllAdsTest(){
-        List<Ad> allAds = (List<Ad>) adController.adminFindAdList(1,5);
+    public void adminGetAllAdsTest(){
+        List<Ad> allAds = (List<Ad>) adController.adminFindAdList(2,5);
         for (int i = 0; i < allAds.size(); i++) {
             Ad ad =  allAds.get(i);
             System.out.println(ad);
