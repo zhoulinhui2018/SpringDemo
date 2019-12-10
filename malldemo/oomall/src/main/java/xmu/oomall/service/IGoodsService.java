@@ -55,4 +55,13 @@ public interface IGoodsService {
      * @return
      */
     void addNewCategory(GoodsCategory goodsCategory);
+
+
+    List<GoodsCategory> getFirstLevelCategories();
+
+    GoodsCategory getCategoryById(Integer id);
+
+    void updateCategory(GoodsCategory goodsCategory);
+
+    void deleteCategoryById(Integer id);
 }

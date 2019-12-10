@@ -93,6 +93,7 @@
         delete from goods where id=#{id};
     </delete>
 
+<!--    关于商品分类的数据库操作   -->
     <select id="getAllGoodsCategories" resultType="GoodsCategory">
         select *
         from goods_category;
@@ -105,5 +106,44 @@
         )
     </insert>
 
+    <update id="updateCategory"  parameterType="GoodsCategory" >
+        update goods_category
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gmtCreate !=null">gmt_create=#{gmtCreate},</if>
+            <if test="gmtModified !=null">gmt_modified=#{gmtModified},</if>
+            <if test="name !=null">name=#{name},</if>
+            <if test="beDelete !=null">is_deleted=#{beDelete},</if>
+            <if test="pid !=null">pid=#{pid},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteCategoryById" parameterType="Integer">
+        delete from goods_category where id=#{id};
+    </delete>
+
+    <select id="getCategoryById" resultType="GoodsCategory" parameterType="Integer">
+        select *
+        from goods_category
+        where id=#{id};
+    </select>
+
+    <select id="getFirstLevelCategories" resultType="GoodsCategory">
+        select *
+        from goods_category
+        where pid is null;
+    </select>
+
+    <select id="getSecondLevelCategories" parameterType="Integer" resultType="GoodsCategory">
+        select *
+        from goods_category
+        where pid=#{id};
+    </select>
+
+    <select id="getGoodsByCategoryId" parameterType="Integer" resultType="Goods">
+        select *
+        from goods
+        where goods_category_ids=#{id};
+    </select>
 
 </mapper>

@@ -31,7 +31,7 @@ public interface GoodsMapper {
      */
     int updateProduct(Product product);
 
-    int updateGoods(Goods goods);
+    int updateGoodsbyId(Goods goods);
 
 
     /**
@@ -99,5 +99,17 @@ public interface GoodsMapper {
      */
     void updateCategory(GoodsCategory goodsCategory);
 
+    /**
+     * 获取某一级商品分类的所有二级分类
+     * @param pid
+     * @return goodsCategory
+     */
+    List<GoodsCategory> getSecondLevelCategories(Integer pid);
 
+    /**
+     * 获取某分类下的所有商品
+     * @param id
+     * @return goods
+     */
+    List<Goods> getGoodsByCategoryId(Integer id);
 }
