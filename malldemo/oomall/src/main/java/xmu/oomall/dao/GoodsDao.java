@@ -29,7 +29,7 @@ public class GoodsDao {
     private Config config;
 
     public Integer updateGoodsbyId(Goods onegoods){
-        goodsMapper.updateGoodsbyId(onegoods);
+        goodsMapper.updateGoodsById(onegoods);
         return 1;
     }
     /**

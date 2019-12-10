@@ -7,7 +7,6 @@ import xmu.oomall.ad.dao.AdDao;
 import xmu.oomall.ad.domain.Ad;
 import xmu.oomall.ad.service.IAdService;
 
-
 import java.util.List;
 
 @Transactional
@@ -43,5 +42,14 @@ public class AdService implements IAdService {
     {
         adDao.updateAdById(newAd);
         return 1;
+    }
+
+    @Override
+    public List<Ad> findUserAds() {
+        return adDao.findUserAds();
+    }
+    @Override
+    public List<Ad> adminFindAllAds(Integer page, Integer limit) {
+        return adDao.adminFindAllAds();
     }
 }

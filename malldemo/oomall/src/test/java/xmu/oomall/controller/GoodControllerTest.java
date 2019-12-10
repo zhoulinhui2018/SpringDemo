@@ -34,7 +34,7 @@ public class GoodControllerTest {
         newgood.setName("百褶裙");
         newgood.setDetail("好看的裙子");
         newgood.setBrandId(100001);
-        newgood.setGoodsCategoryId("100001");
+        newgood.setGoodsCategoryId(100001);
 
         goodController.create(newgood);
         System.out.println("插入数据成功");
