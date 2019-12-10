@@ -1,3 +1,4 @@
+
 -- ----------------------------
 -- Table structure for ad
 -- ----------------------------
@@ -48,7 +49,7 @@ CREATE TABLE `admin` (
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
   `username` varchar(31) DEFAULT NULL,
-  `password` varchar(31) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `role_id` bigint(11) unsigned DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -74,7 +75,7 @@ DROP TABLE IF EXISTS `privilege`;
 CREATE TABLE `privilege` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `role_id` bigint(11) unsigned DEFAULT NULL,
-  `name` varchar(63) NOT NULL,
+  `name` varchar(5000) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
@@ -300,6 +301,7 @@ CREATE TABLE `goods` (
   `volume` varchar(255) DEFAULT NULL,
   `special_freight_id` bigint(11) unsigned DEFAULT NULL,
   `is_special` tinyint(1) unsigned DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -314,6 +316,7 @@ CREATE TABLE `goods_category` (
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '1',
+  `pic_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -534,6 +537,7 @@ CREATE TABLE `user` (
   `last_login_time` datetime DEFAULT NULL,
   `last_login_ip` varchar(255) DEFAULT NULL,
   `user_level` int(3) unsigned DEFAULT NULL,
+  `role_id` bigint(11) unsigned DEFAULT NULL,
   `wx_open_id` varchar(127) DEFAULT NULL,
   `session_key` varchar(127) DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
