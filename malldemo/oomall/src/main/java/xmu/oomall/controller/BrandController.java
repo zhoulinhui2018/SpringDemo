@@ -21,7 +21,7 @@ public class BrandController {
     * @Date: 2019/12/6
     */
     @PostMapping("/brands")
-    public Object create(@RequestBody Brand newbrand) {
+    public Object addBrand(@RequestBody Brand newbrand) {
 //        Object error = validate(ad);
 //        if (error != null) {
 //            return error;
@@ -37,7 +37,7 @@ public class BrandController {
      * @Date: 2019/12/7
      */
     @PutMapping("/brands/{id}")
-    public Object update(@PathVariable Integer id,@RequestBody Brand newbrand){
+    public Object updateBrandById(@PathVariable Integer id,@RequestBody Brand newbrand){
 //        Object error = validate(ad);
 //        if (error != null) {
 //            return error;
@@ -53,7 +53,7 @@ public class BrandController {
      * @Date: 2019/12/7
      */
     @DeleteMapping("/brands/{id}")
-    public Object delete(@PathVariable Integer id,@RequestBody Brand newbrand){
+    public Object deleteBrandById(@PathVariable Integer id,@RequestBody Brand newbrand){
         brandService.deleteBrand(newbrand);
 
         return ResponseUtil.ok(newbrand);
@@ -66,7 +66,7 @@ public class BrandController {
      * @Date: 2019/12/7
      */
     @GetMapping("/brands/{id}")
-    public Object detail(@PathVariable Integer id){
+    public Object getBrandById(@PathVariable Integer id){
 //        Object error = validate(ad);
 //        if (error != null) {
 //            return error;
@@ -76,14 +76,14 @@ public class BrandController {
     }
 
     /**
-     * @Description: 管理员查看所有品牌
+     * @Description: 管理员根据条件所有品牌
      * @Param: [brand]
      * @Author: Ren tianhe
      * @Date: 2019/12/8
      */
-    @GetMapping("/brands")
-    public List<Brand> list(){
-        List<Brand> list = brandService.getBrandList();
+    @GetMapping("/admin/brands")
+    public List<Brand> listBrandByCondition(Brand newbrand){
+        List<Brand> list = brandService.listBrandByCondition(newbrand);
         return list;
     }
 }

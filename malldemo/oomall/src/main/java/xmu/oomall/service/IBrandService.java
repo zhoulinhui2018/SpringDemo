@@ -22,6 +22,6 @@ public interface IBrandService {
 
     public Brand findBrandById(Integer id);
 
-    public List<Brand> getBrandList();
+    public List<Brand> listBrandByCondition(Brand newbrand);
 
 }

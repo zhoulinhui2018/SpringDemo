@@ -31,5 +31,5 @@ public class BrandService implements IBrandService {
     public Brand findBrandById(Integer id){return brandDao.findBrandById(id);}
 
     @Override
-    public List<Brand> getBrandList(){return brandDao.getBrandList();}
+    public List<Brand> listBrandByCondition(Brand newbrand){return brandDao.listBrandByCondition(newbrand);}
 }

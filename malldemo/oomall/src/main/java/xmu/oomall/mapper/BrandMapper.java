@@ -23,5 +23,5 @@ public interface BrandMapper {
      * @param
      * @return 品牌列表
      */
-    public List<Brand> getBrandList();
+    public List<Brand> listBrandByCondition(Brand newbrand);
 }

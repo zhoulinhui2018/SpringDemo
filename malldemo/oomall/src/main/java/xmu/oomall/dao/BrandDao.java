@@ -42,7 +42,7 @@ public class BrandDao {
 
     public Brand findBrandById(Integer id){return brandMapper.findBrandById(id);}
 
-    public List<Brand> getBrandList(){return brandMapper.getBrandList();}
+    public List<Brand> listBrandByCondition(Brand newbrand){return brandMapper.listBrandByCondition(newbrand);}
 
     public void setGoodsMapper(GoodsMapper goodsMapper) {
         this.goodsMapper = goodsMapper;

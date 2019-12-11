@@ -31,18 +31,24 @@
         where id=#{id}
     </update>
 
-    <delete id="deleteBrand" parameterType="Brand">
-        delete from brand  where id=#{id};
-    </delete>
+    <update id="deleteBrand" parameterType="Brand">
+        update brand
+        set is_deleted=1
+        where id=#{id};
+    </update>
 
     <select id="findBrandById" resultType="Brand" parameterType="Integer">
         select *
         from brand
-        where id= #{id}
+        where id= #{id};
     </select>
 
-    <select id="getBrandList" resultType="Brand">
+    <select id="listBrandByCondition"  parameterType="Brand" resultType="Brand">
         select *
-        from brand;
+        from brand
+        <where>
+            <if test="id !=null"> id = #{id}</if>
+            <if test="name !=null"> `name` like #{name}</if>
+        </where>
     </select>
 </mapper>

@@ -41,7 +41,7 @@ public class BrandControllerTest {
         newbrand.setBeDeleted(false);
         newbrand.setGmtCreate(LocalDateTime.now());
         newbrand.setGmtModified(LocalDateTime.now());
-        brandController.create(newbrand);
+        brandController.addBrand(newbrand);
     }
 
     //更新品牌信息测试
@@ -58,7 +58,7 @@ public class BrandControllerTest {
         newbrand.setDescribe("锤子好看");
         newbrand.setId(100001);
         System.out.println(newbrand);
-        brandController.update(100001,newbrand);
+        brandController.updateBrandById(100001,newbrand);
     }
 
     //删除品牌信息测试
@@ -67,22 +67,25 @@ public class BrandControllerTest {
     public void deletebrandTest()
     {
         Brand newbrand = new Brand();
-        newbrand.setId(100007);
-        brandController.delete(100007,newbrand);
+        newbrand.setId(200007);
+        brandController.deleteBrandById(200007,newbrand);
     }
 
     //根据id查找某个品牌信息测试
     @Test
     public void findBrandByIdTest()
     {
-        System.out.println(brandController.detail(100001));
+        System.out.println(brandController.getBrandById(100001));
     }
 
     //根据id查看所有品牌
     @Test
     public void getBrandList(){
-        System.out.println(brandController.list());
-
+        Brand ba = new Brand();
+        List<Brand> b = brandController.listBrandByCondition(ba);
+        for(Brand br :b){
+            System.out.println(br);
+        }
     }
 
 }
