@@ -11,6 +11,7 @@ import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.mapper.CouponMapper;
 import xmu.oomall.domain.goods.Goods;
+import xmu.oomall.util.JacksonUtil;
 
 import java.math.BigDecimal;
 import java.util.*;
