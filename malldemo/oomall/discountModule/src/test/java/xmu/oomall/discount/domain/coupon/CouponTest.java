@@ -1,5 +1,9 @@
 package xmu.oomall.discount.domain.coupon;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import xmu.oomall.discount.DiscountApplication;
+
+@SpringBootTest(classes = DiscountApplication.class)
 class CouponTest {
 
 //    private Coupon coupon;

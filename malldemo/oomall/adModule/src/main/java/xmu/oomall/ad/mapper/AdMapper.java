@@ -11,9 +11,10 @@ import java.util.List;
 public interface AdMapper {
     public Ad findAdById(Integer id);
 
-    public List<Ad> adminFindAllAds();
+    public List<Ad> adminFindAllAds(Ad ad);
     public List<Ad> findAdsDefault();
     public List<Ad> findAllAds();
+    public List<Ad> findAllAdsAvailable();
 
     public Integer deleteAdbyId(Integer id);
 
