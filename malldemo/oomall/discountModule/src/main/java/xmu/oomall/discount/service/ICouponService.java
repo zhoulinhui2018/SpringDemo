@@ -1,10 +1,12 @@
-package xmu.oomall.discount.service.Impl;
+package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
+import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -58,4 +60,8 @@ public interface ICouponService {
     Integer getGoodsId(Integer productId);
 
     Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
+
+    Coupon findCouponById(Integer id);
+
+    List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId);
 }

@@ -3,10 +3,14 @@ package xmu.oomall.discount.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
+import xmu.oomall.discount.service.ICouponService;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -54,6 +58,12 @@ public class CouponServiceImpl implements ICouponService {
         List<Coupon> mylist=couponDao.getCouponMyList(userId);
         return mylist;
     }
+    @Override
+    public Coupon findCouponById(Integer id){
+        Coupon coupon=couponDao.findCouponById(id);
+        return coupon;
+    }
+
 
     @Override
     public Integer getProductId(Integer itemId){
@@ -71,5 +81,11 @@ public class CouponServiceImpl implements ICouponService {
     public Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
         Set<CouponRule> canUsedCoupons=couponDao.getCanUsedCoupons(goodsIdList,userId);
         return canUsedCoupons;
+    }
+
+    @Override
+    public List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId){
+        List<OrderItem> newItems=couponDao.calcDiscount(orderItems,couponId);
+        return newItems;
     }
 }

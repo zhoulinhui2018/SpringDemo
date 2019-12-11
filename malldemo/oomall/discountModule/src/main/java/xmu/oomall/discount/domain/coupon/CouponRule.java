@@ -3,15 +3,13 @@ package xmu.oomall.discount.domain.coupon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.util.JacksonUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @Author: 数据库与对象模型标准组
@@ -67,6 +65,7 @@ public class CouponRule implements Comparable<CouponRule>{
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
     private Boolean beDeleted;
+
 
 
     @Override

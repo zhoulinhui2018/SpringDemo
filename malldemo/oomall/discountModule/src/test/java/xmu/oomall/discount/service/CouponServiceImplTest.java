@@ -3,7 +3,6 @@ package xmu.oomall.discount.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.OoMallApplication;
-import xmu.oomall.discount.service.Impl.ICouponService;
 
 
 @SpringBootTest(classes = OoMallApplication.class)

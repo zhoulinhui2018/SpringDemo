@@ -3,13 +3,17 @@ package xmu.oomall.discount.controller;
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xmu.oomall.discount.controller.vo.OrderVo;
+import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
+import xmu.oomall.service.CartItemService;
 import xmu.oomall.util.ResponseUtil;
 
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +23,9 @@ import java.util.Set;
 public class CouponController {
     @Autowired
     private CouponServiceImpl couponService;
+
+    @Autowired
+    private CartItemController cartItemController;
 
     private Object validate(CouponRule couponRule) {
         String name = couponRule.getName();
@@ -48,6 +55,18 @@ public class CouponController {
     {
         List<Coupon> myList=couponService.getCouponMyList(userId);
         return myList;
+    }
+
+    /**
+     * 根据id查询coupon表
+     * @param id
+     * @return
+     */
+    @GetMapping("/coupons/{id}")
+    public Object readACoupon(Integer id)
+    {
+        Coupon ACoupon=couponService.findCouponById(id);
+        return ResponseUtil.ok(ACoupon);
     }
     /**
      * 管理员新建优惠券
@@ -128,19 +147,39 @@ public class CouponController {
 
         }
         Set<CouponRule> canUsedCoupons=couponService.getCanUsedCoupons(goodsIdList,userId);
-        return canUsedCoupons;
+        return ResponseUtil.ok(canUsedCoupons);
     }
 
     /**
-     * Order模块调用Discount模块，计算使用优惠券后的价格
-     * @param cartItemIds
-     * @param couponId
-     * @return
+     * Order模块调用Discount模块，把OrderVo传过来计算使用优惠券后的价格,返回计算优惠价格后的新明细
+     * @param orderVo
+     * @return List<OrderItem>
      */
-//    @GetMapping("/calcDiscount")
-//    public Object calcDiscount(List<Integer> cartItemIds,String couponSn)
-//    {
-//
-//    }
+    @GetMapping("/calcDiscount")
+    public List<OrderItem> calcDiscount(OrderVo orderVo)
+    {
+
+        Integer couponId=orderVo.getCouponId();
+        //根据couponId查找coupon对象
+        //Coupon coupon=couponService.findCouponById(couponId);
+        List<Integer> cartItemIds=new ArrayList<Integer>(orderVo.getCartItemIds().size());
+        CartItem item;
+        OrderItem orderItem;
+        BigDecimal price;
+
+        //List<CartItem> cartItems=new ArrayList<CartItem>(cartItemIds.size());
+        List<OrderItem> orderItems=new ArrayList<>(cartItemIds.size());
+        for(Integer cartId:orderVo.getCartItemIds())
+        {
+            item= cartItemController.getCartItemById(cartId);
+            orderItem=new OrderItem(item);
+            price=cartItemController.getProductPrice(item.getProductId());
+            orderItem.setPrice(price);
+            orderItems.add(orderItem);
+        }
+        List<OrderItem> newItems=couponService.calcDiscount(orderItems,couponId);
+        return newItems;
+
+    }
 
 }
