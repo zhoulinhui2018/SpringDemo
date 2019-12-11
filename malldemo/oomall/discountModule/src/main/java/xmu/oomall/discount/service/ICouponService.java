@@ -1,9 +1,8 @@
-package xmu.oomall.discount.service.Impl;
+package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
-
 
 import java.util.List;
 import java.util.Set;

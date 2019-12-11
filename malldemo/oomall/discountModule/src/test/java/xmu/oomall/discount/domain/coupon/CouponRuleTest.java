@@ -1,19 +1,12 @@
 package xmu.oomall.discount.domain.coupon;
 
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import xmu.oomall.util.JacksonUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+//@SpringBootTest(classes = DiscountApplication.class)
 class CouponRuleTest {
-    @Autowired
-    private CouponRule coupon;
+//    @Autowired
+//    private CouponRule couponRule;
+
 //
 //    @BeforeEach
 //    void setUp() {

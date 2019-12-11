@@ -2,15 +2,17 @@ package xmu.oomall.discount.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xmu.oomall.OoMallApplication;
-import xmu.oomall.discount.service.Impl.ICouponService;
+import org.springframework.transaction.annotation.Transactional;
+import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 
 
-@SpringBootTest(classes = OoMallApplication.class)
+@Transactional
+@SpringBootTest(classes = DiscountApplication.class)
 class CouponServiceImplTest {
 
     @Autowired
-    private ICouponService couponService;
+    private CouponServiceImpl couponService;
 
 //    @Test
 //    public void findCouponById1(){

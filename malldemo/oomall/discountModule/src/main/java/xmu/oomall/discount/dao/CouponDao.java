@@ -3,18 +3,16 @@ package xmu.oomall.discount.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
-import org.springframework.cglib.core.Transformer;
 import org.springframework.stereotype.Repository;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.mapper.CouponMapper;
 import xmu.oomall.domain.goods.Goods;
-import xmu.oomall.util.JacksonUtil;
-
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+
 
 /**
  * @Author: Xu Huangchao

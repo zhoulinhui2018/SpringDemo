@@ -1,11 +1,11 @@
 package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Author: XuHuangchao
@@ -14,6 +14,7 @@ import java.util.Set;
  * @Modified By:
  **/
 
+@Service
 @Mapper
 public interface CouponMapper {
 

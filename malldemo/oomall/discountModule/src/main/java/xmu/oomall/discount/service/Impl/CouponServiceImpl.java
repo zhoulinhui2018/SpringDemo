@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
-
+import xmu.oomall.discount.service.ICouponService;
 
 import java.util.List;
 import java.util.Set;
