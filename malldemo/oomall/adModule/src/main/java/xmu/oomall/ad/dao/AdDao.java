@@ -13,12 +13,14 @@ import java.util.List;
 public class AdDao {
     @Autowired
     private AdMapper adMapper;
-    public List<Ad> adminFindAllAds(){
-        return adMapper.adminFindAllAds();
+    public List<Ad> adminFindAllAds(Ad ad){
+        return adMapper.adminFindAllAds(ad);
     }
 
 
     public void addAds(Ad ad){
+        ad.setGmtCreate(LocalDateTime.now());
+        ad.setGmtModified(LocalDateTime.now());
         adMapper.addAds(ad);
     }
 
@@ -43,11 +45,12 @@ public class AdDao {
 
     public Integer updateAdById(Ad newAd)
     {
-       return adMapper.updateAdById(newAd);
+        newAd.setGmtModified(LocalDateTime.now());
+        return adMapper.updateAdById(newAd);
     }
 
     public List<Ad> findUserAds(){
-        List<Ad> allAds = adMapper.findAllAds();
+        List<Ad> allAds = adMapper.findAllAdsAvailable();
         LocalDateTime now = LocalDateTime.now();
         Iterator<Ad> iterator = allAds.iterator();
         while (iterator.hasNext()){

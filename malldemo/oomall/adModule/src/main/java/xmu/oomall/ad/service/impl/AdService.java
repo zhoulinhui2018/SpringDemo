@@ -49,9 +49,10 @@ public class AdService implements IAdService {
     public List<Ad> findUserAds() {
         return adDao.findUserAds();
     }
+
     @Override
-    public List<Ad> adminFindAllAds(Integer page, Integer limit) {
+    public List<Ad> adminFindAllAds(Integer page, Integer limit,Ad ad) {
         PageHelper.startPage(page,limit);
-        return adDao.adminFindAllAds();
+        return adDao.adminFindAllAds(ad);
     }
 }
