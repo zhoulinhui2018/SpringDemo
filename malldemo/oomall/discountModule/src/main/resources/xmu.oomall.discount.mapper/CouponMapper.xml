@@ -2,10 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
-    <select id="findCouponById" parameterType="Integer" resultType="coupon">
-            select *
-                    from coupon where id = #{id}
-    </select>
 
     <select id="findCouponRuleById" parameterType="Integer" resultType="couponRule">
             select *
@@ -50,7 +46,7 @@
 
     <select id="getCouponMyList" parameterType="Integer" resultType="coupon">
         select *
-        from coupon where user_id=#{userId};
+        from coupon where user_id=#{userId} and status=0;
     </select>
 
     <select id="getProductId" parameterType="Integer" resultType="Integer">
@@ -68,6 +64,11 @@
         from coupon_rule where id=#{couponRuleId};
     </select>
 
+    <select id="findCouponById" parameterType="Integer" resultType="coupon">
+        select * from coupon where id = #{id}
+    </select>
 
-
+    <select id="getProductPrice" parameterType="Integer" resultType="BigDecimal">
+        select price from product where id = #{productId}
+    </select>
 </mapper>

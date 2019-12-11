@@ -38,8 +38,13 @@ public class AdController {
     */
     @GetMapping("/admins/ads")
     public Object adminFindAdList(@RequestParam(defaultValue = "1") Integer page,
-                                    @RequestParam(defaultValue = "10") Integer limit){
-        return adService.adminFindAllAds(page,limit);
+                                  @RequestParam(defaultValue = "10") Integer limit,
+                                  @RequestParam String name,
+                                  @RequestParam String content){
+        Ad ad=new Ad();
+        ad.setName(name);
+        ad.setContent(content);
+        return adService.adminFindAllAds(page,limit,ad);
     }
 
     /**
