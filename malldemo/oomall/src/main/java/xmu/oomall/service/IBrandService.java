@@ -2,7 +2,6 @@ package xmu.oomall.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Brand;
-
 import java.util.List;
 
 @Service

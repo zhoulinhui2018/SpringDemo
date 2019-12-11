@@ -44,11 +44,15 @@
     </select>
 
     <select id="listBrandByCondition"  parameterType="Brand" resultType="Brand">
-        select *
+        select id,`name`,description,pic_url,gmt_create,gmt_modified,is_deleted
         from brand
         <where>
-            <if test="id !=null"> id = #{id}</if>
-            <if test="name !=null"> `name` like #{name}</if>
+        <if test="id !=null">
+                id = #{id}
+        </if>
+        <if test="name !=null">
+                and `name` like CONCAT('%',#{name},'%')
+        </if>
         </where>
     </select>
 </mapper>

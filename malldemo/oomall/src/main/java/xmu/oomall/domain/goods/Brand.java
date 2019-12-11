@@ -11,33 +11,33 @@ import java.util.Objects;
 
 public class Brand {
     private Integer id;
-    /*
+    /**
     *品牌名称
-    * */
+    */
     private String name;
-    /*
+    /**
     *品牌描述
-    * */
-    private String describe;
-    /*
+    */
+    private String description;
+    /**
     *品牌图片链接
-    * */
+     */
     private String picUrl;
 
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean beDeleted;
+    private Boolean isDeleted;
 
     @Override
     public String toString() {
         return "Brand{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", describe='" + describe + '\'' +
+                ", description='" + description + '\'' +
                 ", picUrl='" + picUrl + '\'' +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", beDeleted=" + beDeleted +
+                ", beDeleted=" + isDeleted +
                 '}';
     }
 
@@ -70,15 +70,15 @@ public class Brand {
         this.name = name;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getpicUrl() {
+    public String getPicUrl() {
         return picUrl;
     }
 
@@ -103,10 +103,10 @@ public class Brand {
     }
 
     public Boolean getBeDeleted() {
-        return beDeleted;
+        return isDeleted;
     }
 
     public void setBeDeleted(Boolean beDeleted) {
-        this.beDeleted = beDeleted;
+        this.isDeleted = beDeleted;
     }
 }

@@ -1,10 +1,8 @@
 package xmu.oomall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Brand;
-
 import java.util.List;
 
 @Service

@@ -2,11 +2,10 @@ package xmu.oomall.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.domain.goods.Brand;
 import xmu.oomall.mapper.BrandMapper;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.mapper.GoodsMapper;
-
+import xmu.oomall.domain.goods.Brand;
 
 import java.util.ArrayList;
 import java.util.List;

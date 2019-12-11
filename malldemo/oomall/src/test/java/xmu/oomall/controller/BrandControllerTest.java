@@ -10,13 +10,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.goods.Brand;
-import xmu.oomall.util.JacksonUtil;
 import java.util.List;
-import java.lang.Object;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 @SpringBootTest(classes = OoMallApplication.class)
 @AutoConfigureMockMvc
@@ -36,7 +32,7 @@ public class BrandControllerTest {
     {
         Brand newbrand=new Brand();
         newbrand.setName("Air");
-        newbrand.setDescribe("好看");
+        newbrand.setDescription("好看");
         newbrand.setPicUrl("url");
         newbrand.setBeDeleted(false);
         newbrand.setGmtCreate(LocalDateTime.now());
@@ -55,7 +51,7 @@ public class BrandControllerTest {
         newbrand.setGmtModified(LocalDateTime.now());
         newbrand.setGmtCreate(LocalDateTime.now());
         newbrand.setBeDeleted(true);
-        newbrand.setDescribe("锤子好看");
+        newbrand.setDescription("锤子好看");
         newbrand.setId(100001);
         System.out.println(newbrand);
         brandController.updateBrandById(100001,newbrand);
@@ -82,6 +78,8 @@ public class BrandControllerTest {
     @Test
     public void getBrandList(){
         Brand ba = new Brand();
+        ba.setId(100004);
+        ba.setName("Guc");
         List<Brand> b = brandController.listBrandByCondition(ba);
         for(Brand br :b){
             System.out.println(br);
