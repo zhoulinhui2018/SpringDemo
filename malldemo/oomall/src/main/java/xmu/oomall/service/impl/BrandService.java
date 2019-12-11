@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.dao.BrandDao;
-import xmu.oomall.domain.goods.Brand;
 import xmu.oomall.service.IBrandService;
-
+import xmu.oomall.domain.goods.Brand;
 import java.util.List;
 
 @Transactional
@@ -31,5 +30,5 @@ public class BrandService implements IBrandService {
     public Brand findBrandById(Integer id){return brandDao.findBrandById(id);}
 
     @Override
-    public List<Brand> getBrandList(){return brandDao.getBrandList();}
+    public List<Brand> listBrandByCondition(Brand newbrand){return brandDao.listBrandByCondition(newbrand);}
 }

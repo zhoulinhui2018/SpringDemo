@@ -1,10 +1,8 @@
 package xmu.oomall.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Brand;
-
 import java.util.List;
 
 @Service
@@ -23,5 +21,5 @@ public interface BrandMapper {
      * @param
      * @return 品牌列表
      */
-    public List<Brand> getBrandList();
+    public List<Brand> listBrandByCondition(Brand newbrand);
 }

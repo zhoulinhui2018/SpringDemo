@@ -2,7 +2,6 @@ package xmu.oomall.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.domain.goods.Brand;
-
 import java.util.List;
 
 @Service
@@ -22,6 +21,6 @@ public interface IBrandService {
 
     public Brand findBrandById(Integer id);
 
-    public List<Brand> getBrandList();
+    public List<Brand> listBrandByCondition(Brand newbrand);
 
 }

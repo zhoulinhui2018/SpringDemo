@@ -6,10 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.domain.goods.Brand;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
 @SpringBootTest(classes = OoMallApplication.class)
 public class BrandDaoTest {
     @Autowired

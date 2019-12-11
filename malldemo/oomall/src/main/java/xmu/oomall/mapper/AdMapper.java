@@ -12,6 +12,7 @@ public interface AdMapper {
     public Ad findAdById(Integer id);
 
     public List<Ad> findAdsDefault();
+
     public List<Ad> findAllAds();
 
     public Integer deleteAdbyId(Integer id);
