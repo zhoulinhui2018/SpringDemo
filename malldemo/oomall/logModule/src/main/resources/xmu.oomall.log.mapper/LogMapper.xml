@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.oomall.log.mapper.LogMapper">
+    <select id="findLogListByAdminName" parameterType="Integer" resultType="Log">
+        select *
+        from log
+        <where>
+            <if test="adminId !=null">
+                admin_id = #{adminId}
+            </if>
+        </where>
+    </select>
+    
+    <select id="findAdminIdByName" parameterType="String" resultType="Integer">
+        select id from admin where username= #{username}
+    </select>
+    <!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
+    <!--        select * from ad-->
+    <!--        where #{now} between start_time and end_time-->
+    <!--    </select>-->
+</mapper>
