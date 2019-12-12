@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.ad.mapper.AdMapper">
-    <select id="findAdById" parameterType="Integer" resultType="ad">
+    <select id="findAdById" parameterType="Integer" resultType="xmu.oomall.ad.domain.Ad">
             select id,
                    link,
                    name,
@@ -21,11 +21,24 @@
     <select id="adminFindAllAds" resultType="ad">
         select *
         from ad
+        <where>
+            <if test="name !=null">
+                `name` like CONCAT('%',#{name},'%')
+            </if>
+            <if test="content !=null">
+                and `content` like CONCAT('%',#{content},'%')
+            </if>
+        </where>
     </select>
 
     <select id="findAdsDefault" resultType="ad">
         select *
         from ad where is_default=1;
+    </select>
+
+    <select id="findAllAdsAvailable" resultType="ad">
+        select *
+        from ad where is_deleted=0 and is_enabled=1;
     </select>
 
     <select id="findAllAds" resultType="ad">
@@ -40,7 +53,7 @@
         where id=#{id}
     </update>
 
-    <select id="findDefaultAds" resultType="ad">
+    <select id="findDefaultAds" resultType="Ad">
         select *
         from ad
         where is_default=1 and is_deleted = 0

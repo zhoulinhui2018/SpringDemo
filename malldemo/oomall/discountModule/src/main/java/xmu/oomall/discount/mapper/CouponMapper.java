@@ -1,11 +1,13 @@
 package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Service;
+import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: XuHuangchao
@@ -14,7 +16,6 @@ import java.util.List;
  * @Modified By:
  **/
 
-@Service
 @Mapper
 public interface CouponMapper {
 
@@ -58,4 +59,8 @@ public interface CouponMapper {
     Integer getGoodsId(Integer productId);
 
     CouponRule getCouponRule(Integer couponRuleId);
+
+    Coupon findCouponById(Integer id);
+
+    BigDecimal getProductPrice(Integer productId);
 }

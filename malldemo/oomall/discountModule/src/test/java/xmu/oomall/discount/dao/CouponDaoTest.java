@@ -4,8 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +30,7 @@ class CouponDaoTest {
    }
 
     @Test
-    void getGoodsTest() {
+    public void getGoodsTest() {
         CouponRule coupon=new CouponRule();
         coupon.setId(200005);
         coupon.setName("全场九折");
@@ -36,5 +41,14 @@ class CouponDaoTest {
         System.out.println(goodIds);
 
     }
+    @Test
+    public void getStrategyTest()
+    {
+        Coupon coupon=couponDao.findCouponById(1000001);
+        CouponRule couponRule=couponDao.findCouponRuleById(coupon.getCouponRuleId());
+        AbstractCouponStrategy strategy=couponDao.getStrategy(couponRule);
+        System.out.println(strategy);
+    }
+
 
 }

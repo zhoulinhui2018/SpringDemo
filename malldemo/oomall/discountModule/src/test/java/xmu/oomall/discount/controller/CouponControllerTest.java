@@ -8,6 +8,10 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.controller.vo.OrderVo;
+import xmu.oomall.discount.domain.Address;
+import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 
@@ -22,6 +26,9 @@ import java.util.List;
 public class CouponControllerTest {
     @Autowired
     private CouponController couponController;
+
+    @Autowired
+    private CartItemController cartItemController;
 
     @Rollback(false)
     @Test
@@ -80,6 +87,12 @@ public class CouponControllerTest {
     }
 
     @Test
+    public void findCouponTest()
+    {
+        Object object=couponController.readACoupon(1000001);
+        System.out.println(object.toString());
+    }
+    @Test
     public void selectlist()
     {
         //参数：Integer userId,List<Integer> cartItemIds
@@ -89,5 +102,34 @@ public class CouponControllerTest {
         }
         Object object=couponController.selectlist(100001,cartItemIds);
         System.out.println(object.toString());
+    }
+
+    @Test
+    public void calcDiscount()
+    {
+        OrderVo orderVo=new OrderVo();
+        List<Integer> cartItemIds=new ArrayList<Integer>();
+        cartItemIds.add(1);//100元 1个
+        cartItemIds.add(2);//30元  1个
+        cartItemIds.add(3);//70元  3个
+        orderVo.setCartItemIds(cartItemIds);
+        orderVo.setCouponId(1000001);
+
+        List<OrderItem> orderItems=new ArrayList<>(cartItemIds.size());
+        //System.out.println(orderVo.getCartItemIds());
+        for(Integer cartId:orderVo.getCartItemIds())
+        {
+            CartItem item= cartItemController.getCartItemById(cartId);
+            OrderItem orderItem=new OrderItem(item);
+            BigDecimal price=cartItemController.getProductPrice(item.getProductId());
+            orderItem.setPrice(price);
+            orderItems.add(orderItem);
+
+        }
+
+        List<OrderItem> items=couponController.calcDiscount(orderVo);
+
+        System.out.println(items);
+
     }
 }

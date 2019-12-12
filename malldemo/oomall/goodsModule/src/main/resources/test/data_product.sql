@@ -1,0 +1,14 @@
+insert into product values (100001,'100001','pic_url','specifications',100001,60,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (100002,'100002','pic_url','specifications',100001,160,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (100003,'100003','pic_url','specifications',100001,260,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (100004,'100004','pic_url','specifications',100001,360,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (100005,'100005','pic_url','specifications',100001,460,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (200001,'100006','pic_url','specifications',100001,2260,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (200002,'200001','pic_url','specifications',100001,1260,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (200003,'200002','pic_url','specifications',100001,1460,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (200004,'200003','pic_url','specifications',100001,1560,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (200005,'100007','pic_url','specifications',100001,3360,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (300001,'200004','pic_url','specifications',100001,1160,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (300002,'200005','pic_url','specifications',100001,960,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (300003,'200006','pic_url','specifications',100001,860,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
+insert into product values (300004,'200007','pic_url','specifications',100001,760,100,'2019-12-11 22:06:00','2019-12-11 22:06:00',0);
