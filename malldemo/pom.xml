@@ -27,6 +27,9 @@
 		<module>oomall/discountModule</module>
 		<module>oomall/adModule</module>
 		<module>oomall/logModule</module>
+        <module>oomall/addressModule</module>
+        <module>oomall/topicModule</module>
+        <module>oomall/footprintModule</module>
 	</modules>
 
 	<dependencies>
