@@ -26,6 +26,7 @@
 		<module>oomall/goodsModule</module>
 		<module>oomall/discountModule</module>
 		<module>oomall/adModule</module>
+		<module>oomall/logModule</module>
 	</modules>
 
 	<dependencies>
