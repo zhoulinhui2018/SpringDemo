@@ -2,7 +2,6 @@ package xmu.oomall.ad.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.ad.domain.Ad;
-
 import java.util.List;
 
 @Service

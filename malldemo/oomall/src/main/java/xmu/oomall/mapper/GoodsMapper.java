@@ -90,7 +90,7 @@ public interface GoodsMapper {
      * @param id
      * @return
      */
-    void deleteCategoryById(Integer id);
+    boolean deleteCategoryById(Integer id);
 
     /**
      * 修改某分类
