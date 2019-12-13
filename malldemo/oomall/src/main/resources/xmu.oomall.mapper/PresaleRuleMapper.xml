@@ -17,8 +17,8 @@
             <if test="gmtModified != null">
                 gmt_modified = #{gmtModified},
             </if>
-            <if test="beDeleted != null">
-                is_deleted = #{beDeleted},
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
             </if>
             <if test="startTime != null">
                 start_time = #{startTime},
@@ -46,7 +46,7 @@
         insert into presale_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, status,
         strategy, product_id, deposit)
-        values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
+        values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
         #{startTime}, #{endTime}, #{statusCode},
         #{strategy}, #{productId}, #{deposit})
     </insert>
