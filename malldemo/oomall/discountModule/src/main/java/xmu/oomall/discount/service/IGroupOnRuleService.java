@@ -1,7 +1,7 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
-import xmu.oomall.discount.domain.GroupOnRule;
+import xmu.oomall.discount.domain.GrouponRulePo;
 
 import java.util.List;
 
@@ -9,25 +9,25 @@ import java.util.List;
 public interface IGroupOnRuleService {
     /**
     * @Description: 管理员新增团购规则
-    * @Param: [groupOnRule]
-    * @return: xmu.oomall.domain.goods.GroupOnRule
+    * @Param: [grouponRulePo]
+    * @return: xmu.oomall.domain.goods.GrouponRulePo
     * @Author: Zhou Linhui
     * @Date: 2019/12/6
     */
-    public void add(GroupOnRule groupOnRule);
+    public void add(GrouponRulePo grouponRulePo);
 
     /**
     * @Description: 查询单张优惠券
     * @Param: [id]
-    * @return: xmu.oomall.domain.goods.GroupOnRule
+    * @return: xmu.oomall.domain.goods.GrouponRulePo
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
-    public GroupOnRule findById(Integer id);
+    public GrouponRulePo findById(Integer id);
 
-    public int update(GroupOnRule groupOnRule);
+    public int update(GrouponRulePo grouponRulePo);
 
-    public int delete(GroupOnRule groupOnRule);
+    public int delete(GrouponRulePo grouponRulePo);
 
-    public List<GroupOnRule> searchGrouponGoods(Integer goodsId,Integer page,Integer limit);
+    public List<GrouponRulePo> searchGrouponGoods(Integer goodsId, Integer page, Integer limit);
 }
