@@ -1,6 +1,5 @@
 package xmu.oomall.discount.domain;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -11,50 +10,28 @@ import java.util.List;
 
 public class GrouponRule extends GrouponRulePo {
 
-    public class Strategy{
-        private Integer lowerBound;
-        private Integer upperBound;
-        private BigDecimal discountRate;
 
-        public Integer getLowerBound() {
-            return lowerBound;
-        }
+    private List<GrouponRuleStrategy> strategy;
 
-        public void setLowerBound(Integer lowerBound) {
-            this.lowerBound = lowerBound;
-        }
-
-        public Integer getUpperBound() {
-            return upperBound;
-        }
-
-        public void setUpperBound(Integer upperBound) {
-            this.upperBound = upperBound;
-        }
-
-        public BigDecimal getDiscountRate() {
-            return discountRate;
-        }
-
-        public void setDiscountRate(BigDecimal discountRate) {
-            this.discountRate = discountRate;
-        }
+    public List<GrouponRuleStrategy> getStrategy() {
+        return strategy;
     }
 
-    private List<Strategy> strategyList;
-
-    public List<Strategy> getStrategyList() {
-        return strategyList;
+    public void setStrategy(List<GrouponRuleStrategy> strategy) {
+        this.strategy = strategy;
     }
 
-    public void setStrategyList(List<Strategy> strategyList) {
-        this.strategyList = strategyList;
+    public GrouponRule(List<GrouponRuleStrategy> strategy) {
+        this.strategy = strategy;
+    }
+
+    public GrouponRule() {
     }
 
     @Override
     public String toString() {
         return "GrouponRule{" +
-                "strategyList=" + strategyList +
+                "strategy=" + strategy +
                 '}';
     }
 }

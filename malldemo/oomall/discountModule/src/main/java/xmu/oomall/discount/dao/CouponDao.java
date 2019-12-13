@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
 import xmu.oomall.discount.domain.coupon.Coupon;
@@ -180,6 +179,7 @@ public class CouponDao {
         System.out.println("getStrategy参数：");
         String jsonString = couponRule.getStrategy();
         System.out.println("jsonString = "+ jsonString);
+
         jsonString = org.apache.commons.text.StringEscapeUtils.unescapeJson(jsonString);
         String strategyName = JacksonUtil.parseString(jsonString, "name");
 
