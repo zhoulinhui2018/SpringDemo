@@ -73,8 +73,8 @@ public class CategoryControllerTest {
     @Rollback(false)
     @Test
     public void deleteCategoryByIdTest() {
-        goodController.deleteCategoryById(20009);
-        System.out.println("删除成功");
+//        goodController.deleteCategoryById(20009);
+        System.out.println(goodController.deleteCategoryById(20009));
     }
 
 

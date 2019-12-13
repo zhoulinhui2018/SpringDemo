@@ -147,27 +147,28 @@ public class GoodsDao {
      * @param id
      * @return
      */
-    public void deleteCategoryById(Integer id)
+    public boolean deleteCategoryById(Integer id)
     {
-        GoodsCategory goodsCategory=getCategoryById(id);
-        if(goodsCategory.getPid()==null) {
-            //如果是一级分类，要把该分类下的所有二级分类的pid置为00000
-            List<GoodsCategory> SecondLevelCategories=getSecondLevelCategories(id);
-            for (int i = 0; i < SecondLevelCategories.size(); i++){
-                GoodsCategory newGoodsCategory=SecondLevelCategories.get(i);
-                newGoodsCategory.setPid(00000);
-                updateCategory(newGoodsCategory);
-            }
-        }else {
-            //如果是二级分类，要把该分类下的所有商品的goodsCategoryId置为00000
-            List<Goods> goodsList=getGoodsByCategoryId(id);
-            for (int i = 0; i < goodsList.size(); i++){
-                Goods newGoods=goodsList.get(i);
-                newGoods.setGoodsCategoryId(00000);
-                updateGoodsbyId(newGoods);
-            }
-        }
+//        GoodsCategory goodsCategory=getCategoryById(id);
+//        if(goodsCategory.getPid()==null) {
+//            //如果是一级分类，要把该分类下的所有二级分类的pid置为00000
+//            List<GoodsCategory> SecondLevelCategories=getSecondLevelCategories(id);
+//            for (int i = 0; i < SecondLevelCategories.size(); i++){
+//                GoodsCategory newGoodsCategory=SecondLevelCategories.get(i);
+//                newGoodsCategory.setPid(00000);
+//                updateCategory(newGoodsCategory);
+//            }
+//        }else {
+//            //如果是二级分类，要把该分类下的所有商品的goodsCategoryId置为00000
+//            List<Goods> goodsList=getGoodsByCategoryId(id);
+//            for (int i = 0; i < goodsList.size(); i++){
+//                Goods newGoods=goodsList.get(i);
+//                newGoods.setGoodsCategoryId(00000);
+//                updateGoodsbyId(newGoods);
+//            }
+//        }
 
-        goodsMapper.deleteCategoryById(id);
+        boolean result= goodsMapper.deleteCategoryById(id);
+        return result;
     }
 }

@@ -63,5 +63,5 @@ public interface IGoodsService {
 
     void updateCategory(GoodsCategory goodsCategory);
 
-    void deleteCategoryById(Integer id);
+    boolean deleteCategoryById(Integer id);
 }
