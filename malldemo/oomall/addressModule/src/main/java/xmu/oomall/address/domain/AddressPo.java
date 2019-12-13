@@ -39,61 +39,30 @@ public class AddressPo {
      * 地址详情
      */
     private String addressDetail;
+    /**
+     * 联系电话
+     */
+    private String mobile;
+    /**
+     * 邮政编码
+     */
+    private String postalCode;
+    /**
+     * 收件人
+     */
+    private String consignee;
+    /**
+     * 是否是默认地址，1表示是，0表示否
+     */
+    private int beDefault;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private LocalDateTime gmtCreate;
+    private LocalDateTime gmtModified;
+    private Boolean beDeleted;
+
 
     public Integer getId() {
         return id;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public void setCountyId(Integer countyId) {
-        this.countyId = countyId;
-    }
-
-    public void setAddressDetail(String addressDetail) {
-        this.addressDetail = addressDetail;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public void setConsignee(String consignee) {
-        this.consignee = consignee;
-    }
-
-    public void setBeDefault(boolean beDefault) {
-        this.beDefault = beDefault;
-    }
-
-    public void setGmtCreate(LocalDateTime gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public void setGmtModified(LocalDateTime gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
-    public void setBeDeleted(Boolean beDeleted) {
-        this.beDeleted = beDeleted;
     }
 
     public Integer getUserId() {
@@ -128,7 +97,7 @@ public class AddressPo {
         return consignee;
     }
 
-    public boolean isBeDefault() {
+    public int getBeDefault() {
         return beDefault;
     }
 
@@ -144,25 +113,56 @@ public class AddressPo {
         return beDeleted;
     }
 
-    /**
-     * 联系电话
-     */
-    private String mobile;
-    /**
-     * 邮政编码
-     */
-    private String postalCode;
-    /**
-     * 收件人
-     */
-    private String consignee;
-    /**
-     * 是否是默认地址
-     */
-    private boolean beDefault;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-    private LocalDateTime gmtCreate;
-    private LocalDateTime gmtModified;
-    private Boolean beDeleted;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public void setCountyId(Integer countyId) {
+        this.countyId = countyId;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setConsignee(String consignee) {
+        this.consignee = consignee;
+    }
+
+    public void setBeDefault(int beDefault) {
+        this.beDefault = beDefault;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
+    }
+
 }

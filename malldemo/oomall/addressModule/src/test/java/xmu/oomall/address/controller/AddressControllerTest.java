@@ -5,14 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import xmu.oomall.OoMallApplication;
+import xmu.oomall.address.AddressApplication;
 import xmu.oomall.address.domain.Address;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@SpringBootTest(classes = OoMallApplication.class)
+@SpringBootTest(classes = AddressApplication.class)
 @Transactional
 public class AddressControllerTest {
     @Autowired
@@ -59,9 +58,8 @@ public class AddressControllerTest {
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
-        address.setBeDefault(false);
+        address.setBeDefault(1);
         address.setUserId(10000);
-        address.setBeDeleted(false);
         address.setGmtCreate(LocalDateTime.now());
         address.setGmtModified(LocalDateTime.now());
 
@@ -74,6 +72,7 @@ public class AddressControllerTest {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
+    @Rollback
     @Test
     public void addNewAddressTest(){
         Address address=new Address();
@@ -83,9 +82,8 @@ public class AddressControllerTest {
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
-        address.setBeDefault(false);
+        address.setBeDefault(0);
         address.setUserId(10000);
-        address.setBeDeleted(false);
         address.setGmtCreate(LocalDateTime.now());
         address.setGmtModified(LocalDateTime.now());
 
@@ -98,6 +96,7 @@ public class AddressControllerTest {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
+    @Rollback
     @Test
     public void deleteAddressTest(){
         Object addressObject=addressController.deleteAddress(10001);
@@ -109,6 +108,7 @@ public class AddressControllerTest {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
+    @Rollback
     @Test
     public void updateAddressTest(){
         Address address=new Address();

@@ -28,12 +28,21 @@ public class AddressDao {
     public Address addNewAddress(Address address) {
         address.setGmtCreate(LocalDateTime.now());
         address.setGmtModified(LocalDateTime.now());
-        return addressMapper.addNewAddress(address);
+        boolean resultMsg=addressMapper.addNewAddress(address);
+        if(resultMsg)
+            return address;
+        else
+            return null;
+
     }
 
-    public Address updateAddress(Integer id,Address address) {
+    public Address updateAddress(Address address) {
         address.setGmtModified(LocalDateTime.now());
-        return addressMapper.updateAddress(id,address);
+        boolean result=addressMapper.updateAddress(address);
+        if(result)
+            return address;
+        else
+            return null;
     }
 
     public List<Address> getAllAddressList() {

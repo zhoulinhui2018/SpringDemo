@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.service.impl.AddressService;
 import xmu.oomall.util.ResponseUtil;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping("")
@@ -115,8 +113,16 @@ public class AddressController {
      */
     @PutMapping("/addresses/{id}")
     public Object updateAddress(@PathVariable Integer id, @RequestBody Address address){
-        Address newAddress=addressService.updateAddress(id,address);
-        return ResponseUtil.ok(newAddress);
+        Object error=validate(address);
+        if (error != null) {
+            return error;
+        }
+        address.setId(id);
+        if(addressService.updateAddress(address)==null)
+        {
+            return ResponseUtil.updatedDataFailed();
+        }
+        return ResponseUtil.ok(address);
     }
 
     /**

@@ -1,12 +1,8 @@
 package xmu.oomall.address.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xmu.oomall.address.dao.AddressDao;
-import xmu.oomall.address.domain.Address;
-import xmu.oomall.address.service.IAddressService;
 import xmu.oomall.address.dao.AddressDao;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.service.IAddressService;
@@ -36,8 +32,8 @@ public class AddressService implements IAddressService {
         return addressDao.addNewAddress(address);
     }
     @Override
-    public Address updateAddress(Integer id,Address address) {
-        return addressDao.updateAddress(id, address);
+    public Address updateAddress(Address address) {
+        return addressDao.updateAddress(address);
     }
     @Override
     public List<Address> getAllAddressList() {

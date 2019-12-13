@@ -44,13 +44,12 @@ public interface IAddressService {
 
     /**
      * 更新收货地址
-     * @param id  地址id
      * @param address 用户收货地址
      * @return 更新操作结果
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    public Address updateAddress(Integer id, Address address);
+    public Address updateAddress( Address address);
 
     /**
      * 管理员获取全部地址列表

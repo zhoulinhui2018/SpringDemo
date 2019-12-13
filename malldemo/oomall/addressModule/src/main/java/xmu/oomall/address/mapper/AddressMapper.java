@@ -14,11 +14,11 @@ public interface AddressMapper {
 
     public List<Address> getUserAddressList(Integer userId);
 
-    public Address addNewAddress(Address address);
+    public boolean addNewAddress(Address address);
 
     public boolean deleteAddress(Integer id);
 
-    public Address updateAddress(Integer id,Address address);
+    public boolean updateAddress(Address address);
 
     public Address getAddressDetail(Integer id);
 

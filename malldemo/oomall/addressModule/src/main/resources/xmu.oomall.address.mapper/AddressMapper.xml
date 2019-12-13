@@ -13,13 +13,13 @@
     </select>
 
     <insert id="addNewAddress" parameterType="Address" useGeneratedKeys="true" keyProperty="id">
-        insert into address (gmt_create, gmt_modified, is_deleted,
+      insert into address (gmt_create, gmt_modified, is_deleted,
         county, province, city,
         address_detail, postal_code,
-        mobile,is_default,user_id,county_id)
+        mobile, is_default, user_id, county_id)
         values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
         #{county}, #{province}, #{city},
-        #{addressDetail}, #{postalCode}),
+        #{addressDetail}, #{postalCode},
         #{mobile},#{beDefault},#{userId},#{countyId});
     </insert>
 
@@ -76,8 +76,5 @@
         from address
         where id=#{id}
     </select>
-
-
-
 
 </mapper>
