@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/logService")
+@RequestMapping("/logs")
 public class LogController {
     @Autowired
     private LogService logService;
@@ -21,7 +21,7 @@ public class LogController {
      * @Author Ren tianhe
      * @Date 2019/12/12
      */
-    @GetMapping("/")
+    @GetMapping("")
     public Object findLogListByAdminName(@RequestParam(defaultValue = "1") Integer page,
                                          @RequestParam(defaultValue = "10") Integer limit,
                                          @RequestParam String username) {
@@ -30,7 +30,7 @@ public class LogController {
         return ResponseUtil.ok(loglist);
     }
 
-    @PostMapping("/log")
+    @PostMapping("")
     public Object addLog(Log newlog){
         logService.addLog(newlog);
         return ResponseUtil.ok();
