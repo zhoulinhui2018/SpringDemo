@@ -38,5 +38,5 @@ public interface IAdService {
      */
     public Integer updateAdById(Ad newAd);
     public List<Ad> adminFindAllAds(Integer page, Integer limit,Ad ad);
-    public List<Ad> findUserAds();
+    public List<Ad> findUserAds(Integer page ,Integer limit);
 }

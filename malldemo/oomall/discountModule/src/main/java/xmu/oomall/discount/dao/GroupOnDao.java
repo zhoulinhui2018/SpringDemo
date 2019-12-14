@@ -7,6 +7,7 @@ import xmu.oomall.discount.domain.GrouponRule;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.domain.GrouponRuleStrategy;
 import xmu.oomall.discount.mapper.GroupOnRuleMapper;
+import xmu.oomall.domain.goods.GroupOnRule;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -66,5 +67,9 @@ public class GroupOnDao {
 
     public List<GrouponRulePo> searchGrouponGoods(Integer goodsId){
         return groupOnRuleMapper.searchGrouponGoods(goodsId);
+    }
+
+    public List<GrouponRulePo> findAvailableGrouponRules(){
+        return groupOnRuleMapper.findAvailableGrouponRules();
     }
 }

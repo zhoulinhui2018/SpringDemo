@@ -19,4 +19,6 @@ public interface GroupOnRuleMapper {
     public int delete(GrouponRulePo grouponRulePo);
 
     public List<GrouponRulePo> searchGrouponGoods(Integer goodsId);
+
+    public List<GrouponRulePo> findAvailableGrouponRules();
 }

@@ -12,4 +12,6 @@ public interface LogMapper {
     public List<Log> findLogListByAdminName(Integer id);
 
     public Integer findAdminIdByName(String name);
+
+    public Integer addLog(Log newlog);
 }

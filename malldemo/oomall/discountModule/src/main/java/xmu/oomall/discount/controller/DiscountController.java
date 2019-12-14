@@ -2,7 +2,9 @@ package xmu.oomall.discount.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
@@ -14,6 +16,17 @@ import java.util.List;
 public class DiscountController {
     @Autowired
     private GroupOnRuleService groupOnRuleService;
+
+    @Autowired
+    private GroupOnDao groupOnDao;
+
+    @Scheduled(cron = "0/3 * * * * ?")
+    public Object executeAllGroupon(){
+
+        List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
+        System.out.println("test");
+        return null;
+    }
 
     /**
      * @Description: 管理员新增团购规则
