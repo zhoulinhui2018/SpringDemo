@@ -71,7 +71,7 @@ public  class GoodsServiceImpl implements IGoodsService {
     }
 
     @Override
-    public void deleteCategoryById(Integer id) {
-        goodsDao.deleteCategoryById(id);
+    public boolean deleteCategoryById(Integer id) {
+       return goodsDao.deleteCategoryById(id);
     }
 }

@@ -10,13 +10,17 @@ import java.util.List;
 @Service
 @Mapper
 public interface GroupOnRuleMapper {
-    public int add(GrouponRulePo groupOnRule);
+    public int add(GrouponRulePo grouponRulePo);
 
     public GrouponRulePo findGroupOnRuleById(Integer id);
 
-    public int updateById(GrouponRulePo groupOnRule);
+    public int updateById(GrouponRulePo grouponRulePo);
 
-    public int delete(GrouponRulePo groupOnRule);
+    public int delete(GrouponRulePo grouponRulePo);
 
     public List<GrouponRulePo> searchGrouponGoods(Integer goodsId);
+
+    public List<GrouponRulePo> findAvailableGrouponRules();
+
+    public List<GrouponRulePo> adminFindGrouponRules();
 }

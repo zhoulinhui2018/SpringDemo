@@ -11,7 +11,7 @@
 
     <insert id="addCouponRule" parameterType="couponRulePo" useGeneratedKeys="true" keyProperty="id">
         insert into coupon_rule(name,brief,begin_time,end_time,pic_url,valid_period,strategy,goods_list1,goods_list2,gmt_create,gmt_modified,is_deleted)
-        values (#{name},#{brief},#{beginTime},#{endTime},#{picUrl},#{validPeriod},#{strategy},#{goodsList1},#{goodsList2},#{gmtCreate},#{gmtModified},#{beDeleted})
+        values (#{name},#{brief},#{beginTime},#{endTime},#{picUrl},#{validPeriod},#{strategy},#{goodsList1},#{goodsList2},#{gmtCreate},#{gmtModified},#{isDeleted})
     </insert>
 
     <insert id="addCoupon" parameterType="couponPo" useGeneratedKeys="true" keyProperty="id">
@@ -43,7 +43,7 @@
             <if test="goodsList2!=null">goodsList2=#{goodsList2},</if>
             <if test="gmtCreate!=null">gmtCreate=#{gmtCreate},</if>
             <if test="gmtModified!=null">gmtModified=#{gmtModified},</if>
-            <if test="beDeleted!=null">beDeleted=#{beDeleted},</if>
+            <if test="isDeleted!=null">isDeleted=#{isDeleted},</if>
 
         </trim>
         WHERE id=#{id}

@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DiscountApplication.class)
 @AutoConfigureMockMvc
 @Transactional
-public class GroupOnRuleControllerTest {
+public class GrouponRulePoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -35,12 +35,12 @@ public class GroupOnRuleControllerTest {
     @Rollback(false)
     @Test
     public void addTest() throws Exception{
-        GrouponRulePo groupOnRule=new GrouponRulePo();
-        groupOnRule.setGoodsId(100001);
-        groupOnRule.setEndTime(LocalDateTime.now());
-        groupOnRule.setGrouponLevelStragety("level_top");
+        GrouponRulePo grouponRulePo =new GrouponRulePo();
+        grouponRulePo.setProductId(100001);
+        grouponRulePo.setEndTime(LocalDateTime.now());
+        grouponRulePo.setGrouponLevelStrategy("level_top");
 
-        String jsonString = JacksonUtil.toJson(groupOnRule);
+        String jsonString = JacksonUtil.toJson(grouponRulePo);
 
         String responseString= this.mockMvc.perform(post("/grouponRules").contentType("application/json").content(jsonString))
                 .andExpect(status().isOk())
@@ -49,25 +49,25 @@ public class GroupOnRuleControllerTest {
 
         String errMsg = JacksonUtil.parseObject(responseString,"errmsg", String.class);
         Integer errNo = JacksonUtil.parseObject(responseString,"errno", Integer.class);
-        GrouponRulePo groupOnRule1 = JacksonUtil.parseObject(responseString,"data", GrouponRulePo.class);
+        GrouponRulePo grouponRulePo1 = JacksonUtil.parseObject(responseString,"data", GrouponRulePo.class);
 
         assertEquals(errNo, 0);
         assertEquals(errMsg, "Success");
-        assertEquals(groupOnRule.getGoodsId(),100001);
-        assertEquals(groupOnRule.getGrouponLevelStragety(),"level_top");
-        //        groupOnRuleController.create(groupOnRule);
+        assertEquals(grouponRulePo.getProductId(),100001);
+        assertEquals(grouponRulePo.getGrouponLevelStrategy(),"level_top");
+        //        groupOnRuleController.create(grouponRulePo);
     }
 
     @Test
     public void updateTest() throws Exception {
-        GrouponRulePo groupOnRule=new GrouponRulePo();
-        groupOnRule.setGoodsId(100001);
-        groupOnRule.setStartTime(LocalDateTime.now());
-        groupOnRule.setEndTime(LocalDateTime.now());
-        groupOnRule.setGrouponLevelStragety("level_test");
+        GrouponRulePo grouponRulePo =new GrouponRulePo();
+        grouponRulePo.setProductId(100001);
+        grouponRulePo.setStartTime(LocalDateTime.now());
+        grouponRulePo.setEndTime(LocalDateTime.now());
+        grouponRulePo.setGrouponLevelStrategy("level_test");
 
-        groupOnRuleController.update(100001,groupOnRule);
-//        String jsonString = JacksonUtil.toJson(groupOnRule);
+        groupOnRuleController.update(100001, grouponRulePo);
+//        String jsonString = JacksonUtil.toJson(grouponRulePo);
 //
 //        String responseString = this.mockMvc.perform(put("/grouponRules/{id}","100001").contentType(MediaType.APPLICATION_JSON).content(jsonString))
 //                .andExpect(status().isOk())
@@ -77,12 +77,12 @@ public class GroupOnRuleControllerTest {
 //
 //        String errMsg = JacksonUtil.parseObject(responseString,"errmsg", String.class);
 //        Integer errNo = JacksonUtil.parseObject(responseString,"errno", Integer.class);
-//        GroupOnRule groupOnRule1 = JacksonUtil.parseObject(responseString,"data", GroupOnRule.class);
+//        GrouponRulePo groupOnRule1 = JacksonUtil.parseObject(responseString,"data", GrouponRulePo.class);
 //
 //        assertEquals(errNo, 0);
 //        assertEquals(errMsg, "Success");
-//        assertEquals(groupOnRule.getProductId(),100001);
-//        assertEquals(groupOnRule.getGrouponLevelStrategy(),"level_test");
+//        assertEquals(grouponRulePo.getProductId(),100001);
+//        assertEquals(grouponRulePo.getGrouponLevelStrategy(),"level_test");
     }
 
     @Test
@@ -94,7 +94,7 @@ public class GroupOnRuleControllerTest {
 //
 //        String errMsg = JacksonUtil.parseObject(responseString,"errmsg", String.class);
 //        Integer errNo = JacksonUtil.parseObject(responseString,"errno", Integer.class);
-//        GroupOnRule groupOnRule = JacksonUtil.parseObject(responseString,"data", GroupOnRule.class);
+//        GrouponRulePo groupOnRule = JacksonUtil.parseObject(responseString,"data", GrouponRulePo.class);
 //
 //        assertEquals(errNo, 0);
 //        assertEquals(errMsg, "Success");
@@ -107,14 +107,9 @@ public class GroupOnRuleControllerTest {
 //    @Rollback(false)
     @Test
     public void deleteTest(){
-        GrouponRulePo groupOnRule=new GrouponRulePo();
-        groupOnRule.setId(100021);
-        System.out.println(groupOnRuleController.delete(100001,groupOnRule));
+        GrouponRulePo grouponRulePo =new GrouponRulePo();
+        grouponRulePo.setId(100021);
+        System.out.println(groupOnRuleController.delete(100001));
     }
 
-    @Test
-    public void searchGrouponGoodsTest(){
-        Object list = groupOnRuleController.list(10, "100001", 1, 10);
-        System.out.println(list);
-    }
 }

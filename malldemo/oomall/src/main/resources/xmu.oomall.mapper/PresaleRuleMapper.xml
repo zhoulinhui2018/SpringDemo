@@ -17,8 +17,8 @@
             <if test="gmtModified != null">
                 gmt_modified = #{gmtModified},
             </if>
-            <if test="beDeleted != null">
-                is_deleted = #{beDeleted},
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
             </if>
             <if test="startTime != null">
                 start_time = #{startTime},
@@ -26,8 +26,8 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-            <if test="statusCode != null">
-                status = #{statusCode},
+            <if test="status != null">
+                status = #{status},
             </if>
             <if test="grouponLevelStrategy != null">
                 strategy=#{strategy},
@@ -46,8 +46,8 @@
         insert into presale_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, status,
         strategy, product_id, deposit)
-        values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
-        #{startTime}, #{endTime}, #{statusCode},
+        values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
+        #{startTime}, #{endTime}, #{status},
         #{strategy}, #{productId}, #{deposit})
     </insert>
 

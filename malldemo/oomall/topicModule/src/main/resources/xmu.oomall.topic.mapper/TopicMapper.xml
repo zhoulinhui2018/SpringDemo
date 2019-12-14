@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.oomall.topic.mapper.TopicMapper">
+    <resultMap id="TopicPoMap" type="TopicPo">
+        <id column="id" property="id"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="pic_url_list" property="picUrlList"/>
+        <result column="content" property="content"/>
+        <result column="is_deleted" property="beDeleted"/>
+    </resultMap>
+    <insert id="adminAddTopic" parameterType="xmu.oomall.topic.domain.TopicPo" useGeneratedKeys="true" keyProperty="id">
+        insert into oomall_topic (gmt_create,gmt_modified,is_deleted,pic_url_list,content)
+        values (#{gmtCreate},#{gmtModified},#{beDeleted},#{picUrlList},#{content})
+    </insert>
+
+    <select id="findTopicById" parameterType="Integer" resultType="TopicPo">
+        select * from oomall_topic where id=#{id};
+    </select>
+
+    <select id="findTopicList" resultType="xmu.oomall.topic.domain.TopicPo">
+        select *
+        from oomall_topic where is_deleted = 0
+    </select>
+
+    <update id="adminUpdateTopicById" parameterType="xmu.oomall.topic.domain.TopicPo" >
+        update oomall_topic
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gmtCreate!=null"> gmt_create=#{gmtCreate},</if>
+            <if test="gmtModified!=null"> gmt_modified=#{gmtModified},</if>
+            <if test="beDeleted!=null"> is_deleted=#{beDeleted},</if>
+            <if test="picUrlList!=null"> pic_url_list=#{picUrlList},</if>
+            <if test="content!=null"> content=#{content},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <delete id="adminDeleteTopicById" parameterType="Integer">
+        update oomall_topic
+        set is_deleted = 1
+        where id=#{id}
+    </delete>
+
+</mapper>

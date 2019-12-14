@@ -9,10 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.log.LogApplication;
 import xmu.oomall.log.domain.Log;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @SpringBootTest(classes = LogApplication.class)
 @AutoConfigureMockMvc
@@ -34,4 +31,18 @@ public class LogControllerTest {
         System.out.println(object.toString());
     }
 
+    @Rollback(false)
+    @Test
+    public void addLogTest(){
+        Log log = new Log();
+        log.setActions("删除一个商品");
+        log.setActionId(100006);
+        log.setType(3);
+        log.setStatusCode(1);
+        log.setIp("ip");
+        log.setAdminId(100001);
+        log.setGmtModified(LocalDateTime.now());
+        log.setGmtCreate(LocalDateTime.now());
+        logController.addLog(log);
+    }
 }

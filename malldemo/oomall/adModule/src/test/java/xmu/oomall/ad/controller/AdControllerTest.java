@@ -88,7 +88,7 @@ public class AdControllerTest {
 
     @Test
     public void userFindAdsTest(){
-        Object adsList = adController.userFindAdsList();
+        Object adsList = adController.userFindAdsList(1,5);
         System.out.println(adsList);
     }
 

@@ -2,7 +2,6 @@ package xmu.oomall.log.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.log.domain.Log;
-
 import java.util.List;
 
 /**
@@ -14,4 +13,6 @@ import java.util.List;
 @Service
 public interface ILogService {
     public List<Log> findLogListByAdminName(Integer page, Integer limit,String username);
+
+    public Integer addLog(Log newlog);
 }

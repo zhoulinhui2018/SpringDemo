@@ -3,7 +3,7 @@
 <mapper namespace="xmu.oomall.mapper.BrandMapper">
     <insert id="addBrand" parameterType="Brand" useGeneratedKeys="true" keyProperty="id">
         insert into brand (name,`describe`,pic_url,gmt_create,gmt_modified,is_deleted)
-        values (#{name},#{describe},#{picUrl},#{gmtCreate},#{gmtModified},#{beDeleted})
+        values (#{name},#{describe},#{picUrl},#{gmtCreate},#{gmtModified},#{isDeleted})
     </insert>
 
     <update id="updateBrand" parameterType="Brand">
@@ -24,8 +24,8 @@
             <if test="gmtModified !=null">
                 gmt_modified = #{gmtModified},
             </if>
-            <if test="beDeleted !=null">
-                is_deleted = #{beDeleted},
+            <if test="isDeleted !=null">
+                is_deleted = #{isDeleted},
             </if>
         </trim>
         where id=#{id}

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("")
-public class PresaleController {
+public class PresaleRuleController {
     @Autowired
     private PresaleRuleService presaleRuleService;
 
@@ -67,5 +67,12 @@ public class PresaleController {
         return ResponseUtil.ok(presaleRule);
     }
 
+    /**
+     * @Description: 用户为某商品支付定金，提交订单
+     * @Param: productId
+     * @return: order
+     * @Author: Zhang Yaqing
+     * @Date: 2019/12/11
+     */
 
 }
