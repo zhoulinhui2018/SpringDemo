@@ -24,5 +24,8 @@ public class LogService implements ILogService{
         return logDao.findLogListByAdminName(username);
     }
 
-
+    @Override
+    public Integer addLog(Log newlog){
+        return logDao.addLog(newlog);
+    }
 }

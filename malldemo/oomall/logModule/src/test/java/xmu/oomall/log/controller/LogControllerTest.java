@@ -11,6 +11,7 @@ import xmu.oomall.log.LogApplication;
 import xmu.oomall.log.domain.Log;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,4 +35,18 @@ public class LogControllerTest {
         System.out.println(object.toString());
     }
 
+    @Rollback(false)
+    @Test
+    public void addLogTest(){
+        Log log = new Log();
+        log.setAction("删除一个商品");
+        log.setActionId(100006);
+        log.setType(3);
+        log.setStatusCode(1);
+        log.setIp("ip");
+        log.setAdminId(100001);
+        log.setGmtModified(LocalDateTime.now());
+        log.setGmtCreate(LocalDateTime.now());
+        logController.addLog(log);
+    }
 }
