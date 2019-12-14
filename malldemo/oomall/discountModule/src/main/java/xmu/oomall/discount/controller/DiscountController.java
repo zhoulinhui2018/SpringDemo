@@ -4,11 +4,14 @@ package xmu.oomall.discount.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
+import xmu.oomall.discount.domain.GoodsPo;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -50,8 +53,12 @@ public class DiscountController {
      */
     @GetMapping("/grouponRules/{id}")
     public Object detail(@PathVariable Integer id){
+        GrouponRuleVo grouponRuleVo= new GrouponRuleVo();
         GrouponRulePo grouponRulePo = groupOnRuleService.findById(id);
-        return ResponseUtil.ok(grouponRulePo);
+        GoodsPo grouponGoods = groupOnRuleService.getGrouponGoods(grouponRulePo);
+        grouponRuleVo.setGoodsPo(grouponGoods);
+        grouponRuleVo.setGrouponRulePo(grouponRulePo);
+        return ResponseUtil.ok(grouponRuleVo);
     }
 
     /**
@@ -77,24 +84,48 @@ public class DiscountController {
      * @Date: 2019/12/7
      */
     @DeleteMapping("/grouponRules/{id}")
-    public Object delete(@PathVariable Integer id,@RequestBody GrouponRulePo grouponRulePo){
+    public Object delete(@PathVariable Integer id){
+        GrouponRulePo grouponRulePo=new GrouponRulePo();
         grouponRulePo.setId(id);
         groupOnRuleService.delete(grouponRulePo);
-        return ResponseUtil.ok(grouponRulePo);
+        return ResponseUtil.ok();
     }
 
     /**
-     * @Description: 用户开团或者入团情况
+     * @Description: 用户查看团购商品
      * @Param: [id, groupOnRule]
      * @return: java.lang.Object
      * @Author: Zhou Linhui
      * @Date: 2019/12/7
      */
-    @GetMapping("/goods/{id}/grouponRules")
-    public Object list(@PathVariable Integer id, String goodsId,
-                       @RequestParam(defaultValue = "1") Integer page,
+    @GetMapping("/grouponGoods")
+    public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
-        List<GrouponRulePo> rulesList = groupOnRuleService.searchGrouponGoods(Integer.valueOf(goodsId),page,limit);
-        return ResponseUtil.ok(rulesList);
+
+        List<GrouponRulePo> rulesList = groupOnRuleService.findGrouponRulePos(page,limit);
+        List<GrouponRuleVo> grouponRuleVoList=new ArrayList<>();
+        for (GrouponRulePo grouponRulePo : rulesList) {
+            GoodsPo grouponGoods = groupOnRuleService.getGrouponGoods(grouponRulePo);
+            GrouponRuleVo grouponRuleVo=new GrouponRuleVo();
+            grouponRuleVo.setGrouponRulePo(grouponRulePo);
+            grouponRuleVo.setGoodsPo(grouponGoods);
+            grouponRuleVoList.add(grouponRuleVo);
+        }
+        return ResponseUtil.ok(grouponRuleVoList);
+    }
+
+    @GetMapping("/admin/grouponGoods")
+    public Object adminList(@RequestParam(defaultValue = "1") Integer page,
+                            @RequestParam(defaultValue = "10") Integer limit){
+        List<GrouponRulePo> rulesList = groupOnRuleService.adminFindGrouponRulePos(page,limit);
+        List<GrouponRuleVo> grouponRuleVoList=new ArrayList<>();
+        for (GrouponRulePo grouponRulePo : rulesList) {
+            GoodsPo grouponGoods = groupOnRuleService.getGrouponGoods(grouponRulePo);
+            GrouponRuleVo grouponRuleVo=new GrouponRuleVo();
+            grouponRuleVo.setGrouponRulePo(grouponRulePo);
+            grouponRuleVo.setGoodsPo(grouponGoods);
+            grouponRuleVoList.add(grouponRuleVo);
+        }
+        return ResponseUtil.ok(grouponRuleVoList);
     }
 }

@@ -36,7 +36,7 @@ public class Ad {
     /**
      * 该广告是否启用
      */
-    private Boolean beEnable;
+    private Boolean beEnabled;
     /**
      * 该广告上线的时间
      */
@@ -47,7 +47,7 @@ public class Ad {
     private LocalDateTime endTime;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean isDeleted;
+    private Boolean beDeleted;
 
     @Override
     public String toString() {
@@ -58,12 +58,12 @@ public class Ad {
                 ", content='" + content + '\'' +
                 ", picUrl='" + picUrl + '\'' +
                 ", beDefault=" + beDefault +
-                ", beEnable=" + beEnable +
+                ", beEnabled=" + beEnabled +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", beDelete=" + isDeleted +
+                ", beDelete=" + beDeleted +
                 '}';
     }
 
@@ -128,12 +128,12 @@ public class Ad {
         this.beDefault = beDefault;
     }
 
-    public Boolean getBeEnable() {
-        return beEnable;
+    public Boolean getBeEnabled() {
+        return beEnabled;
     }
 
-    public void setBeEnable(Boolean beEnable) {
-        this.beEnable = beEnable;
+    public void setBeEnabled(Boolean beEnabled) {
+        this.beEnabled = beEnabled;
     }
 
     public LocalDateTime getStartTime() {
@@ -169,10 +169,10 @@ public class Ad {
     }
 
     public Boolean getBeDelete() {
-        return isDeleted;
+        return beDeleted;
     }
 
     public void setBeDelete(Boolean beDelete) {
-        this.isDeleted = beDelete;
+        this.beDeleted = beDelete;
     }
 }

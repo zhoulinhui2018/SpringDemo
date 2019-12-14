@@ -3,7 +3,7 @@
 <mapper namespace="xmu.oomall.log.mapper.LogMapper">
     <select id="findLogListByAdminName" parameterType="Integer" resultType="Log">
         select *
-        from log
+        from oomall_log
         <where>
             <if test="adminId !=null">
                 admin_id = #{adminId}
@@ -12,12 +12,13 @@
     </select>
     
     <select id="findAdminIdByName" parameterType="String" resultType="Integer">
-        select id from admin where username= #{username}
+        select id from oomall_admin where username= #{username}
     </select>
     
     <insert id="addLog" parameterType="Log" useGeneratedKeys="true" keyProperty="id">
-        insert into log (admin_id,ip,`type`,`action`,status,gmt_create,gmt_modified,action_id)
-        values (#{adminId},#{ip},#{type},#{action},#{statusCode},#{gmtCreate},#{gmtModified},#{actionId})
+        insert into oomall_log (admin_id,ip,`type`,actions,status,gmt_create,gmt_modified,action_id)
+        values (#{adminId},#{ip},#{type},#{actions},#{statusCode},#{gmtCreate},#{gmtModified},#{actionId})
+
     </insert>
     <!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
     <!--        select * from ad-->

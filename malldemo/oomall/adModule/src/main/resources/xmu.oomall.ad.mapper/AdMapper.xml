@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.ad.mapper.AdMapper">
-    <select id="findAdById" parameterType="Integer" resultType="xmu.oomall.ad.domain.Ad">
+    <select id="findAdById" parameterType="Integer" resultMap="AdResultType">
             select id,
                    link,
                    name,
@@ -18,7 +18,7 @@
             from ad where id = #{id}
     </select>
 
-    <select id="adminFindAllAds" resultType="ad">
+    <select id="adminFindAllAds" resultMap="AdResultType">
         select *
         from ad
         <where>
@@ -31,17 +31,17 @@
         </where>
     </select>
 
-    <select id="findAdsDefault" resultType="ad">
+    <select id="findAdsDefault" resultMap="AdResultType">
         select *
         from ad where is_default=1;
     </select>
 
-    <select id="findAllAdsAvailable" resultType="ad">
+    <select id="findAllAdsAvailable" resultMap="AdResultType">
         select *
         from ad where is_deleted=0 and is_enabled=1;
     </select>
 
-    <select id="findAllAds" resultType="ad">
+    <select id="findAllAds" resultMap="AdResultType">
         select *
         from ad
         where is_deleted = 0
@@ -53,7 +53,7 @@
         where id=#{id}
     </update>
 
-    <select id="findDefaultAds" resultType="Ad">
+    <select id="findDefaultAds" resultMap="AdResultType">
         select *
         from ad
         where is_default=1 and is_deleted = 0
@@ -65,7 +65,7 @@
         start_time, end_time,gmt_create,
         gmt_modified,is_deleted)
         values (#{link}, #{name}, #{content},
-        #{picUrl},#{beDefault},#{beEnable},
+        #{picUrl},#{beDefault},#{beEnabled},
         #{startTime}, #{endTime}, #{gmtCreate},
         #{gmtModified}, #{isDeleted})
     </insert>
@@ -78,12 +78,12 @@
             <if test="content!=null">content=#{content},</if>
             <if test="picUrl!=null">pic_url=#{picUrl},</if>
             <if test="beDefault!=null">is_default=#{beDefault},</if>
-            <if test="beEnable!=null">is_enabled=#{beEnable},</if>
+            <if test="beEnabled!=null">is_enabled=#{beEnabled},</if>
             <if test="startTime!=null">start_time=#{startTime},</if>
             <if test="endTime!=null">end_time=#{endTime},</if>
             <if test="gmtCreate!=null">gmt_create=#{gmtCreate},</if>
             <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
-            <if test="isDeleted!=null">is_deleted=#{isDeleted},</if>
+            <if test="beDeleted!=null">is_deleted=#{beDeleted},</if>
         </trim>
         WHERE id=#{id}
     </update>
@@ -92,4 +92,19 @@
 <!--        select * from ad-->
 <!--        where #{now} between start_time and end_time-->
 <!--    </select>-->
+
+    <resultMap id="AdResultType" type="xmu.oomall.ad.domain.Ad">
+        <id column="id" property="id"/>
+        <result column="link" property="link"/>
+        <result column="content" property="content"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="is_default" property="beDefault"/>
+        <result column="name" property="name"/>
+        <result column="is_enabled" property="beEnabled"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="beDeleted"/>
+    </resultMap>
 </mapper>

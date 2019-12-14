@@ -21,6 +21,7 @@ public class AdDao {
     public void addAds(Ad ad){
         ad.setGmtCreate(LocalDateTime.now());
         ad.setGmtModified(LocalDateTime.now());
+        ad.setBeDelete(false);
         adMapper.addAds(ad);
     }
 
