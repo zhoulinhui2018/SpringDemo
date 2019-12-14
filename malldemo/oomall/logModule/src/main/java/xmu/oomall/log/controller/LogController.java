@@ -31,5 +31,10 @@ public class LogController {
         return ResponseUtil.ok(loglist);
     }
 
+    @PostMapping("/log")
+    public Object addLog(Log newlog){
+        logService.addLog(newlog);
+        return ResponseUtil.ok();
+    }
 
 }

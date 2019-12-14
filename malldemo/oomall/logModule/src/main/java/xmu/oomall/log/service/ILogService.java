@@ -14,4 +14,6 @@ import java.util.List;
 @Service
 public interface ILogService {
     public List<Log> findLogListByAdminName(Integer page, Integer limit,String username);
+
+    public Integer addLog(Log newlog);
 }

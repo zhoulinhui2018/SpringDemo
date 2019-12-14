@@ -20,4 +20,7 @@ public class LogDao {
         return loglist;
     }
 
+    public Integer addLog(Log newlog){
+        return logMapper.addLog(newlog);
+    }
 }
