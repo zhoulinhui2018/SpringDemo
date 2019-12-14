@@ -67,5 +67,7 @@ public interface IGroupOnRuleService {
 
     public int delete(GrouponRulePo grouponRulePo);
 
-    public List<GrouponRulePo> searchGrouponGoods(Integer goodsId, Integer page, Integer limit);
+    public List<GrouponRulePo> findGrouponRulePos(Integer page, Integer limit);
+
+    public List<GrouponRulePo> adminFindGrouponRulePos(Integer page,Integer limit);
 }

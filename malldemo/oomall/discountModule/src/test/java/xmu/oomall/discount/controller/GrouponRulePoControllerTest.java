@@ -109,12 +109,7 @@ public class GrouponRulePoControllerTest {
     public void deleteTest(){
         GrouponRulePo grouponRulePo =new GrouponRulePo();
         grouponRulePo.setId(100021);
-        System.out.println(groupOnRuleController.delete(100001, grouponRulePo));
+        System.out.println(groupOnRuleController.delete(100001));
     }
 
-    @Test
-    public void searchGrouponGoodsTest(){
-        Object list = groupOnRuleController.list(10, "100001", 1, 10);
-        System.out.println(list);
-    }
 }

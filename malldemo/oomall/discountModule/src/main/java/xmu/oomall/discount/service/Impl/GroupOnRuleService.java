@@ -43,11 +43,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         return groupOnDao.update(grouponRulePo);
     }
 
-    @Override
-    public List<GrouponRulePo> searchGrouponGoods(Integer goodsId, Integer page, Integer limit) {
-        PageHelper.startPage(page,limit);
-        return groupOnDao.searchGrouponGoods(goodsId);
-    }
+
 
     public int getGrouponNumber(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
@@ -114,6 +110,19 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         goodsPo.setIsSpecial(goods.getIsSpecial());
         goodsPo.setPrice(goods.getPrice());
         return goodsPo;
+    }
 
+    @Override
+    public List<GrouponRulePo> findGrouponRulePos(Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<GrouponRulePo> availableGrouponRules = groupOnDao.findAvailableGrouponRules();
+        return availableGrouponRules;
+    }
+
+    @Override
+    public List<GrouponRulePo> adminFindGrouponRulePos(Integer page, Integer limit) {
+        PageHelper.startPage(page,limit);
+        List<GrouponRulePo> grouponRulePos=groupOnDao.adminFindGrouponRules();
+        return grouponRulePos;
     }
 }

@@ -17,7 +17,7 @@
     
     <insert id="addLog" parameterType="Log" useGeneratedKeys="true" keyProperty="id">
         insert into log (admin_id,ip,`type`,`action`,status,gmt_create,gmt_modified,action_id)
-        values (#{adminId},#{ip},#{type},#{action},#{statusCode},#{gmtCreate},#{gmtModified},#{actionId})
+        values (#{adminId},#{ip},#{type},#{action},#{status},#{gmtCreate},#{gmtModified},#{actionId})
     </insert>
     <!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
     <!--        select * from ad-->

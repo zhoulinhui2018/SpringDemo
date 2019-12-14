@@ -43,7 +43,7 @@ public class GroupOnDao {
     public GrouponRulePo add(GrouponRulePo grouponRulePo){
         grouponRulePo.setGmtCreate(LocalDateTime.now());
         grouponRulePo.setIsDeleted(false);
-        grouponRulePo.setStatusCode(true);
+        grouponRulePo.setStatus(true);
         grouponRulePo.setGmtModified(LocalDateTime.now());
         int id= groupOnRuleMapper.add(grouponRulePo);
         System.out.println("id "+String.valueOf(id));
@@ -69,5 +69,9 @@ public class GroupOnDao {
 
     public List<GrouponRulePo> findAvailableGrouponRules(){
         return groupOnRuleMapper.findAvailableGrouponRules();
+    }
+
+    public List<GrouponRulePo> adminFindGrouponRules(){
+        return groupOnRuleMapper.adminFindGrouponRules();
     }
 }

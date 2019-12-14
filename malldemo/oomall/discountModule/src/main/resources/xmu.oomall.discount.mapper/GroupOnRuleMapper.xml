@@ -34,8 +34,8 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-            <if test="statusCode != null">
-                status = #{statusCode},
+            <if test="status != null">
+                status = #{status},
             </if>
             <if test="grouponLevelStrategy != null">
                 groupon_level_strategy=#{grouponLevelStrategy},
@@ -59,12 +59,18 @@
         where status=1 and is_deleted = 0
     </select>
 
+    <select id="adminFindGrouponRules" resultType="xmu.oomall.discount.domain.GrouponRulePo">
+        select *
+        from groupon_rule
+        where is_deleted = 0
+    </select>
+
     <insert id="add" parameterType="GrouponRulePo" useGeneratedKeys="true" keyProperty="id">
         insert into groupon_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, status,
         groupon_level_strategy, goods_id)
         values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
-        #{startTime}, #{endTime}, #{statusCode},
+        #{startTime}, #{endTime}, #{status},
         #{grouponLevelStrategy}, #{productId})
     </insert>
 
