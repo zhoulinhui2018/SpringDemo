@@ -2,9 +2,8 @@ package xmu.oomall.log.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.log.domain.Log;
 import xmu.oomall.log.mapper.LogMapper;
-
+import xmu.oomall.log.domain.Log;
 import java.util.List;
 
 @Repository

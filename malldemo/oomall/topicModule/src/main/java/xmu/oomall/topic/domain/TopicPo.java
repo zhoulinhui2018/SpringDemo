@@ -31,7 +31,7 @@ public class TopicPo {
 
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean isDeleted;
+    private Boolean beDeleted;
 
     @Override
     public String toString() {
@@ -41,7 +41,7 @@ public class TopicPo {
                 ", content=" + content +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", isDeleted=" + isDeleted +
+                ", isDeleted=" + beDeleted +
                 '}';
     }
 
@@ -87,10 +87,10 @@ public class TopicPo {
     }
 
     public Boolean getDeleted() {
-        return isDeleted;
+        return beDeleted;
     }
 
     public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+        beDeleted = deleted;
     }
 }

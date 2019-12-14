@@ -54,7 +54,7 @@ public class Topic  {
                 ", content=" + topicPo.getContent() +
                 ", gmtCreate=" + topicPo.getGmtCreate() +
                 ", gmtModified=" + topicPo.getGmtModified() +
-                ", isDeleted=" + topicPo.getDeleted()+
+                ", beDeleted=" + topicPo.getDeleted()+
                 ", pictures="+pictures+
                 '}';
     }

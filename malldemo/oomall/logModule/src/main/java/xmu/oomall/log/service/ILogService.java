@@ -2,7 +2,6 @@ package xmu.oomall.log.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.log.domain.Log;
-
 import java.util.List;
 
 /**
