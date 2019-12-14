@@ -21,4 +21,6 @@ public interface GroupOnRuleMapper {
     public List<GrouponRulePo> searchGrouponGoods(Integer goodsId);
 
     public List<GrouponRulePo> findAvailableGrouponRules();
+
+    public List<GrouponRulePo> adminFindGrouponRules();
 }

@@ -34,8 +34,8 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-            <if test="statusCode != null">
-                status = #{statusCode},
+            <if test="status != null">
+                status = #{status},
             </if>
             <if test="grouponLevelStrategy != null">
                 groupon_level_strategy=#{grouponLevelStrategy},
@@ -58,7 +58,7 @@
         start_time, end_time, status,
         groupon_level_strategy, goods_id)
         values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
-        #{startTime}, #{endTime}, #{statusCode},
+        #{startTime}, #{endTime}, #{status},
         #{grouponLevelStrategy}, #{productId})
     </insert>
 

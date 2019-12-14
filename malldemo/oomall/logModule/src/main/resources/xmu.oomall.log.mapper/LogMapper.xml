@@ -18,6 +18,7 @@
     <insert id="addLog" parameterType="Log" useGeneratedKeys="true" keyProperty="id">
         insert into oomall_log (admin_id,ip,`type`,actions,status,gmt_create,gmt_modified,action_id)
         values (#{adminId},#{ip},#{type},#{actions},#{statusCode},#{gmtCreate},#{gmtModified},#{actionId})
+
     </insert>
     <!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
     <!--        select * from ad-->

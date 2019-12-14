@@ -6,10 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.controller.vo.OrderVo;
-import xmu.oomall.discount.domain.Address;
 import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.Coupon;
@@ -54,7 +52,7 @@ public class CouponControllerTest {
     @Test
     public void readTest()
     {
-        Object object= couponController.read(100003);
+        Object object= couponController.read(100001);
         System.out.println(object.toString());
     }
 

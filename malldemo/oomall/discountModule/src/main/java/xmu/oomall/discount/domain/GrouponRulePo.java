@@ -27,7 +27,7 @@ public class GrouponRulePo {
     /*
     *判断团购是否还在进行中
     * */
-    private Boolean statusCode;
+    private Boolean status;
     /*
     * 团购等级（满多少人组团多少折扣）
     * */
@@ -46,7 +46,7 @@ public class GrouponRulePo {
                 ", isDeleted=" + isDeleted +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", statusCode=" + statusCode +
+                ", status=" + status +
                 ", grouponLevelStrategy='" + grouponLevelStrategy + '\'' +
                 ", productId=" + productId +
                 '}';
@@ -113,12 +113,12 @@ public class GrouponRulePo {
         this.endTime = endTime;
     }
 
-    public Boolean getStatusCode() {
-        return statusCode;
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setStatusCode(Boolean statusCode) {
-        this.statusCode = statusCode;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public String getGrouponLevelStrategy() {
