@@ -1,13 +1,21 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
-import xmu.oomall.discount.domain.GrouponRule;
 import xmu.oomall.discount.domain.GrouponRulePo;
+import xmu.oomall.discount.domain.GrouponRuleStrategy;
 
 import java.util.List;
 
 @Service
 public interface IGroupOnRuleService {
+    /** 
+    * @Description: 获得当前团购达成的团购策略 
+    * @Param: [grouponRulePo] 
+    * @return: xmu.oomall.discount.domain.GrouponRuleStrategy 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/13 
+    */ 
+    public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo);
 
     /** 
     * @Description: 搜索目前时间点已完成团购 
@@ -25,7 +33,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/13
     */
-    public int getGrouponNumber(GrouponRule grouponRule);
+    public int getGrouponNumber(GrouponRulePo grouponRulePo);
     /**
     * @Description: 管理员新增团购规则
     * @Param: [grouponRulePo]

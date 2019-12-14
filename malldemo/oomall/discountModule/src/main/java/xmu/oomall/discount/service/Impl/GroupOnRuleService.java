@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.GrouponRule;
 import xmu.oomall.discount.domain.GrouponRulePo;
+import xmu.oomall.discount.domain.GrouponRuleStrategy;
 import xmu.oomall.discount.service.IGroupOnRuleService;
 
 import java.time.LocalDateTime;
@@ -50,7 +51,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         return groupOnDao.searchGrouponGoods(goodsId);
     }
 
-    public int getGrouponNumber(GrouponRule grouponRule){
+    public int getGrouponNumber(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("order");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/GrouponOrders");
@@ -70,5 +71,19 @@ public class GroupOnRuleService implements IGroupOnRuleService {
             }
         }
         return availableGrouponRules;
+    }
+
+    @Override
+    public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo) {
+        int grouponNumber = this.getGrouponNumber(grouponRulePo);
+        GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
+        GrouponRuleStrategy grouponRuleStrategyBest =new GrouponRuleStrategy();
+        for (int i = 0; i < strategy.getStrategy().size(); i++) {
+            GrouponRuleStrategy grouponRuleStrategy =  strategy.getStrategy().get(i);
+            if (grouponRuleStrategy.getLowerbound()<=grouponNumber){
+                grouponRuleStrategyBest=grouponRuleStrategy;
+            }
+        }
+        return grouponRuleStrategyBest;
     }
 }
