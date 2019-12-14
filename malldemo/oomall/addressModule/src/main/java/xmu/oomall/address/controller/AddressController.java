@@ -49,7 +49,7 @@ public class AddressController {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    public Object validate(@RequestBody Address address){
+    private Object validate(@RequestBody Address address){
         String country=address.getCounty();
         String province=address.getProvince();
         String city=address.getCity();
