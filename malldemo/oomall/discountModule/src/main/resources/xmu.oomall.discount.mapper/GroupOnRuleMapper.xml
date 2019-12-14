@@ -46,7 +46,7 @@
         <id column="id" property="id"/>
         <result column="gmt_create" property="gmtCreate"/>
         <result column="gmt_modified" property="gmtModified"/>
-        <result column="is_deleted" property=""/>
+        <result column="is_deleted" property="beDeleted"/>
         <result column="start_time" property="startTime"/>
         <result column="end_time" property="endTime"/>
         <result column="statusCode" property="statusCode"/>
@@ -74,7 +74,7 @@
 
     <insert id="add" parameterType="GrouponRulePo" useGeneratedKeys="true" keyProperty="id">
         insert into groupon_rule (gmt_create, gmt_modified, is_deleted,
-        start_time, end_time, statusCode,
+        start_time, end_time, status,
         groupon_level_strategy, goods_id)
         values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
         #{startTime}, #{endTime}, #{statusCode},
