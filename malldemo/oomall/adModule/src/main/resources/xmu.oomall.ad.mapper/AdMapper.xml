@@ -67,7 +67,7 @@
         values (#{link}, #{name}, #{content},
         #{picUrl},#{beDefault},#{beEnabled},
         #{startTime}, #{endTime}, #{gmtCreate},
-        #{gmtModified}, #{isDeleted})
+        #{gmtModified}, #{beDeleted})
     </insert>
 
     <update id="updateAdById" parameterType="Ad" >

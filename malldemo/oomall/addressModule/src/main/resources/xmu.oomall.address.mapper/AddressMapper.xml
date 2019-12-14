@@ -17,7 +17,7 @@
         county, province, city,
         address_detail, postal_code,
         mobile, is_default, user_id, county_id)
-        values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
+        values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
         #{county}, #{province}, #{city},
         #{addressDetail}, #{postalCode},
         #{mobile},#{beDefault},#{userId},#{countyId});
@@ -37,8 +37,8 @@
             <if test="gmtModified != null">
                 gmt_modified = #{gmtModified},
             </if>
-            <if test="isDeleted != null">
-                is_deleted = #{isDeleted},
+            <if test="beDeleted != null">
+                is_deleted = #{beDeleted},
             </if>
             <if test="county != null">
                 county = #{county},

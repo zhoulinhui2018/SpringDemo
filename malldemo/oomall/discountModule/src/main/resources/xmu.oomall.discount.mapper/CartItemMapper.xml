@@ -11,6 +11,6 @@
 
     <select id="findProductPrice" parameterType="Integer" resultType="BigDecimal">
         select price
-        from product where id = #{productId}
+        from product where id = #{goodsId}
     </select>
 </mapper>

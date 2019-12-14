@@ -12,7 +12,7 @@
         values (#{goodsId}, #{productIds},
         #{picUrl}, #{specifications},
         #{price}, #{saftyStock},
-        #{gmtCreate}, #{gmtModified},#{isDeleted})
+        #{gmtCreate}, #{gmtModified},#{beDeleted})
     </insert>
 
     <update id="updateProductById" parameterType="Product">
@@ -26,7 +26,7 @@
             <if test="saftyStock!=null">safety_stock = #{saftyStock},</if>
             <if test="gmtCreate!=null">gmtCreate = #{gmtCreate},</if>
             <if test="gmtModified!=null">gmtModified = #{gmtModified},</if>
-            <if test="isDeleted!=null"> is_deleted = #{isDeleted},</if>
+            <if test="beDeleted!=null"> is_deleted = #{beDeleted},</if>
         </trim>
         WHERE id=#{id}
     </update>

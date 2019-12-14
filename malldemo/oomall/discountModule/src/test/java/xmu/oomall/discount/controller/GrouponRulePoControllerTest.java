@@ -36,7 +36,7 @@ public class GrouponRulePoControllerTest {
     @Test
     public void addTest() throws Exception{
         GrouponRulePo grouponRulePo =new GrouponRulePo();
-        grouponRulePo.setProductId(100001);
+        grouponRulePo.setGoodsId(100001);
         grouponRulePo.setEndTime(LocalDateTime.now());
         grouponRulePo.setGrouponLevelStrategy("level_top");
 
@@ -53,7 +53,7 @@ public class GrouponRulePoControllerTest {
 
         assertEquals(errNo, 0);
         assertEquals(errMsg, "Success");
-        assertEquals(grouponRulePo.getProductId(),100001);
+        assertEquals(grouponRulePo.getGoodsId(),100001);
         assertEquals(grouponRulePo.getGrouponLevelStrategy(),"level_top");
         //        groupOnRuleController.create(grouponRulePo);
     }
@@ -61,7 +61,7 @@ public class GrouponRulePoControllerTest {
     @Test
     public void updateTest() throws Exception {
         GrouponRulePo grouponRulePo =new GrouponRulePo();
-        grouponRulePo.setProductId(100001);
+        grouponRulePo.setGoodsId(100001);
         grouponRulePo.setStartTime(LocalDateTime.now());
         grouponRulePo.setEndTime(LocalDateTime.now());
         grouponRulePo.setGrouponLevelStrategy("level_test");
@@ -81,7 +81,7 @@ public class GrouponRulePoControllerTest {
 //
 //        assertEquals(errNo, 0);
 //        assertEquals(errMsg, "Success");
-//        assertEquals(grouponRulePo.getProductId(),100001);
+//        assertEquals(grouponRulePo.getGoodsId(),100001);
 //        assertEquals(grouponRulePo.getGrouponLevelStrategy(),"level_test");
     }
 
@@ -98,7 +98,7 @@ public class GrouponRulePoControllerTest {
 //
 //        assertEquals(errNo, 0);
 //        assertEquals(errMsg, "Success");
-//        assertEquals(groupOnRule.getProductId(),100001);
+//        assertEquals(groupOnRule.getGoodsId(),100001);
 
 
         System.out.println(groupOnRuleController.detail(100001));

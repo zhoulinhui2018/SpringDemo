@@ -88,7 +88,7 @@ public class OrderItem implements Cloneable{
         this.setProductId(cartItem.getProductId());
         this.setGmtCreate(cartItem.getGmtCreate());
         this.setGmtModified(cartItem.getGmtModified());
-        //BigDecimal price=cartItemController.getProductPrice(cartItem.getProductId());
+        //BigDecimal price=cartItemController.getProductPrice(cartItem.getGoodsId());
         //this.setPrice(price);
         this.beDeleted=false;
         this.statusCode=1;
