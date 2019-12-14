@@ -2,7 +2,7 @@ package xmu.oomall.discount.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.discount.domain.GroupOnRule;
+import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.mapper.GroupOnRuleMapper;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public class GroupOnDao {
     @Autowired
     private GroupOnRuleMapper groupOnRuleMapper;
 
-    public GroupOnRule add(GroupOnRule groupOnRule){
+    public GrouponRulePo add(GrouponRulePo groupOnRule){
         groupOnRule.setGmtCreate(LocalDateTime.now());
         groupOnRule.setBeDeleted(false);
         groupOnRule.setStatusCode(true);
@@ -23,20 +23,20 @@ public class GroupOnDao {
         return groupOnRule;
     }
 
-    public GroupOnRule findById(Integer id){
+    public GrouponRulePo findById(Integer id){
         return groupOnRuleMapper.findGroupOnRuleById(id);
     }
 
-    public int update(GroupOnRule groupOnRule){
+    public int update(GrouponRulePo groupOnRule){
         groupOnRule.setGmtModified(LocalDateTime.now());
         return groupOnRuleMapper.updateById(groupOnRule);
     }
 
-    public int delete(GroupOnRule groupOnRule){
+    public int delete(GrouponRulePo groupOnRule){
         return groupOnRuleMapper.delete(groupOnRule);
     }
 
-    public List<GroupOnRule> searchGrouponGoods(Integer goodsId){
+    public List<GrouponRulePo> searchGrouponGoods(Integer goodsId){
         return groupOnRuleMapper.searchGrouponGoods(goodsId);
     }
 }

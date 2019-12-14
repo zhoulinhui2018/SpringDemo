@@ -8,7 +8,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.discount.DiscountApplication;
-import xmu.oomall.discount.domain.GroupOnRule;
+import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.util.JacksonUtil;
 
 import java.time.LocalDateTime;
@@ -35,10 +35,10 @@ public class GroupOnRuleControllerTest {
     @Rollback(false)
     @Test
     public void addTest() throws Exception{
-        GroupOnRule groupOnRule=new GroupOnRule();
-        groupOnRule.setProductId(100001);
+        GrouponRulePo groupOnRule=new GrouponRulePo();
+        groupOnRule.setGoodsId(100001);
         groupOnRule.setEndTime(LocalDateTime.now());
-        groupOnRule.setGrouponLevelStrategy("level_top");
+        groupOnRule.setGrouponLevelStragety("level_top");
 
         String jsonString = JacksonUtil.toJson(groupOnRule);
 
@@ -49,22 +49,22 @@ public class GroupOnRuleControllerTest {
 
         String errMsg = JacksonUtil.parseObject(responseString,"errmsg", String.class);
         Integer errNo = JacksonUtil.parseObject(responseString,"errno", Integer.class);
-        GroupOnRule groupOnRule1 = JacksonUtil.parseObject(responseString,"data", GroupOnRule.class);
+        GrouponRulePo groupOnRule1 = JacksonUtil.parseObject(responseString,"data", GrouponRulePo.class);
 
         assertEquals(errNo, 0);
         assertEquals(errMsg, "Success");
-        assertEquals(groupOnRule.getProductId(),100001);
-        assertEquals(groupOnRule.getGrouponLevelStrategy(),"level_top");
+        assertEquals(groupOnRule.getGoodsId(),100001);
+        assertEquals(groupOnRule.getGrouponLevelStragety(),"level_top");
         //        groupOnRuleController.create(groupOnRule);
     }
 
     @Test
     public void updateTest() throws Exception {
-        GroupOnRule groupOnRule=new GroupOnRule();
-        groupOnRule.setProductId(100001);
+        GrouponRulePo groupOnRule=new GrouponRulePo();
+        groupOnRule.setGoodsId(100001);
         groupOnRule.setStartTime(LocalDateTime.now());
         groupOnRule.setEndTime(LocalDateTime.now());
-        groupOnRule.setGrouponLevelStrategy("level_test");
+        groupOnRule.setGrouponLevelStragety("level_test");
 
         groupOnRuleController.update(100001,groupOnRule);
 //        String jsonString = JacksonUtil.toJson(groupOnRule);
@@ -107,7 +107,7 @@ public class GroupOnRuleControllerTest {
 //    @Rollback(false)
     @Test
     public void deleteTest(){
-        GroupOnRule groupOnRule=new GroupOnRule();
+        GrouponRulePo groupOnRule=new GrouponRulePo();
         groupOnRule.setId(100021);
         System.out.println(groupOnRuleController.delete(100001,groupOnRule));
     }

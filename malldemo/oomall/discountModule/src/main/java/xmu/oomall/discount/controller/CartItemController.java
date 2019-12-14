@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.CartItemPo;
 import xmu.oomall.discount.service.Impl.CartItemServiceImpl;
-import xmu.oomall.discount.service.Impl.CouponServiceImpl;
-import xmu.oomall.util.ResponseUtil;
 
 import java.math.BigDecimal;
 
@@ -18,9 +16,9 @@ public class CartItemController {
     private CartItemServiceImpl cartService;
 
     @GetMapping("/cartItem/{id}")
-    public CartItem getCartItemById(Integer cartId)
+    public CartItemPo getCartItemById(Integer cartId)
     {
-        CartItem cartItem=cartService.findCartItemById(cartId);
+        CartItemPo cartItem=cartService.findCartItemById(cartId);
         return cartItem;
     }
 

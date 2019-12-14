@@ -9,11 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.controller.vo.OrderVo;
-import xmu.oomall.discount.domain.Address;
-import xmu.oomall.discount.domain.CartItem;
-import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.coupon.Coupon;
-import xmu.oomall.discount.domain.coupon.CouponRule;
+import xmu.oomall.discount.domain.CartItemPo;
+import xmu.oomall.discount.domain.OrderItemPo;
+import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -34,7 +33,7 @@ public class CouponControllerTest {
     @Test
     public void createTest()
     {
-        CouponRule couponRule=new CouponRule();
+        CouponRulePo couponRule=new CouponRulePo();
 
         couponRule.setName("全场买三赠一");
         couponRule.setBrief("多买多送");
@@ -51,6 +50,27 @@ public class CouponControllerTest {
         System.out.println("插入一条数据成功");
     }
 
+    @Rollback(false)
+    @Test
+    public void createCouponTest(){
+        CouponPo coupon=new CouponPo();
+        coupon.setUserId(100001);
+        coupon.setCouponRuleId(100001);
+        coupon.setCouponSn("FFFFF");
+        coupon.setBeginTime(LocalDateTime.now());
+        coupon.setEndTime(LocalDateTime.now());
+        coupon.setUsedTime(LocalDateTime.now());
+        coupon.setName("九折折扣券");
+        coupon.setPicUrl("aaaaaa");
+        coupon.setGmtCreate(LocalDateTime.now());
+        coupon.setGmtModified(LocalDateTime.now());
+        coupon.setBeDeleted(false);
+        coupon.setStatusCode(false);
+        couponController.createACoupon(coupon);
+        System.out.println("插入一条数据成功");
+
+    }
+
     @Test
     public void readTest()
     {
@@ -62,7 +82,7 @@ public class CouponControllerTest {
     @Test
     public void deleteTest()
     {
-        CouponRule couponRule=new CouponRule();
+        CouponRulePo couponRule=new CouponRulePo();
         couponRule.setId(100005);
         couponRule.setName("全场买二赠一");
         couponController.delete(couponRule);
@@ -73,7 +93,7 @@ public class CouponControllerTest {
     @Test
     public void updateTest()
     {
-        CouponRule couponRule=new CouponRule();
+        CouponRulePo couponRule=new CouponRulePo();
         couponRule.setId(100005);
         couponRule.setName("全场买三赠一");
 
@@ -82,7 +102,7 @@ public class CouponControllerTest {
     }
     @Test
     public  void myListTest(){
-        List<Coupon> myList=couponController.mylist(100001);
+        List<CouponPo> myList=couponController.mylist(100001);
         System.out.println(myList);
     }
 
@@ -115,21 +135,20 @@ public class CouponControllerTest {
         orderVo.setCartItemIds(cartItemIds);
         orderVo.setCouponId(1000001);
 
-        List<OrderItem> orderItems=new ArrayList<>(cartItemIds.size());
-        //System.out.println(orderVo.getCartItemIds());
+        List<OrderItemPo> orderItems=new ArrayList<>(cartItemIds.size());
+
         for(Integer cartId:orderVo.getCartItemIds())
         {
-            CartItem item= cartItemController.getCartItemById(cartId);
-            OrderItem orderItem=new OrderItem(item);
+            CartItemPo item= cartItemController.getCartItemById(cartId);
+            OrderItemPo orderItem=new OrderItemPo(item);
             BigDecimal price=cartItemController.getProductPrice(item.getProductId());
             orderItem.setPrice(price);
             orderItems.add(orderItem);
-
         }
 
-        List<OrderItem> items=couponController.calcDiscount(orderVo);
+        List<OrderItemPo> items=couponController.calcDiscount(orderVo);
 
-        System.out.println(items);
+        System.out.println("返回明细为："+items);
 
     }
 }

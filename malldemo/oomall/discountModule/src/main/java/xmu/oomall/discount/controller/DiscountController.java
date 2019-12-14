@@ -3,7 +3,7 @@ package xmu.oomall.discount.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import xmu.oomall.discount.domain.GroupOnRule;
+import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
 
@@ -23,7 +23,7 @@ public class DiscountController {
      * @Date: 2019/12/11
      */
     @PostMapping("/grouponRules")
-    public Object create(@RequestBody GroupOnRule groupOnRule){
+    public Object create(@RequestBody GrouponRulePo groupOnRule){
         groupOnRuleService.add(groupOnRule);
         return ResponseUtil.ok(groupOnRule);
     }
@@ -37,7 +37,7 @@ public class DiscountController {
      */
     @GetMapping("/grouponRules/{id}")
     public Object detail(@PathVariable Integer id){
-        GroupOnRule groupOnRule = groupOnRuleService.findById(id);
+        GrouponRulePo groupOnRule = groupOnRuleService.findById(id);
         return ResponseUtil.ok(groupOnRule);
     }
 
@@ -49,7 +49,7 @@ public class DiscountController {
      * @Date: 2019/12/7
      */
     @PutMapping("/grouponRules/{id}")
-    public Object update(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
+    public Object update(@PathVariable Integer id,@RequestBody GrouponRulePo groupOnRule){
         groupOnRule.setId(id);
         groupOnRuleService.update(groupOnRule);
         return ResponseUtil.ok(groupOnRule);
@@ -64,7 +64,7 @@ public class DiscountController {
      * @Date: 2019/12/7
      */
     @DeleteMapping("/grouponRules/{id}")
-    public Object delete(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
+    public Object delete(@PathVariable Integer id,@RequestBody GrouponRulePo groupOnRule){
         groupOnRule.setId(id);
         groupOnRuleService.delete(groupOnRule);
         return ResponseUtil.ok(groupOnRule);
@@ -81,7 +81,7 @@ public class DiscountController {
     public Object list(@PathVariable Integer id, String goodsId,
                        @RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
-        List<GroupOnRule> rulesList = groupOnRuleService.searchGrouponGoods(Integer.valueOf(goodsId),page,limit);
+        List<GrouponRulePo> rulesList = groupOnRuleService.searchGrouponGoods(Integer.valueOf(goodsId),page,limit);
         return ResponseUtil.ok(rulesList);
     }
 }

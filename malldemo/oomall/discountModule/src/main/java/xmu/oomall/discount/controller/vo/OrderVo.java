@@ -1,7 +1,5 @@
 package xmu.oomall.discount.controller.vo;
 
-import xmu.oomall.discount.domain.Address;
-
 import java.util.List;
 
 public class OrderVo {
@@ -21,7 +19,7 @@ public class OrderVo {
      ****************************************************/
     @Override
     public String toString() {
-        return "OrderSubmitVo{" +
+        return "OrderVo{" +
                 "cartItemIds=" + cartItemIds +
                 ", couponId=" + couponId +
                 '}';

@@ -2,7 +2,7 @@ package xmu.oomall.discount.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.CartItemPo;
 import xmu.oomall.discount.mapper.CartItemMapper;
 
 import java.math.BigDecimal;
@@ -13,8 +13,8 @@ public class CartItemDao {
     @Autowired
     private CartItemMapper cartItemMapper;
 
-    public CartItem findCartItemById(Integer cartId) {
-        CartItem cartItem=cartItemMapper.findCartItemById(cartId);
+    public CartItemPo findCartItemById(Integer cartId) {
+        CartItemPo cartItem=cartItemMapper.findCartItemById(cartId);
         return cartItem;
     }
 

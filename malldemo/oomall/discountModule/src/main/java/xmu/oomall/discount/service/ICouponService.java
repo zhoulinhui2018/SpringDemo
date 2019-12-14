@@ -1,12 +1,10 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
-import xmu.oomall.discount.domain.CartItem;
-import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.coupon.Coupon;
-import xmu.oomall.discount.domain.coupon.CouponRule;
+import xmu.oomall.discount.domain.OrderItemPo;
+import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -24,14 +22,14 @@ public interface ICouponService {
      * @param id
      * @return
      */
-   CouponRule findCouponRuleById(Integer id);
+   CouponRulePo findCouponRuleById(Integer id);
 
     /**
      * 根据id更新CouponRule对象
      * @param couponRule
      * @return
      */
-   int updateCouponRuleById(CouponRule couponRule);
+   int updateCouponRuleById(CouponRulePo couponRule);
 
     /**
      * 根据id删除CouponRule对象
@@ -45,23 +43,25 @@ public interface ICouponService {
      * 获取CouponRule列表
      * @return
      */
-   List<CouponRule> getCouponList();
+   List<CouponRulePo> getCouponList();
 
     /**
      * 新增CouponRule
      * @param couponRule
      */
-   void addCouponRule(CouponRule couponRule);
+    void addCouponRule(CouponRulePo couponRule);
 
-    List<Coupon> getCouponMyList(Integer userId);
+    List<CouponPo> getCouponMyList(Integer userId);
 
     Integer getProductId(Integer itemId);
 
     Integer getGoodsId(Integer productId);
 
-    Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
+    Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
 
-    Coupon findCouponById(Integer id);
+    CouponPo findCouponById(Integer id);
 
-    List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId);
+    List<OrderItemPo> calcDiscount(List<OrderItemPo> orderItems, Integer couponId);
+
+    void addCoupon(CouponPo coupon);
 }

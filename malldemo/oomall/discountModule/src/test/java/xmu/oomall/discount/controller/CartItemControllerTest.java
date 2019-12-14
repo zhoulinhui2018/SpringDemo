@@ -6,8 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.discount.DiscountApplication;
-import xmu.oomall.discount.domain.CartItem;
-import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.CartItemPo;
+import xmu.oomall.discount.domain.OrderItemPo;
 
 import java.math.BigDecimal;
 
@@ -21,8 +21,8 @@ public class CartItemControllerTest {
     @Test
     public void findCartItemTest()
     {
-        CartItem cartItem=cartItemController.getCartItemById(1);
-        OrderItem orderItem=new OrderItem(cartItem);
+        CartItemPo cartItem=cartItemController.getCartItemById(1);
+        OrderItemPo orderItem=new OrderItemPo(cartItem);
         BigDecimal price=cartItemController.getProductPrice(cartItem.getProductId());
         orderItem.setPrice(price);
         System.out.println(orderItem);

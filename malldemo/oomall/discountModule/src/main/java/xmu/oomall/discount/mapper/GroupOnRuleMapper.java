@@ -3,20 +3,20 @@ package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
-import xmu.oomall.discount.domain.GroupOnRule;
+import xmu.oomall.discount.domain.GrouponRulePo;
 
 import java.util.List;
 
 @Service
 @Mapper
 public interface GroupOnRuleMapper {
-    public int add(GroupOnRule groupOnRule);
+    public int add(GrouponRulePo groupOnRule);
 
-    public GroupOnRule findGroupOnRuleById(Integer id);
+    public GrouponRulePo findGroupOnRuleById(Integer id);
 
-    public int updateById(GroupOnRule groupOnRule);
+    public int updateById(GrouponRulePo groupOnRule);
 
-    public int delete(GroupOnRule groupOnRule);
+    public int delete(GrouponRulePo groupOnRule);
 
-    public List<GroupOnRule> searchGrouponGoods(Integer goodsId);
+    public List<GrouponRulePo> searchGrouponGoods(Integer goodsId);
 }

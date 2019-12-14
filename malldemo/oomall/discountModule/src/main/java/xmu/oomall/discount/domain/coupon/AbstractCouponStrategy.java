@@ -3,6 +3,7 @@ package xmu.oomall.discount.domain.coupon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.OrderItemPo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -52,19 +53,19 @@ public abstract class AbstractCouponStrategy {
      * @param couponId   优惠卷Id
      * @return 更新的订单列表，包含可能因为误差拆开的明细
      */
-    public List<OrderItem> cacuDiscount(List<OrderItem> validItems, int couponId) {
+    public List<OrderItemPo> cacuDiscount(List<OrderItemPo> validItems, int couponId) {
         System.out.println("cacuDiscount的参数： validItems" + validItems + " couponId = " + couponId);
         //优惠商品的总价和数量
         BigDecimal totalPrice = BigDecimal.ZERO;
         Integer totalQuantity = 0;
 
         //优惠的货品
-        List<OrderItem> discountItems = new ArrayList<>(validItems.size());
+        List<OrderItemPo> discountItems = new ArrayList<>(validItems.size());
 
-        Iterator<OrderItem> itemIterator = validItems.iterator();
+        Iterator<OrderItemPo> itemIterator = validItems.iterator();
 
         while (itemIterator.hasNext()) {
-            OrderItem item = itemIterator.next();
+            OrderItemPo item = itemIterator.next();
             System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
             totalPrice = totalPrice.add(item.getPrice().multiply(BigDecimal.valueOf(item.getNumber())));
             totalQuantity += item.getNumber();
@@ -77,14 +78,14 @@ public abstract class AbstractCouponStrategy {
         System.out.println("优惠门槛 enough = " + enough);
 
         //计算优惠后的价格
-        List<OrderItem> newItems = new ArrayList<>();
+        List<OrderItemPo> newItems = new ArrayList<>();
         BigDecimal dealTotalPrice = BigDecimal.ZERO;
 
         if (enough) {
 
-            Iterator<OrderItem> iterator = discountItems.iterator();
+            Iterator<OrderItemPo> iterator = discountItems.iterator();
             while (iterator.hasNext()){
-                OrderItem item = iterator.next();
+                OrderItemPo item = iterator.next();
                 //按照比例分配，可能会出现精度误差，在后面补偿到第一个货品上
                 BigDecimal dealPrice = this.getDealPrice(item.getPrice(), totalPrice);
                 System.out.println("优惠价格 dealPrice=" + dealPrice);
@@ -98,7 +99,6 @@ public abstract class AbstractCouponStrategy {
 
             BigDecimal error = this.getError(totalPrice, dealTotalPrice);
             System.out.println("误差 error=" + error);
-            //System.out.println("cacuDiscount返回 newItems = " + newItems);
 
             if (error.compareTo(BigDecimal.ZERO) != 0) {
 
@@ -106,7 +106,7 @@ public abstract class AbstractCouponStrategy {
                 //寻找数量为1的明细，将误差补偿在此明细上，否则拆开一个现有明细
 
                 Boolean gotIt = false;
-                for (OrderItem item : validItems) {
+                for (OrderItemPo item : validItems) {
                     if (item.getNumber() == 1) {
                         BigDecimal dealPrice = item.getDealPrice();
                         item.setDealPrice(dealPrice.add(error));
@@ -118,13 +118,13 @@ public abstract class AbstractCouponStrategy {
                 if (!gotIt) {
                     newItems.clear();
                     //无数量为1的明细，拆第一个
-                    OrderItem item = validItems.get(0);
+                    OrderItemPo item = validItems.get(0);
                     Integer quantity = item.getNumber();
                     item.setNumber(quantity - 1);//原item的数量减一
 
                     newItems.add(item);//加上第一项明细
                     try {
-                        OrderItem newItem = (OrderItem) item.clone();
+                        OrderItemPo newItem = (OrderItemPo) item.clone();
                         newItem.setNumber(1);//用newItem来代替以前的item
                         BigDecimal dealPrice = newItem.getDealPrice();
                         newItem.setDealPrice(dealPrice.add(error));
@@ -140,7 +140,7 @@ public abstract class AbstractCouponStrategy {
                 }
 
             }
-            System.out.println("cacuDiscount返回 newItems = " + newItems);
+            //System.out.println("cacuDiscount返回 newItems = " + newItems);
             return newItems;
         }
         else {
