@@ -53,7 +53,7 @@ public class TopicControllerTest {
     //用户管理员查看专题详情测试
     @Test
     public void findTopicByIdTest(){
-        Object object = topicController.findTopicById(100002);
+        Object object = topicController.findTopicById(100003);
         System.out.println(object.toString());
     }
 
@@ -63,22 +63,21 @@ public class TopicControllerTest {
     public void adminUpdateTopicByIdTest(){
         Topic newtopic = new Topic();
         List<String> pic_urls = new ArrayList<String>();
-        newtopic.setId(100002);
-        newtopic.setGmtCreate(LocalDateTime.now());
+        newtopic.setId(100004);
         newtopic.setGmtModified(LocalDateTime.now());
-        newtopic.setContent("content");
+        newtopic.setContent("new_content");
         newtopic.setDeleted(false);
         pic_urls.add("pic7_url");
         pic_urls.add("pic8_url");
         pic_urls.add("pic9_url");
         newtopic.setPictures(pic_urls);
-        Object object = topicController.adminUpdateTopicById(100002,newtopic);
+        Object object = topicController.adminUpdateTopicById(100004,newtopic);
     }
 
     //管理员删除专题测试
     @Rollback(false)
     @Test
     public void adminDeleteTopicTest(){
-        topicController.adminDeleteTopicById(100005);
+        topicController.adminDeleteTopicById(300004);
     }
 }

@@ -25,7 +25,6 @@ public class TopicDao {
         for(TopicPo item:topicPos){
             Topic temp = new Topic(item);//新建一个topic对象，修改构造方法
             temp.getPictures();
-            temp.setPictures();
             topics.add(temp);
         }
         return topics;
@@ -38,7 +37,7 @@ public class TopicDao {
         topicPo.setGmtModified(LocalDateTime.now());
         topicPo.setContent(newtopic.getContent());
         topicPo.setDeleted(false);
-        newtopic.setPictures();//调用setpictures的方法，把private属性中的po对象内的pic_url_list给初始化
+        newtopic.setPictures(newtopic.getpictures());//调用setpictures的方法，用newtopic中的pictures这个list，把private属性中的po对象内的pic_url_list给初始化
         topicPo.setPicUrlList(newtopic.getPicUrlList());
         topicMapper.adminAddTopic(topicPo);
         return newtopic;
@@ -59,7 +58,7 @@ public class TopicDao {
         topicPo.setGmtModified(LocalDateTime.now());
         topicPo.setContent(newtopic.getContent());
         topicPo.setDeleted(newtopic.getDeleted());
-        newtopic.setPictures();//调用setpictures的方法，把private属性中的po对象内的pic_url_list给初始化
+        newtopic.setPictures(newtopic.getpictures());//调用setpictures的方法，把private属性中的po对象内的pic_url_list给初始化
         topicPo.setPicUrlList(newtopic.getPicUrlList());
         return topicMapper.adminUpdateTopicById(topicPo);
     }

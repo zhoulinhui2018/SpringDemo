@@ -48,6 +48,18 @@ public class TopicDaoTest {
         topicDao.adminUpdateTopicById(newtopic);
     }
 
+
+    @Test
+    public void JsonTest(){
+        Topic topic = new Topic();
+        List<String> pic_urls = new ArrayList<String>();
+        pic_urls.add("pic4_url");
+        pic_urls.add("pic5_url");
+        pic_urls.add("pic6_url");
+        topic.setPictures(pic_urls);
+        System.out.println(topic.getPicUrlList());
+    }
+
     //删除专题测试
     @Test
     public void deleteTopic(){
