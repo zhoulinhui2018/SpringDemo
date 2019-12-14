@@ -4,6 +4,7 @@ package xmu.oomall.discount.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
@@ -50,6 +51,7 @@ public class DiscountController {
      */
     @GetMapping("/grouponRules/{id}")
     public Object detail(@PathVariable Integer id){
+        GrouponRuleVo grouponRuleVo= new GrouponRuleVo();
         GrouponRulePo grouponRulePo = groupOnRuleService.findById(id);
         return ResponseUtil.ok(grouponRulePo);
     }

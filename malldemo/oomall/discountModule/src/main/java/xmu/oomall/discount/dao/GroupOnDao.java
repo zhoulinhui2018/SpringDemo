@@ -7,7 +7,6 @@ import xmu.oomall.discount.domain.GrouponRule;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.domain.GrouponRuleStrategy;
 import xmu.oomall.discount.mapper.GroupOnRuleMapper;
-import xmu.oomall.domain.goods.GroupOnRule;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -45,7 +44,6 @@ public class GroupOnDao {
         grouponRulePo.setGmtCreate(LocalDateTime.now());
         grouponRulePo.setIsDeleted(false);
         grouponRulePo.setStatusCode(true);
-        grouponRulePo.setStartTime(LocalDateTime.now());
         grouponRulePo.setGmtModified(LocalDateTime.now());
         int id= groupOnRuleMapper.add(grouponRulePo);
         System.out.println("id "+String.valueOf(id));

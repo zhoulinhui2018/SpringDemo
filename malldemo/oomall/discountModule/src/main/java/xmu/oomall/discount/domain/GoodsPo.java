@@ -44,7 +44,7 @@ public class GoodsPo {
     /**
      * 上下架状态，0表示下架，1表示上架，2表示最新，3表示最热，4表示最新且最热
      */
-    private Boolean statusCode;
+    private Integer statusCode;
     /**
      * 分享链接
      */
@@ -78,43 +78,15 @@ public class GoodsPo {
     /**
      * 0：默认模板计算邮费 1：特殊模板计算邮费
      */
-    private Boolean beSpecial;
+    private Boolean isSpecial;
     /**
      * 该商品的最低产品价格
      */
     private BigDecimal price;
 
-    private Boolean beDeleted;
+    private Boolean isDeleted;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-
-
-    @Override
-    public String toString() {
-        return "GoodsPo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", goodsSn='" + goodsSn + '\'' +
-                ", shortName='" + shortName + '\'' +
-                ", description='" + description + '\'' +
-                ", brief='" + brief + '\'' +
-                ", picUrl='" + picUrl + '\'' +
-                ", detail='" + detail + '\'' +
-                ", statusCode=" + statusCode +
-                ", shareUrl='" + shareUrl + '\'' +
-                ", gallery='" + gallery + '\'' +
-                ", goodsCategoryId=" + goodsCategoryId +
-                ", brandId=" + brandId +
-                ", weight=" + weight +
-                ", volume='" + volume + '\'' +
-                ", specialFreightId=" + specialFreightId +
-                ", beSpecial=" + beSpecial +
-                ", price=" + price +
-                ", beDeleted=" + beDeleted +
-                ", gmtCreate=" + gmtCreate +
-                ", gmtModified=" + gmtModified +
-                '}';
-    }
 
     public Integer getId() {
         return id;
@@ -180,11 +152,11 @@ public class GoodsPo {
         this.detail = detail;
     }
 
-    public Boolean getStatusCode() {
+    public Integer getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(Boolean statusCode) {
+    public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -244,12 +216,12 @@ public class GoodsPo {
         this.specialFreightId = specialFreightId;
     }
 
-    public Boolean getBeSpecial() {
-        return beSpecial;
+    public Boolean getIsSpecial() {
+        return isSpecial;
     }
 
-    public void setBeSpecial(Boolean beSpecial) {
-        this.beSpecial = beSpecial;
+    public void setIsSpecial(Boolean isSpecial) {
+        this.isSpecial = isSpecial;
     }
 
     public BigDecimal getPrice() {
@@ -260,12 +232,12 @@ public class GoodsPo {
         this.price = price;
     }
 
-    public Boolean getBeDeleted() {
-        return beDeleted;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setBeDeleted(Boolean beDeleted) {
-        this.beDeleted = beDeleted;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -282,5 +254,32 @@ public class GoodsPo {
 
     public void setGmtModified(LocalDateTime gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public GoodsPo(Integer id, String name, String goodsSn, String shortName, String description, String brief, String picUrl, String detail, Integer statusCode, String shareUrl, String gallery, Integer goodsCategoryId, Integer brandId, BigDecimal weight, String volume, Integer specialFreightId, Boolean isSpecial, BigDecimal price, Boolean isDeleted, LocalDateTime gmtCreate, LocalDateTime gmtModified) {
+        this.id = id;
+        this.name = name;
+        this.goodsSn = goodsSn;
+        this.shortName = shortName;
+        this.description = description;
+        this.brief = brief;
+        this.picUrl = picUrl;
+        this.detail = detail;
+        this.statusCode = statusCode;
+        this.shareUrl = shareUrl;
+        this.gallery = gallery;
+        this.goodsCategoryId = goodsCategoryId;
+        this.brandId = brandId;
+        this.weight = weight;
+        this.volume = volume;
+        this.specialFreightId = specialFreightId;
+        this.isSpecial = isSpecial;
+        this.price = price;
+        this.isDeleted = isDeleted;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
+    }
+
+    public GoodsPo() {
     }
 }
