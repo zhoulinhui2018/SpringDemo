@@ -42,7 +42,7 @@
             <if test="purchasePrice!=null">purchase_price=#{purchasePrice},</if>
             <if test="addTime!=null">add_time=#{addTime},</if>
             <if test="updateTime!=null">update_time=#{updateTime},</if>
-            <if test="beDeleted!=null">be_delete=#{beDeleted},</if>
+            <if test="isDeleted!=null">be_delete=#{isDeleted},</if>
             <if test="goodsId!=null">goods_id=#{goodsId},</if>
         </trim>
         WHERE id=#{id}
@@ -69,7 +69,7 @@
             <if test="volume !=null">volume=#{volume},</if>
             <if test="specialFreightId !=null">special_freight_id=#{specialFreightId},</if>
             <if test="beSpecial !=null">is_special=#{beSpecial},</if>
-            <if test="beDeleted !=null">is_deleted=#{beDeleted},</if>
+            <if test="isDeleted !=null">is_deleted=#{isDeleted},</if>
         </trim>
         where id=#{id}
     </update>
@@ -86,7 +86,7 @@
                 #{description}, #{brief}, #{picUrl},
                 #{detail}, #{status},#{shareUrl},#{gallery},
                 #{goodsCategoryId},#{brandId},
-                #{weight},#{volume},#{specialFreightId},#{beSpecial},#{beDeleted})
+                #{weight},#{volume},#{specialFreightId},#{beSpecial},#{isDeleted})
     </insert>
 
     <delete id="deleteGoodsbyId" parameterType="Integer">
@@ -102,7 +102,7 @@
     <insert id="addNewCategory" parameterType="GoodsCategory">
         insert into goods_category
         values (
-        #{id},#{name},#{pid},#{gmtCreate}, #{gmtModified},#{beDeleted}
+        #{id},#{name},#{pid},#{gmtCreate}, #{gmtModified},#{isDeleted}
         )
     </insert>
 

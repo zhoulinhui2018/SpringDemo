@@ -86,8 +86,9 @@ public class CategoryController {
      * @Date: 2019/12/7
      */
     @DeleteMapping("/categories/{id}")
-    public void deleteCategoryById(Integer id) {
-        goodsService.deleteCategoryById(id);
+    public Object deleteCategoryById(Integer id) {
+        boolean result=goodsService.deleteCategoryById(id);
+        return ResponseUtil.ok(result);
     }
 
 }

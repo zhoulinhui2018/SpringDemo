@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.oomall.address.mapper.AddressMapper">
+
+    <select id="getAllAddressList" resultType="Address">
+        select * from address;
+    </select>
+
+    <select id="getUserAddressList" resultType="Address" parameterType="Integer">
+        select *
+        from address
+        where user_id= #{userId};
+    </select>
+
+    <insert id="addNewAddress" parameterType="Address" useGeneratedKeys="true" keyProperty="id">
+      insert into address (gmt_create, gmt_modified, is_deleted,
+        county, province, city,
+        address_detail, postal_code,
+        mobile, is_default, user_id, county_id)
+        values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
+        #{county}, #{province}, #{city},
+        #{addressDetail}, #{postalCode},
+        #{mobile},#{beDefault},#{userId},#{countyId});
+    </insert>
+
+    <delete id="deleteAddress" parameterType="integer">
+        delete from address
+        where id=#{id};
+    </delete>
+
+    <update id="updateAddress"  parameterType="Address" >
+        update address
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified},
+            </if>
+            <if test="beDeleted != null">
+                is_deleted = #{beDeleted},
+            </if>
+            <if test="county != null">
+                county = #{county},
+            </if>
+            <if test="province != null">
+                province = #{province},
+            </if>
+            <if test="city != null">
+                city = #{city},
+            </if>
+            <if test="addressDetail != null">
+                address_detail = #{addressDetail},
+            </if>
+            <if test="postalCode != null">
+                postal_code = #{postalCode},
+            </if>
+            <if test="mobile != null">
+                mobile=#{mobile},
+            </if>
+            <if test="beDefault != null">
+                is_default=#{beDefault},
+            </if>
+            <if test="userId != null">
+                user_id=#{userId},
+            </if>
+            <if test="countyId != null">
+                county_id=#{countyId},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <select id="getAddressDetail" resultType="Address" parameterType="Integer">
+        select *
+        from address
+        where id=#{id}
+    </select>
+
+</mapper>

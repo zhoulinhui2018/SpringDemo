@@ -2,7 +2,6 @@ package xmu.oomall.ad.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.ad.domain.Ad;
-
 import java.util.List;
 
 @Service
@@ -39,5 +38,5 @@ public interface IAdService {
      */
     public Integer updateAdById(Ad newAd);
     public List<Ad> adminFindAllAds(Integer page, Integer limit,Ad ad);
-    public List<Ad> findUserAds();
+    public List<Ad> findUserAds(Integer page ,Integer limit);
 }

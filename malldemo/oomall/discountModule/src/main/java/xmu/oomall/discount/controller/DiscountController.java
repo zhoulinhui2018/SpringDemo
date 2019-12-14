@@ -3,7 +3,7 @@ package xmu.oomall.discount.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import xmu.oomall.discount.domain.GroupOnRule;
+import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.util.ResponseUtil;
 
@@ -17,15 +17,15 @@ public class DiscountController {
 
     /**
      * @Description: 管理员新增团购规则
-     * @Param: [groupOnRule]
+     * @Param: [grouponRulePo]
      * @return: java.lang.Object
      * @Author: Zhou Linhui
      * @Date: 2019/12/11
      */
     @PostMapping("/grouponRules")
-    public Object create(@RequestBody GroupOnRule groupOnRule){
-        groupOnRuleService.add(groupOnRule);
-        return ResponseUtil.ok(groupOnRule);
+    public Object create(@RequestBody GrouponRulePo grouponRulePo){
+        groupOnRuleService.add(grouponRulePo);
+        return ResponseUtil.ok(grouponRulePo);
     }
 
     /**
@@ -37,37 +37,37 @@ public class DiscountController {
      */
     @GetMapping("/grouponRules/{id}")
     public Object detail(@PathVariable Integer id){
-        GroupOnRule groupOnRule = groupOnRuleService.findById(id);
-        return ResponseUtil.ok(groupOnRule);
+        GrouponRulePo grouponRulePo = groupOnRuleService.findById(id);
+        return ResponseUtil.ok(grouponRulePo);
     }
 
     /**
      * @Description: 管理员修改团购信息
-     * @Param: [id, groupOnRule]
+     * @Param: [id, grouponRulePo]
      * @return: java.lang.Object
      * @Author: Zhou Linhui
      * @Date: 2019/12/7
      */
     @PutMapping("/grouponRules/{id}")
-    public Object update(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
-        groupOnRule.setId(id);
-        groupOnRuleService.update(groupOnRule);
-        return ResponseUtil.ok(groupOnRule);
+    public Object update(@PathVariable Integer id,@RequestBody GrouponRulePo grouponRulePo){
+        grouponRulePo.setId(id);
+        groupOnRuleService.update(grouponRulePo);
+        return ResponseUtil.ok(grouponRulePo);
     }
 
 
     /**
      * @Description: 管理员删除团购
-     * @Param: [id, groupOnRule]
+     * @Param: [id, grouponRulePo]
      * @return: java.lang.Object
      * @Author: Zhou Linhui
      * @Date: 2019/12/7
      */
     @DeleteMapping("/grouponRules/{id}")
-    public Object delete(@PathVariable Integer id,@RequestBody GroupOnRule groupOnRule){
-        groupOnRule.setId(id);
-        groupOnRuleService.delete(groupOnRule);
-        return ResponseUtil.ok(groupOnRule);
+    public Object delete(@PathVariable Integer id,@RequestBody GrouponRulePo grouponRulePo){
+        grouponRulePo.setId(id);
+        groupOnRuleService.delete(grouponRulePo);
+        return ResponseUtil.ok(grouponRulePo);
     }
 
     /**
@@ -81,7 +81,7 @@ public class DiscountController {
     public Object list(@PathVariable Integer id, String goodsId,
                        @RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
-        List<GroupOnRule> rulesList = groupOnRuleService.searchGrouponGoods(Integer.valueOf(goodsId),page,limit);
+        List<GrouponRulePo> rulesList = groupOnRuleService.searchGrouponGoods(Integer.valueOf(goodsId),page,limit);
         return ResponseUtil.ok(rulesList);
     }
 }

@@ -10,12 +10,12 @@ import java.util.Objects;
  * @Modified By:
  **/
 
-public class GroupOnRule {
+public class GrouponRulePo {
     private Integer id;
 
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean beDeleted;
+    private Boolean isDeleted;
     /*
      *团购开始时间
      * */
@@ -39,11 +39,11 @@ public class GroupOnRule {
 
     @Override
     public String toString() {
-        return "GroupOnRule{" +
+        return "GrouponRulePo{" +
                 "id=" + id +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", beDeleted=" + beDeleted +
+                ", isDeleted=" + isDeleted +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", statusCode=" + statusCode +
@@ -56,7 +56,7 @@ public class GroupOnRule {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GroupOnRule that = (GroupOnRule) o;
+        GrouponRulePo that = (GrouponRulePo) o;
         return Objects.equals(id, that.id);
     }
 
@@ -89,12 +89,12 @@ public class GroupOnRule {
         this.gmtModified = gmtModified;
     }
 
-    public Boolean getBeDeleted() {
-        return beDeleted;
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setBeDeleted(Boolean beDeleted) {
-        this.beDeleted = beDeleted;
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public LocalDateTime getStartTime() {
