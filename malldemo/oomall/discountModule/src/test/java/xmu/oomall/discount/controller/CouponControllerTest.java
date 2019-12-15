@@ -8,7 +8,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import xmu.oomall.discount.DiscountApplication;
-import xmu.oomall.discount.controller.vo.OrderVo;
 import xmu.oomall.discount.domain.CartItemPo;
 import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.CouponPo;

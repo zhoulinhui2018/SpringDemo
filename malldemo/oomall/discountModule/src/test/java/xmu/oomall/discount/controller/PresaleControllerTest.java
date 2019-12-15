@@ -95,7 +95,7 @@ public class PresaleControllerTest {
         List<OrderItem> list=new ArrayList<>();
         list.add(item);
         order.setOrderItemList(list);
-        Object object=presaleController.getPrePayment(order,30);
+        Object object=presaleController.getDepositAndFinalPay(order,30);
         System.out.println(object.toString());
     }
 

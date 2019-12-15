@@ -1,9 +1,12 @@
 package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
-import xmu.oomall.discount.controller.vo.OrderVo;
+import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
@@ -24,7 +27,7 @@ public class CouponController {
     private CouponServiceImpl couponService;
 
     @Autowired
-    private CartItemController cartItemController;
+    private LoadBalancerClient loadBalancerClient;
 
     private Object validate(CouponRulePo couponRule) {
         String name = couponRule.getName();
@@ -146,22 +149,26 @@ public class CouponController {
 
     /**
      * 用户查看当前购物车下单商品订单可用优惠券
+     * userId不能直接使用！！！
      * @param userId
      * @param cartItemIds
      * @return
      */
     @GetMapping("/coupons/availableCoupons")
-    //OrderVo可以使用在这里
     public Object selectlist(Integer userId,List<Integer> cartItemIds){
-        //把购物车中商品可用优惠券提出来
-        Integer itemId;
-        Integer productId;
         Integer goodsId;
         List<Integer> goodsIdList=new ArrayList<Integer>(cartItemIds.size());
         for(int i=0;i<cartItemIds.size();i++) {
-            itemId = cartItemIds.get(i);
-            productId = couponService.getProductId(itemId);//通过cartItemId找货品id
-            goodsId = couponService.getGoodsId(productId);//通过货品id找商品id
+            Integer id = cartItemIds.get(i);
+            //调用购物车模块服务通过cartItemId找货品id
+            RestTemplate restTemplate = new RestTemplate();
+            ServiceInstance instance = loadBalancerClient.choose("cartItem");
+            String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/cartItems/{id}");
+            CartItem cartItem = restTemplate.getForObject(reqURL,CartItem.class);
+
+            //通过货品id找商品id
+            goodsId=cartItem.getProduct().getGoodsId();
+
             goodsIdList.add(goodsId);//把购物车中商品id保存到一个list当中
 
         }
@@ -170,35 +177,28 @@ public class CouponController {
     }
 
     /**
-     * Order模块调用Discount模块，把List<OrderItem>传过来计算使用优惠券后的价格,返回计算优惠价格后的新明细
-     * @param orderVo
-     * @return List<OrderItem>
+     * Order模块调用Discount模块，把Order传过来计算使用优惠券后的价格,返回计算优惠价格后的新Order
+     * @param order
+     * @return newOrder
      */
-    @GetMapping("/calcDiscount")
-    public List<OrderItemPo> calcDiscount(OrderVo orderVo)
+    @GetMapping("/calcWithCouponPrice")
+    public Order calcDiscount(Order order)
     {
 
-        Integer couponId=orderVo.getCouponId();
-        //根据couponId查找coupon对象
-        //Coupon coupon=couponService.findCouponById(couponId);
-        List<Integer> cartItemIds=new ArrayList<Integer>(orderVo.getCartItemIds().size());
-        CartItemPo item;
-        OrderItemPo orderItem;
-        BigDecimal price;
+        Integer couponId=order.getCouponId();
 
-        //List<CartItem> cartItems=new ArrayList<CartItem>(cartItemIds.size());
-        List<OrderItemPo> orderItems=new ArrayList<>(cartItemIds.size());
-        for(Integer cartId:orderVo.getCartItemIds())
-        {
-            item= cartItemController.getCartItemById(cartId);
-            orderItem=new OrderItemPo(item);
-            price=cartItemController.getProductPrice(item.getProductId());
-            orderItem.setPrice(price);
-            orderItems.add(orderItem);
-        }
-        List<OrderItemPo> newItems=couponService.calcDiscount(orderItems,couponId);
-        return newItems;
+        List<OrderItem> orderItems=order.getOrderItemList();
 
+        List<OrderItem> newItems=couponService.calcDiscount(orderItems,couponId);
+
+        //包装成一个新的Order返回
+        Order newOrder=new Order();
+        newOrder.setOrderItemList(newItems);
+        newOrder.setAddressObj(order.getAddressObj());
+        newOrder.setUser(order.getUser());
+        newOrder.setCouponId(couponId);
+
+        return newOrder;
     }
 
 }

@@ -9,6 +9,7 @@ import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
 import xmu.oomall.util.ResponseUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -80,39 +81,19 @@ public class PresaleController {
         return ResponseUtil.ok();
     }
 
-//    /**
-//     * Order传给discount一个Order,计算出定金之后返回
-//     * @param order
-//     * @return定金
-//     */
-//    @GetMapping("/calcPrePay")
-//
-//    public Object calcDeposit(Order order) {
-//        //预售订单限制只能一个规格，一条明细
-//        List<OrderItem> list = order.getOrderItemList();
-//        if (list.size() != 1) {
-//            return ResponseUtil.fail();
-//        }
-//        else {
-//            OrderItem item=list.get(0);
-//            Integer goodsId = item.getGoodsId();
-//            BigDecimal totalDeposit = BigDecimal.ZERO;
-//            List<PresaleRule> ruleList = presaleService.findByGoodsId(goodsId);
-//            for (PresaleRule rule : ruleList) {
-//                //判断Order是不是预售订单 符不符合预售规则中的某一条
-//                if (presaleService.isPresaleOrder(item, rule) == true) {
-//                    totalDeposit = rule.getDeposit().multiply(BigDecimal.valueOf(item.getNumber()));
-//                    return ResponseUtil.ok(totalDeposit);
-//                }
-//            }
-//            return ResponseUtil.fail();
-//        }
-//    }
 
-    @GetMapping("/prePayment")
-    public Object getPrePayment(Order order,Integer maxPayTime){
-        List<Payment> payments=presaleService.getPrepayment(order,maxPayTime);
-        return ResponseUtil.ok(payments);
+    /**
+     * Order调discount获得预售订单的定金和尾款
+     * @param order
+     * @param maxPayTime
+     * @return
+     */
+
+    @GetMapping("/calcWithPrePayment")
+    public Object getDepositAndFinalPay(Order order,Integer maxPayTime){
+
+        List<BigDecimal> priceList=presaleService.getDepositAndFinalPay(order,maxPayTime);
+        return ResponseUtil.ok(priceList);
     }
 
 

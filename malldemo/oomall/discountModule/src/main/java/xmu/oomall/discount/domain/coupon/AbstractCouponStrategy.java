@@ -53,19 +53,19 @@ public abstract class AbstractCouponStrategy {
      * @param couponId   优惠卷Id
      * @return 更新的订单列表，包含可能因为误差拆开的明细
      */
-    public List<OrderItemPo> cacuDiscount(List<OrderItemPo> validItems, int couponId) {
+    public List<OrderItem> cacuDiscount(List<OrderItem> validItems, int couponId) {
         System.out.println("cacuDiscount的参数： validItems" + validItems + " couponId = " + couponId);
         //优惠商品的总价和数量
         BigDecimal totalPrice = BigDecimal.ZERO;
         Integer totalQuantity = 0;
 
         //优惠的货品
-        List<OrderItemPo> discountItems = new ArrayList<>(validItems.size());
+        List<OrderItem> discountItems = new ArrayList<>(validItems.size());
 
-        Iterator<OrderItemPo> itemIterator = validItems.iterator();
+        Iterator<OrderItem> itemIterator = validItems.iterator();
 
         while (itemIterator.hasNext()) {
-            OrderItemPo item = itemIterator.next();
+            OrderItem item = itemIterator.next();
             System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
             totalPrice = totalPrice.add(item.getPrice().multiply(BigDecimal.valueOf(item.getNumber())));
             totalQuantity += item.getNumber();
@@ -78,14 +78,14 @@ public abstract class AbstractCouponStrategy {
         System.out.println("优惠门槛 enough = " + enough);
 
         //计算优惠后的价格
-        List<OrderItemPo> newItems = new ArrayList<>();
+        List<OrderItem> newItems = new ArrayList<>();
         BigDecimal dealTotalPrice = BigDecimal.ZERO;
 
         if (enough) {
 
-            Iterator<OrderItemPo> iterator = discountItems.iterator();
+            Iterator<OrderItem> iterator = discountItems.iterator();
             while (iterator.hasNext()){
-                OrderItemPo item = iterator.next();
+                OrderItem item = iterator.next();
                 //按照比例分配，可能会出现精度误差，在后面补偿到第一个货品上
                 BigDecimal dealPrice = this.getDealPrice(item.getPrice(), totalPrice);
                 System.out.println("优惠价格 dealPrice=" + dealPrice);
@@ -106,7 +106,7 @@ public abstract class AbstractCouponStrategy {
                 //寻找数量为1的明细，将误差补偿在此明细上，否则拆开一个现有明细
 
                 Boolean gotIt = false;
-                for (OrderItemPo item : validItems) {
+                for (OrderItem item : validItems) {
                     if (item.getNumber() == 1) {
                         BigDecimal dealPrice = item.getDealPrice();
                         item.setDealPrice(dealPrice.add(error));
@@ -118,18 +118,19 @@ public abstract class AbstractCouponStrategy {
                 if (!gotIt) {
                     newItems.clear();
                     //无数量为1的明细，拆第一个
-                    OrderItemPo item = validItems.get(0);
+                    OrderItem item = validItems.get(0);
                     Integer quantity = item.getNumber();
                     item.setNumber(quantity - 1);//原item的数量减一
 
                     newItems.add(item);//加上第一项明细
                     try {
-                        OrderItemPo newItem = (OrderItemPo) item.clone();
+                        OrderItem newItem = (OrderItem) item.clone();
                         newItem.setNumber(1);//用newItem来代替以前的item
                         BigDecimal dealPrice = newItem.getDealPrice();
                         newItem.setDealPrice(dealPrice.add(error));
-                        newItems.add(newItem);
+                        newItems.add(newItem);//把拆出来的第一项放进新的明细中
 
+                        //剩余明细也放进newItems里面，因为newItems是最后更新的明细
                         for(int i=1;i<validItems.size();i++)
                         {
                             newItems.add(validItems.get(i));

@@ -6,7 +6,9 @@ import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.Payment;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @Service
 public interface IPresaleService {
@@ -18,7 +20,7 @@ public interface IPresaleService {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/10
      */
-    public void add(PresaleRule presaleRule);
+    void add(PresaleRule presaleRule);
 
     /**
      * @Description: 管理员查看某个预售规则详情
@@ -27,7 +29,7 @@ public interface IPresaleService {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/10
      */
-    public PresaleRule findById(Integer id);
+    PresaleRule findById(Integer id);
 
     /**
      * @Description: 管理员修改预售规则信息
@@ -36,7 +38,7 @@ public interface IPresaleService {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/10
      */
-    public int update(PresaleRule presaleRule);
+    int update(PresaleRule presaleRule);
 
     /**
      * @Description: 管理员删除预售规则
@@ -45,11 +47,10 @@ public interface IPresaleService {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/10
      */
-    public int delete(Integer id);
+    int delete(Integer id);
 
-    List<PresaleRule> findByGoodsId(Integer goodsId);
+    //用户查看自己参与的预售活动？需要吗
 
-    boolean isPresaleOrder(OrderItem item, PresaleRule rule);
 
-    List<Payment> getPrepayment(Order order,Integer maxPayTime);
+    List<BigDecimal> getDepositAndFinalPay(Order order, Integer maxPayTime);
 }

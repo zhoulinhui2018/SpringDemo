@@ -9,6 +9,7 @@ import xmu.oomall.discount.domain.Payment;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.IPresaleService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -36,18 +37,9 @@ public class PresaleServiceImpl implements IPresaleService {
         return presaleDao.update(presaleRule);
     }
 
-    @Override
-    public List<PresaleRule> findByGoodsId(Integer goodsId){
-        return presaleDao.findByGoodsId(goodsId);
-    }
 
     @Override
-    public boolean isPresaleOrder(OrderItem item, PresaleRule rule){
-        return presaleDao.isPresaleOrder(item,rule);
-    }
-
-    @Override
-    public List<Payment> getPrepayment(Order order,Integer maxPayTime){
-        return presaleDao.getPrepayment(order,maxPayTime);
+    public List<BigDecimal> getDepositAndFinalPay(Order order, Integer maxPayTime){
+        return presaleDao.getDepositAndFinalPay(order,maxPayTime);
     }
 }

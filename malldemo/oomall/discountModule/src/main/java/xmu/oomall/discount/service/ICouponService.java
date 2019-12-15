@@ -1,6 +1,7 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
+import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
@@ -61,7 +62,7 @@ public interface ICouponService {
 
     CouponPo findCouponById(Integer id);
 
-    List<OrderItemPo> calcDiscount(List<OrderItemPo> orderItems, Integer couponId);
+    List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId);
 
     void addCoupon(CouponPo coupon);
 }

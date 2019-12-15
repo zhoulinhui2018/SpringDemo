@@ -3,6 +3,7 @@ package xmu.oomall.discount.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
@@ -82,8 +83,8 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public List<OrderItemPo> calcDiscount(List<OrderItemPo> orderItems, Integer couponId){
-        List<OrderItemPo> newItems=couponDao.calcDiscount(orderItems,couponId);
+    public List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId){
+        List<OrderItem> newItems=couponDao.calcDiscount(orderItems,couponId);
         return newItems;
     }
 
