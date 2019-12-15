@@ -1,4 +1,9 @@
 package xmu.oomall.discount.domain;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 
 /**
@@ -7,7 +12,10 @@ import java.time.LocalDateTime;
  * @Data:Created in 14:50 2019/12/11
  **/
 
-
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class BrandPo {
     private Integer id;
     /**

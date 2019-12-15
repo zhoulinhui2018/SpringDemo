@@ -1,6 +1,5 @@
 package xmu.oomall.discount.domain;
 
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,29 +9,32 @@ import java.time.LocalDateTime;
 
 /**
  * @Author: 数据库与对象模型标准组
- * @Description:商品种类的信息
- * @Data:Created in 14:50 2019/12/11
+ * @Description: 购物车明细
+ * @Date: Created in 14:30 2019/12/11
  **/
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-public class GoodsCategoryPo {
+public class CartItemPo {
     private Integer id;
     /**
-     * 种类的名称
+     * 购物车归属的用户id
      */
-    private String name;
+    private Integer userId;
     /**
-     * 该种类的父种类ID
+     * 货品ID
      */
-    private Integer pid;
+    private Integer productId;
     /**
-     * 二级目录的pic
+     * 是否选中，0未选中，1已选中
      */
-    private String picUrl;
+    private Boolean beCheck;
+    /**
+     * 数量
+     */
+    private Integer number;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean beDeleted;
 
 }
