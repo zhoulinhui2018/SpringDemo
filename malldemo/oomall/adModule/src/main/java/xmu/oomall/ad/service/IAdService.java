@@ -27,7 +27,7 @@ public interface IAdService {
 
     public Integer deleteAdbyId(Integer id);
 
-    public void addAds(Ad ad);
+    public Integer addAds(Ad ad);
 
     /**
      * @Description: 修改ad的信息

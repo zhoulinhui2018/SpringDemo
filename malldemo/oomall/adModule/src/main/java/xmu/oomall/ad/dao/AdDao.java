@@ -18,11 +18,11 @@ public class AdDao {
     }
 
 
-    public void addAds(Ad ad){
+    public Integer addAds(Ad ad){
         ad.setGmtCreate(LocalDateTime.now());
         ad.setGmtModified(LocalDateTime.now());
         ad.setBeDelete(false);
-        adMapper.addAds(ad);
+        return adMapper.addAds(ad);
     }
 
     public Ad findAdById(Integer id){

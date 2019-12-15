@@ -28,8 +28,10 @@ public class AdService implements IAdService {
     }
 
     @Override
-    public void addAds(Ad ad) {
-        adDao.addAds(ad);
+    public Integer addAds(Ad ad) {
+        Integer id =adDao.addAds(ad);
+        System.out.println(id);
+        return id;
     }
 
     @Override

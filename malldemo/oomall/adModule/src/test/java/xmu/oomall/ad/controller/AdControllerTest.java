@@ -11,7 +11,6 @@ import xmu.oomall.ad.AdApplication;
 import xmu.oomall.ad.domain.Ad;
 import xmu.oomall.util.JacksonUtil;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest(classes = AdApplication.class)
@@ -70,19 +69,10 @@ public class AdControllerTest {
         ad.setLink("test");
         ad.setName("芒果test");
         ad.setContent("芒果大促销了");
-        ad.setBeDefault(true);
-        ad.setStartTime(LocalDateTime.now());
-        ad.setEndTime(LocalDateTime.now());
-
         String jsonString= JacksonUtil.toJson(ad);
-//        String responseString = this.mockMvc.perform(post("/ads")).contentType("application/json;charset=UTF-8").content(jsonString))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType("application/json;charset=UTF-8"))
-//                .andReturn().getResponse().getContentAsString();
 
+        System.out.println(adController.adminCreateAd(ad));
 
-        adController.adminCreateAd(ad);
-        System.out.println("插入成功");
     }
 
 

@@ -39,11 +39,12 @@ public class AdController {
     @GetMapping("/admins/ads")
     public Object adminFindAdList(@RequestParam(defaultValue = "1") Integer page,
                                   @RequestParam(defaultValue = "10") Integer limit,
-                                  @RequestParam String name,
-                                  @RequestParam String content){
+                                  @RequestParam String adTitle,
+                                  @RequestParam String adContent){
+
         Ad ad=new Ad();
-        ad.setName(name);
-        ad.setContent(content);
+        ad.setName(adTitle);
+        ad.setContent(adContent);
         return adService.adminFindAllAds(page,limit,ad);
     }
 
@@ -71,6 +72,9 @@ public class AdController {
     @GetMapping("/ads/{id}")
     public Object adminFindAdById(@PathVariable Integer id){
         Ad adById = adService.findAdById(id);
+        if (adById==null){
+            return ResponseUtil.fail(690,"广告不存在");
+        }
         return  ResponseUtil.ok(adById);
     }
 
@@ -92,7 +96,7 @@ public class AdController {
         newAd.setId(id);
         if(adService.updateAdById(newAd)==0)
         {
-            return ResponseUtil.updatedDataFailed();
+            return ResponseUtil.fail(691,"广告更新失败");
         }
         return ResponseUtil.ok(newAd);
     }
@@ -126,10 +130,12 @@ public class AdController {
       Object error = validate(ad);
         if (error != null) {
            return error;
-       }
-        adService.addAds(ad);
+        }
+        if (adService.addAds(ad)!=1){
+            return ResponseUtil.fail(691,"广告操作失败");
+        }
+
         return ResponseUtil.ok(ad);
     }
-
 
 }
