@@ -9,7 +9,7 @@ import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.GoodsPo;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.discount.util.ResponseUtil;
 
 import java.util.ArrayList;
 import java.util.List;

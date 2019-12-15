@@ -3,14 +3,13 @@ package xmu.oomall.ad.dao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xmu.oomall.OoMallApplication;
-import xmu.oomall.dao.AdDao;
-import xmu.oomall.domain.Ad;
+import xmu.oomall.ad.AdApplication;
+import xmu.oomall.ad.domain.Ad;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@SpringBootTest(classes = OoMallApplication.class)
+@SpringBootTest(classes = AdApplication.class)
 public class AdDaoTest {
     @Autowired
     private  AdDao adDao;

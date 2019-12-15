@@ -9,14 +9,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.GrouponRulePo;
-import xmu.oomall.util.JacksonUtil;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 ;
 
@@ -37,31 +31,18 @@ public class GrouponRulePoControllerTest {
     public void addTest() throws Exception{
         GrouponRulePo grouponRulePo =new GrouponRulePo();
         grouponRulePo.setGoodsId(100001);
-        grouponRulePo.setEndTime(LocalDateTime.now());
         grouponRulePo.setGrouponLevelStrategy("level_top");
+        grouponRulePo.setStartTime(LocalDateTime.now());
+        grouponRulePo.setEndTime(LocalDateTime.now());
 
-        String jsonString = JacksonUtil.toJson(grouponRulePo);
-
-        String responseString= this.mockMvc.perform(post("/grouponRules").contentType("application/json").content(jsonString))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andReturn().getResponse().getContentAsString();
-
-        String errMsg = JacksonUtil.parseObject(responseString,"errmsg", String.class);
-        Integer errNo = JacksonUtil.parseObject(responseString,"errno", Integer.class);
-        GrouponRulePo grouponRulePo1 = JacksonUtil.parseObject(responseString,"data", GrouponRulePo.class);
-
-        assertEquals(errNo, 0);
-        assertEquals(errMsg, "Success");
-        assertEquals(grouponRulePo.getGoodsId(),100001);
-        assertEquals(grouponRulePo.getGrouponLevelStrategy(),"level_top");
+        groupOnRuleController.create(grouponRulePo);
         //        groupOnRuleController.create(grouponRulePo);
     }
 
     @Test
     public void updateTest() throws Exception {
         GrouponRulePo grouponRulePo =new GrouponRulePo();
-        grouponRulePo.setGoodsId(100001);
+        grouponRulePo.setGoodsId(100002);
         grouponRulePo.setStartTime(LocalDateTime.now());
         grouponRulePo.setEndTime(LocalDateTime.now());
         grouponRulePo.setGrouponLevelStrategy("level_test");

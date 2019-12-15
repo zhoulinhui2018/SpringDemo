@@ -5,3 +5,27 @@ spring:
     username: root
     password: 123456
 
+
+
+
+#潘朝旺组
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.96.159.71:3306/oomall?serverTimezone=GMT
+#    username: oomall
+#    password: oomallp@$$w0rd
+#  application:
+#    name: Discount #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8763
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.96.159.71:8888/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8763
