@@ -35,5 +35,4 @@ public class LogController {
         logService.addLog(newlog);
         return ResponseUtil.ok();
     }
-
 }

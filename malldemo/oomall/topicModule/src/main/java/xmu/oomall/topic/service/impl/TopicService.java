@@ -5,9 +5,12 @@ import net.sf.jsqlparser.statement.select.Top;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import xmu.oomall.topic.dao.TopicDao;
 import xmu.oomall.topic.domain.*;
 import xmu.oomall.topic.service.ITopicService;
+import xmu.oomall.topic.util.MallException;
+
 
 import java.util.List;
 
@@ -17,22 +20,23 @@ public class TopicService implements ITopicService{
     @Autowired
     private TopicDao topicDao;
 
+    @Autowired
+    RestTemplate restTemplate;
     //重写接口中的方法
 
     @Override
-    public List<Topic> findTopicList(Integer page, Integer limit){
+    public List<Topic> findTopicList(Integer page, Integer limit) throws MallException{
         PageHelper.startPage(page,limit);
         return topicDao.findTopicList();
     }
 
     @Override
-    public Topic adminAddTopic(Topic newtopic){
-        topicDao.adminAddTopic(newtopic);
-        return newtopic;
+    public Integer adminAddTopic(Topic newtopic) throws MallException{
+        return topicDao.adminAddTopic(newtopic);
     }
 
     @Override
-    public Topic findTopicById(Integer id){
+    public Topic findTopicById(Integer id) throws MallException {
         return topicDao.findTopicById(id);
     }
 

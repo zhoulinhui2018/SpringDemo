@@ -29,7 +29,7 @@ public class TopicDaoTest {
         pic_urls.add("pic2_url");
         pic_urls.add("pic3_url");
         newtopic.setPictures(pic_urls);
-        topicDao.adminAddTopic(newtopic);
+//        topicDao.adminAddTopic(newtopic);
     }
 
     @Test//更新专题测试
