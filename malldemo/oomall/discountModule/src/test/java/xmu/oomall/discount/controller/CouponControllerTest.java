@@ -6,14 +6,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
 import xmu.oomall.discount.DiscountApplication;
-import xmu.oomall.discount.domain.CartItemPo;
-import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +21,6 @@ public class CouponControllerTest {
     @Autowired
     private CouponController couponController;
 
-    @Autowired
-    private CartItemController cartItemController;
 
     @Rollback(false)
     @Test
@@ -123,31 +117,5 @@ public class CouponControllerTest {
         System.out.println(object.toString());
     }
 
-    @Test
-    public void calcDiscount()
-    {
-        OrderVo orderVo=new OrderVo();
-        List<Integer> cartItemIds=new ArrayList<Integer>();
-        cartItemIds.add(1);//100元 1个
-        cartItemIds.add(2);//30元  1个
-        cartItemIds.add(3);//70元  3个
-        orderVo.setCartItemIds(cartItemIds);
-        orderVo.setCouponId(1000001);
 
-        List<OrderItemPo> orderItems=new ArrayList<>(cartItemIds.size());
-
-        for(Integer cartId:orderVo.getCartItemIds())
-        {
-            CartItemPo item= cartItemController.getCartItemById(cartId);
-            OrderItemPo orderItem=new OrderItemPo(item);
-            BigDecimal price=cartItemController.getProductPrice(item.getProductId());
-            orderItem.setPrice(price);
-            orderItems.add(orderItem);
-        }
-
-        List<OrderItemPo> items=couponController.calcDiscount(orderVo);
-
-        System.out.println("返回明细为："+items);
-
-    }
 }

@@ -15,7 +15,7 @@ public class GrouponRulePo {
 
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    private Boolean isDeleted;
+    private Boolean beDeleted;
     /*
      *团购开始时间
      * */
@@ -27,7 +27,7 @@ public class GrouponRulePo {
     /*
     *判断团购是否还在进行中
     * */
-    private Boolean status;
+    private Boolean statusCode;
     /*
     * 团购等级（满多少人组团多少折扣）
     * */
@@ -35,7 +35,7 @@ public class GrouponRulePo {
     /*
     *团购产品id
     * */
-    private Integer productId;
+    private Integer goodsId;
 
     @Override
     public String toString() {
@@ -43,12 +43,12 @@ public class GrouponRulePo {
                 "id=" + id +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", isDeleted=" + isDeleted +
+                ", beDeleted=" + beDeleted +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", status=" + status +
+                ", statusCode=" + statusCode +
                 ", grouponLevelStrategy='" + grouponLevelStrategy + '\'' +
-                ", productId=" + productId +
+                ", goodsId=" + goodsId +
                 '}';
     }
 
@@ -89,12 +89,12 @@ public class GrouponRulePo {
         this.gmtModified = gmtModified;
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
+    public Boolean getBeDeleted() {
+        return beDeleted;
     }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
     }
 
     public LocalDateTime getStartTime() {
@@ -113,12 +113,12 @@ public class GrouponRulePo {
         this.endTime = endTime;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setStatusCode(Boolean statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getGrouponLevelStrategy() {
@@ -129,11 +129,11 @@ public class GrouponRulePo {
         this.grouponLevelStrategy = grouponLevelStrategy;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 }

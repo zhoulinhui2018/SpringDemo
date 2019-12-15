@@ -18,7 +18,7 @@ class CouponTest {
 //        this.coupon.setCouponRule(couponRule);
 //        this.coupon.setBeginTime(LocalDateTime.now().minusDays(1));
 //        this.coupon.setEndTime((LocalDateTime.now().plusDays(1)));
-//        this.coupon.setStatus(Coupon.Status.NOT_USED.getValue());
+//        this.coupon.setStatusCode(Coupon.Status.NOT_USED.getValue());
 //    }
 
 //    @Test

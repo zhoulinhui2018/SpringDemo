@@ -3,11 +3,11 @@ package xmu.oomall.ad.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import xmu.oomall.OoMallApplication;
-import xmu.oomall.domain.Ad;
-import xmu.oomall.service.impl.AdService;
+import xmu.oomall.ad.AdApplication;
+import xmu.oomall.ad.domain.Ad;
+import xmu.oomall.ad.service.impl.AdService;
 
-@SpringBootTest(classes = OoMallApplication.class)
+@SpringBootTest(classes = AdApplication.class)
 public class AdServiceTest {
 
     @Autowired

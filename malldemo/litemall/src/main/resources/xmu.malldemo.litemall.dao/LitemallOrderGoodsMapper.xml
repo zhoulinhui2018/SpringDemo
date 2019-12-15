@@ -11,7 +11,7 @@
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
-    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_id" jdbcType="INTEGER" property="goodsId" />
     <result column="number" jdbcType="SMALLINT" property="number" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="specifications" jdbcType="VARCHAR" property="specifications" typeHandler="org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler" />
@@ -258,7 +258,7 @@
       pic_url, `comment`, add_time, 
       update_time, deleted)
     values (#{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
-      #{goodsSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{number,jdbcType=SMALLINT}, 
+      #{goodsSn,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{number,jdbcType=SMALLINT},
       #{price,jdbcType=DECIMAL}, #{specifications,jdbcType=VARCHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler}, 
       #{picUrl,jdbcType=VARCHAR}, #{comment,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
@@ -285,7 +285,7 @@
       <if test="goodsSn != null">
         goods_sn,
       </if>
-      <if test="productId != null">
+      <if test="goodsId != null">
         product_id,
       </if>
       <if test="number != null">
@@ -326,8 +326,8 @@
       <if test="goodsSn != null">
         #{goodsSn,jdbcType=VARCHAR},
       </if>
-      <if test="productId != null">
-        #{productId,jdbcType=INTEGER},
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
       </if>
       <if test="number != null">
         #{number,jdbcType=SMALLINT},
@@ -387,8 +387,8 @@
       <if test="record.goodsSn != null">
         goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
       </if>
-      <if test="record.productId != null">
-        product_id = #{record.productId,jdbcType=INTEGER},
+      <if test="record.goodsId != null">
+        product_id = #{record.goodsId,jdbcType=INTEGER},
       </if>
       <if test="record.number != null">
         `number` = #{record.number,jdbcType=SMALLINT},
@@ -430,7 +430,7 @@
       goods_id = #{record.goodsId,jdbcType=INTEGER},
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
-      product_id = #{record.productId,jdbcType=INTEGER},
+      product_id = #{record.goodsId,jdbcType=INTEGER},
       `number` = #{record.number,jdbcType=SMALLINT},
       price = #{record.price,jdbcType=DECIMAL},
       specifications = #{record.specifications,jdbcType=VARCHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler},
@@ -462,8 +462,8 @@
       <if test="goodsSn != null">
         goods_sn = #{goodsSn,jdbcType=VARCHAR},
       </if>
-      <if test="productId != null">
-        product_id = #{productId,jdbcType=INTEGER},
+      <if test="goodsId != null">
+        product_id = #{goodsId,jdbcType=INTEGER},
       </if>
       <if test="number != null">
         `number` = #{number,jdbcType=SMALLINT},
@@ -502,7 +502,7 @@
       goods_id = #{goodsId,jdbcType=INTEGER},
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_sn = #{goodsSn,jdbcType=VARCHAR},
-      product_id = #{productId,jdbcType=INTEGER},
+      product_id = #{goodsId,jdbcType=INTEGER},
       `number` = #{number,jdbcType=SMALLINT},
       price = #{price,jdbcType=DECIMAL},
       specifications = #{specifications,jdbcType=VARCHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler},

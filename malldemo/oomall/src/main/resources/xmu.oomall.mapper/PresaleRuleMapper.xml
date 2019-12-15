@@ -17,8 +17,8 @@
             <if test="gmtModified != null">
                 gmt_modified = #{gmtModified},
             </if>
-            <if test="isDeleted != null">
-                is_deleted = #{isDeleted},
+            <if test="beDeleted != null">
+                is_deleted = #{beDeleted},
             </if>
             <if test="startTime != null">
                 start_time = #{startTime},
@@ -26,14 +26,14 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-            <if test="status != null">
-                status = #{status},
+            <if test="statusCode != null">
+                statusCode = #{statusCode},
             </if>
             <if test="grouponLevelStrategy != null">
                 strategy=#{strategy},
             </if>
-            <if test="productId != null">
-                product_id=#{productId},
+            <if test="goodsId != null">
+                product_id=#{goodsId},
             </if>
             <if test="deposit != null">
                 deposit=#{deposit},
@@ -44,11 +44,11 @@
 
     <insert id="add" parameterType="PresaleRule" useGeneratedKeys="true" keyProperty="id">
         insert into presale_rule (gmt_create, gmt_modified, is_deleted,
-        start_time, end_time, status,
+        start_time, end_time, statusCode,
         strategy, product_id, deposit)
-        values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
-        #{startTime}, #{endTime}, #{status},
-        #{strategy}, #{productId}, #{deposit})
+        values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
+        #{startTime}, #{endTime}, #{statusCode},
+        #{strategy}, #{goodsId}, #{deposit})
     </insert>
 
     <delete id="delete" parameterType="PresaleRule">
