@@ -2,7 +2,6 @@ package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
@@ -54,9 +53,6 @@ public interface ICouponService {
 
     List<CouponPo> getCouponMyList(Integer userId);
 
-    Integer getProductId(Integer itemId);
-
-    Integer getGoodsId(Integer productId);
 
     Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
 

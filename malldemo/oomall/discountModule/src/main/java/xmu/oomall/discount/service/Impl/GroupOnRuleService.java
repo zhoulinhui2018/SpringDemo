@@ -103,11 +103,11 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         goodsPo.setGallery(goods.getGallery());
         goodsPo.setGoodsCategoryId(goods.getGoodsCategoryId());
         goodsPo.setBrandId(goods.getBrandId());
-        goodsPo.setIsDeleted(goods.getIsDeleted());
+        goodsPo.setBeDeleted(goods.getBeDeleted());
         goodsPo.setWeight(goods.getWeight());
         goodsPo.setVolume(goods.getVolume());
         goodsPo.setSpecialFreightId(goods.getSpecialFreightId());
-        goodsPo.setIsSpecial(goods.getIsSpecial());
+        goodsPo.setBeSpecial(goods.getBeSpecial());
         goodsPo.setPrice(goods.getPrice());
         return goodsPo;
     }

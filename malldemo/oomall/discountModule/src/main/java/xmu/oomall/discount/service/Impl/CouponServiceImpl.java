@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
 import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.ICouponService;
-
 
 import java.util.List;
 import java.util.Set;
@@ -64,17 +62,6 @@ public class CouponServiceImpl implements ICouponService {
     }
 
 
-    @Override
-    public Integer getProductId(Integer itemId){
-          Integer productId=couponDao.getProductId(itemId);
-          return productId;
-    }
-
-    @Override
-    public Integer getGoodsId(Integer productId){
-        Integer goodsId=couponDao.getGoodsId(productId);
-        return goodsId;
-    }
 
     @Override
     public Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
