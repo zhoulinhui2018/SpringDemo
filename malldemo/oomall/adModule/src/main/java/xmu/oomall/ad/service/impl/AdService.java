@@ -27,8 +27,10 @@ public class AdService implements IAdService {
     public void log(Log log) {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("Log");
+        System.out.println(instance.getHost());
+        System.out.println(instance.getPort());
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
-        restTemplate.getForObject(reqURL, Log.class);
+        restTemplate.postForObject(reqURL,log,Log.class);
     }
 
     @Override
@@ -43,23 +45,21 @@ public class AdService implements IAdService {
     }
 
     @Override
-    public Integer addAds(Ad ad) {
+    public Integer addAds(Ad ad) throws Exception{
         Integer id =adDao.addAds(ad);
         System.out.println(id);
         return id;
     }
 
     @Override
-    public Integer deleteAdbyId(Integer id){
-        adDao.deleteAdbyId(id);
-        return 1;
+    public Integer deleteAdbyId(Integer id) throws Exception{
+        return adDao.deleteAdbyId(id);
     }
 
     @Override
-    public Integer updateAdById(Ad newAd)
+    public Integer updateAdById (Ad newAd) throws Exception
     {
-        adDao.updateAdById(newAd);
-        return 1;
+        return adDao.updateAdById(newAd);
     }
 
     @Override

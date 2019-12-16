@@ -12,14 +12,14 @@ public interface IGroupOnRuleService {
 
     public void refund(List<Payment> payments);
 
-    /**
-    * @Description: 将新订单传回去给order模块
-    * @Param:
-    * @return:
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/16
-    */
-    public void putOrdersBack(List<Order> orders);
+//    /**
+//    * @Description: 将新订单传回去给order模块
+//    * @Param:
+//    * @return:
+//    * @Author: Zhou Linhui
+//    * @Date: 2019/12/16
+//    */
+//    public void putOrdersBack(List<Order> orders);
 
     /** 
     * @Description: 获得团购商品 

@@ -2,8 +2,10 @@ package xmu.oomall.log.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import xmu.oomall.log.mapper.LogMapper;
 import xmu.oomall.log.domain.Log;
+import xmu.oomall.log.mapper.LogMapper;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -21,6 +23,8 @@ public class LogDao {
     }
 
     public Integer addLog(Log newlog){
+        newlog.setGmtCreate(LocalDateTime.now());
+        newlog.setGmtModified(LocalDateTime.now());
         return logMapper.addLog(newlog);
     }
 }

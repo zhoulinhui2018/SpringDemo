@@ -47,8 +47,7 @@ public class DiscountController {
                 payments.add(payment);
             }
             groupOnRuleService.refund(payments);
-            groupOnRuleService.putOrdersBack(grouponOrders);
-
+//            groupOnRuleService.putOrdersBack(grouponOrders);
         }
         System.out.println("test");
         return null;

@@ -10,6 +10,7 @@ import xmu.oomall.discount.mapper.GroupOnRuleMapper;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,16 @@ public class GroupOnDao {
     }
 
     public List<GrouponRulePo> findAvailableGrouponRules(){
-        return groupOnRuleMapper.findAvailableGrouponRules();
+        List<GrouponRulePo> availableGrouponRules = groupOnRuleMapper.findAvailableGrouponRules();
+        LocalDateTime  now = LocalDateTime.now();
+        Iterator<GrouponRulePo> iterator = availableGrouponRules.iterator();
+        while (iterator.hasNext()){
+            GrouponRulePo next = iterator.next();
+            if (now.isBefore(next.getStartTime()) || now.isAfter(next.getEndTime())){
+                iterator.remove();
+            }
+        }
+        return availableGrouponRules;
     }
 
 

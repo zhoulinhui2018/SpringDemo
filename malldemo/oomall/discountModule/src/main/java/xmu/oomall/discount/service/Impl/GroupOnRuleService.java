@@ -10,6 +10,7 @@ import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.service.IGroupOnRuleService;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
@@ -39,16 +40,16 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("Order");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
-        restTemplate.getForObject(reqURL,Void.class,payments);
+        restTemplate.postForObject(reqURL,payments,Void.class);
     }
 
-    @Override
-    public void putOrdersBack(List<Order> orders) {
-        RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Order");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders");
-        restTemplate.getForObject(reqURL,List.class,orders);
-    }
+//    @Override
+//    public void putOrdersBack(List<Order> orders) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        ServiceInstance instance = loadBalancerClient.choose("Order");
+//        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders");
+//        restTemplate.getForObject(reqURL,List.class,orders);
+//    }
 
     @Override
     public void add(GrouponRulePo grouponRulePo) {
@@ -99,14 +100,23 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         List<Order> orders = this.getGrouponOrders(grouponRulePo);
         int grouponNumber=orders.size();
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
+        boolean isEnough= false;
         GrouponRuleStrategy grouponRuleStrategyBest =new GrouponRuleStrategy();
         for (int i = 0; i < strategy.getStrategy().size(); i++) {
             GrouponRuleStrategy grouponRuleStrategy =  strategy.getStrategy().get(i);
             if (grouponRuleStrategy.getLowerbound()<=grouponNumber){
                 grouponRuleStrategyBest=grouponRuleStrategy;
+                isEnough=true;
             }
         }
-        return grouponRuleStrategyBest;
+        if (isEnough==true){
+            return grouponRuleStrategyBest;
+        }
+        else {
+            GrouponRuleStrategy grouponRuleStrategyBest2 =new GrouponRuleStrategy();
+            grouponRuleStrategyBest2.setRate(new BigDecimal(1));
+            return grouponRuleStrategyBest2;
+        }
     }
 
     @Override
