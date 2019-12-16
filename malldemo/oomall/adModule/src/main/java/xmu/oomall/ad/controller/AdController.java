@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import xmu.oomall.ad.domain.Ad;
 import xmu.oomall.ad.domain.Log;
 import xmu.oomall.ad.service.impl.AdService;
+import xmu.oomall.ad.util.FileUploadUtil;
+import xmu.oomall.ad.util.IdUtil;
 import xmu.oomall.ad.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +33,30 @@ public class AdController {
             return ResponseUtil.badArgument();
         }
         return null;
+    }
+
+    /**
+     * 管理员上传专题的图片
+     * @param file
+     * @return
+     * @throws Exception
+     * @Author Ren tianhe
+     * @date 2019/12/15
+     */
+    @RequestMapping(value="/pics",method = RequestMethod.POST)
+    public Object uploadPicture(@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
+        if(file==null){
+            return xmu.oomall.util.ResponseUtil.badArgument();
+        }
+        String path = "/var/www/tardybird/upload/"
+                + IdUtil.genImageName()
+                +file.getOriginalFilename();
+        String ok="Success";
+        if(ok.equals(FileUploadUtil.upload(file,path))){
+            String prefix="http://";
+            return xmu.oomall.util.ResponseUtil.ok(prefix+path);
+        }
+        return xmu.oomall.util.ResponseUtil.fail();
     }
 
     /**
