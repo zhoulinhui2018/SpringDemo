@@ -25,7 +25,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("")
 public class TopicController {
     @Autowired
     private TopicService topicService;
@@ -51,9 +51,7 @@ public class TopicController {
         return null;
     }
 
-    /**支持图片的类型**/
-    private String [] types={".jpg",".bmp",".jpeg",".png"};
-    private final String PATH = "img";
+
     /**
      * 管理员上传专题的图片
      * @param file
@@ -62,7 +60,7 @@ public class TopicController {
      * @Author Ren tianhe
      * @date 2019/12/15
      */
-    @RequestMapping(value="pic",method = RequestMethod.POST)
+    @RequestMapping(value="/pics",method = RequestMethod.POST)
     public Object uploadPicture(@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
         if(file==null){
             return ResponseUtil.badArgument();
@@ -85,7 +83,7 @@ public class TopicController {
      * @Author Ren tianhe
      * @Date 2019/12/13
      */
-    @GetMapping("topics")
+    @GetMapping("/topics")
     public Object findTopicList(@RequestParam(defaultValue = "1") Integer page,
                                          @RequestParam(defaultValue = "10") Integer limit
                                ) {
@@ -104,7 +102,7 @@ public class TopicController {
      * @Author Ren tianhe
      * @Date 2019/12/13
      */
-    @PostMapping("topics")
+    @PostMapping("/topics")
     public Object adminAddTopic(Topic newtopic,HttpServletRequest request) {
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -135,7 +133,7 @@ public class TopicController {
      * @Author Ren tianhe
      * @Date 2019/12/13
      */
-    @GetMapping("topics/{id}")
+    @GetMapping("/topics/{id}")
     public Object findTopicById(Integer id, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -154,7 +152,7 @@ public class TopicController {
     }
 
     //管理员修改一个专题
-    @PutMapping("topics/{id}")
+    @PutMapping("/topics/{id}")
     public Object adminUpdateTopicById(@PathVariable Integer id,@RequestBody Topic newtopic, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -179,7 +177,7 @@ public class TopicController {
     }
 
     //管理员删除一个专题
-    @DeleteMapping("topics/{id}")
+    @DeleteMapping("/topics/{id}")
     public Object adminDeleteTopicById(Integer id){
 //        Integer adminid= request.getIntHeader("userId");
 //        if (adminid==null){
