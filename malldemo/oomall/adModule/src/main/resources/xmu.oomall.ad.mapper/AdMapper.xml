@@ -15,52 +15,53 @@
                    gmt_modified,
                    is_deleted
 
-            from ad where id = #{id}
+            from oomall_ad where id = #{id}
     </select>
 
     <select id="adminFindAllAds" resultMap="AdResultType">
         select *
-        from ad
+        from oomall_ad
         <where>
             <if test="name !=null">
-                `name` like CONCAT('%',#{name},'%')
+                `name` = #{name}
             </if>
             <if test="content !=null">
-                and `content` like CONCAT('%',#{content},'%')
+                and `content` =#{content}
             </if>
+                and is_deleted = 0
         </where>
     </select>
 
     <select id="findAdsDefault" resultMap="AdResultType">
         select *
-        from ad where is_default=1;
+        from oomall_ad where is_default=1;
     </select>
 
     <select id="findAllAdsAvailable" resultMap="AdResultType">
         select *
-        from ad where is_deleted=0 and is_enabled=1
+        from oomall_ad where is_deleted=0 and is_enabled=1
     </select>
 
     <select id="findAllAds" resultMap="AdResultType">
         select *
-        from ad
+        from oomall_ad
         where is_deleted = 0
     </select>
 
     <update id="deleteAdbyId" parameterType="Integer">
-        update ad
+        update oomall_ad
         set is_deleted = 1
         where id=#{id}
     </update>
 
     <select id="findDefaultAds" resultMap="AdResultType">
         select *
-        from ad
+        from oomall_ad
         where is_default=1 and is_deleted = 0
     </select>
 
     <insert id="addAds" parameterType="Ad" useGeneratedKeys="true" keyProperty="id">
-        insert into ad (link, name, content,
+        insert into oomall_ad (link, name, content,
         pic_url, is_default, is_enabled,
         start_time, end_time,gmt_create,
         gmt_modified,is_deleted)
@@ -71,7 +72,7 @@
     </insert>
 
     <update id="updateAdById" parameterType="Ad" >
-        update ad
+        update oomall_ad
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
             <if test="link!=null">link=#{link},</if>

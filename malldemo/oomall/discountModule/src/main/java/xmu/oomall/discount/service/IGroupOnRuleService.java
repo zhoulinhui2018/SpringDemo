@@ -1,14 +1,25 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
-import xmu.oomall.discount.domain.GoodsPo;
-import xmu.oomall.discount.domain.GrouponRulePo;
-import xmu.oomall.discount.domain.GrouponRuleStrategy;
+import xmu.oomall.discount.domain.*;
 
 import java.util.List;
 
 @Service
 public interface IGroupOnRuleService {
+
+    public boolean isGrouponOrder(Integer goodsId);
+
+    public void refund(List<Payment> payments);
+
+    /**
+    * @Description: 将新订单传回去给order模块
+    * @Param:
+    * @return:
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/16
+    */
+    public void putOrdersBack(List<Order> orders);
 
     /** 
     * @Description: 获得团购商品 
@@ -38,13 +49,14 @@ public interface IGroupOnRuleService {
     public List<GrouponRulePo> findFinishedGrouponRules();
     
     /**
-    * @Description: 获得某个团购成团人数
+    * @Description: 获得某个团购成团订单
     * @Param: [grouponRule]
     * @return: int
     * @Author: Zhou Linhui
     * @Date: 2019/12/13
     */
-    public int getGrouponNumber(GrouponRulePo grouponRulePo);
+    public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo);
+
     /**
     * @Description: 管理员新增团购规则
     * @Param: [grouponRulePo]

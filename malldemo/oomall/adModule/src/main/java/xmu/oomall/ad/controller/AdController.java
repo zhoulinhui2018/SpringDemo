@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import xmu.oomall.ad.domain.Ad;
 import xmu.oomall.ad.domain.Log;
 import xmu.oomall.ad.service.impl.AdService;
+import xmu.oomall.ad.util.FileUploadUtil;
+import xmu.oomall.ad.util.IdUtil;
 import xmu.oomall.ad.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,18 +36,42 @@ public class AdController {
     }
 
     /**
+     * 管理员上传专题的图片
+     * @param file
+     * @return
+     * @throws Exception
+     * @Author Ren tianhe
+     * @date 2019/12/15
+     */
+    @RequestMapping(value="/pics",method = RequestMethod.POST)
+    public Object uploadPicture(@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
+        if(file==null){
+            return xmu.oomall.util.ResponseUtil.badArgument();
+        }
+        String path = "/var/www/tardybird/upload/"
+                + IdUtil.genImageName()
+                +file.getOriginalFilename();
+        String ok="Success";
+        if(ok.equals(FileUploadUtil.upload(file,path))){
+            String prefix="http://";
+            return xmu.oomall.util.ResponseUtil.ok(prefix+path);
+        }
+        return xmu.oomall.util.ResponseUtil.fail();
+    }
+
+    /**
     * @Description: 管理员获取广告列表
     * @Param: [page, limit]
     * @return: java.lang.Object
     * @Author: Zhou Linhui
     * @Date: 2019/12/10
     */
-    @GetMapping("/admins/ads")
+    @GetMapping("/admin/ads")
     public Object adminFindAdList(HttpServletRequest request,
                                   @RequestParam(defaultValue = "1") Integer page,
                                   @RequestParam(defaultValue = "10") Integer limit,
-                                  @RequestParam String adTitle,
-                                  @RequestParam String adContent){
+                                  @RequestParam(required = false) String adTitle,
+                                  @RequestParam(required = false) String adContent){
         String id= request.getHeader("id");
         if (id==null){
             return ResponseUtil.unlogin();
@@ -59,7 +86,7 @@ public class AdController {
         Ad ad=new Ad();
         ad.setName(adTitle);
         ad.setContent(adContent);
-        return adService.adminFindAllAds(page,limit,ad);
+        return ResponseUtil.ok(adService.adminFindAllAds(page,limit,ad));
     }
 
     /**
@@ -70,9 +97,8 @@ public class AdController {
     * @Date: 2019/12/9
     */
     @GetMapping("/ads")
-    public Object userFindAdsList(@RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "10") Integer limit){
-        return ResponseUtil.ok(adService.findUserAds(page,limit));
+    public Object userFindAdsList(){
+        return ResponseUtil.ok(adService.findUserAds());
     }
 
 
@@ -100,7 +126,7 @@ public class AdController {
         if (adById==null){
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail(690,"广告不存在");
+            return ResponseUtil.badArgumentValue();
         }
         adService.log(log);
         return  ResponseUtil.ok(adById);
@@ -135,7 +161,7 @@ public class AdController {
         {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail(691,"广告更新失败");
+            return ResponseUtil.updatedDataFailed();
         }
         adService.log(log);
         return ResponseUtil.ok(newAd);
@@ -157,13 +183,14 @@ public class AdController {
         }
         Log log=new Log();
         log.setAdminId(Integer.valueOf(adminid));
+        log.setActionId(id);
         log.setIp(request.getRemoteAddr());
         log.setType(0);
-        log.setActions("删除");
+        log.setActions("删除广告");
         if (id == null) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.badArgument();
+            return ResponseUtil.badArgumentValue();
         }
         adService.log(log);
         adService.deleteAdbyId(id);
@@ -188,14 +215,14 @@ public class AdController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setActions("新增");
-      Object error = validate(ad);
+        Object error = validate(ad);
         if (error != null) {
            return error;
         }
         if (adService.addAds(ad)!=1){
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail(691,"广告操作失败");
+            return ResponseUtil.fail();
         }
         adService.log(log);
         return ResponseUtil.ok(ad);

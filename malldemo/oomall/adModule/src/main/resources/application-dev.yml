@@ -1,27 +1,9 @@
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
-#    username: root
-#    password: 123456
-#  application:
-#    name: ad-service-provider #服务名称--调用的时候根据名称来调用该服务的方法
-#
-#server:
-#  port: 8762
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
-
-#潘朝旺
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.96.159.71:3306/oomall?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: oomall
-    password: oomallp@$$w0rd
+    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+    username: root
+    password: 123456
   application:
     name: Ad #服务名称--调用的时候根据名称来调用该服务的方法
 
@@ -31,10 +13,28 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://47.96.159.71:8888/eureka/
-  instance:
-    prefer-ip-address: true
-    ip-address: 47.97.43.141
-    non-secure-port: 8762
+      defaultZone: http://localhost:8761/eureka/
+
+#潘朝旺
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.96.159.71:3306/oomall?useUnicode=true&characterEncoding=utf8&useSSL=false
+#    username: oomall
+#    password: oomallp@$$w0rd
+#  application:
+#    name: Ad #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8762
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.96.159.71:8888/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8762
 
 

@@ -6,11 +6,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
-import xmu.oomall.discount.domain.GoodsPo;
-import xmu.oomall.discount.domain.GrouponRulePo;
+import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.discount.util.ResponseUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +23,33 @@ public class DiscountController {
     @Autowired
     private GroupOnDao groupOnDao;
 
-    @Scheduled(cron = "0/3 * * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public Object executeAllGroupon(){
 
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
+        for (GrouponRulePo finishedGrouponRule : finishedGrouponRules) {
+            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(finishedGrouponRule);
+            GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule);
+            BigDecimal rate = accessStrategy.getRate();
+            List<Payment> payments =new ArrayList<>();
+            for (int i = 0; i < grouponOrders.size(); i++) {
+                Order order =  grouponOrders.get(i);
+                List<OrderItem> orderItemList = order.getOrderItemList();
+                OrderItem orderItem = orderItemList.get(0);
+                BigDecimal price = orderItem.getPrice();
+                Integer number1 = orderItem.getNumber();
+                BigDecimal number=new BigDecimal(number1);
+                BigDecimal dealPrice = price.multiply(number).multiply(rate).setScale(2,BigDecimal.ROUND_FLOOR);
+                orderItem.setDealPrice(dealPrice);
+                Payment payment=new Payment();
+                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
+                payment.setOrderId(order.getId());
+                payments.add(payment);
+            }
+            groupOnRuleService.refund(payments);
+            groupOnRuleService.putOrdersBack(grouponOrders);
+
+        }
         System.out.println("test");
         return null;
     }

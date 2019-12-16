@@ -22,6 +22,33 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Override
+    public boolean isGrouponOrder(Integer goodsId) {
+        List<GrouponRulePo> availableGrouponRules = groupOnDao.findAvailableGrouponRules();
+        for (GrouponRulePo availableGrouponRule : availableGrouponRules) {
+            Integer goodsId1 = availableGrouponRule.getGoodsId();
+            if (goodsId.equals(goodsId1)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void refund(List<Payment> payments) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Order");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
+        restTemplate.getForObject(reqURL,Void.class,payments);
+    }
+
+    @Override
+    public void putOrdersBack(List<Order> orders) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Order");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders");
+        restTemplate.getForObject(reqURL,List.class,orders);
+    }
 
     @Override
     public void add(GrouponRulePo grouponRulePo) {
@@ -45,11 +72,11 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
 
     @Override
-    public int getGrouponNumber(GrouponRulePo grouponRulePo){
+    public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("order");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/GrouponOrders");
-        return restTemplate.getForObject(reqURL, Integer.class);
+        ServiceInstance instance = loadBalancerClient.choose("Order");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/grouponOrders");
+        return restTemplate.getForObject(reqURL, List.class);
     }
 
     @Override
@@ -69,7 +96,8 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
     @Override
     public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo) {
-        int grouponNumber = this.getGrouponNumber(grouponRulePo);
+        List<Order> orders = this.getGrouponOrders(grouponRulePo);
+        int grouponNumber=orders.size();
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
         GrouponRuleStrategy grouponRuleStrategyBest =new GrouponRuleStrategy();
         for (int i = 0; i < strategy.getStrategy().size(); i++) {
