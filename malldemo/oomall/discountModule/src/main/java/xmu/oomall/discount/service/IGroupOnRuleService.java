@@ -69,5 +69,5 @@ public interface IGroupOnRuleService {
 
     public List<GrouponRulePo> findGrouponRulePos(Integer page, Integer limit);
 
-    public List<GrouponRulePo> adminFindGrouponRulePos(Integer page,Integer limit);
+    public List<GrouponRulePo> adminFindGrouponRulePos(Integer page, Integer limit);
 }

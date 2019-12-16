@@ -84,7 +84,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     @Override
     public GoodsPo getGrouponGoods(GrouponRulePo grouponRulePo) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("goods");
+        ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         Goods goods = restTemplate.getForObject(reqURL, Goods.class);
         GoodsPo goodsPo=new GoodsPo();
@@ -103,11 +103,11 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         goodsPo.setGallery(goods.getGallery());
         goodsPo.setGoodsCategoryId(goods.getGoodsCategoryId());
         goodsPo.setBrandId(goods.getBrandId());
-        goodsPo.setIsDeleted(goods.getIsDeleted());
+        goodsPo.setBeDeleted(goods.getBeDeleted());
         goodsPo.setWeight(goods.getWeight());
         goodsPo.setVolume(goods.getVolume());
         goodsPo.setSpecialFreightId(goods.getSpecialFreightId());
-        goodsPo.setIsSpecial(goods.getIsSpecial());
+        goodsPo.setBeSpecial(goods.getBeSpecial());
         goodsPo.setPrice(goods.getPrice());
         return goodsPo;
     }

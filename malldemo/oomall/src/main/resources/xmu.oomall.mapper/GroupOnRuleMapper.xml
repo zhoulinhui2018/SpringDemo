@@ -25,8 +25,8 @@
             <if test="gmtModified != null">
                 gmt_modified = #{gmtModified},
             </if>
-            <if test="isDeleted != null">
-                is_deleted = #{isDeleted},
+            <if test="beDeleted != null">
+                is_deleted = #{beDeleted},
             </if>
             <if test="startTime != null">
                 start_time = #{startTime},
@@ -34,14 +34,14 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-            <if test="status != null">
-                status = #{status},
+            <if test="statusCode != null">
+                statusCode = #{statusCode},
             </if>
             <if test="grouponLevelStrategy != null">
                 groupon_level_strategy=#{grouponLevelStrategy},
             </if>
-            <if test="productId != null">
-                goods_id=#{productId},
+            <if test="goodsId != null">
+                goods_id=#{goodsId},
             </if>
         </trim>
         where id=#{id}
@@ -55,11 +55,11 @@
 
     <insert id="add" parameterType="GroupOnRule" useGeneratedKeys="true" keyProperty="id">
         insert into groupon_rule (gmt_create, gmt_modified, is_deleted,
-        start_time, end_time, status,
+        start_time, end_time, statusCode,
         groupon_level_strategy, goods_id)
-        values (#{gmtCreate}, #{gmtModified}, #{isDeleted},
-        #{startTime}, #{endTime}, #{status},
-        #{grouponLevelStrategy}, #{productId})
+        values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
+        #{startTime}, #{endTime}, #{statusCode},
+        #{grouponLevelStrategy}, #{goodsId})
     </insert>
 
     <delete id="delete" parameterType="GroupOnRule">

@@ -3,14 +3,11 @@ package xmu.oomall.discount.service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
-import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.coupon.Coupon;
-import xmu.oomall.discount.domain.coupon.CouponRule;
+import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.ICouponService;
 
-
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -26,13 +23,13 @@ public class CouponServiceImpl implements ICouponService {
     private CouponDao couponDao;
 
     @Override
-    public CouponRule findCouponRuleById(Integer id) {
-        CouponRule couponRule=couponDao.findCouponRuleById(id);
+    public CouponRulePo findCouponRuleById(Integer id) {
+        CouponRulePo couponRule=couponDao.findCouponRuleById(id);
         return couponRule;
     }
 
     @Override
-    public int updateCouponRuleById(CouponRule couponRule) {
+    public int updateCouponRuleById(CouponRulePo couponRule) {
         return couponDao.updateCouponRuleById(couponRule);
     }
 
@@ -42,44 +39,33 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public List<CouponRule> getCouponList() {
-        List<CouponRule> couponRuleList=couponDao.getCouponList();
+    public List<CouponRulePo> getCouponList() {
+        List<CouponRulePo> couponRuleList=couponDao.getCouponList();
         return couponRuleList;
     }
 
     @Override
-    public void addCouponRule(CouponRule couponRule) {
+    public void addCouponRule(CouponRulePo couponRule) {
         couponDao.addCouponRule(couponRule);
 
     }
 
     @Override
-    public List<Coupon> getCouponMyList(Integer userId){
-        List<Coupon> mylist=couponDao.getCouponMyList(userId);
+    public List<CouponPo> getCouponMyList(Integer userId){
+        List<CouponPo> mylist=couponDao.getCouponMyList(userId);
         return mylist;
     }
     @Override
-    public Coupon findCouponById(Integer id){
-        Coupon coupon=couponDao.findCouponById(id);
+    public CouponPo findCouponById(Integer id){
+        CouponPo coupon=couponDao.findCouponById(id);
         return coupon;
     }
 
 
-    @Override
-    public Integer getProductId(Integer itemId){
-          Integer productId=couponDao.getProductId(itemId);
-          return productId;
-    }
 
     @Override
-    public Integer getGoodsId(Integer productId){
-        Integer goodsId=couponDao.getGoodsId(productId);
-        return goodsId;
-    }
-
-    @Override
-    public Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
-        Set<CouponRule> canUsedCoupons=couponDao.getCanUsedCoupons(goodsIdList,userId);
+    public Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
+        Set<CouponRulePo> canUsedCoupons=couponDao.getCanUsedCoupons(goodsIdList,userId);
         return canUsedCoupons;
     }
 
@@ -87,5 +73,10 @@ public class CouponServiceImpl implements ICouponService {
     public List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId){
         List<OrderItem> newItems=couponDao.calcDiscount(orderItems,couponId);
         return newItems;
+    }
+
+    @Override
+    public void addCoupon(CouponPo coupon) {
+        couponDao.addCoupon(coupon);
     }
 }

@@ -152,7 +152,7 @@
 											"top": 357,
 											"width": 94.0595703125,
 											"height": 13,
-											"text": "+status",
+											"text": "+statusCode",
 											"horizontalAlignment": 0
 										},
 										{
@@ -706,7 +706,7 @@
 											"top": 355,
 											"width": 82.75439453125,
 											"height": 13,
-											"text": "+status",
+											"text": "+statusCode",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1274,7 +1274,7 @@
 											"top": 755,
 											"width": 75.5751953125,
 											"height": 13,
-											"text": "+status",
+											"text": "+statusCode",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1724,7 +1724,7 @@
 											"top": 553,
 											"width": 101.30224609375,
 											"height": 13,
-											"text": "+status",
+											"text": "+statusCode",
 											"horizontalAlignment": 0
 										},
 										{
@@ -10645,7 +10645,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuN6fTn2W9jl4="
 							},
-							"name": "status",
+							"name": "statusCode",
 							"type": ""
 						},
 						{
@@ -10853,7 +10853,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuN6hFt2Xpwsg="
 							},
-							"name": "status",
+							"name": "statusCode",
 							"type": ""
 						},
 						{
@@ -10986,7 +10986,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuN6jgDGa8iY8="
 							},
-							"name": "status",
+							"name": "statusCode",
 							"type": ""
 						},
 						{
@@ -11200,7 +11200,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFuOWqeU2dlacA="
 							},
-							"name": "status",
+							"name": "statusCode",
 							"type": ""
 						},
 						{
@@ -18759,7 +18759,7 @@
 														"$ref": "AAAAAAFuyapxoKd3l+Q="
 													},
 													"edgePosition": 1,
-													"text": "deductStock(productId, quantity)"
+													"text": "deductStock(goodsId, quantity)"
 												},
 												{
 													"_type": "EdgeLabelView",
@@ -19263,7 +19263,7 @@
 																	"top": 406,
 																	"width": 169.05712890625,
 																	"height": 13,
-																	"text": "[fetchFromDb(productId,key)]"
+																	"text": "[fetchFromDb(goodsId,key)]"
 																}
 															],
 															"font": "Arial;13;0",
@@ -19541,7 +19541,7 @@
 									"signature": {
 										"$ref": "AAAAAAFuyaqXDqeMwCc="
 									},
-									"arguments": "productId, quantity"
+									"arguments": "goodsId, quantity"
 								},
 								{
 									"_type": "UMLMessage",
@@ -19687,7 +19687,7 @@
 												"$ref": "AAAAAAFuybAssqf5ENg="
 											},
 											"name": "Operand1",
-											"guard": "fetchFromDb(productId,key)"
+											"guard": "fetchFromDb(goodsId,key)"
 										}
 									]
 								}

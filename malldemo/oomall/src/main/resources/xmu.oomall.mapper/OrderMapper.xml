@@ -24,7 +24,7 @@
     <select id="findOrderById" parameterType="Integer" resultMap="orderMap">
         select id,
                order_sn,
-               status,
+               statusCode,
                consignee,
                mobile,
                message,
@@ -48,8 +48,8 @@
     </select>
 
     <insert id="addOrder" parameterType="order" useGeneratedKeys="true" keyProperty="id">
-        insert into oomall_order(order_sn, status, consignee, mobile, message, good_price, coupon_price, freight_price, integral_price, ship_sn, ship_channel, ship_time, confirm_time, end_time, province, city, county , address_detail, add_time, update_time, be_deleted, quantity)
-        values (#{orderSn},#{orderStatus}, #{consignee}, #{mobile}, #{message}, #{goodPrice}, #{couponPrice}, #{freightPrice}, #{integralPrice}, #{shipSn}, #{shipChannel}, #{shipTime}, #{confirmTime}, #{endTime}, #{province}, #{city}, #{county}, #{addressDetail}, #{addTime}, #{updateTime}, #{isDeleted},#{quantity})
+        insert into oomall_order(order_sn, statusCode, consignee, mobile, message, good_price, coupon_price, freight_price, integral_price, ship_sn, ship_channel, ship_time, confirm_time, end_time, province, city, county , address_detail, add_time, update_time, be_deleted, quantity)
+        values (#{orderSn},#{orderStatus}, #{consignee}, #{mobile}, #{message}, #{goodPrice}, #{couponPrice}, #{freightPrice}, #{integralPrice}, #{shipSn}, #{shipChannel}, #{shipTime}, #{confirmTime}, #{endTime}, #{province}, #{city}, #{county}, #{addressDetail}, #{addTime}, #{updateTime}, #{beDeleted},#{quantity})
     </insert>
 
 
@@ -58,7 +58,7 @@
         insert into order_item(order_id, quantity, price, deal_price, add_time, update_time, be_deleted, product_id, product_name, promotion_sn)
         values
         <foreach collection="list" item="item" separator=",">
-            (#{item.orderId}, #{item.quantity}, #{item.price},#{item.dealPrice}, #{item.addTime}, #{item.updateTime}, #{item.isDeleted}, #{item.productId}, #{item.productName}, #{item.promotionSn})
+            (#{item.orderId}, #{item.quantity}, #{item.price},#{item.dealPrice}, #{item.addTime}, #{item.updateTime}, #{item.beDeleted}, #{item.goodsId}, #{item.productName}, #{item.promotionSn})
         </foreach>
     </insert>
 

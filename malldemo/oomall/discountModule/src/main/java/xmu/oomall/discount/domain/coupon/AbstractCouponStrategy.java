@@ -3,6 +3,7 @@ package xmu.oomall.discount.domain.coupon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.OrderItemPo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -98,7 +99,6 @@ public abstract class AbstractCouponStrategy {
 
             BigDecimal error = this.getError(totalPrice, dealTotalPrice);
             System.out.println("误差 error=" + error);
-            //System.out.println("cacuDiscount返回 newItems = " + newItems);
 
             if (error.compareTo(BigDecimal.ZERO) != 0) {
 
@@ -128,8 +128,9 @@ public abstract class AbstractCouponStrategy {
                         newItem.setNumber(1);//用newItem来代替以前的item
                         BigDecimal dealPrice = newItem.getDealPrice();
                         newItem.setDealPrice(dealPrice.add(error));
-                        newItems.add(newItem);
+                        newItems.add(newItem);//把拆出来的第一项放进新的明细中
 
+                        //剩余明细也放进newItems里面，因为newItems是最后更新的明细
                         for(int i=1;i<validItems.size();i++)
                         {
                             newItems.add(validItems.get(i));
@@ -140,7 +141,7 @@ public abstract class AbstractCouponStrategy {
                 }
 
             }
-            System.out.println("cacuDiscount返回 newItems = " + newItems);
+            //System.out.println("cacuDiscount返回 newItems = " + newItems);
             return newItems;
         }
         else {

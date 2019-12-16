@@ -1,5 +1,6 @@
 package xmu.oomall.topic.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,7 +66,15 @@ public class Topic  {
     //外部的图片url传入后存在pictures这个list中
     public void setPictures(List<String> pictures) {
         this.pictures = pictures;
-        topicPo.setPicUrlList(JSON.toJSONString(this.pictures));
+        String pictureJson = new String();
+        pictureJson += "{\"pictures\":[";
+        for(String onePictureUrl:pictures){
+            pictureJson= pictureJson + "\""+onePictureUrl+"\""+",";
+        }
+        //删除最后一个逗号
+        pictureJson = pictureJson.substring(0,pictureJson.length() - 1);
+        pictureJson = pictureJson+"]"+"}";
+        topicPo.setPicUrlList(pictureJson);
     }
 
     //通过pictures这个string<list>，来构造topicpo中的pic_url_list这个string
@@ -74,11 +83,18 @@ public class Topic  {
         topicPo.setPicUrlList(JSON.toJSONString(this.pictures));//将pictures变成json格式
     }
 
+    //返回pictures这个list
+    public  List<String> getpictures(){
+        return this.pictures;
+    }
+
     //从数据库中将pic_url_list读出来后json解析
     public List<String> getPictures()
     {   String picturesJson =topicPo.getPicUrlList();
-        pictures = JSON.parseArray(picturesJson,String.class);
-        return pictures;
+        JSONObject jsonObject = JSON.parseObject(picturesJson);
+        String picture = jsonObject.getString("pictures");
+        this.pictures = JSON.parseArray(picture,String.class);
+        return this.pictures;
     }
 
 

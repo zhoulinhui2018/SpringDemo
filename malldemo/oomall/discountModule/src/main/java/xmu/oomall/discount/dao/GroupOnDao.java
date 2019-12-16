@@ -42,8 +42,8 @@ public class GroupOnDao {
 
     public GrouponRulePo add(GrouponRulePo grouponRulePo){
         grouponRulePo.setGmtCreate(LocalDateTime.now());
-        grouponRulePo.setIsDeleted(false);
-        grouponRulePo.setStatus(true);
+        grouponRulePo.setBeDeleted(false);
+        grouponRulePo.setStatusCode(true);
         grouponRulePo.setGmtModified(LocalDateTime.now());
         int id= groupOnRuleMapper.add(grouponRulePo);
         System.out.println("id "+String.valueOf(id));

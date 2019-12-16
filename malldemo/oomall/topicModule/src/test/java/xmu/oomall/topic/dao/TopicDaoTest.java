@@ -29,7 +29,7 @@ public class TopicDaoTest {
         pic_urls.add("pic2_url");
         pic_urls.add("pic3_url");
         newtopic.setPictures(pic_urls);
-        topicDao.adminAddTopic(newtopic);
+//        topicDao.adminAddTopic(newtopic);
     }
 
     @Test//更新专题测试
@@ -46,6 +46,18 @@ public class TopicDaoTest {
         pic_urls.add("pic6_url");
         newtopic.setPictures(pic_urls);
         topicDao.adminUpdateTopicById(newtopic);
+    }
+
+
+    @Test
+    public void JsonTest(){
+        Topic topic = new Topic();
+        List<String> pic_urls = new ArrayList<String>();
+        pic_urls.add("pic4_url");
+        pic_urls.add("pic5_url");
+        pic_urls.add("pic6_url");
+        topic.setPictures(pic_urls);
+        System.out.println(topic.getPicUrlList());
     }
 
     //删除专题测试

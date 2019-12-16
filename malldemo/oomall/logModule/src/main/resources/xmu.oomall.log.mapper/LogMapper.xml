@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.log.mapper.LogMapper">
-    <select id="findLogListByAdminName" parameterType="Integer" resultType="Log">
+    <select id="findLogListByAdminId" parameterType="Integer" resultType="Log">
         select *
         from oomall_log
         <where>
@@ -10,13 +10,10 @@
             </if>
         </where>
     </select>
-    
-    <select id="findAdminIdByName" parameterType="String" resultType="Integer">
-        select id from oomall_admin where username= #{username}
-    </select>
+
     
     <insert id="addLog" parameterType="Log" useGeneratedKeys="true" keyProperty="id">
-        insert into oomall_log (admin_id,ip,`type`,actions,status,gmt_create,gmt_modified,action_id)
+        insert into oomall_log (admin_id,ip,`type`,actions,statusCode,gmt_create,gmt_modified,action_id)
         values (#{adminId},#{ip},#{type},#{actions},#{statusCode},#{gmtCreate},#{gmtModified},#{actionId})
 
     </insert>

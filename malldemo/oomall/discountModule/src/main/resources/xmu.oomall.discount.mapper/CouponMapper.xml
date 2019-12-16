@@ -3,27 +3,32 @@
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
 
-    <select id="findCouponRuleById" parameterType="Integer" resultType="couponRule">
+    <select id="findCouponRuleById" parameterType="Integer" resultType="couponRulePo">
             select *
                     from coupon_rule where id = #{id}
     </select>
 
 
-    <insert id="addCouponRule" parameterType="couponRule" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addCouponRule" parameterType="couponRulePo" useGeneratedKeys="true" keyProperty="id">
         insert into coupon_rule(name,brief,begin_time,end_time,pic_url,valid_period,strategy,goods_list1,goods_list2,gmt_create,gmt_modified,is_deleted)
-        values (#{name},#{brief},#{beginTime},#{endTime},#{picUrl},#{validPeriod},#{strategy},#{goodsList1},#{goodsList2},#{gmtCreate},#{gmtModified},#{isDeleted})
+        values (#{name},#{brief},#{beginTime},#{endTime},#{picUrl},#{validPeriod},#{strategy},#{goodsList1},#{goodsList2},#{gmtCreate},#{gmtModified},#{beDeleted})
     </insert>
 
-    <select id="getCouponList" resultType="couponRule">
+    <insert id="addCoupon" parameterType="couponPo" useGeneratedKeys="true" keyProperty="id">
+        insert into coupon(user_id,coupon_rule_id,coupon_sn,begin_time,end_time,used_time,name,pic_url,gmt_create,gmt_modified,is_deleted,status)
+        values (#{userId},#{couponRuleId},#{couponSn},#{beginTime},#{endTime},#{usedTime},#{name},#{picUrl},#{gmtCreate},#{gmtModified},#{beDeleted},#{statusCode})
+    </insert>
+
+    <select id="getCouponList" resultType="couponRulePo">
         select *
         from coupon_rule;
     </select>
 
     <delete id="deleteCouponRuleById" parameterType="Integer">
-        delete from coupon_rule where id = #{id};
+        update coupon_rule set is_deleted=1 where id = #{id};
     </delete>
 
-    <update id="updateCouponRuleById" parameterType="couponRule" >
+    <update id="updateCouponRuleById" parameterType="couponRulePo" >
         update coupon_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
@@ -38,15 +43,15 @@
             <if test="goodsList2!=null">goodsList2=#{goodsList2},</if>
             <if test="gmtCreate!=null">gmtCreate=#{gmtCreate},</if>
             <if test="gmtModified!=null">gmtModified=#{gmtModified},</if>
-            <if test="isDeleted!=null">isDeleted=#{isDeleted},</if>
+            <if test="beDeleted!=null">beDeleted=#{beDeleted},</if>
 
         </trim>
         WHERE id=#{id}
     </update>
 
-    <select id="getCouponMyList" parameterType="Integer" resultType="coupon">
+    <select id="getCouponMyList" parameterType="Integer" resultType="couponPo">
         select *
-        from coupon where user_id=#{userId} and status=0;
+        from coupon where user_id=#{userId} and statusCode=0;
     </select>
 
     <select id="getProductId" parameterType="Integer" resultType="Integer">
@@ -56,19 +61,19 @@
 
     <select id="getGoodsId" parameterType="Integer" resultType="Integer">
         select goods_id
-        from product where id=#{productId};
+        from product where id=#{goodsId};
     </select>
 
-    <select id="getCouponRule" parameterType="Integer" resultType="couponRule">
+    <select id="getCouponRule" parameterType="Integer" resultType="couponRulePo">
         select *
         from coupon_rule where id=#{couponRuleId};
     </select>
 
-    <select id="findCouponById" parameterType="Integer" resultType="coupon">
+    <select id="findCouponById" parameterType="Integer" resultType="couponPo">
         select * from coupon where id = #{id}
     </select>
 
     <select id="getProductPrice" parameterType="Integer" resultType="BigDecimal">
-        select price from product where id = #{productId}
+        select price from product where id = #{goodsId}
     </select>
 </mapper>

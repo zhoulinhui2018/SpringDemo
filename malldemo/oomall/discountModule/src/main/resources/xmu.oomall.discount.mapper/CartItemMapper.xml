@@ -3,7 +3,7 @@
 <mapper namespace="xmu.oomall.discount.mapper.CartItemMapper">
 
 
-    <select id="findCartItemById" parameterType="Integer" resultType="cartItem">
+    <select id="findCartItemById" parameterType="Integer" resultType="cartItemPo">
         select *
         from cart_item where id = #{cartId}
     </select>
@@ -11,6 +11,6 @@
 
     <select id="findProductPrice" parameterType="Integer" resultType="BigDecimal">
         select price
-        from product where id = #{productId}
+        from product where id = #{goodsId}
     </select>
 </mapper>

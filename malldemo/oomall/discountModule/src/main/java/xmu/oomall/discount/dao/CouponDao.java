@@ -5,9 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
-import xmu.oomall.discount.domain.coupon.Coupon;
-import xmu.oomall.discount.domain.coupon.CouponRule;
+import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.mapper.CouponMapper;
 import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.util.JacksonUtil;
@@ -31,13 +32,13 @@ public class CouponDao {
     @Autowired
     private CouponMapper couponMapper;
 
-    public void addCouponRule(CouponRule couponRule) {
+    public void addCouponRule(CouponRulePo couponRule) {
         couponMapper.addCouponRule(couponRule);
     }
 
 
-    public List<CouponRule> getCouponList() {
-        List<CouponRule> couponRuleList=couponMapper.getCouponList();
+    public List<CouponRulePo> getCouponList() {
+        List<CouponRulePo> couponRuleList=couponMapper.getCouponList();
         return couponRuleList;
     }
 
@@ -45,45 +46,55 @@ public class CouponDao {
         return couponMapper.deleteCouponRuleById(id);
     }
 
-    public int updateCouponRuleById(CouponRule couponRule) {
+    public int updateCouponRuleById(CouponRulePo couponRule) {
         return couponMapper.updateCouponRuleById(couponRule);
     }
 
-    public CouponRule findCouponRuleById(Integer id) {
-        CouponRule couponRule=couponMapper.findCouponRuleById(id);
+    public CouponRulePo findCouponRuleById(Integer id) {
+        CouponRulePo couponRule=couponMapper.findCouponRuleById(id);
         return couponRule;
     }
 
-    public List<Coupon> getCouponMyList(Integer userId) {
-        List<Coupon> myList=couponMapper.getCouponMyList(userId);
+    public List<CouponPo> getCouponMyList(Integer userId) {
+        List<CouponPo> myList=couponMapper.getCouponMyList(userId);
         return myList;
     }
 
-    public Integer getProductId(Integer itemId) {
-        Integer productId=couponMapper.getProductId(itemId);
-        return productId;
-    }
-
-    public Integer getGoodsId(Integer productId) {
-        Integer goodsId=couponMapper.getGoodsId(productId);
-        return goodsId;
-    }
 
     /**
      * 通过用户的优惠券获取相应的优惠券规则
      * @param coupons
      * @return
      */
-    public List<CouponRule> getCouponRules(List<Coupon> coupons)
+    public List<CouponRulePo> getCouponRules(List<CouponPo> coupons)
     {
-        List<CouponRule> rules=new ArrayList<CouponRule>();
+        List<CouponRulePo> rules=new ArrayList<CouponRulePo>();
         for(int i=0;i<coupons.size();i++)
         {
-            CouponRule couponRule=couponMapper.getCouponRule(coupons.get(i).getCouponRuleId());
+            CouponRulePo couponRule=couponMapper.getCouponRule(coupons.get(i).getCouponRuleId());
             rules.add(couponRule);
         }
         return rules;
     }
+
+    /**
+     * 根据id找到一张优惠券
+     * @param id
+     * @return
+     */
+    public CouponPo findCouponById(Integer id) {
+        CouponPo coupon=couponMapper.findCouponById(id);
+        return coupon;
+    }
+
+    /**
+     * 用户领取一张优惠券
+     * @param coupon
+     */
+    public void addCoupon(CouponPo coupon) {
+        couponMapper.addCoupon(coupon);
+    }
+
 
     /**
      * 获取可用优惠券列表
@@ -91,10 +102,10 @@ public class CouponDao {
      * @param userId
      * @return
      */
-    public Set<CouponRule> getCanUsedCoupons(List<Integer> goodsIdList,Integer userId) {
-        List<Coupon> coupons=couponMapper.getCouponMyList(userId);
-        List<CouponRule> couponRules=getCouponRules(coupons);
-        Set<CouponRule> canUsedCoupons=new TreeSet<>();
+    public Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList,Integer userId) {
+        List<CouponPo> coupons=couponMapper.getCouponMyList(userId);
+        List<CouponRulePo> couponRules=getCouponRules(coupons);
+        Set<CouponRulePo> canUsedCoupons=new TreeSet<>();
         for(int i=0;i<goodsIdList.size();i++)
         {
             for(int j=0;j<couponRules.size();j++) {
@@ -113,7 +124,7 @@ public class CouponDao {
      * @param couponRule
      * @return
      */
-    private boolean isUsedOnGoods(Integer goodsId, CouponRule couponRule) {
+    private boolean isUsedOnGoods(Integer goodsId, CouponRulePo couponRule) {
         Set<Integer> goodsIds=new TreeSet<>();
         goodsIds.clear();
         goodsIds.addAll(getGoodsIdsInCouponRule(couponRule));
@@ -126,42 +137,35 @@ public class CouponDao {
             return goodsIds.contains(goodsId);
         }
     }
+
     /**
      * 获取优惠券中适用的所有商品
      * @param
+     * @param couponRule
      * @return
      */
-
-    public List<Integer> getGoodsIdsInCouponRule(CouponRule couponRule){
+    public List<Integer> getGoodsIdsInCouponRule(CouponRulePo couponRule){
 
             String jsonString = couponRule.getGoodsList1() + "," + couponRule.getGoodsList2();
-            //jsonString = org.apache.commons.text.StringEscapeUtils.unescapeJson(jsonString);
-            //System.out.println("jsonString:"+jsonString);
-            //return JacksonUtil.parseIntegerList(jsonString, "gIDs");
             List<Integer> goodsIds = Arrays.asList(jsonString.split(",")).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
-            //System.out.println(Arrays.toString(goodsIds .toArray()));
             return goodsIds;
 
     }
 
-    public Coupon findCouponById(Integer id) {
-        Coupon coupon=couponMapper.findCouponById(id);
-        return coupon;
-    }
 
     /**
      * 获得能用于此优惠卷的明细
      * @param items 订单明细
      * @return 适用的订单明细
      */
-    private List<OrderItem> getValidItems(List<OrderItem> items,Integer couponId){
+    private List<OrderItem> getValidItems(List<OrderItem> items, Integer couponId){
         System.out.println("getValidItems参数：items = "+items);
         List<OrderItem> validItems = new ArrayList<OrderItem>(items.size());
-        Coupon coupon=couponMapper.findCouponById(couponId);
-        CouponRule couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
+        CouponPo coupon=couponMapper.findCouponById(couponId);
+        CouponRulePo couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
         for (OrderItem item: items){
-            Integer productId = item.getProductId();
-            Integer goodsId=couponMapper.getGoodsId(productId);
+            //根据orderitem->product->GoodsPo->GoodsId
+            Integer goodsId=item.getProduct().getGoodsId();
             if (isUsedOnGoods(goodsId,couponRule)){
                 validItems.add(item);
             }
@@ -175,11 +179,10 @@ public class CouponDao {
      * JSON格式:{ name：“XXX”, obj:{XXX}}
      * @return 折扣策略对象
      */
-    public AbstractCouponStrategy getStrategy(CouponRule couponRule) {
+    public AbstractCouponStrategy getStrategy(CouponRulePo couponRule) {
         System.out.println("getStrategy参数：");
         String jsonString = couponRule.getStrategy();
         System.out.println("jsonString = "+ jsonString);
-
         jsonString = org.apache.commons.text.StringEscapeUtils.unescapeJson(jsonString);
         String strategyName = JacksonUtil.parseString(jsonString, "name");
 
@@ -199,7 +202,7 @@ public class CouponDao {
      * @param strategy 策略对象
      *
      */
-    public void setStrategy(AbstractCouponStrategy strategy,CouponRule couponRule) {
+    public void setStrategy(AbstractCouponStrategy strategy,CouponRulePo couponRule) {
 
         Map<String, Object> jsonObj = new HashMap<String, Object>(2);
         jsonObj.put("name", strategy.getClass().getName());
@@ -217,13 +220,13 @@ public class CouponDao {
      */
     public List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId) {
       List<OrderItem> validItems=getValidItems(orderItems, couponId);
-      Coupon coupon=couponMapper.findCouponById(couponId);
+      CouponPo coupon=couponMapper.findCouponById(couponId);
       BigDecimal totalPrice=BigDecimal.ZERO;
-      CouponRule couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
+      CouponRulePo couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
       if(validItems.size()!=0)
       {
           List<OrderItem> newItems=this.getStrategy(couponRule).cacuDiscount(orderItems,couponId);
-          System.out.println(newItems);
+          //System.out.println(newItems);
           return newItems;
       }
       else
@@ -232,4 +235,6 @@ public class CouponDao {
       }
 
     }
+
+
 }

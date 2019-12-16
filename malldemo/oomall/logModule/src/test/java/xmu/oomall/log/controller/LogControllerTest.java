@@ -23,13 +23,13 @@ public class LogControllerTest {
     private MockMvc mockMvc;
 
     //通过姓名找到对应的操作
-    @Rollback(false)
-    @Test
-    public void findloglistTest(){
-        String username="王";
-        Object object = logController.findLogListByAdminName(1,5,username);
-        System.out.println(object.toString());
-    }
+//    @Rollback(false)
+//    @Test
+//    public void findloglistTest(){
+//        String username="王";
+//        Object object = logController.findLogListByAdminId(1,5,200001);
+//        System.out.println(object.toString());
+//    }
 
     @Rollback(false)
     @Test

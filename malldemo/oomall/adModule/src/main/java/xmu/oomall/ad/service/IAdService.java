@@ -2,10 +2,15 @@ package xmu.oomall.ad.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.ad.domain.Ad;
+import xmu.oomall.ad.domain.Log;
+
 import java.util.List;
 
 @Service
 public interface IAdService {
+
+    public void log(Log log);
+
     /**
     * @Description: 根据ID查找广告
     * @Param: [id]
@@ -13,7 +18,6 @@ public interface IAdService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/4
     */
-
     public Ad findAdById(Integer id);
 
     /**
@@ -27,7 +31,7 @@ public interface IAdService {
 
     public Integer deleteAdbyId(Integer id);
 
-    public void addAds(Ad ad);
+    public Integer addAds(Ad ad);
 
     /**
      * @Description: 修改ad的信息

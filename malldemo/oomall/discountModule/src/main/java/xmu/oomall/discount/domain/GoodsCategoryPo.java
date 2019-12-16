@@ -1,6 +1,11 @@
 package xmu.oomall.discount.domain;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,7 +13,10 @@ import java.time.LocalDateTime;
  * @Description:商品种类的信息
  * @Data:Created in 14:50 2019/12/11
  **/
-
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class GoodsCategoryPo {
     private Integer id;
     /**
