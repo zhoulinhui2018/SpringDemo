@@ -15,7 +15,7 @@
     </insert>
 
     <select id="findTopicById" parameterType="Integer" resultType="TopicPo">
-        select * from oomall_topic where id=#{id};
+        select * from oomall_topic where id=#{id}
     </select>
 
     <select id="findTopicList" resultType="xmu.oomall.topic.domain.TopicPo">
