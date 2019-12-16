@@ -3,6 +3,7 @@ package xmu.oomall.address.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import xmu.oomall.address.domain.Address;
+import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.mapper.AddressMapper;
 
 import java.time.LocalDateTime;
@@ -25,28 +26,32 @@ public class AddressDao {
         return addressMapper.deleteAddress(id);
     }
 
-    public Address addNewAddress(Address address) {
-        address.setGmtCreate(LocalDateTime.now());
-        address.setGmtModified(LocalDateTime.now());
-        boolean resultMsg=addressMapper.addNewAddress(address);
-        if(resultMsg)
-            return address;
-        else
+    public AddressPo addNewAddress(AddressPo addressPo) {
+        addressPo.setGmtCreate(LocalDateTime.now());
+        addressPo.setGmtModified(LocalDateTime.now());
+        boolean resultMsg=addressMapper.addNewAddress(addressPo);
+        if(resultMsg){
+            return addressPo;
+        }
+        else{
             return null;
+        }
 
     }
 
-    public Address updateAddress(Address address) {
-        address.setGmtModified(LocalDateTime.now());
-        boolean result=addressMapper.updateAddress(address);
-        if(result)
-            return address;
-        else
+    public AddressPo updateAddress(AddressPo addressPo) {
+        addressPo.setGmtModified(LocalDateTime.now());
+        boolean result=addressMapper.updateAddress(addressPo);
+        if(result){
+            return addressPo;
+        }
+        else{
             return null;
+        }
     }
 
-    public List<Address> getAllAddressList() {
-        List<Address> allAddresses = addressMapper.getAllAddressList();
-        return allAddresses;
+    public List<Address> adminFindUserAddress(Integer userId, String name) {
+        List<Address> addresses = addressMapper.adminFindUserAddress(userId,name);
+        return addresses;
     }
 }

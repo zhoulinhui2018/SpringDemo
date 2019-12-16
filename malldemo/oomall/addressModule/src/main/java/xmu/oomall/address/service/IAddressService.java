@@ -2,18 +2,23 @@ package xmu.oomall.address.service;
 
 import org.springframework.stereotype.Service;
 import xmu.oomall.address.domain.Address;
+import xmu.oomall.address.domain.AddressPo;
+
 import java.util.List;
 
 @Service
 public interface IAddressService {
     /**
      * 查看某用户的收货地址列表
+     *
+     * @param page
+     * @param limit
      * @param userId 用户ID
      * @return 收货地址列表
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    public List<Address> getUserAddresslist(Integer userId);
+    public List<Address> getUserAddresslist(Integer page, Integer limit, Integer userId);
 
     /**
      * 收货地址详情
@@ -31,7 +36,7 @@ public interface IAddressService {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    public Address addNewAddress(Address address);
+    public AddressPo addNewAddress(AddressPo address);
 
     /**
      * 删除收货地址
@@ -49,16 +54,20 @@ public interface IAddressService {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    public Address updateAddress( Address address);
+    public AddressPo updateAddress(AddressPo address);
 
     /**
      * 管理员获取全部地址列表
      * @param
+     * @param page
+     * @param limit
+     * @param userId
+     * @param name
      * @return 全部地址列表
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    public List<Address> getAllAddressList();
+    public List<Address> adminFindUserAddress(Integer page, Integer limit, Integer userId, String name);
 
 
 }

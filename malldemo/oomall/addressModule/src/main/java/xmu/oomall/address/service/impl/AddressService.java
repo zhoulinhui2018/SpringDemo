@@ -1,10 +1,12 @@
 package xmu.oomall.address.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.address.dao.AddressDao;
 import xmu.oomall.address.domain.Address;
+import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.service.IAddressService;
 
 import java.util.List;
@@ -16,7 +18,8 @@ public class AddressService implements IAddressService {
     private AddressDao addressDao;
 
     @Override
-    public List<Address> getUserAddresslist(Integer userId) {
+    public List<Address> getUserAddresslist(Integer page, Integer limit, Integer userId) {
+        PageHelper.startPage(page,limit);
         return addressDao.getUserAdresslist(userId);
     }
     @Override
@@ -28,15 +31,16 @@ public class AddressService implements IAddressService {
         return addressDao.deleteAddress(id);
     }
     @Override
-    public Address addNewAddress(Address address) {
-        return addressDao.addNewAddress(address);
+    public AddressPo addNewAddress(AddressPo addressPo) {
+        return addressDao.addNewAddress(addressPo);
     }
     @Override
-    public Address updateAddress(Address address) {
-        return addressDao.updateAddress(address);
+    public AddressPo updateAddress(AddressPo addressPo) {
+        return addressDao.updateAddress(addressPo);
     }
     @Override
-    public List<Address> getAllAddressList() {
-        return addressDao.getAllAddressList();
+    public List<Address> adminFindUserAddress(Integer page, Integer limit, Integer userId, String name) {
+        PageHelper.startPage(page,limit);
+        return addressDao.adminFindUserAddress(userId,name);
     }
 }

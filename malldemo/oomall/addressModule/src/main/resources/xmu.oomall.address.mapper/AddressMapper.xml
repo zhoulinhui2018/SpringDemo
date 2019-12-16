@@ -2,35 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.address.mapper.AddressMapper">
 
-    <select id="getAllAddressList" resultType="xmu.oomall.address.domain.Address">
-        select * from address;
+    <select id="adminFindUserAddress" resultType="xmu.oomall.address.domain.Address">
+        select *
+        from oomall_address
+        where
+        <if test="userId!=null and name!=''">
+            (user_id=#{userId} and consignee=#{name}) and
+        </if>
+        <if test="userId!=null and name ==''">
+            (user_id=#{userId}) and
+        </if>
+        true
     </select>
 
     <select id="getUserAddressList" resultType="xmu.oomall.address.domain.Address" parameterType="Integer">
         select *
-        from address
-        where user_id= #{userId};
+        from oomall_address
+        where user_id= #{userId}
     </select>
 
 
     <insert id="addNewAddress" parameterType="xmu.oomall.address.domain.Address" useGeneratedKeys="true" keyProperty="id">
-      insert into address (gmt_create, gmt_modified, is_deleted,
-        county, province, city,
-        address_detail, postal_code,
-        mobile, is_default, user_id, county_id)
+      insert into oomall_address (gmt_create, gmt_modified, is_deleted,
+        county_id, province_id, city_id,
+        address_detail, postal_code,consignee,
+        mobile, is_default, user_id)
         values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
-        #{county}, #{province}, #{city},
-        #{addressDetail}, #{postalCode},
-        #{mobile},#{beDefault},#{userId},#{countyId});
+        #{countyId}, #{provinceId}, #{cityId},
+        #{addressDetail}, #{postalCode},#{consignee},
+        #{mobile},#{beDefault},#{userId})
     </insert>
 
     <delete id="deleteAddress" parameterType="integer">
-        delete from address
-        where id=#{id};
+        delete from oomall_address
+        where id=#{id}
     </delete>
 
     <update id="updateAddress"  parameterType="xmu.oomall.address.domain.Address" >
-        update address
+        update oomall_address
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate != null">
                 gmt_create = #{gmtCreate},
@@ -72,9 +81,9 @@
         where id=#{id}
     </update>
 
-    <select id="getAddressDetail" resultType="Address" parameterType="Integer">
+    <select id="getAddressDetail" resultType="xmu.oomall.address.domain.Address" parameterType="Integer">
         select *
-        from address
+        from oomall_address
         where id=#{id}
     </select>
 

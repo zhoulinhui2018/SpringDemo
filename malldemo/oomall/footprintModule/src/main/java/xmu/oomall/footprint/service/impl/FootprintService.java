@@ -20,8 +20,7 @@ public class FootprintService implements IFootprintService {
     @Override
     public List<FootprintItem> getUserFootprintList(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        List<FootprintItem> userFootprintList=footprintDao.getUserFootprintList(userId);
-        return userFootprintList;
+        return footprintDao.getUserFootprintList(userId);
     }
 
     @Override

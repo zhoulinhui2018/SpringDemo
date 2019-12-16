@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.footprint.mapper.FootprintMapper">
 
+    <select id="getUserFootprintList" resultType="xmu.oomall.footprint.domain.FootprintItem" parameterType="Integer">
+        select *
+        from oomall_footprint_item
+        where user_id= #{userId}
+    </select>
+
+    <insert id="addFootprint" parameterType="xmu.oomall.footprint.domain.FootprintItem" useGeneratedKeys="true" keyProperty="id">
+      insert into oomall_footprint_item
+      (gmt_create, birth_time,user_id,goods_id)
+        values (#{gmtCreate}, #{birthTime},#{userId},#{goodsId});
+    </insert>
+
+
+    <delete id="deleteFootprint" parameterType="integer">
+        delete from oomall_footprint_item
+        where id=#{id};
+    </delete>
+
+    <!--根据条件：商品名/用户名，查找足迹-->
     <resultMap id="footprintItemResultMap" type="xmu.oomall.footprint.domain.FootprintItem">
         <id property="id" column="id"/>
         <result property="gmtCreate" column="gmt_create"/>
@@ -9,26 +28,6 @@
         <result property="userId" column="user_id"/>
         <result property="goodsId" column="goods_id"/>
     </resultMap>
-
-    <select id="getUserFootprintList" resultMap="footprintItemResultMap" parameterType="Integer">
-        select *
-        from footprint_item
-        where user_id= #{userId};
-    </select>
-
-    <insert id="addFootprint" parameterType="xmu.oomall.footprint.domain.FootprintItem" useGeneratedKeys="true" keyProperty="id">
-      insert into footprint_item
-      (gmt_create, birth_time,user_id,goods_id)
-        values (#{gmtCreate}, #{birthTime},#{userId},#{goodsId});
-    </insert>
-
-
-    <delete id="deleteFootprint" parameterType="integer">
-        delete from footprint_item
-        where id=#{id};
-    </delete>
-
-    <!--根据条件：商品名/用户名，查找足迹-->
     <select id="listFootprintByCondition" resultMap="footprintItemResultMap">
         select oomall_footprint_item.id,
         oomall_footprint_item.gmt_create,
@@ -46,6 +45,5 @@
         true
         order by oomall_footprint_item.birth_time desc
     </select>
-
 
 </mapper>

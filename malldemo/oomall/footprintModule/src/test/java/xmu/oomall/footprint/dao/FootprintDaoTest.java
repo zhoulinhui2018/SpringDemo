@@ -3,9 +3,9 @@ package xmu.oomall.footprint.dao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import xmu.oomall.footprint.FootprintApplication;
 import xmu.oomall.footprint.domain.FootprintItem;
-import xmu.oomall.footprint.domain.FootprintItemPo;
 import xmu.oomall.footprint.domain.GoodsPo;
 
 import java.time.LocalDateTime;
@@ -23,10 +23,10 @@ class FootprintDaoTest {
        List<FootprintItem> userFootprintList=footprintDao.getUserFootprintList(1);
        for(int i=0;i<userFootprintList.size();++i){
            FootprintItem footprint=userFootprintList.get(i);
-           System.out.println(footprint);
+           System.out.println(footprint.getId());
        }
    }
-
+    @Rollback
     @Test
     public void deleteFootprintTest()
     {
@@ -40,7 +40,7 @@ class FootprintDaoTest {
         List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition("张雅晴","菠萝");
         for(int i=0;i<userFootprintList.size();++i){
             FootprintItem footprint=userFootprintList.get(i);
-            System.out.println(footprint);
+            System.out.println(footprint.getId());
         }
     }
 
