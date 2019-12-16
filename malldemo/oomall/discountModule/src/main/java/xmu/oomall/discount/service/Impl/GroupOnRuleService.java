@@ -25,6 +25,21 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     private LoadBalancerClient loadBalancerClient;
 
     @Override
+    public void log(Log log) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Log");
+        System.out.println(instance.getHost());
+        System.out.println(instance.getPort());
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
+        restTemplate.postForObject(reqURL,log,Log.class);
+    }
+
+    @Override
+    public void putOrdersBack(List<Order> orders) {
+
+    }
+
+    @Override
     public boolean isGrouponOrder(Integer goodsId) {
         List<GrouponRulePo> availableGrouponRules = groupOnDao.findAvailableGrouponRules();
         for (GrouponRulePo availableGrouponRule : availableGrouponRules) {

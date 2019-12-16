@@ -8,6 +8,8 @@ import java.util.List;
 @Service
 public interface IGroupOnRuleService {
 
+    public void log(Log log);
+
     /**
      * 根据GoodsId判断是否是团购订单
      * @param goodsId

@@ -31,7 +31,7 @@ public class Topic extends TopicPo{
         this.setId(topicPo.getId());
         this.setGmtCreate(topicPo.getGmtCreate());
         this.setGmtModified(topicPo.getGmtModified());
-        this.setBeDeleted(topicPo.getBeDeleted());
+        this.setDeleted(topicPo.getDeleted());
         this.setPicUrlList(topicPo.getPicUrlList());
         this.setContent(topicPo.getContent());
     }

@@ -1,24 +1,23 @@
 package xmu.oomall.discount.controller;
 
 
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
-import xmu.oomall.discount.domain.GoodsPo;
-import xmu.oomall.discount.domain.GrouponRulePo;
-import xmu.oomall.discount.domain.Order;
-import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
-import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
+import xmu.oomall.discount.util.LogUtil;
 import xmu.oomall.discount.util.ResponseUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +36,15 @@ public class DiscountController {
     @Autowired
     private GroupOnDao groupOnDao;
 
+    /**
+    * @Description: 每天晚上12点处理团购
+    * @Param: []
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/17
+    */
     @Scheduled(cron = "0 0 0 * * ?")
     public Object executeAllGroupon(){
-
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
         for (GrouponRulePo finishedGrouponRule : finishedGrouponRules) {
             List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(finishedGrouponRule);
@@ -105,7 +110,51 @@ public class DiscountController {
      * @Date: 2019/12/7
      */
     @PutMapping("/grouponRules/{id}")
-    public Object update(@PathVariable Integer id,@RequestBody GrouponRulePo grouponRulePo){
+    public Object update(HttpServletRequest request, @PathVariable Integer id, @RequestBody GrouponRulePo grouponRulePo){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Boolean statusCode = grouponRulePo.getStatusCode();
+        Boolean inTime = false;
+//            int isSuccess= groupOnRuleService.update(grouponRulePo);
+        grouponRulePo.setId(id);
+        GrouponRulePo grouponRulePo1 = groupOnRuleService.findById(id);
+        LocalDateTime now = LocalDateTime.now();
+        if (grouponRulePo1.getStartTime().isBefore(now)&&grouponRulePo1.getEndTime().isAfter(now)){
+            inTime=true;
+        }
+        Log log = LogUtil.newLog("修改团购", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
+        if(inTime==true && statusCode==true) {
+            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(grouponRulePo);
+            List<Payment> payments =new ArrayList<>();
+            for (int i = 0; i < grouponOrders.size(); i++) {
+                Order order =  grouponOrders.get(i);
+                List<OrderItem> orderItemList = order.getOrderItemList();
+                OrderItem orderItem = orderItemList.get(0);
+                BigDecimal price = orderItem.getPrice();
+                Integer number1 = orderItem.getNumber();
+                BigDecimal number=new BigDecimal(number1);
+                BigDecimal dealPrice = price.multiply(number).setScale(2,BigDecimal.ROUND_FLOOR);
+                orderItem.setDealPrice(dealPrice);
+                Payment payment=new Payment();
+                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
+                payment.setOrderId(order.getId());
+                payments.add(payment);
+            }groupOnRuleService.refund(payments);
+        }else if(inTime==false){
+            //预售未开始或者已经结束可以修改信息
+            if (groupOnRuleService.update(grouponRulePo) == 0) {
+                groupOnRuleService.log(log);
+                return ResponseUtil.updatedDataFailed();
+            }
+            log.setStatusCode(1);
+            groupOnRuleService.log(log);
+            return ResponseUtil.ok(grouponRulePo);
+        }else{
+            //在预售开始到结束时间内且未作废的情况，不能改动信息
+            return ResponseUtil.updatedDataFailed();
+        }
         grouponRulePo.setId(id);
         groupOnRuleService.update(grouponRulePo);
         return ResponseUtil.ok(grouponRulePo);
@@ -231,6 +280,20 @@ public class DiscountController {
             }
         }
         return ResponseUtil.ok(order);
+    }
+
+    private Object validate(GrouponRulePo grouponRulePo) {
+        LocalDateTime startTime = grouponRulePo.getStartTime();
+        LocalDateTime endTime = grouponRulePo.getEndTime();
+        String grouponLevelStrategy = grouponRulePo.getGrouponLevelStrategy();
+        Integer goodsId=grouponRulePo.getGoodsId();
+        if (startTime==null || endTime==null || goodsId==null){
+            return ResponseUtil.badArgument();
+        }
+        if (StringUtils.isEmpty(grouponLevelStrategy)) {
+            return ResponseUtil.badArgument();
+        }
+        return null;
     }
 
 }
