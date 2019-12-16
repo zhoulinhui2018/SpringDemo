@@ -88,11 +88,7 @@ public class TopicController {
                                          @RequestParam(defaultValue = "10") Integer limit
                                ) {
         List<Topic> topics = new ArrayList<Topic>();
-        try {
-            topics = topicService.findTopicList(page,limit);
-        }catch (MallException e){
-            return ResponseUtil.badArgumentValue();
-        }
+        topics = topicService.findTopicList(page,limit);
         return ResponseUtil.ok(topics);
     }
 
@@ -108,13 +104,7 @@ public class TopicController {
                                 @RequestParam(defaultValue = "10") Integer limit
                                  ,HttpServletRequest request) {
         List<Topic> topics = new ArrayList<Topic>();
-        try {
             topics = topicService.findTopicList(page,limit);
-//            logService.addLog(request.getIntHeader("userId"),
-//                    request.getHeader("ip"),1,null,"管理员创建新的专题",0);
-        }catch (MallException e){
-            return ResponseUtil.badArgumentValue();
-        }
         return ResponseUtil.ok(topics);
     }
 
@@ -164,11 +154,11 @@ public class TopicController {
         try{
             topicService.findTopicById(id);
         }catch (MallException e){
-            logService.addLog(request.getIntHeader("userId"),
+            logService.addLog(request.getIntHeader("id"),
                     request.getHeader("ip"),0,id,"查看专题详情",0);
             return e.getErrorCode();
         }
-        logService.addLog(request.getIntHeader("userId"),
+        logService.addLog(request.getIntHeader("id"),
                 request.getHeader("ip"),0,id,"查看专题详情",1);
         return ResponseUtil.ok();
     }

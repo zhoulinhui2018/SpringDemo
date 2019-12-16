@@ -15,7 +15,7 @@ import java.util.List;
  **/
 @Service
 public interface ITopicService {
-    public List<Topic> findTopicList(Integer page, Integer limit) throws MallException;
+    public List<Topic> findTopicList(Integer page, Integer limit);
 
     public Integer adminAddTopic(TopicPo topicPo) throws MallException;
 
