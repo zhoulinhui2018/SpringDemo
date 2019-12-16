@@ -14,8 +14,10 @@ import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 import xmu.oomall.util.ResponseUtil;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -48,9 +50,10 @@ public class CouponController {
      * @return list<Coupon>
      */
     @GetMapping("/couponRules")
-    public List<CouponRulePo> list()
+    public List<CouponRulePo> list(@RequestParam(defaultValue = "1") Integer page,
+                                   @RequestParam(defaultValue = "10") Integer limit)
     {
-        List<CouponRulePo> couponList=couponService.getCouponList();
+        List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
         return couponList;
     }
 
@@ -78,49 +81,110 @@ public class CouponController {
      * @return
      */
     @GetMapping("/couponRules/{id}")
-    public Object read(@NotNull Integer id)
+    public Object detail(@NotNull Integer id)
     {
         CouponRulePo couponRule=couponService.findCouponRuleById(id);
         return ResponseUtil.ok(couponRule);
     }
 
     /**
-     * 管理员更新优惠券信息
+     * 管理员修改优惠券信息
+     * 管理员可以作废优惠卷，优惠卷作废后，所有领出未用的优惠卷也一并作废，已经使用的优惠卷不受影响
+     * @param id
      * @param couponRule
      * @return
      */
+
     @PutMapping("/couponRules/{id}")
-    public Object update(@RequestBody CouponRulePo couponRule) {
+    public Object update(@PathVariable Integer id,@RequestBody CouponRulePo couponRule) {
         Object error = validate(couponRule);
         if (error != null) {
             return error;
         }
-        if (couponService.updateCouponRuleById(couponRule) == 0) {
-            return ResponseUtil.updatedDataFailed();
+        couponRule.setId(id);
+        CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
+
+        boolean oldStatusCode=ruleInDB.getStatusCode();
+        boolean newStatusCode=couponRule.getStatusCode();
+
+        LocalDateTime beginTime=ruleInDB.getBeginTime();
+        LocalDateTime endTime=ruleInDB.getEndTime();
+        LocalDateTime nowTime=LocalDateTime.now();
+        if(oldStatusCode==true) {
+            if (newStatusCode == false) {
+                //管理员作废优惠券,更新coupon表
+                couponService.updateCouponRuleById(couponRule);
+                couponService.updateCouponStatus(id);
+
+
+
+
+                return ResponseUtil.ok();
+            } else {
+                if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
+                    //在优惠券开始到结束时间内不能改动信息
+                    return ResponseUtil.updatedDataFailed();
+                } else {
+                    //优惠券未开始或者已经结束可以修改信息
+                    if (couponService.updateCouponRuleById(couponRule) == 0) {
+                        return ResponseUtil.updatedDataFailed();
+                    }
+                    return ResponseUtil.ok(couponRule);
+                }
+            }
         }
-        return ResponseUtil.ok(couponRule);
+        else{
+            //优惠券规则已经过期了可以修改
+            if (couponService.updateCouponRuleById(couponRule) == 0) {
+                return ResponseUtil.updatedDataFailed();
+            }
+            return ResponseUtil.ok(couponRule);
+        }
     }
 
     /**
-     * 管理员删除优惠券
-     * @param couponRule
+     * 管理员删除优惠券规则
+     * @param id
      * @return
      */
     @DeleteMapping("/couponRules/{id}")
-    public Object delete(@RequestBody CouponRulePo couponRule){
-        couponService.deleteCouponRuleById(couponRule.getId());
-        return ResponseUtil.ok();
+    public Object delete(@PathVariable Integer id){
+
+        CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
+        Boolean statusCode=ruleInDB.getStatusCode();
+        LocalDateTime beginTime=ruleInDB.getBeginTime();
+        LocalDateTime endTime=ruleInDB.getEndTime();
+        LocalDateTime nowTime=LocalDateTime.now();
+        //优惠券规则未失效
+        if(statusCode==true) {
+            //在优惠券开始到结束时间内不能删除优惠券
+            if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
+                return ResponseUtil.fail();
+            }
+            couponService.deleteCouponRuleById(id);
+            return ResponseUtil.ok();
+        }else {//优惠券规则已失效
+            couponService.deleteCouponRuleById(id);
+            return ResponseUtil.ok();
+        }
     }
 
     /**
-     * 获取用户的优惠券列表
-     * @param userId
+     * 用户获取自己领取的优惠券列表（失效的statusCode=0不显示）
+     * @param request
+     * @param page
+     * @param limit
      * @return
      */
     @GetMapping("/coupons")
-    public List<CouponPo> mylist(Integer userId)
+    public List<CouponPo> mylist(HttpServletRequest request,
+                                 @RequestParam(defaultValue = "1") Integer page,
+                                 @RequestParam(defaultValue = "10") Integer limit)
     {
-        List<CouponPo> myList=couponService.getCouponMyList(userId);
+        String id=request.getHeader("id");
+        Integer userId=Integer.valueOf(id);
+
+        List<CouponPo> myList=couponService.getCouponMyList(userId,page,limit);
         return myList;
     }
 
@@ -136,69 +200,94 @@ public class CouponController {
         return ResponseUtil.ok(ACoupon);
     }
 
+    /**
+     * 用户领取一张新的优惠券
+     * 在起止期限中才可以领用或使用优惠卷
+     * 限制每个用户同类优惠卷只能有一张
+     * @param coupon
+     * @return
+     */
     @PostMapping("/coupons")
-    public Object createACoupon(@RequestBody CouponPo coupon)
+    public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo coupon)
     {
         Object error=validateCoupon(coupon);
         if (error != null) {
             return error;
         }
-        couponService.addCoupon(coupon);
-        return ResponseUtil.ok(coupon);
+        String id=request.getHeader("id");
+        Integer userId=Integer.valueOf(id);
+        Integer couponRuleId=coupon.getCouponRuleId();
+        //判断当前优惠券是否已经领取过
+        List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,10);
+        List<Integer> couponRuleIds=new ArrayList<>();
+        //获取已领取优惠券的ids
+        for(CouponPo couponPo:couponPos){
+            couponRuleIds.add(couponPo.getCouponRuleId());
+        }
+        for(Integer eachId:couponRuleIds){
+            if(couponRuleId.equals(eachId)){
+                //优惠券已经领取过了
+                return ResponseUtil.fail();
+            }
+        }
+        LocalDateTime now=LocalDateTime.now();
+        LocalDateTime beginTime=coupon.getBeginTime();
+        LocalDateTime endTime=coupon.getEndTime();
+        //判断是否在起止期限内
+        if((now.compareTo(beginTime)>=0)&&(now.compareTo(endTime)<=0)){
+            couponService.addCoupon(coupon);
+            return ResponseUtil.ok(coupon);
+        }
+        else{
+            //优惠券过期了，无法领取
+            return ResponseUtil.fail();
+        }
+
     }
 
     /**
      * 用户查看当前购物车下单商品订单可用优惠券
      * userId不能直接使用！！！
-     * @param userId
+     * @param request
      * @param cartItemIds
      * @return
      */
     @GetMapping("/coupons/availableCoupons")
-    public Object selectlist(Integer userId,List<Integer> cartItemIds){
+    public Object selectAvailableCoupons(HttpServletRequest request,List<Integer> cartItemIds){
+        String Id=request.getHeader("id");
+        Integer userId=Integer.valueOf(Id);
+
         Integer goodsId;
         List<Integer> goodsIdList=new ArrayList<Integer>(cartItemIds.size());
         for(int i=0;i<cartItemIds.size();i++) {
+
+            //ribbon
             Integer id = cartItemIds.get(i);
             //调用购物车模块服务通过cartItemId找货品id
             RestTemplate restTemplate = new RestTemplate();
-            ServiceInstance instance = loadBalancerClient.choose("cartItem");
+            ServiceInstance instance = loadBalancerClient.choose("Cart");
             String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/cartItems/{id}");
-            CartItem cartItem = restTemplate.getForObject(reqURL,CartItem.class);
+            CartItem cartItem = restTemplate.getForObject(reqURL,CartItem.class,id);
 
             //通过货品id找商品id
             goodsId=cartItem.getProduct().getGoodsId();
 
-            goodsIdList.add(goodsId);//把购物车中商品id保存到一个list当中
+            //把购物车中商品id保存到一个list当中
+            goodsIdList.add(goodsId);
 
         }
         Set<CouponRulePo> canUsedCoupons=couponService.getCanUsedCoupons(goodsIdList,userId);
         return ResponseUtil.ok(canUsedCoupons);
     }
 
-    /**
-     * Order模块调用Discount模块，把Order传过来计算使用优惠券后的价格,返回计算优惠价格后的新Order
-     * @param order
-     * @return newOrder
-     */
-    @GetMapping("/calcWithCouponPrice")
-    public Order calcDiscount(Order order)
-    {
 
-        Integer couponId=order.getCouponId();
+    //热门优惠券的抢购 消息队列吗？
+    //管理员把优惠券规则置失效之后
+    //已经使用优惠券的就正常使用了，后面的就没有这个优惠券了
+    //把团购规则置失效之后，已经支付的团购处理退款
+    //把预售规则置失效之后，已经支付定金的退定金，已经付了定金和尾款的全部退款
 
-        List<OrderItem> orderItems=order.getOrderItemList();
 
-        List<OrderItem> newItems=couponService.calcDiscount(orderItems,couponId);
 
-        //包装成一个新的Order返回
-        Order newOrder=new Order();
-        newOrder.setOrderItemList(newItems);
-        newOrder.setAddressObj(order.getAddressObj());
-        newOrder.setUser(order.getUser());
-        newOrder.setCouponId(couponId);
-
-        return newOrder;
-    }
 
 }

@@ -67,7 +67,7 @@ public class CouponControllerTest {
     @Test
     public void readTest()
     {
-        Object object= couponController.read(100003);
+        Object object= couponController.detail(100003);
         System.out.println(object.toString());
     }
 
@@ -75,10 +75,7 @@ public class CouponControllerTest {
     @Test
     public void deleteTest()
     {
-        CouponRulePo couponRule=new CouponRulePo();
-        couponRule.setId(100005);
-        couponRule.setName("全场买二赠一");
-        couponController.delete(couponRule);
+        couponController.delete(100005);
         System.out.println("删除一条数据成功");
     }
 
@@ -87,17 +84,16 @@ public class CouponControllerTest {
     public void updateTest()
     {
         CouponRulePo couponRule=new CouponRulePo();
-        couponRule.setId(100005);
         couponRule.setName("全场买三赠一");
 
-        couponController.update(couponRule);
+        couponController.update(100005,couponRule);
         System.out.println("更新一条数据成功");
     }
-    @Test
-    public  void myListTest(){
-        List<CouponPo> myList=couponController.mylist(100001);
-        System.out.println(myList);
-    }
+//    @Test
+//    public  void myListTest(){
+//        List<CouponPo> myList=couponController.mylist(100001,1,10);
+//        System.out.println(myList);
+//    }
 
     @Test
     public void findCouponTest()
@@ -105,17 +101,18 @@ public class CouponControllerTest {
         Object object=couponController.readACoupon(1000001);
         System.out.println(object.toString());
     }
-    @Test
-    public void selectlist()
-    {
-        //参数：Integer userId,List<Integer> cartItemIds
-        List<Integer> cartItemIds=new ArrayList<Integer>();
-        for(int i=1;i<6;i++){
-            cartItemIds.add(i);
-        }
-        Object object=couponController.selectlist(100001,cartItemIds);
-        System.out.println(object.toString());
-    }
+
+//    @Test
+//    public void selectlist()
+//    {
+//        //参数：Integer userId,List<Integer> cartItemIds
+//        List<Integer> cartItemIds=new ArrayList<Integer>();
+//        for(int i=1;i<6;i++){
+//            cartItemIds.add(i);
+//        }
+//        Object object=couponController.selectlist(100001,cartItemIds);
+//        System.out.println(object.toString());
+//    }
 
 
 }

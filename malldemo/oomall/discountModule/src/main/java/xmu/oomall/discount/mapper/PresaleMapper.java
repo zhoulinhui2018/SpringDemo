@@ -1,8 +1,10 @@
 package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper
@@ -40,4 +42,12 @@ public interface PresaleMapper {
      * @return
      */
     List<PresaleRule> findByGoodsId(Integer goodsId);
+
+    /**
+     * 获取订单求当前
+     * @param order
+     * @return
+     */
+    BigDecimal getIntegralPrice(Order order);
+
 }

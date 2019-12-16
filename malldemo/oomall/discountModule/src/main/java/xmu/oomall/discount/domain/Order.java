@@ -21,4 +21,6 @@ public class Order extends OrderPo {
     private User user;
     private List<OrderItem> orderItemList;
     private Integer couponId;
+    //这里增加了List<Payment>
+    private List<Payment> paymentList;
 }
