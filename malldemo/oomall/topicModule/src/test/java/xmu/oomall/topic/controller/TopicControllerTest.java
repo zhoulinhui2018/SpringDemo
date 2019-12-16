@@ -46,11 +46,11 @@ public class TopicControllerTest {
 //    }
 
     //用户管理员查看所有专题测试，单页返回三个
-    @Test
-    public void findAllTopicTest(){
-        Object object = topicController.findTopicList(1,3);
-        System.out.println(object.toString());
-    }
+//    @Test
+//    public void findAllTopicTest(){
+//        Object object = topicController.findTopicList(1,3);
+//        System.out.println(object.toString());
+//    }
 
     //用户管理员查看专题详情测试
 //    @Test
@@ -78,9 +78,9 @@ public class TopicControllerTest {
 //    }
 
     //管理员删除专题测试
-//    @Rollback(false)
-//    @Test
-//    public void adminDeleteTopicTest(){
-//        topicController.adminDeleteTopicById(300004);
-//    }
+    @Rollback(false)
+    @Test
+    public void adminDeleteTopicTest(){
+        topicController.adminDeleteTopicById(300006);
+    }
 }

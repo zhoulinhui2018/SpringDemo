@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 @Service
 public class LogService implements ILogService{
-    private static String logAPI= "http://localhost:8070/log";
+    private static String logAPI= "http://localhost:8080/logs";
 
 
     @Autowired
