@@ -44,7 +44,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     }
 
 
-
+    @Override
     public int getGrouponNumber(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("order");
