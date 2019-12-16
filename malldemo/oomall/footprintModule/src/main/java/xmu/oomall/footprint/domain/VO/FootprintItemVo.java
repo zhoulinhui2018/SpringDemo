@@ -1,7 +1,7 @@
 package xmu.oomall.footprint.domain.VO;
 import xmu.oomall.domain.*;
-import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.footprint.domain.FootprintItem;
+import xmu.oomall.footprint.domain.Goods;
 
 /**
  * admin端的 GET /footprints 请求VO
