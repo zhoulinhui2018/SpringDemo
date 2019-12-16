@@ -100,11 +100,16 @@
             <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
-        <!--一下印入Alibaba.fastJson依赖.-->
+        <!--以下印入Alibaba.fastJson依赖.-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
+        </dependency>
+        <!--以下印入ribbon依赖.-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-ribbon</artifactId>
         </dependency>
     </dependencies>
 

@@ -8,9 +8,7 @@ import java.util.List;
 @Service
 @Mapper
 public interface LogMapper {
-    public List<Log> findLogListByAdminName(Integer id);
-
-    public Integer findAdminIdByName(String name);
+    public List<Log> findLogListByAdminId(Integer id);
 
     public Integer addLog(Log newlog);
 }

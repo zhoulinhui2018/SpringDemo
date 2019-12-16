@@ -92,6 +92,12 @@
             <version>1.16.20</version>
             <scope>provided</scope>
         </dependency>
+        <!--以下印入ribbon依赖.-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-ribbon</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
