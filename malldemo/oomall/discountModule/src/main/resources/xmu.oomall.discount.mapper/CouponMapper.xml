@@ -5,31 +5,31 @@
 
     <select id="findCouponRuleById" parameterType="Integer" resultType="couponRulePo">
             select *
-                    from coupon_rule where id = #{id}
+                    from oomall_coupon_rule where id = #{id}
     </select>
 
 
     <insert id="addCouponRule" parameterType="couponRulePo" useGeneratedKeys="true" keyProperty="id">
-        insert into coupon_rule(name,brief,begin_time,end_time,pic_url,valid_period,strategy,goods_list1,goods_list2,gmt_create,gmt_modified,is_deleted)
+        insert into oomall_coupon_rule(name,brief,begin_time,end_time,pic_url,valid_period,strategy,goods_list1,goods_list2,gmt_create,gmt_modified,is_deleted)
         values (#{name},#{brief},#{beginTime},#{endTime},#{picUrl},#{validPeriod},#{strategy},#{goodsList1},#{goodsList2},#{gmtCreate},#{gmtModified},#{beDeleted})
     </insert>
 
     <insert id="addCoupon" parameterType="couponPo" useGeneratedKeys="true" keyProperty="id">
-        insert into coupon(user_id,coupon_rule_id,coupon_sn,begin_time,end_time,used_time,name,pic_url,gmt_create,gmt_modified,is_deleted,status)
+        insert into oomall_coupon(user_id,coupon_rule_id,coupon_sn,begin_time,end_time,used_time,name,pic_url,gmt_create,gmt_modified,is_deleted,status)
         values (#{userId},#{couponRuleId},#{couponSn},#{beginTime},#{endTime},#{usedTime},#{name},#{picUrl},#{gmtCreate},#{gmtModified},#{beDeleted},#{statusCode})
     </insert>
 
     <select id="getCouponList" resultType="couponRulePo">
         select *
-        from coupon_rule;
+        from oomall_coupon_rule;
     </select>
 
     <delete id="deleteCouponRuleById" parameterType="Integer">
-        update coupon_rule set is_deleted=1 where id = #{id};
+        update oomall_coupon_rule set is_deleted=1 where id = #{id};
     </delete>
 
     <update id="updateCouponRuleById" parameterType="couponRulePo" >
-        update coupon_rule
+        update oomall_coupon_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
             <if test="brief!=null">brief=#{brief},</if>
@@ -51,29 +51,35 @@
 
     <select id="getCouponMyList" parameterType="Integer" resultType="couponPo">
         select *
-        from coupon where user_id=#{userId} and statusCode=0;
+        from oomall_coupon where user_id=#{userId} and statusCode=0;
     </select>
 
     <select id="getProductId" parameterType="Integer" resultType="Integer">
         select product_id
-        from cart_item where id=#{itemId};
+        from oomall_cart_item where id=#{itemId};
     </select>
 
     <select id="getGoodsId" parameterType="Integer" resultType="Integer">
         select goods_id
-        from product where id=#{goodsId};
+        from oomall_product where id=#{goodsId};
     </select>
 
     <select id="getCouponRule" parameterType="Integer" resultType="couponRulePo">
         select *
-        from coupon_rule where id=#{couponRuleId};
+        from oomall_coupon_rule where id=#{couponRuleId};
     </select>
 
     <select id="findCouponById" parameterType="Integer" resultType="couponPo">
-        select * from coupon where id = #{id}
+        select * from oomall_coupon where id = #{id}
     </select>
 
     <select id="getProductPrice" parameterType="Integer" resultType="BigDecimal">
-        select price from product where id = #{goodsId}
+        select price from oomall_product where id = #{goodsId}
     </select>
+
+    <update id="updateCouponStatus" parameterType="Integer" >
+        update oomall_coupon
+        set status=1 where coupon_rule_id = #{id};
+    </update>
+
 </mapper>

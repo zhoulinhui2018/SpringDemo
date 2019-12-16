@@ -1,5 +1,6 @@
 package xmu.oomall.discount.service.Impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.dao.CouponDao;
@@ -39,7 +40,8 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public List<CouponRulePo> getCouponList() {
+    public List<CouponRulePo> getCouponList(Integer page,Integer limit) {
+        PageHelper.startPage(page,limit);
         List<CouponRulePo> couponRuleList=couponDao.getCouponList();
         return couponRuleList;
     }
@@ -51,7 +53,13 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public List<CouponPo> getCouponMyList(Integer userId){
+    public void addCoupon(CouponPo coupon) {
+        couponDao.addCoupon(coupon);
+    }
+
+    @Override
+    public List<CouponPo> getCouponMyList(Integer userId,Integer page,Integer limit){
+        PageHelper.startPage(page,limit);
         List<CouponPo> mylist=couponDao.getCouponMyList(userId);
         return mylist;
     }
@@ -60,7 +68,6 @@ public class CouponServiceImpl implements ICouponService {
         CouponPo coupon=couponDao.findCouponById(id);
         return coupon;
     }
-
 
 
     @Override
@@ -75,8 +82,13 @@ public class CouponServiceImpl implements ICouponService {
         return newItems;
     }
 
+    /**
+     * 根据优惠券规则id更改coupon的状态
+     * @param id
+     */
     @Override
-    public void addCoupon(CouponPo coupon) {
-        couponDao.addCoupon(coupon);
+    public int updateCouponStatus(Integer id){
+        return couponDao.updateCouponStatus(id);
     }
+
 }

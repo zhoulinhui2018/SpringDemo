@@ -25,14 +25,14 @@ public interface ICouponService {
    CouponRulePo findCouponRuleById(Integer id);
 
     /**
-     * 根据id更新CouponRule对象
+     * 管理员根据id更新CouponRule对象
      * @param couponRule
      * @return
      */
    int updateCouponRuleById(CouponRulePo couponRule);
 
     /**
-     * 根据id删除CouponRule对象
+     * 管理员根据id删除CouponRule对象
      * @param id
      * @return
      */
@@ -40,10 +40,10 @@ public interface ICouponService {
    int deleteCouponRuleById(Integer id);
 
     /**
-     * 获取CouponRule列表
+     * 管理员获取CouponRule列表
      * @return
      */
-   List<CouponRulePo> getCouponList();
+   List<CouponRulePo> getCouponList(Integer page,Integer limit);
 
     /**
      * 新增CouponRule
@@ -51,14 +51,47 @@ public interface ICouponService {
      */
     void addCouponRule(CouponRulePo couponRule);
 
-    List<CouponPo> getCouponMyList(Integer userId);
+    /**
+     * 用户获取优惠券列表
+     * @param userId
+     * @return
+     */
+    List<CouponPo> getCouponMyList(Integer userId,Integer page,Integer limit);
 
 
+    /**
+     * 获取所有可用优惠券
+     * @param goodsIdList
+     * @param userId
+     * @return
+     */
     Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
 
+    /**
+     * 根据id找到优惠券
+     * @param id
+     * @return
+     */
     CouponPo findCouponById(Integer id);
 
+    /**
+     * 用户领取一张优惠券
+     * @param coupon
+     */
+    void addCoupon(CouponPo coupon);
+
+    /**
+     * 计算使用优惠券后的订单明细
+     * @param orderItems
+     * @param couponId
+     * @return
+     */
     List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId);
 
-    void addCoupon(CouponPo coupon);
+
+    /**
+     * 根据优惠券规则id更改coupon的状态
+     * @param id
+     */
+    int updateCouponStatus(Integer id);
 }

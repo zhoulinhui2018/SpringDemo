@@ -14,29 +14,22 @@ import java.util.function.BiConsumer;
 public interface IPresaleService {
 
     /**
-     * @Description: 管理员新增预售规则
-     * @Param: [presaleRule]
-     * @return:
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/10
+     * 管理员增加预售规则
+     * @param presaleRule
      */
     void add(PresaleRule presaleRule);
 
     /**
-     * @Description: 管理员查看某个预售规则详情
-     * @Param: [id]
-     * @return: PresaleRule
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/10
+     * 根据id找到预售规则
+     * @param id
+     * @return
      */
     PresaleRule findById(Integer id);
 
     /**
-     * @Description: 管理员修改预售规则信息
-     * @Param: [id, presaleRule]
-     * @return:
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/10
+     * 管理员更新预售规则
+     * @param presaleRule
+     * @return
      */
     int update(PresaleRule presaleRule);
 
@@ -49,8 +42,18 @@ public interface IPresaleService {
      */
     int delete(Integer id);
 
-    //用户查看自己参与的预售活动？需要吗
+    /**
+     * 为order创建定金和尾款的两个payment
+     * @param order
+     * @param rule
+     * @return
+     */
+    List<Payment> presalePayment(Order order,PresaleRule rule);
 
-
-    List<BigDecimal> getDepositAndFinalPay(Order order, Integer maxPayTime);
+    /**
+     * 根据商品id判断是否是预售订单
+     * @param goodsId
+     * @return
+     */
+    PresaleRule isPresaleOrder(Integer goodsId);
 }

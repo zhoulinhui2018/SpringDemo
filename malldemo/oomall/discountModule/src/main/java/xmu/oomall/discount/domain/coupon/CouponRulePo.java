@@ -53,6 +53,11 @@ public class CouponRulePo {
      * 该优惠券规则下优惠券的总张数
      */
     private Integer total;
+
+    /**
+     *判断优惠券规则是否还在进行中
+     * */
+    private Boolean statusCode;
     /**
      * 该优惠券规则下优惠券的被领取数
      */
@@ -68,10 +73,13 @@ public class CouponRulePo {
      * JSON格式:{"goodsIds": [xxx,xxx,xxx,xxx,xxx]}
      * eg. {"goodsIds": [1, 2, 3, 4, 5]}
      */
+
     private String goodsList2;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
     private Boolean beDeleted;
+
+
 
 
 

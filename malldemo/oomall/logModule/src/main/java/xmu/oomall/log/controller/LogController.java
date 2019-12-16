@@ -30,12 +30,15 @@ public class LogController {
      */
     @GetMapping("/logs")
     public Object findLogListByAdminId(@RequestParam(defaultValue = "1") Integer page,
-                                         @RequestParam(defaultValue = "10") Integer limit,
-                                       HttpServletRequest request) {
-        if(request.getIntHeader("userId")==0){
-            return ResponseUtil.unlogin();
-        }
-        List<Log> loglist = logService.findLogListByAdminId(page,limit,request.getIntHeader("userId"));
+                                       @RequestParam(defaultValue = "10") Integer limit,Integer adminId){
+//                                       HttpServletRequest request) {
+//        if(request.getIntHeader("userId")==0){
+//            return ResponseUtil.unlogin();
+//        }
+//        List<Log> loglist = logService.findLogListByAdminId(page,limit,request.getIntHeader("userId"));
+        Log newlog = new Log();
+        newlog.setId(adminId);
+        List<Log> loglist = logService.findLogListByAdminId(page,limit,newlog);
         return ResponseUtil.ok(loglist);
     }
 

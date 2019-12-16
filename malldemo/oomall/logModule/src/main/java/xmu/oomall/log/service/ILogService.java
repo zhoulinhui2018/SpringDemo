@@ -12,7 +12,7 @@ import java.util.List;
  **/
 @Service
 public interface ILogService {
-    public List<Log> findLogListByAdminId(Integer page, Integer limit,Integer admin_id);
+    public List<Log> findLogListByAdminId(Integer page, Integer limit,Log newlog);
 
     Integer addLog(Log newlog);
 }

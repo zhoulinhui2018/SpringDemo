@@ -17,29 +17,64 @@ public class PresaleServiceImpl implements IPresaleService {
     @Autowired
     private PresaleDao presaleDao;
 
+    /**
+     * 管理员添加预售规则
+     * @param presaleRule
+     */
     @Override
     public void add(PresaleRule presaleRule) {
         presaleDao.add(presaleRule);
     }
 
+    /**
+     * 根据id找到预售规则
+     * @param id
+     * @return
+     */
     @Override
     public PresaleRule findById(Integer id) {
         return presaleDao.findById(id);
     }
 
+    /**
+     * 管理员根据id删除预售规则
+     * @param id
+     * @return
+     */
     @Override
     public int delete(Integer id) {
         return presaleDao.delete(id);
     }
 
+    /**
+     * 管理员更新预售规则
+     * @param presaleRule
+     * @return
+     */
     @Override
     public int update(PresaleRule presaleRule) {
         return presaleDao.update(presaleRule);
     }
 
-
+    /**
+     * 判断是否是预售订单，是的话返回对应的presaleRule
+     * @param goodsId
+     * @return
+     */
     @Override
-    public List<BigDecimal> getDepositAndFinalPay(Order order, Integer maxPayTime){
-        return presaleDao.getDepositAndFinalPay(order,maxPayTime);
+    public PresaleRule isPresaleOrder(Integer goodsId){
+        return presaleDao.isPresaleOrder(goodsId);
+    }
+
+
+    /**
+     * 为order创建定金和尾款的两个payment
+     * @param order
+     * @param rule
+     * @return
+     */
+    @Override
+    public List<Payment> presalePayment(Order order,PresaleRule rule){
+        return presaleDao.presalePayment(order,rule);
     }
 }
