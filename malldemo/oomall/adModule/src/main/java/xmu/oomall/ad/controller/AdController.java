@@ -66,12 +66,12 @@ public class AdController {
     * @Author: Zhou Linhui
     * @Date: 2019/12/10
     */
-    @GetMapping("/admins/ads")
+    @GetMapping("/admin/ads")
     public Object adminFindAdList(HttpServletRequest request,
                                   @RequestParam(defaultValue = "1") Integer page,
                                   @RequestParam(defaultValue = "10") Integer limit,
-                                  @RequestParam String adTitle,
-                                  @RequestParam String adContent){
+                                  @RequestParam(required = false) String adTitle,
+                                  @RequestParam(required = false) String adContent){
         String id= request.getHeader("id");
         if (id==null){
             return ResponseUtil.unlogin();
