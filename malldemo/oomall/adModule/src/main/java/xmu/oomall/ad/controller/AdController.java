@@ -100,7 +100,7 @@ public class AdController {
         if (adById==null){
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail(690,"广告不存在");
+            return ResponseUtil.badArgumentValue();
         }
         adService.log(log);
         return  ResponseUtil.ok(adById);
@@ -135,7 +135,7 @@ public class AdController {
         {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail(691,"广告更新失败");
+            return ResponseUtil.updatedDataFailed();
         }
         adService.log(log);
         return ResponseUtil.ok(newAd);
@@ -157,13 +157,14 @@ public class AdController {
         }
         Log log=new Log();
         log.setAdminId(Integer.valueOf(adminid));
+        log.setActionId(id);
         log.setIp(request.getRemoteAddr());
         log.setType(0);
-        log.setActions("删除");
+        log.setActions("删除广告");
         if (id == null) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.badArgument();
+            return ResponseUtil.badArgumentValue();
         }
         adService.log(log);
         adService.deleteAdbyId(id);
@@ -188,14 +189,14 @@ public class AdController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setActions("新增");
-      Object error = validate(ad);
+        Object error = validate(ad);
         if (error != null) {
            return error;
         }
         if (adService.addAds(ad)!=1){
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail(691,"广告操作失败");
+            return ResponseUtil.fail();
         }
         adService.log(log);
         return ResponseUtil.ok(ad);

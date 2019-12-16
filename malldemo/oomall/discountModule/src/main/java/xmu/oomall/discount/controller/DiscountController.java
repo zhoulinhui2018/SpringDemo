@@ -27,6 +27,7 @@ public class DiscountController {
     public Object executeAllGroupon(){
 
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
+
         System.out.println("test");
         return null;
     }

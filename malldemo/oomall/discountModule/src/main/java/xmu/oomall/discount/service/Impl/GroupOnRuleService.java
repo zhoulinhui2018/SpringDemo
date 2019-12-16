@@ -45,11 +45,11 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
 
 
-    public int getGrouponNumber(GrouponRulePo grouponRulePo){
+    public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("order");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/GrouponOrders");
-        return restTemplate.getForObject(reqURL, Integer.class);
+        ServiceInstance instance = loadBalancerClient.choose("Order");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/grouponOrders");
+        return restTemplate.getForObject(reqURL, List.class);
     }
 
     @Override
@@ -69,7 +69,8 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
     @Override
     public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo) {
-        int grouponNumber = this.getGrouponNumber(grouponRulePo);
+        List<Order> orders = this.getGrouponOrders(grouponRulePo);
+        int grouponNumber=orders.size();
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
         GrouponRuleStrategy grouponRuleStrategyBest =new GrouponRuleStrategy();
         for (int i = 0; i < strategy.getStrategy().size(); i++) {

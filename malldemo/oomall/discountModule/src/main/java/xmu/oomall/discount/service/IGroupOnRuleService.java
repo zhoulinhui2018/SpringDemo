@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.GoodsPo;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.domain.GrouponRuleStrategy;
+import xmu.oomall.discount.domain.Order;
 
 import java.util.List;
 
@@ -38,13 +39,13 @@ public interface IGroupOnRuleService {
     public List<GrouponRulePo> findFinishedGrouponRules();
     
     /**
-    * @Description: 获得某个团购成团人数
+    * @Description: 获得某个团购成团订单
     * @Param: [grouponRule]
     * @return: int
     * @Author: Zhou Linhui
     * @Date: 2019/12/13
     */
-    public int getGrouponNumber(GrouponRulePo grouponRulePo);
+    public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo);
     /**
     * @Description: 管理员新增团购规则
     * @Param: [grouponRulePo]

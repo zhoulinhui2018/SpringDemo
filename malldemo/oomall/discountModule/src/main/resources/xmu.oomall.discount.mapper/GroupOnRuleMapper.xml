@@ -6,13 +6,13 @@
 
     <select id="findGroupOnRuleById" resultMap="GrouponRuleType" parameterType="Integer">
         select *
-        from groupon_rule
+        from oomall_groupon_rule
         where id= #{id}
     </select>
 
 
     <update id="updateById"  parameterType="GrouponRulePo" >
-        update groupon_rule
+        update oomall_groupon_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate != null">
                 gmt_create = #{gmtCreate},
@@ -56,24 +56,24 @@
 
     <select id="searchGrouponGoods" resultMap="GrouponRuleType" parameterType="Integer">
         select *
-        from groupon_rule
+        from oomall_groupon_rule
         where goods_id=#{goodsId}
     </select>
 
     <select id="findAvailableGrouponRules" resultMap="GrouponRuleType">
         select *
-        from groupon_rule
+        from oomall_groupon_rule
         where statusCode=1 and is_deleted = 0
     </select>
 
     <select id="adminFindGrouponRules" resultMap="GrouponRuleType">
         select *
-        from groupon_rule
+        from oomall_groupon_rule
         where is_deleted = 0
     </select>
 
     <insert id="add" parameterType="GrouponRulePo" useGeneratedKeys="true" keyProperty="id">
-        insert into groupon_rule (gmt_create, gmt_modified, is_deleted,
+        insert into oomall_groupon_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, status,
         groupon_level_strategy, goods_id)
         values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
@@ -82,7 +82,7 @@
     </insert>
 
     <update id="delete" parameterType="GrouponRulePo">
-        update groupon_rule
+        update oomall_groupon_rule
         set is_deleted = 1
         where id=#{id}
     </update>
