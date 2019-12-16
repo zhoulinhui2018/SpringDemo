@@ -1,21 +1,11 @@
 package xmu.oomall.topic.controller;
 
-import net.sf.jsqlparser.statement.select.Top;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.topic.TopicApplication;
-import xmu.oomall.topic.domain.Topic;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest(classes = TopicApplication.class)
 @AutoConfigureMockMvc
@@ -78,9 +68,9 @@ public class TopicControllerTest {
 //    }
 
     //管理员删除专题测试
-    @Rollback(false)
-    @Test
-    public void adminDeleteTopicTest(){
-        topicController.adminDeleteTopicById(300006);
-    }
+//    @Rollback(false)
+//    @Test
+//    public void adminDeleteTopicTest(){
+//        topicController.adminDeleteTopicById(300006);
+//    }
 }
