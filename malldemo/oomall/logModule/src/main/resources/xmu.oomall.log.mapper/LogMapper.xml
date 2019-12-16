@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.log.mapper.LogMapper">
-    <select id="findLogListByAdminId" parameterType="Integer" resultType="Log">
+    <resultMap id="LogMap" type="Log">
+        <id column="id" property="id"/>
+        <result column="admin_id" property="adminId"/>
+        <result column="ip" property="ip"/>
+        <result column="type" property="type"/>
+        <result column="actions" property="actions"/>
+        <result column="status" property="statusCode"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="action_id" property="actionId"/>
+    </resultMap>
+
+    <select id="findLogListByAdminId" parameterType="Log" resultMap="LogMap">
         select *
         from oomall_log
         <where>

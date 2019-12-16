@@ -30,6 +30,12 @@ public class LogControllerTest {
 //        Object object = logController.findLogListByAdminId(1,5,200001);
 //        System.out.println(object.toString());
 //    }
+    @Rollback(false)
+    @Test
+    public void findLogListTest(){
+        Object object = logController.findLogListByAdminId(1,5,200001);
+        System.out.println(object.toString());
+    }
 
     @Rollback(false)
     @Test
