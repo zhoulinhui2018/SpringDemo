@@ -71,6 +71,7 @@ public class GroupOnDao {
         return groupOnRuleMapper.findAvailableGrouponRules();
     }
 
+
     public List<GrouponRulePo> adminFindGrouponRules(){
         return groupOnRuleMapper.adminFindGrouponRules();
     }

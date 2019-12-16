@@ -8,7 +8,9 @@ import java.util.List;
 @Service
 public interface IGroupOnRuleService {
 
-    public void refund(Payment payment);
+    public boolean isGrouponOrder(Integer goodsId);
+
+    public void refund(List<Payment> payments);
 
     /**
     * @Description: 将新订单传回去给order模块
@@ -54,6 +56,7 @@ public interface IGroupOnRuleService {
     * @Date: 2019/12/13
     */
     public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo);
+
     /**
     * @Description: 管理员新增团购规则
     * @Param: [grouponRulePo]

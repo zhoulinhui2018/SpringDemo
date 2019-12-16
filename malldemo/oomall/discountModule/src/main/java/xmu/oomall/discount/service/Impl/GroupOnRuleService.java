@@ -23,11 +23,23 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     private LoadBalancerClient loadBalancerClient;
 
     @Override
-    public void refund(Payment payment) {
+    public boolean isGrouponOrder(Integer goodsId) {
+        List<GrouponRulePo> availableGrouponRules = groupOnDao.findAvailableGrouponRules();
+        for (GrouponRulePo availableGrouponRule : availableGrouponRules) {
+            Integer goodsId1 = availableGrouponRule.getGoodsId();
+            if (goodsId.equals(goodsId1)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void refund(List<Payment> payments) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Payment");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/payment");
-        restTemplate.getForObject(reqURL,List.class,payment);
+        ServiceInstance instance = loadBalancerClient.choose("Order");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
+        restTemplate.getForObject(reqURL,Void.class,payments);
     }
 
     @Override
@@ -59,7 +71,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     }
 
 
-
+    @Override
     public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("Order");

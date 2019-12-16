@@ -23,11 +23,12 @@
         from oomall_ad
         <where>
             <if test="name !=null">
-                `name` like CONCAT('%',#{name},'%')
+                `name` = #{name}
             </if>
             <if test="content !=null">
-                and `content` like CONCAT('%',#{content},'%')
+                and `content` =#{content}
             </if>
+                and is_deleted = 0
         </where>
     </select>
 

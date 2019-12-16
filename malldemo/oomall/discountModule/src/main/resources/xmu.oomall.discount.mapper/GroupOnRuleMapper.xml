@@ -63,7 +63,7 @@
     <select id="findAvailableGrouponRules" resultMap="GrouponRuleType">
         select *
         from oomall_groupon_rule
-        where statusCode=1 and is_deleted = 0
+        where status=1 and is_deleted = 0
     </select>
 
     <select id="adminFindGrouponRules" resultMap="GrouponRuleType">

@@ -23,7 +23,7 @@ public class DiscountController {
     @Autowired
     private GroupOnDao groupOnDao;
 
-    @Scheduled(cron = "0/3 * * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public Object executeAllGroupon(){
 
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
@@ -31,6 +31,7 @@ public class DiscountController {
             List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(finishedGrouponRule);
             GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule);
             BigDecimal rate = accessStrategy.getRate();
+            List<Payment> payments =new ArrayList<>();
             for (int i = 0; i < grouponOrders.size(); i++) {
                 Order order =  grouponOrders.get(i);
                 List<OrderItem> orderItemList = order.getOrderItemList();
@@ -43,8 +44,9 @@ public class DiscountController {
                 Payment payment=new Payment();
                 payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
                 payment.setOrderId(order.getId());
-                groupOnRuleService.refund(payment);
+                payments.add(payment);
             }
+            groupOnRuleService.refund(payments);
             groupOnRuleService.putOrdersBack(grouponOrders);
 
         }

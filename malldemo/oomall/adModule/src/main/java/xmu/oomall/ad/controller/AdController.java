@@ -59,7 +59,7 @@ public class AdController {
         Ad ad=new Ad();
         ad.setName(adTitle);
         ad.setContent(adContent);
-        return adService.adminFindAllAds(page,limit,ad);
+        return ResponseUtil.ok(adService.adminFindAllAds(page,limit,ad));
     }
 
     /**
