@@ -63,8 +63,7 @@ public class AdService implements IAdService {
     }
 
     @Override
-    public List<Ad> findUserAds(Integer page,Integer limit) {
-        PageHelper.startPage(page,limit);
+    public List<Ad> findUserAds() {
         return adDao.findUserAds();
     }
 

@@ -70,9 +70,8 @@ public class AdController {
     * @Date: 2019/12/9
     */
     @GetMapping("/ads")
-    public Object userFindAdsList(@RequestParam(defaultValue = "1") Integer page,
-                                  @RequestParam(defaultValue = "10") Integer limit){
-        return ResponseUtil.ok(adService.findUserAds(page,limit));
+    public Object userFindAdsList(){
+        return ResponseUtil.ok(adService.findUserAds());
     }
 
 

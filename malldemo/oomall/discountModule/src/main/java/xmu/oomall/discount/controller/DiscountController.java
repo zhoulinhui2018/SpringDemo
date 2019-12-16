@@ -6,11 +6,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
-import xmu.oomall.discount.domain.GoodsPo;
-import xmu.oomall.discount.domain.GrouponRulePo;
+import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 import xmu.oomall.discount.util.ResponseUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +27,27 @@ public class DiscountController {
     public Object executeAllGroupon(){
 
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
+        for (GrouponRulePo finishedGrouponRule : finishedGrouponRules) {
+            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(finishedGrouponRule);
+            GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule);
+            BigDecimal rate = accessStrategy.getRate();
+            for (int i = 0; i < grouponOrders.size(); i++) {
+                Order order =  grouponOrders.get(i);
+                List<OrderItem> orderItemList = order.getOrderItemList();
+                OrderItem orderItem = orderItemList.get(0);
+                BigDecimal price = orderItem.getPrice();
+                Integer number1 = orderItem.getNumber();
+                BigDecimal number=new BigDecimal(number1);
+                BigDecimal dealPrice = price.multiply(number).multiply(rate).setScale(2,BigDecimal.ROUND_FLOOR);
+                orderItem.setDealPrice(dealPrice);
+                Payment payment=new Payment();
+                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
+                payment.setOrderId(order.getId());
+                groupOnRuleService.refund(payment);
+            }
+            groupOnRuleService.putOrdersBack(grouponOrders);
 
+        }
         System.out.println("test");
         return null;
     }

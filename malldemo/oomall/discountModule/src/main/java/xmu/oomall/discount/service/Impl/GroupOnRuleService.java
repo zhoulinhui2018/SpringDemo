@@ -22,6 +22,21 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Override
+    public void refund(Payment payment) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Payment");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/payment");
+        restTemplate.getForObject(reqURL,List.class,payment);
+    }
+
+    @Override
+    public void putOrdersBack(List<Order> orders) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Order");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders");
+        restTemplate.getForObject(reqURL,List.class,orders);
+    }
 
     @Override
     public void add(GrouponRulePo grouponRulePo) {

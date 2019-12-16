@@ -1,15 +1,23 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
-import xmu.oomall.discount.domain.GoodsPo;
-import xmu.oomall.discount.domain.GrouponRulePo;
-import xmu.oomall.discount.domain.GrouponRuleStrategy;
-import xmu.oomall.discount.domain.Order;
+import xmu.oomall.discount.domain.*;
 
 import java.util.List;
 
 @Service
 public interface IGroupOnRuleService {
+
+    public void refund(Payment payment);
+
+    /**
+    * @Description: 将新订单传回去给order模块
+    * @Param:
+    * @return:
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/16
+    */
+    public void putOrdersBack(List<Order> orders);
 
     /** 
     * @Description: 获得团购商品 
