@@ -19,7 +19,7 @@ public class AddressServiceTest {
     @Test
     public void getUserAdresslistTest()
     {
-        List<Address> addressList=addressService.getUserAddresslist(1);
+        List<Address> addressList=addressService.getUserAddresslist(1, 10, 1);
         for(int i=0;i<addressList.size();++i){
             Address address=addressList.get(i);
             System.out.println(address);
@@ -29,7 +29,7 @@ public class AddressServiceTest {
     @Test
     public void getAllAddressListTest()
     {
-        List<Address> addressList=addressService.getAllAddressList();
+        List<Address> addressList=addressService.adminFindUserAddress(1, 10, 1, "");
         for(int i=0;i<addressList.size();++i){
             Address address=addressList.get(i);
             System.out.println(address);
@@ -49,15 +49,15 @@ public class AddressServiceTest {
         Address address=new Address();
         address.setGmtCreate(LocalDateTime.now());
         address.setGmtModified(LocalDateTime.now());
-        address.setCounty("赵县");
-        address.setProvince("河北省");
-        address.setCity("石家庄市");
+        address.setCountyId(1);
+        address.setProvinceId(1);
+        address.setCityId(1);
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
+        address.setConsignee("虎大王");
         address.setBeDefault(0);
         address.setUserId(1);
-        address.setCityId(0);
         addressService.addNewAddress(address);
         System.out.println(address);
     }
@@ -67,15 +67,16 @@ public class AddressServiceTest {
     {
         Address address=new Address();
         address.setGmtCreate(LocalDateTime.now());
-        address.setCounty("赵县");
-        address.setProvince("河北省");
-        address.setCity("石家庄市");
+        address.setGmtModified(LocalDateTime.now());
+        address.setCountyId(1);
+        address.setProvinceId(1);
+        address.setCityId(1);
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
+        address.setConsignee("虎大王");
         address.setBeDefault(0);
         address.setUserId(1);
-        address.setCityId(0);
         addressService.updateAddress(address);
         System.out.println(address);
     }
@@ -83,7 +84,7 @@ public class AddressServiceTest {
     @Test
     public void deleteAddressTest()
     {
-        boolean result=addressService.deleteAddress(100005);
+        boolean result=addressService.deleteAddress(4);
         System.out.println(result);
     }
 

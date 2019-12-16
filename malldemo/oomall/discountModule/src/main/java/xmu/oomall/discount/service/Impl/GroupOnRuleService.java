@@ -12,6 +12,7 @@ import xmu.oomall.discount.service.IGroupOnRuleService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +36,18 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         return false;
     }
 
+    @Override
+    public List<Payment> getGrouponPayment(Order order){
+        BigDecimal price=order.getIntegralPrice();
+        LocalDateTime now = LocalDateTime.now();
+        Payment grouponPayment = new Payment();
+        grouponPayment.setActualPrice(price);
+        //默认最大付款间隔是30min
+        grouponPayment.setEndTime(now.plusMinutes(30));
+        List<Payment> list=new ArrayList<>();
+        list.add(grouponPayment);
+        return list;
+    }
     @Override
     public void refund(List<Payment> payments) {
         RestTemplate restTemplate = new RestTemplate();

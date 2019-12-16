@@ -5,8 +5,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.address.domain.Address;
+import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.service.impl.AddressService;
 import xmu.oomall.util.ResponseUtil;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -17,15 +20,23 @@ public class AddressController {
     private AddressService addressService;
 
     /**
-     * 查看某用户的收货地址列表
-     * @param userId 用户ID
+     * 用户查看自己的收货地址列表
+     * @param request
+     * @param page
+     * @param limit
      * @return 收货地址列表
      * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
+     * @Date: 2019/12/16
      */
-    @GetMapping("/addresses/{userId}")
-    public Object getUserAddressList(@PathVariable Integer userId){
-        List<Address> addressList= addressService.getUserAddresslist(userId);
+    @GetMapping("/addresses")
+    public Object getUserAddressList(HttpServletRequest request,
+                                     @RequestParam(defaultValue = "1") Integer page,
+                                     @RequestParam(defaultValue = "10") Integer limit){
+        Integer userId= Integer.valueOf(request.getHeader("userid"));
+        if(userId==0){
+            return ResponseUtil.unlogin();
+        }
+        List<Address> addressList= addressService.getUserAddresslist(page,limit,userId);
         return ResponseUtil.ok(addressList);
     }
 
@@ -44,26 +55,26 @@ public class AddressController {
 
     /**
      * 测试地址是否合法，比如是否有country/province等
-     * @param address
+     * @param addressPo
      * @return 返回值表示成功与否
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    private Object validate(@RequestBody Address address){
-        String country=address.getCounty();
-        String province=address.getProvince();
-        String city=address.getCity();
-        String address_detail=address.getAddressDetail();
-        String postal_code=address.getPostalCode();
-        String mobile=address.getMobile();
-        if(StringUtils.isEmpty(country))
+    private Object validate(@RequestBody AddressPo addressPo){
+        Integer countryId=addressPo.getCountyId();
+        Integer provinceId=addressPo.getProvinceId();
+        Integer cityId=addressPo.getCityId();
+        String address_detail=addressPo.getAddressDetail();
+        String postal_code=addressPo.getPostalCode();
+        String mobile=addressPo.getMobile();
+        if(countryId==0)
         {
             return ResponseUtil.badArgument();
         }
-        if (StringUtils.isEmpty(province)) {
+        if (countryId==0) {
             return ResponseUtil.badArgument();
         }
-        if (StringUtils.isEmpty(city)) {
+        if (countryId==0) {
             return ResponseUtil.badArgument();
         }
         if (StringUtils.isEmpty(address_detail)) {
@@ -80,15 +91,15 @@ public class AddressController {
 
     /**
      * 新增收货地址
-     * @param address 用户收货地址
+     * @param addressPo 用户收货地址
      * @return 新增操作结果
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
     @PostMapping("/addresses")
-    public Object addNewAddress(@RequestBody Address address){
-        Address newAddress=addressService.addNewAddress(address);
-        return ResponseUtil.ok(newAddress);
+    public Object addNewAddress(@RequestBody AddressPo addressPo){
+        AddressPo newAddressPo=addressService.addNewAddress(addressPo);
+        return ResponseUtil.ok(newAddressPo);
     }
 
     /**
@@ -105,36 +116,39 @@ public class AddressController {
 
     /**
      * 更新收货地址
-     * @param address 用户收货地址
      * @param id  地址id
+     * @param addressPo 用户收货地址
      * @return 更新操作结果
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
     @PutMapping("/addresses/{id}")
-    public Object updateAddress(@PathVariable Integer id, @RequestBody Address address){
-        Object error=validate(address);
+    public Object updateAddress(@PathVariable Integer id, @RequestBody AddressPo addressPo){
+        Object error=validate(addressPo);
         if (error != null) {
             return error;
         }
-        address.setId(id);
-        if(addressService.updateAddress(address)==null)
+        addressPo.setId(id);
+        if(addressService.updateAddress(addressPo)==null)
         {
             return ResponseUtil.updatedDataFailed();
         }
-        return ResponseUtil.ok(address);
+        return ResponseUtil.ok(addressPo);
     }
 
     /**
-     * 管理员获取全部地址列表
+     * 管理员获取根据条件查找地址
      * @param
      * @return 全部地址列表
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    @GetMapping("/addresses")
-    public Object allAddressList(){
-        List<Address> addressList=addressService.getAllAddressList();
+    @GetMapping("/admin/addresses")
+    public Object adminFindUserAddress(@RequestParam Integer userId,
+                                 @RequestParam String name,
+                                 @RequestParam(defaultValue = "1") Integer page,
+                                 @RequestParam(defaultValue = "10") Integer limit){
+        List<Address> addressList=addressService.adminFindUserAddress(page,limit,userId,name);
         return ResponseUtil.ok(addressList);
     }
 

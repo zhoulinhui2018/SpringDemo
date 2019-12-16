@@ -8,18 +8,31 @@ import java.util.List;
 @Service
 public interface IGroupOnRuleService {
 
-    public boolean isGrouponOrder(Integer goodsId);
+    /**
+     * 根据GoodsId判断是否是团购订单
+     * @param goodsId
+     * @return
+     */
+    boolean isGrouponOrder(Integer goodsId);
 
-    public void refund(List<Payment> payments);
+    /**
+     * 根据团购订单创建一个payment
+     * @param order
+     * @return
+     */
+    List<Payment> getGrouponPayment(Order order);
 
-//    /**
-//    * @Description: 将新订单传回去给order模块
-//    * @Param:
-//    * @return:
-//    * @Author: Zhou Linhui
-//    * @Date: 2019/12/16
-//    */
-//    public void putOrdersBack(List<Order> orders);
+
+    void refund(List<Payment> payments);
+
+    /**
+    * @Description: 将新订单传回去给order模块
+    * @Param:
+    * @return:
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/16
+    */
+    void putOrdersBack(List<Order> orders);
 
     /** 
     * @Description: 获得团购商品 
@@ -28,7 +41,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/14 
     */ 
-    public GoodsPo getGrouponGoods(GrouponRulePo grouponRulePo);
+    GoodsPo getGrouponGoods(GrouponRulePo grouponRulePo);
 
     /** 
     * @Description: 获得当前团购达成的团购策略 
@@ -37,7 +50,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/13 
     */ 
-    public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo);
+    GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo);
 
     /** 
     * @Description: 搜索目前时间点已完成团购 
@@ -46,7 +59,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/13 
     */ 
-    public List<GrouponRulePo> findFinishedGrouponRules();
+    List<GrouponRulePo> findFinishedGrouponRules();
     
     /**
     * @Description: 获得某个团购成团订单
@@ -55,7 +68,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/13
     */
-    public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo);
+    List<Order> getGrouponOrders(GrouponRulePo grouponRulePo);
 
     /**
     * @Description: 管理员新增团购规则
@@ -64,7 +77,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/6
     */
-    public void add(GrouponRulePo grouponRulePo);
+    void add(GrouponRulePo grouponRulePo);
 
     /**
     * @Description: 查询单张优惠券
@@ -73,13 +86,13 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
-    public GrouponRulePo findById(Integer id);
+    GrouponRulePo findById(Integer id);
 
-    public int update(GrouponRulePo grouponRulePo);
+    int update(GrouponRulePo grouponRulePo);
 
-    public int delete(GrouponRulePo grouponRulePo);
+    int delete(GrouponRulePo grouponRulePo);
 
-    public List<GrouponRulePo> findGrouponRulePos(Integer page, Integer limit);
+    List<GrouponRulePo> findGrouponRulePos(Integer page, Integer limit);
 
-    public List<GrouponRulePo> adminFindGrouponRulePos(Integer page, Integer limit);
+    List<GrouponRulePo> adminFindGrouponRulePos(Integer page, Integer limit);
 }

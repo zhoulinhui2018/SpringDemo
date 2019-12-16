@@ -1,13 +1,21 @@
 package xmu.oomall.discount.controller;
 
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
+import xmu.oomall.discount.domain.GoodsPo;
+import xmu.oomall.discount.domain.GrouponRulePo;
+import xmu.oomall.discount.domain.Order;
+import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.Promotion.PresaleRule;
+import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.service.Impl.GroupOnRuleService;
+import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
 import java.math.BigDecimal;
@@ -19,6 +27,12 @@ import java.util.List;
 public class DiscountController {
     @Autowired
     private GroupOnRuleService groupOnRuleService;
+
+    @Autowired
+    private CouponServiceImpl couponService;
+
+    @Autowired
+    private PresaleServiceImpl presaleService;
 
     @Autowired
     private GroupOnDao groupOnDao;
@@ -150,4 +164,73 @@ public class DiscountController {
         }
         return ResponseUtil.ok(grouponRuleVoList);
     }
+
+    @PostMapping("/discount/orders")
+    public Object discountOrder(Order order){
+        Integer couponId=order.getCouponId();
+        if(couponId!=0){
+            //使用优惠券的普通订单
+            List<OrderItem> oldOrderItems=order.getOrderItemList();
+            List<OrderItem> newOrderItems=couponService.calcDiscount(oldOrderItems,couponId);
+            //修改订单中的明细
+            order.setOrderItemList(newOrderItems);
+            //使用优惠券的List<Payment>为空
+            order.setPaymentList(null);
+            for(OrderItem item:newOrderItems){
+                //都是普通商品
+                item.setItemType(0);
+            }
+            order.setOrderItemList(newOrderItems);
+        }
+        else{
+            Integer orderItemSize=order.getOrderItemList().size();
+            List<OrderItem> orderItemsList=order.getOrderItemList();
+            if(orderItemSize!=1){
+                //预售订单或是团购订单明细都只能为1,不为1的话说明是没选优惠券的普通订单
+                for(OrderItem item:orderItemsList){
+                    //都是普通商品
+                    item.setItemType(0);
+                }
+                order.setOrderItemList(orderItemsList);
+            }
+            else{
+                OrderItem item=order.getOrderItemList().get(0);
+                Integer goodsId=item.getGoodsId();
+                //使用goodsId去预售规则和团购规则中查找
+                List<OrderItem> orderItemList1=new ArrayList<>();
+
+                //是团购订单,itemType设置成2
+                if(groupOnRuleService.isGrouponOrder(goodsId)==true){
+
+                    item.setItemType(2);
+                    List<Payment> payments=groupOnRuleService.getGrouponPayment(order);
+                    order.setPaymentList(payments);
+                    orderItemList1.add(item);
+                    order.setOrderItemList(orderItemList1);
+                }
+                else {
+                    //判断是否是预售订单
+                   PresaleRule rule=presaleService.isPresaleOrder(goodsId);
+                   List<OrderItem> orderItemList2=new ArrayList<>();
+                   if(rule!=null){
+                       item.setItemType(1);
+                       List<Payment> payments=presaleService.presalePayment(order,rule);
+                       order.setPaymentList(payments);
+                       orderItemList2.add(item);
+                       order.setOrderItemList(orderItemList2);
+                   }
+                   else{
+                       //明细为1的普通订单
+                       List<OrderItem> orderItemList3=new ArrayList<>();
+                       item.setItemType(0);
+                       orderItemList3.add(item);
+                       order.setOrderItemList(orderItemList3);
+                   }
+                }
+
+            }
+        }
+        return ResponseUtil.ok(order);
+    }
+
 }

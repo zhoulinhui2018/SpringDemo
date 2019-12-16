@@ -32,29 +32,57 @@ public class CouponDao {
     @Autowired
     private CouponMapper couponMapper;
 
+    /**
+     * 管理员增加优惠券规则
+     * @param couponRule
+     */
     public void addCouponRule(CouponRulePo couponRule) {
         couponMapper.addCouponRule(couponRule);
     }
 
 
+    /**
+     * 管理员获取CouponRule列表
+     * @return
+     */
     public List<CouponRulePo> getCouponList() {
         List<CouponRulePo> couponRuleList=couponMapper.getCouponList();
         return couponRuleList;
     }
 
+    /**
+     * 管理员根据id删除优惠券规则
+     * @param id
+     * @return
+     */
     public int deleteCouponRuleById(Integer id) {
         return couponMapper.deleteCouponRuleById(id);
     }
 
+    /**
+     * 管理员更新优惠券规则
+     * @param couponRule
+     * @return
+     */
     public int updateCouponRuleById(CouponRulePo couponRule) {
         return couponMapper.updateCouponRuleById(couponRule);
     }
 
+    /**
+     * 根据id搜索优惠券规则
+     * @param id
+     * @return
+     */
     public CouponRulePo findCouponRuleById(Integer id) {
         CouponRulePo couponRule=couponMapper.findCouponRuleById(id);
         return couponRule;
     }
 
+    /**
+     * 用户获取自己的优惠券列表
+     * @param userId
+     * @return
+     */
     public List<CouponPo> getCouponMyList(Integer userId) {
         List<CouponPo> myList=couponMapper.getCouponMyList(userId);
         return myList;
@@ -223,6 +251,7 @@ public class CouponDao {
       CouponPo coupon=couponMapper.findCouponById(couponId);
       BigDecimal totalPrice=BigDecimal.ZERO;
       CouponRulePo couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
+
       if(validItems.size()!=0)
       {
           List<OrderItem> newItems=this.getStrategy(couponRule).cacuDiscount(orderItems,couponId);
@@ -236,5 +265,12 @@ public class CouponDao {
 
     }
 
+    /**
+     * 根据优惠券规则id更改coupon的状态
+     * @param id
+     */
 
+    public int updateCouponStatus(Integer id) {
+        return couponMapper.updateCouponStatus(id);
+    }
 }

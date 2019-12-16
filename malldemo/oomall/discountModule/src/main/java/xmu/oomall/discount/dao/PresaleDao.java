@@ -11,71 +11,110 @@ import xmu.oomall.discount.mapper.PresaleMapper;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class PresaleDao {
     @Autowired
+
     private PresaleMapper presaleMapper;
 
+    /**
+     * 管理员添加预售规则
+     * @param presaleRule
+     */
     public void add(PresaleRule presaleRule){
         presaleMapper.add(presaleRule);
     }
 
-    public PresaleRule findById(Integer id){
-        return presaleMapper.findPresaleRuleById(id);
-    }
-
+    /**
+     * 管理员更新预售规则
+     * @param presaleRule
+     * @return
+     */
     public int update(PresaleRule presaleRule){
         return presaleMapper.updateById(presaleRule);
     }
 
+    /**
+     * 管理员根据id删除预售规则
+     * @param id
+     * @return
+     */
     public int delete(Integer id){
         return presaleMapper.deleteById(id);
     }
 
+    /**
+     * 根据id找到预售规则
+     * @param id
+     * @return
+     */
+    public PresaleRule findById(Integer id){
+        return presaleMapper.findPresaleRuleById(id);
+    }
+
+    /**
+     * 根据goodsId找到所有的预售规则
+     * @param goodsId
+     * @return
+     */
     public List<PresaleRule> findByGoodsId(Integer goodsId) {
         return presaleMapper.findByGoodsId(goodsId);
     }
 
 
-    public List<BigDecimal> presalePayment(Order order, Integer maxPayTime) {
-        BigDecimal totalDeposit = BigDecimal.ZERO;
-        BigDecimal totalFinalPay = BigDecimal.ZERO;
+    /**
+     * 根据order和presaleRule得出定金和尾款两个payment
+     * @param order
+     * @return
+     */
+    public List<Payment> presalePayment(Order order,PresaleRule rule) {
+        BigDecimal prePay = BigDecimal.ZERO;
+        BigDecimal finalPay = BigDecimal.ZERO;
         LocalDateTime now = LocalDateTime.now();
-        /**
-         * 判断是否只有一条明细,超出一条明细说明是错误的预售订单
-         * 这里的问题是Order->Orderitem->Product->Goods
-         */
-        List<BigDecimal> priceList=new ArrayList<>(2);
-        if(order.getOrderItemList().size()!=1){
-            return null;
+
+        for (OrderItem item: order.getOrderItemList()){
+            prePay = prePay.add(rule.getDeposit());
+            finalPay = finalPay.add(rule.getFinalPayment());
         }
-        else{
-            OrderItem item=order.getOrderItemList().get(0);
-            PresaleRule presaleRule=item.getProduct().getGoods().getPresaleRule();
-            //这里的问题是明细只有一条，但是number可以不只为1，定金*number
-            totalDeposit=presaleRule.getDeposit().multiply(BigDecimal.valueOf(item.getNumber()));
-            totalFinalPay=presaleRule.getFinalPayment().multiply(BigDecimal.valueOf(item.getNumber()));
-            priceList.add(totalDeposit);
-            priceList.add(totalFinalPay);
-            return priceList;
-        }
+
+        Payment prePayment = new Payment();
+        prePayment.setActualPrice(prePay);
+        //默认最大付款间隔是30min
+        prePayment.setEndTime(now.plusMinutes(30));
+        prePayment.setOrderId(order.getId());
+
+        Payment finalPayment = new Payment();
+        finalPayment.setActualPrice(finalPay);
+        finalPayment.setBeginTime(rule.getFinalStartTime());
+        finalPayment.setEndTime(rule.getEndTime());
+        finalPayment.setOrderId(order.getId());
+
+        List<Payment> ret = new ArrayList<>(2);
+        ret.add(prePayment);
+        ret.add(finalPayment);
+        return ret;
 
     }
 
 
-    /**
-     * 返回定金和尾款
-     * @param order
-     * @param maxPayTime
-     * @return List<Integer>
-     */
-    public List<BigDecimal> getDepositAndFinalPay(Order order, Integer maxPayTime) {
-        PresaleRule prePay=new PresaleRule();
+    public PresaleRule isPresaleOrder(Integer goodsId) {
+        List<PresaleRule> presaleRuleList=presaleMapper.findByGoodsId(goodsId);
+        List<PresaleRule> selectRuleList=new ArrayList<>();
+        LocalDateTime nowTime=LocalDateTime.now();
 
-        List<BigDecimal> priceList=this.presalePayment(order,maxPayTime);
-        return priceList;
+        for(PresaleRule rule:presaleRuleList){
+            //预售规则的付定金的时间段
+            LocalDateTime beginTime=rule.getStartTime();
+            LocalDateTime endTime=rule.getAdEndTime();
+
+            if((nowTime.compareTo(beginTime)>=0)&&(nowTime.compareTo(endTime)<=0)){
+                return rule;
+            }
+        }
+        return null;
     }
 }

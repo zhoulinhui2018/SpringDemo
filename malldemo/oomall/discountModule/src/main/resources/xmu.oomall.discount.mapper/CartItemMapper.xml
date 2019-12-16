@@ -5,12 +5,12 @@
 
     <select id="findCartItemById" parameterType="Integer" resultType="cartItemPo">
         select *
-        from cart_item where id = #{cartId}
+        from oomall_cart_item where id = #{cartId}
     </select>
 
 
     <select id="findProductPrice" parameterType="Integer" resultType="BigDecimal">
         select price
-        from product where id = #{goodsId}
+        from oomall_product where id = #{goodsId}
     </select>
 </mapper>

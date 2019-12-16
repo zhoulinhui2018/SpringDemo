@@ -63,4 +63,11 @@ public interface CouponMapper {
     BigDecimal getProductPrice(Integer productId);
 
     void addCoupon(CouponPo coupon);
+
+    /**
+     * 根据couponRuleId更改coupon状态
+     * @param id
+     * @return
+     */
+    int updateCouponStatus(Integer id);
 }

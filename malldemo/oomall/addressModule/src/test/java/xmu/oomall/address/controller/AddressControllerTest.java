@@ -7,9 +7,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.address.AddressApplication;
 import xmu.oomall.address.domain.Address;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest(classes = AddressApplication.class)
 @Transactional
@@ -24,13 +22,8 @@ public class AddressControllerTest {
      */
     @Test
     public void getUserAddresslistTest(){
-        Object addressObject=addressController.getUserAddressList(1);
-        System.out.println(addressObject);
-//        List<Address> addressList = addressObject["data"];
-//        for (int i = 0; i < addressList.size(); i++) {
-//            Address address = addressList.get(i);
-//            System.out.println(address);
-//        }
+//        Object addressObject=addressController.getUserAddressList(1);
+//        System.out.println(addressObject);
     }
 
     /**
@@ -42,32 +35,7 @@ public class AddressControllerTest {
     public void getAddressDetailTest(){
         Object addressObject=addressController.getAddressDetail(100001);
         System.out.println(addressObject);
-//        Address address =((Address)addressObject);
-//        System.out.println(address);
     }
-//
-//    /**
-//     * 测试：测试地址是否合法，比如是否有country/province等
-//     * @Author: Zhang Yaqing
-//     * @Date: 2019/12/12
-//     */
-//    @Test
-//    private void validateTest(){
-//        Address address=new Address();
-//        address.setCounty(" ");
-//        address.setProvince("河北省");
-//        address.setCity(" ");
-//        address.setAddressDetail("某街道");
-//        address.setPostalCode("123456");
-//        address.setMobile("19032");
-//        address.setBeDefault(1);
-//        address.setUserId(10000);
-//        address.setGmtCreate(LocalDateTime.now());
-//        address.setGmtModified(LocalDateTime.now());
-//
-//        Object addressObject=addressController.validate(address);
-//        System.out.println(addressObject);
-//    }
 
     /**
      * 测试：新增收货地址
@@ -135,14 +103,10 @@ public class AddressControllerTest {
      * @Date: 2019/12/12
      */
     @Test
-    public void allAddressList(){
-        Object addressObject=addressController.allAddressList();
+    public void adminFindUserAddressTest(){
+        Object addressObject=addressController.adminFindUserAddress(1,"",1,10);
         System.out.println(addressObject);
-//        List<Address> addressList= ((List<Address>) addressObject);
-//        for (int i = 0; i < addressList.size(); i++) {
-//            Address address = addressList.get(i);
-//            System.out.println(address);
-//        }
+
     }
 
 }
