@@ -46,14 +46,14 @@ public class AdController {
     @RequestMapping(value="/pics",method = RequestMethod.POST)
     public Object uploadPicture(@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
         if(file==null){
-            return xmu.oomall.util.ResponseUtil.badArgument();
+            return ResponseUtil.badArgument();
         }
-        String path = "/var/www/tardybird/upload/"
+        String path = "E:/testPic/"
                 + IdUtil.genImageName()
                 +file.getOriginalFilename();
         String ok="Success";
         if(ok.equals(FileUploadUtil.upload(file,path))){
-            String prefix="http://";
+            String prefix="http://localhost";
             return ResponseUtil.ok(prefix+path);
         }
         return ResponseUtil.fail();
