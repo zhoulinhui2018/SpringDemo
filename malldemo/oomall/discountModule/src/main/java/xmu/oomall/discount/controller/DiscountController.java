@@ -85,13 +85,18 @@ public class DiscountController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        Log log = LogUtil.newLog("插入团购", grouponRulePo.getId(), Integer.valueOf(adminid), 1, request.getRemoteAddr());
 
+        Object error = validate(grouponRulePo);
+        if (error != null) {
+            groupOnRuleService.log(log);
+            return error;
+        }
         try {
             groupOnRuleService.add(grouponRulePo);
         } catch (Exception e) {
             return ResponseUtil.updatedDataFailed();
         }
-        Log log = LogUtil.newLog("插入团购", grouponRulePo.getId(), Integer.valueOf(adminid), 1, request.getRemoteAddr());
         log.setStatusCode(1);
         groupOnRuleService.log(log);
         return ResponseUtil.ok(grouponRulePo);
@@ -217,6 +222,27 @@ public class DiscountController {
         log.setStatusCode(1);
         groupOnRuleService.log(log);
         return ResponseUtil.ok();
+    }
+
+
+    /** 
+    * @Description: 用户查看某个团购详情 
+    * @Param: [id] 
+    * @return: java.lang.Object 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/17 
+    */ 
+    @GetMapping("/grouponRules/{id}")
+    public Object userdetail(@PathVariable Integer id){
+        GrouponRuleVo grouponRuleVo= new GrouponRuleVo();
+        GrouponRulePo grouponRulePo = groupOnRuleService.findById(id);
+        if (grouponRulePo==null){
+            return ResponseUtil.badArgumentValue();
+        }
+        GoodsPo grouponGoods = groupOnRuleService.getGrouponGoods(grouponRulePo);
+        grouponRuleVo.setGoodsPo(grouponGoods);
+        grouponRuleVo.setGrouponRulePo(grouponRulePo);
+        return ResponseUtil.ok(grouponRuleVo);
     }
 
     /**

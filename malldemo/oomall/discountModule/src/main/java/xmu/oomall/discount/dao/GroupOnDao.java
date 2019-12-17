@@ -41,7 +41,7 @@ public class GroupOnDao {
         return grouponRule;
     }
 
-    public GrouponRulePo add(GrouponRulePo grouponRulePo){
+    public GrouponRulePo add(GrouponRulePo grouponRulePo) throws Exception{
         grouponRulePo.setGmtCreate(LocalDateTime.now());
         grouponRulePo.setBeDeleted(false);
         grouponRulePo.setStatusCode(true);

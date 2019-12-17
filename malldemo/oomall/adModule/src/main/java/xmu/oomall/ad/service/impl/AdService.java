@@ -47,7 +47,6 @@ public class AdService implements IAdService {
     @Override
     public Integer addAds(Ad ad) throws Exception{
         Integer id =adDao.addAds(ad);
-        System.out.println(id);
         return id;
     }
 

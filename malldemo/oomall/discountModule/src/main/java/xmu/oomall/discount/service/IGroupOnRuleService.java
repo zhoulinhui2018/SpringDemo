@@ -85,7 +85,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/6
     */
-    void add(GrouponRulePo grouponRulePo);
+    void add(GrouponRulePo grouponRulePo) throws Exception;
 
     /**
     * @Description: 查询单张优惠券
