@@ -139,7 +139,7 @@ public class AddressController {
     }
 
     /**
-     * 管理员获取根据条件查找地址
+     * 管理员根据条件查找地址
      * @param
      * @return 全部地址列表
      * @Author: Zhang Yaqing
@@ -160,6 +160,8 @@ public class AddressController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
+        log.setActions("获取根据条件查找地址");
+        log.setActionId(0);
         List<Address> addressList;
         try {
             addressList=addressService.adminFindUserAddress(page,limit,userId,name);

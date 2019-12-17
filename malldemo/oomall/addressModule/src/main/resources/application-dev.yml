@@ -6,7 +6,7 @@ spring:
   #  password: Zhangyaqing123
     password: 123456
   application:
-    name: address-service-provider #服务名称--调用的时候根据名称来调用该服务的方法
+    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
   port: 8762

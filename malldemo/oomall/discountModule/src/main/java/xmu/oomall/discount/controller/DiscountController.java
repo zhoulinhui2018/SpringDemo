@@ -193,7 +193,6 @@ public class DiscountController {
             groupOnRuleService.log(log);
             return ResponseUtil.updatedDataFailed();
         }
-
     }
 
 
