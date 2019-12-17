@@ -56,7 +56,7 @@ public class TopicController {
 
 
     /**
-     * 管理员上传专题的图片
+     * 管理员上传专题的图片（未测试）
      * @param file
      * @return
      * @throws Exception
@@ -96,7 +96,7 @@ public class TopicController {
     }
 
     /**
-     * 管理员查看所有专题
+     * 管理员查看所有专题 （已通过）
      *
      * @param
      * @Author Ren tianhe
@@ -123,7 +123,7 @@ public class TopicController {
     }
 
     /**
-     * 管理员添加专题
+     * 管理员添加专题（已测试）
      *
      * @Author Ren tianhe
      * @Date 2019/12/13
@@ -158,7 +158,7 @@ public class TopicController {
     }
 
     /**
-     * 管理员查看专题详情 已通过
+     * 管理员查看专题详情 (已通过)
      *
      * @param
      * @Author Ren tianhe
@@ -176,6 +176,7 @@ public class TopicController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("查看专题详情");
+        log.setActionId(id);
         Topic topicById = new Topic();
         try{
             topicById = topicService.findTopicById(id);
@@ -211,14 +212,14 @@ public class TopicController {
     }
 
     /**
-     * 管理员编辑专题
+     * 管理员编辑专题（用body测是可行的）
      *
      * @param
      * @Author Ren tianhe
      * @Date 2019/12/17
      */
     @PutMapping("/topics/{id}")
-    public Object adminUpdateTopicById(@PathVariable Integer id, TopicPo topicPo, HttpServletRequest request){
+    public Object adminUpdateTopicById(@PathVariable Integer id, @RequestBody TopicPo topicPo, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
