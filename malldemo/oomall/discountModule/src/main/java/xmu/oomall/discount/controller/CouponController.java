@@ -58,6 +58,12 @@ public class CouponController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查看优惠券规则列表");
         List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
         return ResponseUtil.ok(couponList);
     }

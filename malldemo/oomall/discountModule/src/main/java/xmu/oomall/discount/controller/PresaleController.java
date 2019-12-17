@@ -2,10 +2,7 @@ package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.Order;
@@ -14,7 +11,6 @@ import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
 import xmu.oomall.util.ResponseUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,7 +21,6 @@ import java.util.List;
 public class PresaleController {
     @Autowired
     private PresaleServiceImpl presaleService;
-
 
 
     /**
