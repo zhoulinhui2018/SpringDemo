@@ -1,11 +1,14 @@
 package xmu.oomall.discount.service.Impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.PresaleDao;
+import xmu.oomall.discount.domain.GoodsPo;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.Payment;
@@ -51,7 +54,7 @@ public class PresaleServiceImpl implements IPresaleService {
      * @return
      */
     @Override
-    public PresaleRule findById(Integer id) {
+    public PresaleRuleVo findById(Integer id) {
         return presaleDao.findById(id);
     }
 
@@ -81,8 +84,16 @@ public class PresaleServiceImpl implements IPresaleService {
      * @return
      */
     @Override
-    public PresaleRule isPresaleOrder(Integer goodsId){
-        return presaleDao.isPresaleOrder(goodsId);
+    public PresaleRuleVo isPresaleOrder(Integer goodsId){
+        PresaleRule rule= presaleDao.isPresaleOrder(goodsId);
+        PresaleRuleVo ruleVo=new PresaleRuleVo();
+        ruleVo.setPresaleRule(rule);
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Goods");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
+        GoodsPo goodsPo= restTemplate.getForObject(reqURL, GoodsPo.class,goodsId);
+        ruleVo.setGoodsPo(goodsPo);
+        return ruleVo;
     }
 
 
@@ -127,5 +138,25 @@ public class PresaleServiceImpl implements IPresaleService {
         ServiceInstance instance = loadBalancerClient.choose("Payment");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders/refund");
         restTemplate.getForObject(reqURL,List.class,paymentList);
+    }
+
+    @Override
+    public List<PresaleRuleVo> findPresaleRule(Integer goodsId, Integer page, Integer limit){
+        PageHelper.startPage(page,limit);
+        List<PresaleRuleVo> list=presaleDao.findByGoodsId(goodsId);
+        return list;
+    }
+    @Override
+    public List<PresaleRuleVo> findAllPresaleRules(Integer page,Integer limit){
+        PageHelper.startPage(page,limit);
+        List<PresaleRuleVo> list=presaleDao.findAllPresaleRules();
+        return list;
+    }
+
+    @Override
+    public List<PresaleRuleVo> findOnPresaleRules(Integer page, Integer limit){
+        PageHelper.startPage(page,limit);
+        List<PresaleRuleVo> list=presaleDao.findOnPresaleRules();
+        return list;
     }
 }
