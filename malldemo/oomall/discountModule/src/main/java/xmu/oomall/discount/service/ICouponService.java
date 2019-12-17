@@ -1,6 +1,9 @@
 package xmu.oomall.discount.service;
 
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
@@ -16,6 +19,12 @@ import java.util.Set;
  **/
 @Service
 public interface ICouponService {
+
+    /**
+     * 管理员操作添加Log
+     * @param log
+     */
+    void log(Log log);
 
     /**
      * 用id找到CouponRule对象
@@ -94,4 +103,10 @@ public interface ICouponService {
      * @param id
      */
     int updateCouponStatus(Integer id);
+
+    /**
+     * 返回用户可见的优惠券列表
+     * @return
+     */
+    List<CouponRulePo> findUserCouponRules();
 }

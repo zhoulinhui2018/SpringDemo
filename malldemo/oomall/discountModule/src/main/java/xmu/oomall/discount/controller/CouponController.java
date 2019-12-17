@@ -46,17 +46,32 @@ public class CouponController {
         return null;
     }
     /**
-     * 获取优惠券列表
+     * 管理员获取优惠券列表
      * @return list<Coupon>
      */
-    @GetMapping("/couponRules")
-    public List<CouponRulePo> list(@RequestParam(defaultValue = "1") Integer page,
+    @GetMapping("/admin/couponRules")
+    public Object adminCouponRuleList(HttpServletRequest request,
+                                   @RequestParam(defaultValue = "1") Integer page,
                                    @RequestParam(defaultValue = "10") Integer limit)
     {
-        List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
-        return couponList;
+        String id= request.getHeader("id");
+        if (id==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(id));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查询列表");
+        couponService.log(log);
+        return ResponseUtil.ok(couponService.getCouponList(page,limit));
     }
 
+    @GetMapping("/couponRules")
+    public Object userCouponRuleList(){
+        return ResponseUtil.ok(couponService.findUserCouponRules());
+    }
 
     /**
      * 管理员新建优惠券
@@ -115,8 +130,6 @@ public class CouponController {
                 //管理员作废优惠券,更新coupon表
                 couponService.updateCouponRuleById(couponRule);
                 couponService.updateCouponStatus(id);
-
-
 
 
                 return ResponseUtil.ok();

@@ -2,8 +2,12 @@ package xmu.oomall.discount.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.dao.CouponDao;
+import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
@@ -22,6 +26,21 @@ import java.util.Set;
 public class CouponServiceImpl implements ICouponService {
     @Autowired
     private CouponDao couponDao;
+
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
+
+
+    @Override
+    public void log(Log log){
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Log");
+        System.out.println(instance.getHost());
+        System.out.println(instance.getPort());
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
+        restTemplate.postForObject(reqURL,log,Log.class);
+    }
+
 
     @Override
     public CouponRulePo findCouponRuleById(Integer id) {
@@ -46,6 +65,10 @@ public class CouponServiceImpl implements ICouponService {
         return couponRuleList;
     }
 
+    @Override
+    public List<CouponRulePo> findUserCouponRules(){
+        return couponDao.findUserCouponRules();
+    }
     @Override
     public void addCouponRule(CouponRulePo couponRule) {
         couponDao.addCouponRule(couponRule);
