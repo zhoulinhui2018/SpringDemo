@@ -86,7 +86,7 @@ public class TopicController {
      */
     @GetMapping("/topics")
     public Object userFindTopicList(@RequestParam(defaultValue = "1") Integer page,
-                                         @RequestParam(defaultValue = "10") Integer limit
+                                    @RequestParam(defaultValue = "10") Integer limit
                                ) {
         List<Topic> topics = new ArrayList<Topic>();
         topics = topicService.findTopicList(page,limit);
@@ -102,7 +102,7 @@ public class TopicController {
      */
     @GetMapping("/admin/topics")
     public Object adminFindTopicList(@RequestParam(defaultValue = "1") Integer page,
-                                @RequestParam(defaultValue = "10") Integer limit
+                                     @RequestParam(defaultValue = "10") Integer limit
                                  ,HttpServletRequest request) {
         String id= request.getHeader("id");
         if (id==null){
@@ -138,7 +138,6 @@ public class TopicController {
         log.setIp(request.getRemoteAddr());
         log.setType(1);
         log.setActions("添加一个专题");
-        logService.addlog(log);
         Object error=validate(topicPo);
         if (error != null) {
             log.setStatusCode(0);
@@ -147,7 +146,8 @@ public class TopicController {
         }
         try {
             topicService.adminAddTopic(topicPo);
-        }catch (MallException e){
+            log.setActionId(topicPo.getId());
+        }catch (Exception e){
             log.setStatusCode(0);
             logService.addlog(log);
         }
@@ -156,14 +156,14 @@ public class TopicController {
     }
 
     /**
-     * 管理员查看专题详情
+     * 管理员查看专题详情 已通过
      *
      * @param
      * @Author Ren tianhe
      * @Date 2019/12/13
      */
     @GetMapping("/admin/topics/{id}")
-    public Object adminFindTopicById(Integer id, HttpServletRequest request){
+    public Object adminFindTopicById(@PathVariable Integer id, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -174,33 +174,38 @@ public class TopicController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("查看专题详情");
+        Topic topicById = new Topic();
         try{
-            topicService.findTopicById(id);
+            topicById = topicService.findTopicById(id);
+            if (topicById==null){
+                return ResponseUtil.badArgumentValue();
+            }
         }catch (MallException e){
             log.setStatusCode(0);
             logService.addlog(log);
-            return e.getErrorCode();
+            return ResponseUtil.badArgumentValue();
         }
         log.setStatusCode(1);
         logService.addlog(log);
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(topicById);
     }
 
     /**
-     * 用户查看专题详情
+     * 用户查看专题详情 已通过
      *
      * @param
      * @Author Ren tianhe
      * @Date 2019/12/13
      */
     @GetMapping("/topics/{id}")
-    public Object userFindTopicById(Integer id){
+    public Object userFindTopicById(@PathVariable Integer id){
+        Topic topic=new Topic();
         try{
-            topicService.findTopicById(id);
+            topic = topicService.findTopicById(id);
         }catch (MallException e){
-            return e.getErrorCode();
+            return ResponseUtil.badArgumentValue();
         }
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(topic);
     }
 
     /**

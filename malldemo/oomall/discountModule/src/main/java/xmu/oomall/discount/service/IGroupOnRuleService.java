@@ -8,7 +8,6 @@ import java.util.List;
 @Service
 public interface IGroupOnRuleService {
 
-    public void log(Log log);
 
     /**
      * 管理员操作添加Log
