@@ -18,23 +18,10 @@ public class TopicDao {
     private TopicMapper topicMapper;
 
     //管理员/用户获得所有的专题（已重改）
-    public List<Topic> findTopicList() throws MallException{
+    public List<Topic> findTopicList() {
         List<TopicPo> topicPos = topicMapper.findTopicList();//从数据库中获取topicpo对象
         List<Topic> topics = new ArrayList<Topic>();
         for(TopicPo item:topicPos){
-//            if(item == null){
-//                throw new MallException(ResponseUtil.badArgumentValue());
-//            }
-
-            /*
-            如果返回的是be_deleted=1的字段
-             */
-            if(!item.getDeleted()){
-                throw new MallException(ResponseUtil.badArgumentValue());
-            }
-            /*
-            新建一个topic对象，修改构造方法
-             */
             Topic temp = new Topic(item);
             temp.setPictures();
             topics.add(temp);
@@ -64,18 +51,14 @@ public class TopicDao {
     2. 从数据库中查到的是be_deleted=1的数据
      */
     public Topic findTopicById(Integer id) throws MallException {
-        TopicPo topicPo = topicMapper.findTopicById(id);
-        Topic topic = new Topic(topicPo);
-        topic.setPictures();
-        //如果返回的是空的数据
-//        if(topic == null) {
-//            throw new MallException(ResponseUtil.badArgumentValue());
-//        }
-        //如果返回的是be_deleted=1的字段
-        if(!topic.getDeleted()){
+        TopicPo topicPo =topicMapper.findTopicById(id);
+        if(topicPo == null){
             throw new MallException(ResponseUtil.serious());
         }
+        Topic topic = new Topic(topicPo);
         return topic;
+
+
     }
 
     //管理员编辑专题

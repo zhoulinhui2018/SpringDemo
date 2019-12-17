@@ -24,7 +24,7 @@ public class TopicService implements ITopicService{
     //重写接口中的方法
 
     @Override
-    public List<Topic> findTopicList(Integer page, Integer limit) throws MallException{
+    public List<Topic> findTopicList(Integer page, Integer limit){
         PageHelper.startPage(page,limit);
         return topicDao.findTopicList();
     }
