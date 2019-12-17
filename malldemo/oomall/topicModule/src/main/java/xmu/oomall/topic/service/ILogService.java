@@ -13,5 +13,6 @@ import java.util.List;
  **/
 @Service
 public interface ILogService {
-    Integer addLog(Integer adminId, String ip, Integer type, Integer actionId, String action, Integer statusCode);
+//    Integer addLog(Integer adminId, String ip, Integer type, Integer actionId, String action, Integer statusCode);
+      void addlog(Log newlog);
 }

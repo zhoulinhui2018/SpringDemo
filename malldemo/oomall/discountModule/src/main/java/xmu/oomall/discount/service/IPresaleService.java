@@ -1,6 +1,7 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
+import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.Payment;
@@ -12,6 +13,13 @@ import java.util.function.BiConsumer;
 
 @Service
 public interface IPresaleService {
+
+    /**
+     * 管理员操作添加Log
+     * @param log
+     */
+    void log(Log log);
+
 
     /**
      * 管理员增加预售规则
