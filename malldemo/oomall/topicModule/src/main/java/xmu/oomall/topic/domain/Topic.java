@@ -19,6 +19,8 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class Topic extends TopicPo{
+    public Topic() {
+    }
 
     public Topic(List<String> pictures) {
         this.pictures = pictures;
@@ -57,9 +59,6 @@ public class Topic extends TopicPo{
     }
 
     //返回pictures这个list
-    public  List<String> getpictures(){
-        return this.pictures;
-    }
 
     //得到this.pictures
     public List<String> getPictures()

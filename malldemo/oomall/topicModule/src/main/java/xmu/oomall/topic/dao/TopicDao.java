@@ -38,9 +38,6 @@ public class TopicDao {
         topicPo.setGmtCreate(LocalDateTime.now());
         topicPo.setGmtModified(LocalDateTime.now());
         topicPo.setDeleted(false);
-        if(topicMapper.adminAddTopic(topicPo)==0) {
-            throw new MallException(ResponseUtil.serious());
-        }
         return topicMapper.adminAddTopic(topicPo);
     }
 
@@ -57,8 +54,6 @@ public class TopicDao {
         }
         Topic topic = new Topic(topicPo);
         return topic;
-
-
     }
 
     //管理员编辑专题
