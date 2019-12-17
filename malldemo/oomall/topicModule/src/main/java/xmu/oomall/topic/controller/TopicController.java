@@ -4,6 +4,7 @@ import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import xmu.oomall.topic.domain.Log;
 import xmu.oomall.topic.domain.Topic;
 import xmu.oomall.topic.domain.TopicPo;
 import xmu.oomall.topic.service.impl.LogService;
@@ -103,6 +104,17 @@ public class TopicController {
     public Object adminFindTopicList(@RequestParam(defaultValue = "1") Integer page,
                                 @RequestParam(defaultValue = "10") Integer limit
                                  ,HttpServletRequest request) {
+        String id= request.getHeader("id");
+        if (id==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(id));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查询专题列表");
+        logService.addlog(log);
         List<Topic> topics = new ArrayList<Topic>();
             topics = topicService.findTopicList(page,limit);
         return ResponseUtil.ok(topics);
@@ -121,20 +133,25 @@ public class TopicController {
             return ResponseUtil.unlogin();
         }
         //进行合法性判断（内容不为空）
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(1);
+        log.setActions("添加一个专题");
+        logService.addlog(log);
         Object error=validate(topicPo);
         if (error != null) {
-            logService.addLog(request.getIntHeader("userId"),
-                    request.getHeader("ip"),1,topicPo.getId(),"管理员创建新的专题",0);
+            log.setStatusCode(0);
+            logService.addlog(log);
             return error;
         }
         try {
             topicService.adminAddTopic(topicPo);
         }catch (MallException e){
-            logService.addLog(request.getIntHeader("userId"),
-                    request.getHeader("ip"),1,topicPo.getId(),"管理员创建新的专题",0);
+            log.setStatusCode(0);
+            logService.addlog(log);
         }
-        logService.addLog(request.getIntHeader("userId"),
-                request.getHeader("ip"),1,topicPo.getId(),"管理员创建新的专题",1);
+        logService.addlog(log);
         return ResponseUtil.ok(topicPo);
     }
 
@@ -151,15 +168,21 @@ public class TopicController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查看专题详情");
         try{
             topicService.findTopicById(id);
         }catch (MallException e){
-            logService.addLog(request.getIntHeader("id"),
-                    request.getHeader("ip"),0,id,"查看专题详情",0);
+            log.setStatusCode(0);
+            logService.addlog(log);
             return e.getErrorCode();
         }
-        logService.addLog(request.getIntHeader("id"),
-                request.getHeader("ip"),0,id,"查看专题详情",1);
+        log.setStatusCode(1);
+        logService.addlog(log);
         return ResponseUtil.ok();
     }
 
@@ -193,21 +216,27 @@ public class TopicController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("编辑专题");
         //进行合法性判断（内容不为空）
         Object error=validate(topicPo);
         if (error != null) {
-            logService.addLog(request.getIntHeader("userId"),
-                    request.getHeader("ip"),2,id,"管理员修改专题详情",0);
+            log.setStatusCode(0);
+            logService.addlog(log);
             return error;
         }
         topicPo.setId(id);
         if(topicService.adminUpdateTopicById(topicPo)==0){
-            logService.addLog(request.getIntHeader("userId"),
-                    request.getHeader("ip"),2,id,"管理员修改专题详情",0);
+            log.setStatusCode(0);
+            logService.addlog(log);
             return ResponseUtil.updatedDataFailed();
         }
-        logService.addLog(request.getIntHeader("userId"),
-                request.getHeader("ip"),2,id,"管理员修改专题详情",1);
+        log.setStatusCode(1);
+        logService.addlog(log);
         return ResponseUtil.ok();
     }
 
@@ -220,15 +249,22 @@ public class TopicController {
      */
     @DeleteMapping("/topics/{id}")
     public Object adminDeleteTopicById(Integer id,HttpServletRequest request){
-        Integer adminid= request.getIntHeader("userId");
+        Integer adminid= request.getIntHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("删除专题");
         if(topicService.adminDeleteTopicById(id)==0){
-            logService.addLog(request.getIntHeader("userId"),
-                    request.getHeader("ip"),3,id,"管理员删除专题",0);
+            log.setStatusCode(0);
+            logService.addlog(log);
             return ResponseUtil.updatedDataFailed();
         }
+        log.setStatusCode(1);
         return ResponseUtil.ok();
     }
 }
