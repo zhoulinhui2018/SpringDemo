@@ -11,8 +11,6 @@ import java.util.List;
 public interface IAddressService {
     void log(Log log);
 
-    void log(Log log);
-
     /**
      * 查看某用户的收货地址列表
      *
