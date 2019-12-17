@@ -20,6 +20,7 @@ import java.util.List;
 @Repository
 public class PresaleDao {
     @Autowired
+
     private PresaleMapper presaleMapper;
 
     @Autowired

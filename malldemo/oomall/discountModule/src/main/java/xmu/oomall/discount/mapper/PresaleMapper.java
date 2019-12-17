@@ -2,19 +2,21 @@ package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
+import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 @Mapper
 public interface PresaleMapper {
     /**
      * 管理员新增预售规则
      * @param presaleRule
      */
-    void add(PresaleRule presaleRule);
+    Integer add(PresaleRule presaleRule);
 
     /**
      * 管理员根据ID找到预售规则
