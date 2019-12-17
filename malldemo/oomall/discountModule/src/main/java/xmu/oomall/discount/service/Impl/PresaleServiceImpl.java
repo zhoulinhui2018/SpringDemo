@@ -41,8 +41,8 @@ public class PresaleServiceImpl implements IPresaleService {
      * @param presaleRule
      */
     @Override
-    public void add(PresaleRule presaleRule) {
-        presaleDao.add(presaleRule);
+    public Integer add(PresaleRule presaleRule) {
+        return presaleDao.add(presaleRule);
     }
 
     /**

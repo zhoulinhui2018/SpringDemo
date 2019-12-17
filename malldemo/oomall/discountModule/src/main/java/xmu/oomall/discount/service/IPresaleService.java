@@ -25,7 +25,7 @@ public interface IPresaleService {
      * 管理员增加预售规则
      * @param presaleRule
      */
-    void add(PresaleRule presaleRule);
+    Integer add(PresaleRule presaleRule);
 
     /**
      * 根据id找到预售规则
