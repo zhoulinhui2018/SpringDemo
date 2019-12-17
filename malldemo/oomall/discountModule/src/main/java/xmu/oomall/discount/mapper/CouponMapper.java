@@ -70,4 +70,10 @@ public interface CouponMapper {
      * @return
      */
     int updateCouponStatus(Integer id);
+
+    /**
+     * 找到用户端可显示的优惠券规则
+     * @return
+     */
+    List<CouponRulePo> findCouponRulesAvailable();
 }

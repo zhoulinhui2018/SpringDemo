@@ -1,8 +1,12 @@
 package xmu.oomall.discount.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.dao.PresaleDao;
+import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.Payment;
@@ -16,6 +20,19 @@ import java.util.List;
 public class PresaleServiceImpl implements IPresaleService {
     @Autowired
     private PresaleDao presaleDao;
+
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
+
+    @Override
+    public void log(Log log){
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("Log");
+        System.out.println(instance.getHost());
+        System.out.println(instance.getPort());
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
+        restTemplate.postForObject(reqURL,log,Log.class);
+    }
 
     /**
      * 管理员添加预售规则
