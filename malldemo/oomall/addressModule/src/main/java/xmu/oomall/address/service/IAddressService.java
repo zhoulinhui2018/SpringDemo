@@ -3,11 +3,16 @@ package xmu.oomall.address.service;
 import org.springframework.stereotype.Service;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
+import xmu.oomall.address.domain.Log;
 
 import java.util.List;
 
 @Service
 public interface IAddressService {
+    void log(Log log);
+
+    void log(Log log);
+
     /**
      * 查看某用户的收货地址列表
      *

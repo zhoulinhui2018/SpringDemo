@@ -6,10 +6,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
+import xmu.oomall.address.domain.Log;
 import xmu.oomall.address.service.impl.AddressService;
 import xmu.oomall.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -144,11 +146,29 @@ public class AddressController {
      * @Date: 2019/12/12
      */
     @GetMapping("/admin/addresses")
-    public Object adminFindUserAddress(@RequestParam Integer userId,
-                                 @RequestParam String name,
-                                 @RequestParam(defaultValue = "1") Integer page,
-                                 @RequestParam(defaultValue = "10") Integer limit){
-        List<Address> addressList=addressService.adminFindUserAddress(page,limit,userId,name);
+    public Object adminFindUserAddress(HttpServletRequest request,
+                                       @RequestParam Integer userId,
+                                       @RequestParam String name,
+                                       @RequestParam(defaultValue = "1") Integer page,
+                                       @RequestParam(defaultValue = "10") Integer limit){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        List<Address> addressList;
+        try {
+            addressList=addressService.adminFindUserAddress(page,limit,userId,name);
+        } catch (Exception e) {
+            log.setStatusCode(0);
+            addressService.log(log);
+            return ResponseUtil.updatedDataFailed();
+        }
+        addressService.log(log);
         return ResponseUtil.ok(addressList);
     }
 
