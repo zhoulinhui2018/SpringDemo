@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.FootprintItemPo;
+import xmu.oomall.footprint.domain.Log;
 import xmu.oomall.footprint.domain.VO.FootprintItemVo;
 import xmu.oomall.footprint.service.impl.FootprintService;
 import xmu.oomall.util.ResponseUtil;
@@ -70,11 +71,29 @@ public class FootprintController {
      * @Date: 2019/12/14
      */
     @GetMapping("/admin/footprints")
-    public Object listFootprintByCondition(@RequestParam String userName,
+    public Object listFootprintByCondition(HttpServletRequest request,
+                                           @RequestParam String userName,
                                            @RequestParam String goodsName,
                                            @RequestParam(defaultValue = "1") Integer page,
                                            @RequestParam(defaultValue = "10") Integer limit) {
-        List<FootprintItem> footprintList=footprintService.listFootprintByCondition(page,limit,userName,goodsName);
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        List<FootprintItem> footprintList;
+        try {
+            footprintList=footprintService.listFootprintByCondition(page,limit,userName,goodsName);
+        } catch (Exception e) {
+            log.setStatusCode(0);
+            footprintService.log(log);
+            return ResponseUtil.updatedDataFailed();
+        }
+        footprintService.log(log);
         return ResponseUtil.ok(footprintList);
     }
 

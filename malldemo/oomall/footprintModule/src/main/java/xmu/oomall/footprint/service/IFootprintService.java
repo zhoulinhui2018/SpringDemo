@@ -3,11 +3,14 @@ package xmu.oomall.footprint.service;
 import org.springframework.stereotype.Service;
 import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.FootprintItemPo;
+import xmu.oomall.footprint.domain.Log;
 
 import java.util.List;
 
 @Service
 public interface IFootprintService {
+
+    void log(Log log);
 
     /**
      * 用户查询足迹信息
