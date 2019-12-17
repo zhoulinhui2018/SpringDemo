@@ -56,4 +56,10 @@ public interface IPresaleService {
      * @return
      */
     PresaleRule isPresaleOrder(Integer goodsId);
+
+    List<Order> getPresaleRuleOrders(PresaleRule presaleRule);
+
+    List<Payment> getPaymentList(List<Order> orderList);
+
+    void presaleRefund(List<Payment> paymentList);
 }

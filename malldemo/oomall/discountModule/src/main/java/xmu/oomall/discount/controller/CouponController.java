@@ -94,7 +94,6 @@ public class CouponController {
      * @param couponRule
      * @return
      */
-
     @PutMapping("/couponRules/{id}")
     public Object update(@PathVariable Integer id,@RequestBody CouponRulePo couponRule) {
         Object error = validate(couponRule);
