@@ -1,0 +1,2 @@
+# insert into oomall_user values (1,null,'zhou',0,null,null,null,null,null,null,null,null,null,null,null ,null ,null ,0);
+insert into oomall_goods values (100001,null,null,'lin',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0);
