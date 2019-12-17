@@ -54,9 +54,9 @@ public class AdController {
         String ok="Success";
         if(ok.equals(FileUploadUtil.upload(file,path))){
             String prefix="http://";
-            return xmu.oomall.util.ResponseUtil.ok(prefix+path);
+            return ResponseUtil.ok(prefix+path);
         }
-        return xmu.oomall.util.ResponseUtil.fail();
+        return ResponseUtil.fail();
     }
 
     /**

@@ -102,7 +102,6 @@ public class CouponController {
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
 
         boolean oldStatusCode=ruleInDB.getStatusCode();
-        boolean newStatusCode=couponRule.getStatusCode();
 
         LocalDateTime beginTime=ruleInDB.getBeginTime();
         LocalDateTime endTime=ruleInDB.getEndTime();

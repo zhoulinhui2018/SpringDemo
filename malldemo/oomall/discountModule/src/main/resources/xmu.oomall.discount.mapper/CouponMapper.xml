@@ -3,7 +3,7 @@
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
 
-    <select id="findCouponRuleById" parameterType="Integer" resultType="couponRulePo">
+    <select id="findCouponRuleById" parameterType="Integer" resultMap="couponRuleType">
             select *
                     from oomall_coupon_rule where id = #{id}
     </select>
@@ -19,7 +19,7 @@
         values (#{userId},#{couponRuleId},#{couponSn},#{beginTime},#{endTime},#{usedTime},#{name},#{picUrl},#{gmtCreate},#{gmtModified},#{beDeleted},#{statusCode})
     </insert>
 
-    <select id="getCouponList" resultType="couponRulePo">
+    <select id="getCouponList" resultMap="couponRuleType">
         select *
         from oomall_coupon_rule;
     </select>
@@ -33,23 +33,24 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
             <if test="brief!=null">brief=#{brief},</if>
-            <if test="beginTime!=null">beginTime=#{beginTime},</if>
-            <if test="endTime!=null">endTime=#{endTime},</if>
-            <if test="picUrl!=null">picUrl=#{picUrl},</if>
+            <if test="beginTime!=null">begin_time=#{beginTime},</if>
+            <if test="endTime!=null">end_time=#{endTime},</if>
+            <if test="picUrl!=null">pic_url=#{picUrl},</if>
             <if test="validPeriod!=null">validPeriod=#{validPeriod},</if>
             <if test="strategy!=null">strategy=#{strategy},</if>
             <if test="total!=null">total=#{total},</if>
-            <if test="goodsList1!=null">goodsList1=#{goodsList1},</if>
-            <if test="goodsList2!=null">goodsList2=#{goodsList2},</if>
-            <if test="gmtCreate!=null">gmtCreate=#{gmtCreate},</if>
-            <if test="gmtModified!=null">gmtModified=#{gmtModified},</if>
-            <if test="beDeleted!=null">beDeleted=#{beDeleted},</if>
-
+            <if test="goodsList1!=null">goods_list1=#{goodsList1},</if>
+            <if test="goodsList2!=null">goods_list2=#{goodsList2},</if>
+            <if test="gmtCreate!=null">gmt_create=#{gmtCreate},</if>
+            <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
+            <if test="beDeleted!=null">is_deleted=#{beDeleted},</if>
+            <if test="collectedNum!=null">collected_num=#{collectedNum}</if>
+            <if test="status!=null">status=#{statusCode}</if>
         </trim>
         WHERE id=#{id}
     </update>
 
-    <select id="getCouponMyList" parameterType="Integer" resultType="couponPo">
+    <select id="getCouponMyList" parameterType="Integer" resultMap="couponType">
         select *
         from oomall_coupon where user_id=#{userId} and statusCode=0;
     </select>
@@ -64,12 +65,12 @@
         from oomall_product where id=#{goodsId};
     </select>
 
-    <select id="getCouponRule" parameterType="Integer" resultType="couponRulePo">
+    <select id="getCouponRule" parameterType="Integer" resultMap="couponRuleType">
         select *
         from oomall_coupon_rule where id=#{couponRuleId};
     </select>
 
-    <select id="findCouponById" parameterType="Integer" resultType="couponPo">
+    <select id="findCouponById" parameterType="Integer" resultMap="couponType">
         select * from oomall_coupon where id = #{id}
     </select>
 
@@ -81,5 +82,39 @@
         update oomall_coupon
         set status=1 where coupon_rule_id = #{id};
     </update>
+
+    <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="coupon_rule_id" property="couponRuleId"/>
+        <result column="coupon_sn" property="couponSn"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="name" property="name"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="beDeleted"/>
+        <result column="status" property="statusCode"/>
+    </resultMap>
+
+    <resultMap id="couponRuleType" type="xmu.oomall.discount.domain.coupon.CouponRulePo">
+        <id column="id" property="id"/>
+        <result column="brief" property="brief"/>
+        <result column="valid_period" property="validPeriod"/>
+        <result column="strategy" property="strategy"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="name" property="name"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="beDeleted"/>
+        <result column="status" property="statusCode"/>
+        <result column="total" property="total"/>
+        <result column="collected_num" property="collectedNum"/>
+        <result column="goods_list1" property="goodsList1"/>
+        <result column="goods_list2" property="goodsList2"/>
+    </resultMap>
 
 </mapper>
