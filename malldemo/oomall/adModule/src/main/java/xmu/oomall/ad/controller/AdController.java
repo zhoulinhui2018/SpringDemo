@@ -46,14 +46,14 @@ public class AdController {
     @RequestMapping(value="/pics",method = RequestMethod.POST)
     public Object uploadPicture(@RequestParam(value = "file",required = false) MultipartFile file) throws Exception {
         if(file==null){
-            return xmu.oomall.util.ResponseUtil.badArgument();
+            return ResponseUtil.badArgument();
         }
-        String path = "/var/www/tardybird/upload/"
+        String path = "E:/testPic/"
                 + IdUtil.genImageName()
                 +file.getOriginalFilename();
         String ok="Success";
         if(ok.equals(FileUploadUtil.upload(file,path))){
-            String prefix="http://";
+            String prefix="http://localhost";
             return ResponseUtil.ok(prefix+path);
         }
         return ResponseUtil.fail();
@@ -154,6 +154,7 @@ public class AdController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("修改");
+        log.setActionId(id);
         Object error=validate(newAd);
         if (error != null) {
             return error;
@@ -226,7 +227,8 @@ public class AdController {
     * @Date: 2019/12/5
     */
     @PostMapping("/ads")
-    public Object adminCreateAd(HttpServletRequest request,@RequestBody Ad ad) {
+    public Object adminCreateAd(HttpServletRequest request, Ad ad) {
+        System.out.println("test");
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -243,13 +245,16 @@ public class AdController {
             adService.log(log);
             return error;
         }
+        System.out.println("test1");
         try {
             adService.addAds(ad);
         } catch (Exception e) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.serious();
+            return ResponseUtil.badArgumentValue();
         }
+        System.out.println("test2");
+        adService.log(log);
         return ResponseUtil.ok(ad);
     }
 

@@ -82,9 +82,7 @@
             <if test="beEnabled!=null">is_enabled=#{beEnabled},</if>
             <if test="startTime!=null">start_time=#{startTime},</if>
             <if test="endTime!=null">end_time=#{endTime},</if>
-            <if test="gmtCreate!=null">gmt_create=#{gmtCreate},</if>
             <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
-            <if test="beDeleted!=null">is_deleted=#{beDeleted},</if>
         </trim>
         WHERE id=#{id}
     </update>

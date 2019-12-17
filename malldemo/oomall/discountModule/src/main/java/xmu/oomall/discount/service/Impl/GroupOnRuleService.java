@@ -72,7 +72,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
 
     @Override
-    public void add(GrouponRulePo grouponRulePo) {
+    public void add(GrouponRulePo grouponRulePo) throws Exception {
         groupOnDao.add(grouponRulePo);
     }
 
