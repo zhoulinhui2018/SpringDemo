@@ -44,9 +44,11 @@ public class TopicController {
      */
     private Object validate(TopicPo newtopic) {
         String content = newtopic.getContent();
-        newtopic.getPicUrlList();
         String picturesJson = newtopic.getPicUrlList();
-        if (StringUtils.isEmpty(content)||StringUtils.isEmpty(picturesJson)) {
+        if (StringUtils.isEmpty(content)) {
+            return ResponseUtil.badArgument();
+        }
+        if(StringUtils.isEmpty(picturesJson)){
             return ResponseUtil.badArgument();
         }
         return null;
@@ -78,7 +80,7 @@ public class TopicController {
     }
 
     /**
-     * 用户查看所有专题
+     * 用户查看所有专题（已通过）
      *
      * @param
      * @Author Ren tianhe
@@ -216,7 +218,7 @@ public class TopicController {
      * @Date 2019/12/17
      */
     @PutMapping("/topics/{id}")
-    public Object adminUpdateTopicById(@PathVariable Integer id,@RequestBody TopicPo topicPo, HttpServletRequest request){
+    public Object adminUpdateTopicById(@PathVariable Integer id, TopicPo topicPo, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -227,6 +229,7 @@ public class TopicController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("编辑专题");
+        log.setActionId(id);
         //进行合法性判断（内容不为空）
         Object error=validate(topicPo);
         if (error != null) {
@@ -246,15 +249,15 @@ public class TopicController {
     }
 
     /**
-     * 管理员删除专题
+     * 管理员删除专题 （测试通过）
      *
      * @param
      * @Author Ren tianhe
      * @Date 2019/12/17
      */
     @DeleteMapping("/topics/{id}")
-    public Object adminDeleteTopicById(Integer id,HttpServletRequest request){
-        Integer adminid= request.getIntHeader("id");
+    public Object adminDeleteTopicById(@PathVariable Integer id,HttpServletRequest request){
+        String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
@@ -264,12 +267,14 @@ public class TopicController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("删除专题");
+        log.setActionId(id);
         if(topicService.adminDeleteTopicById(id)==0){
             log.setStatusCode(0);
             logService.addlog(log);
             return ResponseUtil.updatedDataFailed();
         }
         log.setStatusCode(1);
+        logService.addlog(log);
         return ResponseUtil.ok();
     }
 }

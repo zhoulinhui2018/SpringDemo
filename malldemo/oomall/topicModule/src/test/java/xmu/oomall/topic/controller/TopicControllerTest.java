@@ -1,5 +1,6 @@
 package xmu.oomall.topic.controller;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,11 +37,11 @@ public class TopicControllerTest {
 //    }
 
     //用户管理员查看所有专题测试，单页返回三个
-//    @Test
-//    public void findAllTopicTest(){
-//        Object object = topicController.findTopicList(1,3);
-//        System.out.println(object.toString());
-//    }
+    @Test
+    public void findAllTopicTest(){
+        Object object = topicController.userFindTopicList(1,3);
+        System.out.println(object.toString());
+    }
 
     //用户管理员查看专题详情测试
 //    @Test
