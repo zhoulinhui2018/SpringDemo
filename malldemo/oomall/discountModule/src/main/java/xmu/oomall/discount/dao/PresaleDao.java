@@ -18,15 +18,14 @@ import java.util.List;
 @Repository
 public class PresaleDao {
     @Autowired
-
     private PresaleMapper presaleMapper;
 
     /**
      * 管理员添加预售规则
      * @param presaleRule
      */
-    public void add(PresaleRule presaleRule){
-        presaleMapper.add(presaleRule);
+    public Integer add(PresaleRule presaleRule){
+        return presaleMapper.add(presaleRule);
     }
 
     /**

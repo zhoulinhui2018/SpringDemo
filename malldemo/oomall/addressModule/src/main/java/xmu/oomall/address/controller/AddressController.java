@@ -8,10 +8,9 @@ import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.domain.Log;
 import xmu.oomall.address.service.impl.AddressService;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.address.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

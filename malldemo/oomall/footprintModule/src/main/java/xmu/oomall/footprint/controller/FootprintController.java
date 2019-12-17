@@ -22,7 +22,7 @@ public class FootprintController {
     private FootprintService footprintService;
 
     /**
-     * 用户查询足迹信息
+     * 用户查询足迹信息（测试已通过）
      * @param request 前端请求
      * @param page 分页大小
      * @param limit 分页限制
@@ -43,7 +43,7 @@ public class FootprintController {
     }
 
     /**
-     * 用户删除足迹信息
+     * 用户删除足迹信息（测试已通过）
      * @param id 足迹id
      * @return 用boolean表示删除操作是否成功
      * @Author: Zhang Yaqing
@@ -61,7 +61,11 @@ public class FootprintController {
     }
 
     /**
-     * 管理员按条件查询足迹信息
+     * 管理员按条件查询足迹信息（测试已通过）
+     * 测试内容：
+     * 1. username和goodsname都有
+     * 2. username或goodsname为空
+     * 3. 两个都为空（默认返回所有）
      * @param userName 查询的用户名
      * @param goodsName 查询的商品名
      * @param page 分页大小
@@ -85,6 +89,7 @@ public class FootprintController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
+        log.setActions("查询足迹信息");
         List<FootprintItem> footprintList;
         try {
             footprintList=footprintService.listFootprintByCondition(page,limit,userName,goodsName);
@@ -105,7 +110,7 @@ public class FootprintController {
      * @Date: 2019/12/14
      */
     @PostMapping("/footprints/{userId}")
-    public Object addFootprint(@RequestBody FootprintItemPo footprintItemPo){
+    public Object addFootprint( FootprintItemPo footprintItemPo){
         boolean result=footprintService.addFootprint(footprintItemPo);
         if(result){
             return ResponseUtil.ok(footprintItemPo);
