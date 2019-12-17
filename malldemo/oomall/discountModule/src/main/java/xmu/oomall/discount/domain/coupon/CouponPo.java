@@ -60,4 +60,110 @@ public class CouponPo {
     private LocalDateTime gmtModified;
     private Boolean beDeleted;
 
+
+    //getter and setter方法
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCouponRuleId() {
+        return couponRuleId;
+    }
+
+    public void setCouponRuleId(Integer couponRuleId) {
+        this.couponRuleId = couponRuleId;
+    }
+
+    public String getCouponSn() {
+        return couponSn;
+    }
+
+    public void setCouponSn(String couponSn) {
+        this.couponSn = couponSn;
+    }
+
+    public LocalDateTime getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(LocalDateTime beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public LocalDateTime getUsedTime() {
+        return usedTime;
+    }
+
+    public void setUsedTime(LocalDateTime usedTime) {
+        this.usedTime = usedTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public Boolean getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(Boolean statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Boolean getBeDeleted() {
+        return beDeleted;
+    }
+
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
+    }
 }

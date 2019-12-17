@@ -33,10 +33,10 @@
         #{mobile},#{beDefault},#{userId})
     </insert>
 
-    <delete id="deleteAddress" parameterType="integer">
-        delete from oomall_address
-        where id=#{id}
-    </delete>
+    <update id="deleteAddress" parameterType="integer">
+        update oomall_address
+        set is_deleted=1 where id=#{id}
+    </update>
 
     <update id="updateAddress"  parameterType="xmu.oomall.address.domain.Address" >
         update oomall_address

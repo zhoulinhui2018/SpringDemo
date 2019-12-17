@@ -83,7 +83,7 @@ class AddressDaoTest {
     @Test
     public void deleteAddressTest()
     {
-        boolean result=addressDao.deleteAddress(1);
+        boolean result=addressDao.deleteAddress(3);
         System.out.println(result);
     }
 }

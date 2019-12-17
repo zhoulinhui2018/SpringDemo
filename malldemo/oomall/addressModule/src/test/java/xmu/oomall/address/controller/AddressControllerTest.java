@@ -104,8 +104,8 @@ public class AddressControllerTest {
      */
     @Test
     public void adminFindUserAddressTest(){
-        Object addressObject=addressController.adminFindUserAddress(1,"",1,10);
-        System.out.println(addressObject);
+//        Object addressObject=addressController.adminFindUserAddress(1,"",1,10);
+//        System.out.println(addressObject);
 
     }
 
