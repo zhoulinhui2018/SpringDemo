@@ -80,7 +80,131 @@ public class CouponRulePo {
     private Boolean beDeleted;
 
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public LocalDateTime getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(LocalDateTime beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public Integer getValidPeriod() {
+        return validPeriod;
+    }
+
+    public void setValidPeriod(Integer validPeriod) {
+        this.validPeriod = validPeriod;
+    }
+
+    public String getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Boolean getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(Boolean statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public Integer getCollectedNum() {
+        return collectedNum;
+    }
+
+    public void setCollectedNum(Integer collectedNum) {
+        this.collectedNum = collectedNum;
+    }
+
+    public String getGoodsList1() {
+        return goodsList1;
+    }
+
+    public void setGoodsList1(String goodsList1) {
+        this.goodsList1 = goodsList1;
+    }
+
+    public String getGoodsList2() {
+        return goodsList2;
+    }
+
+    public void setGoodsList2(String goodsList2) {
+        this.goodsList2 = goodsList2;
+    }
+
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Boolean getBeDeleted() {
+        return beDeleted;
+    }
+
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.CartItem;
+import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
@@ -43,58 +44,113 @@ public class CouponController {
         return null;
     }
     /**
-     * 获取优惠券列表
-     * @return list<Coupon>
+     * 管理员获取优惠券列表（第一次修改）
+     * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
+     * 4.返回值为ResponseUtil
+     * @return list<CouponRulePo>
      */
-    @GetMapping("/couponRules")
-    public List<CouponRulePo> list(@RequestParam(defaultValue = "1") Integer page,
-                                   @RequestParam(defaultValue = "10") Integer limit)
+    @GetMapping("/admin/couponRules")
+    public Object list(@RequestParam(defaultValue = "1") Integer page,
+                                   @RequestParam(defaultValue = "10") Integer limit,
+                                   HttpServletRequest request)
     {
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
         List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
-        return couponList;
+        return ResponseUtil.ok(couponList);
     }
 
 
     /**
-     * 管理员新建优惠券
+     * 管理员新建优惠券（已修改）
+     * 修改内容如下：1.因为为管理员的操作，所以参数添加Http头部 2.添加了log 3.log中的actionId未填写
      * @param couponRule
      * @return
      */
     @PostMapping("/couponRules")
-    public Object create(@RequestBody CouponRulePo couponRule)
+    public Object create(@RequestBody CouponRulePo couponRule,HttpServletRequest request)
     {
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(1);
+        log.setStatusCode(1);
+        log.setActions("新增优惠券");
         Object error=validate(couponRule);
+        //couponRule内容不合理
         if (error != null) {
+            log.setStatusCode(0);
+            couponService.log(log);
             return error;
         }
+        couponService.log(log);
         couponService.addCouponRule(couponRule);
         return ResponseUtil.ok(couponRule);
 
     }
 
     /**
-     * 获取某一种优惠券信息
+     * 管理员查看优惠券规则详情（已修改）
+     * 修改内容如下：1.新增Http的参数 2.添加log操作 3.出现非法id返回badArgumentValue()
      * @param id
      * @return
      */
     @GetMapping("/couponRules/{id}")
-    public Object detail(@NotNull Integer id)
+    public Object detail(@NotNull Integer id,HttpServletRequest request)
     {
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActionId(id);
+        log.setActions("查看优惠券规则");
         CouponRulePo couponRule=couponService.findCouponRuleById(id);
+        if(couponRule == null){
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.badArgumentValue();
+        }
+        couponService.log(log);
         return ResponseUtil.ok(couponRule);
     }
 
     /**
-     * 管理员修改优惠券信息
+     * 管理员修改优惠券信息（已修改）
+     * 修改内容如下：1. 添加Http请求头部
      * 管理员可以作废优惠卷，优惠卷作废后，所有领出未用的优惠卷也一并作废，已经使用的优惠卷不受影响
      * @param id
      * @param couponRule
      * @return
      */
     @PutMapping("/couponRules/{id}")
-    public Object update(@PathVariable Integer id,@RequestBody CouponRulePo couponRule) {
+    public Object update(@PathVariable Integer id,@RequestBody CouponRulePo couponRule,HttpServletRequest request) {
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(2);
+        log.setStatusCode(1);
+        log.setActionId(id);
+        log.setActions("修改优惠券规则");
+
         Object error = validate(couponRule);
         if (error != null) {
+            log.setStatusCode(0);
+            couponService.log(log);
             return error;
         }
         couponRule.setId(id);
@@ -120,24 +176,40 @@ public class CouponController {
         }else if(inTime==false){
             //预售未开始或者已经结束可以修改信息
             if (couponService.updateCouponRuleById(couponRule) == 0) {
+                log.setStatusCode(0);
+                couponService.log(log);
                 return ResponseUtil.updatedDataFailed();
             }
             return ResponseUtil.ok(couponRule);
 
         }else{
             //在预售开始到结束时间内且未作废的情况，不能改动信息
+            log.setStatusCode(0);
+            couponService.log(log);
             return ResponseUtil.updatedDataFailed();
         }
 
     }
 
     /**
-     * 管理员删除优惠券规则
+     * 管理员删除优惠券规则（已修改）
+     * 修改内容如下：1.添加Http头部 2.添加log（好多种情况，得仔细检查）
      * @param id
      * @return
      */
     @DeleteMapping("/couponRules/{id}")
-    public Object delete(@PathVariable Integer id){
+    public Object delete(@PathVariable Integer id,HttpServletRequest request){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(3);
+        log.setStatusCode(1);
+        log.setActionId(id);
+        log.setActions("删除优惠券规则");
 
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
         Boolean statusCode=ruleInDB.getStatusCode();
@@ -148,18 +220,36 @@ public class CouponController {
         if(statusCode==true) {
             //在优惠券开始到结束时间内不能删除优惠券
             if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
+                log.setStatusCode(0);
+                couponService.log(log);
                 return ResponseUtil.fail();
             }
-            couponService.deleteCouponRuleById(id);
-            return ResponseUtil.ok();
+            //出现非法id情况，删除失败
+            if(couponService.deleteCouponRuleById(id)==0){
+                log.setStatusCode(0);
+                couponService.log(log);
+                return ResponseUtil.badArgumentValue();
+            }
+            else {
+                log.setStatusCode(1);
+                couponService.log(log);
+            }
+                return ResponseUtil.ok();
         }else {//优惠券规则已失效
-            couponService.deleteCouponRuleById(id);
+            if(couponService.deleteCouponRuleById(id)==0){
+                log.setStatusCode(0);
+                couponService.log(log);
+            }
+            else{
+                log.setStatusCode(1);
+                couponService.log(log);
+            }
             return ResponseUtil.ok();
         }
     }
 
     /**
-     * 用户获取自己领取的优惠券列表（失效的statusCode=0不显示）
+     * 用户获取自己领取的优惠券列表（失效的statusCode=0不显示）（不需要添加log）
      * @param request
      * @param page
      * @param limit
@@ -178,7 +268,8 @@ public class CouponController {
     }
 
     /**
-     * 根据id查询coupon表
+     * 根据id查询coupon表（已修改）
+     * 修改内容如下：1.对于非法id的判断
      * @param id
      * @return
      */
