@@ -115,7 +115,6 @@ public class DiscountController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-        Boolean statusCode = grouponRulePo.getStatusCode();
         Boolean inTime = false;
 //            int isSuccess= groupOnRuleService.update(grouponRulePo);
         grouponRulePo.setId(id);
@@ -124,6 +123,8 @@ public class DiscountController {
         if (grouponRulePo1.getStartTime().isBefore(now)&&grouponRulePo1.getEndTime().isAfter(now)){
             inTime=true;
         }
+        Boolean statusCode = grouponRulePo1.getStatusCode();
+
         Log log = LogUtil.newLog("修改团购", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
         if(inTime==true && statusCode==true) {
             List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(grouponRulePo);
