@@ -8,6 +8,15 @@ import java.util.List;
 @Service
 public interface IGroupOnRuleService {
 
+    public void log(Log log);
+
+    /**
+     * 管理员操作添加Log
+     * @param log
+     */
+    void log(Log log);
+
+
     /**
      * 根据GoodsId判断是否是团购订单
      * @param goodsId
@@ -32,7 +41,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/16
     */
-    void putOrdersBack(List<Order> orders);
+    //void putOrdersBack(List<Order> orders);
 
     /** 
     * @Description: 获得团购商品 

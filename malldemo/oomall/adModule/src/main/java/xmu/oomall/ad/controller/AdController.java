@@ -54,13 +54,13 @@ public class AdController {
         String ok="Success";
         if(ok.equals(FileUploadUtil.upload(file,path))){
             String prefix="http://";
-            return xmu.oomall.util.ResponseUtil.ok(prefix+path);
+            return ResponseUtil.ok(prefix+path);
         }
-        return xmu.oomall.util.ResponseUtil.fail();
+        return ResponseUtil.fail();
     }
 
     /**
-    * @Description: 管理员获取广告列表
+    * @Description: 管理员获取广告列表 已通过
     * @Param: [page, limit]
     * @return: java.lang.Object
     * @Author: Zhou Linhui
@@ -86,11 +86,12 @@ public class AdController {
         Ad ad=new Ad();
         ad.setName(adTitle);
         ad.setContent(adContent);
+        System.out.println("tessssssssssssssssssss");
         return ResponseUtil.ok(adService.adminFindAllAds(page,limit,ad));
     }
 
     /**
-    * @Description: 用户端获得广告，获取在当前时间点可以播放的广告列表，如果为0，则返回默认广告
+    * @Description: 用户端获得广告，获取在当前时间点可以播放的广告列表，如果为0，则返回默认广告 已通过
     * @Param: []
     * @return: java.lang.Object
     * @Author: Zhou Linhui
@@ -103,7 +104,7 @@ public class AdController {
 
 
     /**
-    * @Description: 管理员查看单条广告
+    * @Description: 管理员查看单条广告 已通过
     * @Param: []
     * @return: xmu.oomall.domain.Ad
     * @Author: Zhou Linhui
@@ -119,9 +120,9 @@ public class AdController {
         log.setAdminId(Integer.valueOf(adminid));
         log.setIp(request.getRemoteAddr());
         log.setType(0);
-
+        log.setActionId(id);
+        log.setStatusCode(1);
         log.setActions("查询详情");
-        adService.log(log);
         Ad adById = adService.findAdById(id);
         if (adById==null){
             log.setStatusCode(0);
@@ -135,14 +136,14 @@ public class AdController {
 
 
     /**
-    * @Description: 管理员修改广告信息
+    * @Description: 管理员修改广告信息 (时间格式问题，设置时间有问题，其他通过）
     * @Param: [newAd]
     * @return: void
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
     @PutMapping("/ads/{id}")
-    public Object adminUpdateAd(HttpServletRequest request,@PathVariable Integer id,@RequestBody Ad newAd) {
+    public Object adminUpdateAd(HttpServletRequest request,@PathVariable Integer id,Ad newAd) {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -151,14 +152,22 @@ public class AdController {
         log.setAdminId(Integer.valueOf(adminid));
         log.setIp(request.getRemoteAddr());
         log.setType(0);
+        log.setStatusCode(1);
         log.setActions("修改");
         Object error=validate(newAd);
         if (error != null) {
             return error;
         }
         newAd.setId(id);
-        if(adService.updateAdById(newAd)==0)
-        {
+
+        try {
+            Integer integer = adService.updateAdById(newAd);
+            if (integer==0){
+                log.setStatusCode(0);
+                adService.log(log);
+                return ResponseUtil.badArgumentValue();
+            }
+        } catch (Exception e) {
             log.setStatusCode(0);
             adService.log(log);
             return ResponseUtil.updatedDataFailed();
@@ -169,7 +178,7 @@ public class AdController {
 
 
     /**
-    * @Description: 管理员删除一条广告
+    * @Description: 管理员删除一条广告 已通过，但是状态码没确定，待确定
     * @Param: [id]
     * @return: void
     * @Author: Zhou Linhui
@@ -186,14 +195,26 @@ public class AdController {
         log.setActionId(id);
         log.setIp(request.getRemoteAddr());
         log.setType(0);
+        log.setStatusCode(1);
         log.setActions("删除广告");
         if (id == null) {
             log.setStatusCode(0);
             adService.log(log);
             return ResponseUtil.badArgumentValue();
         }
+        try {
+            Integer integer = adService.deleteAdbyId(id);
+            if (integer==0){
+                log.setStatusCode(0);
+                adService.log(log);
+                return ResponseUtil.badArgumentValue();
+            }
+        } catch (Exception e) {
+            log.setStatusCode(0);
+            adService.log(log);
+            return ResponseUtil.serious();
+        }
         adService.log(log);
-        adService.deleteAdbyId(id);
         return ResponseUtil.ok();
     }
 
@@ -214,17 +235,21 @@ public class AdController {
         log.setAdminId(Integer.valueOf(adminid));
         log.setIp(request.getRemoteAddr());
         log.setType(0);
+        log.setStatusCode(1);
         log.setActions("新增");
         Object error = validate(ad);
         if (error != null) {
-           return error;
-        }
-        if (adService.addAds(ad)!=1){
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.fail();
+            return error;
         }
-        adService.log(log);
+        try {
+            adService.addAds(ad);
+        } catch (Exception e) {
+            log.setStatusCode(0);
+            adService.log(log);
+            return ResponseUtil.serious();
+        }
         return ResponseUtil.ok(ad);
     }
 

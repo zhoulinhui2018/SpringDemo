@@ -1,4 +1,4 @@
-﻿package xmu.oomall.discount.domain;
+package xmu.oomall.discount.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

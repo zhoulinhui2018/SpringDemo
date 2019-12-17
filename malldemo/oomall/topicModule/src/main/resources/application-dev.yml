@@ -8,7 +8,7 @@ spring:
     name: ad-service-provider #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
-  port: 8762
+  port: 8804
 
 eureka:
   client:

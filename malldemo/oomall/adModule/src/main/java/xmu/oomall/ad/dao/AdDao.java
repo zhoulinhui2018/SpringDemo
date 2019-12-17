@@ -18,7 +18,7 @@ public class AdDao {
     }
 
 
-    public Integer addAds(Ad ad){
+    public Integer addAds(Ad ad) throws Exception{
         ad.setGmtCreate(LocalDateTime.now());
         ad.setGmtModified(LocalDateTime.now());
         ad.setBeDelete(false);
@@ -40,11 +40,11 @@ public class AdDao {
         return allAds;
     }
 
-    public Integer deleteAdbyId(Integer id){
+    public Integer deleteAdbyId(Integer id) throws Exception{
        return adMapper.deleteAdbyId(id);
     }
 
-    public Integer updateAdById(Ad newAd)
+    public Integer updateAdById(Ad newAd) throws Exception
     {
         newAd.setGmtModified(LocalDateTime.now());
         return adMapper.updateAdById(newAd);

@@ -29,9 +29,9 @@ public interface IAdService {
     */
     public List<Ad> findAllAds();
 
-    public Integer deleteAdbyId(Integer id);
+    public Integer deleteAdbyId(Integer id) throws Exception;
 
-    public Integer addAds(Ad ad);
+    public Integer addAds(Ad ad) throws Exception;
 
     /**
      * @Description: 修改ad的信息
@@ -40,7 +40,7 @@ public interface IAdService {
      * @Author: Xu Huangchao
      * @Date: 2019/12/5
      */
-    public Integer updateAdById(Ad newAd);
+    public Integer updateAdById(Ad newAd) throws Exception;
     public List<Ad> adminFindAllAds(Integer page, Integer limit,Ad ad);
     public List<Ad> findUserAds();
 }

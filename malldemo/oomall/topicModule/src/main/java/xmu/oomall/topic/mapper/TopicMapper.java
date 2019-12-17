@@ -1,9 +1,7 @@
 package xmu.oomall.topic.mapper;
 
-import net.sf.jsqlparser.statement.select.Top;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
-import xmu.oomall.topic.domain.Topic;
 import xmu.oomall.topic.domain.TopicPo;
 
 import java.util.List;
@@ -12,17 +10,17 @@ import java.util.List;
 @Mapper
 public interface TopicMapper {
 
-    //从数据库中返回所有的topicpo对象
+    //用户/管理员，查看专题列表
     public List<TopicPo>  findTopicList();
 
-    // 查看某条专题详情
+    // 用户/管理员，查看某条专题详情
     public TopicPo findTopicById(Integer id);
 
     //管理员添加专题
-    public int adminAddTopic(TopicPo newTopicPo);
+    public int adminAddTopic(TopicPo topicPo);
 
-    //管理员更新专题内容
-    public int adminUpdateTopicById(TopicPo newTopicPo);
+    //管理员编辑专题
+    public int adminUpdateTopicById(TopicPo topicPo);
 
     //管理员删除专题（逻辑删除）
     public int adminDeleteTopicById(Integer id);

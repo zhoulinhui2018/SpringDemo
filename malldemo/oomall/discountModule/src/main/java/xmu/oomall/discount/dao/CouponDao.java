@@ -14,6 +14,7 @@ import xmu.oomall.domain.goods.Goods;
 import xmu.oomall.util.JacksonUtil;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -272,5 +273,24 @@ public class CouponDao {
 
     public int updateCouponStatus(Integer id) {
         return couponMapper.updateCouponStatus(id);
+    }
+
+
+    /**
+     * 获取用户可见优惠券规则
+     * @return List<CouponRulePo>
+     */
+    public List<CouponRulePo> findUserCouponRules() {
+        List<CouponRulePo> allCouponRules = couponMapper.findCouponRulesAvailable();
+        LocalDateTime now = LocalDateTime.now();
+        Iterator<CouponRulePo> iterator = allCouponRules.iterator();
+        while (iterator.hasNext()){
+            CouponRulePo next = iterator.next();
+            if (now.isAfter(next.getBeginTime()) && now.isBefore(next.getEndTime())){
+                allCouponRules.add(next);
+            }
+        }
+
+        return allCouponRules;
     }
 }

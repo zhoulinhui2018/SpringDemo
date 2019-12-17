@@ -1,22 +1,19 @@
 package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import xmu.oomall.discount.domain.*;
+import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 import xmu.oomall.util.ResponseUtil;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,41 +101,34 @@ public class CouponController {
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
 
         boolean oldStatusCode=ruleInDB.getStatusCode();
-        boolean newStatusCode=couponRule.getStatusCode();
 
         LocalDateTime beginTime=ruleInDB.getBeginTime();
         LocalDateTime endTime=ruleInDB.getEndTime();
+        Boolean inTime=false;
         LocalDateTime nowTime=LocalDateTime.now();
-        if(oldStatusCode==true) {
-            if (newStatusCode == false) {
-                //管理员作废优惠券,更新coupon表
-                couponService.updateCouponRuleById(couponRule);
-                couponService.updateCouponStatus(id);
-
-
-
-
-                return ResponseUtil.ok();
-            } else {
-                if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
-                    //在优惠券开始到结束时间内不能改动信息
-                    return ResponseUtil.updatedDataFailed();
-                } else {
-                    //优惠券未开始或者已经结束可以修改信息
-                    if (couponService.updateCouponRuleById(couponRule) == 0) {
-                        return ResponseUtil.updatedDataFailed();
-                    }
-                    return ResponseUtil.ok(couponRule);
-                }
-            }
+        if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)){
+            inTime=true;
         }
-        else{
-            //优惠券规则已经过期了可以修改
+        if(inTime==true && oldStatusCode==true) {
+            //先修改预售状态
+            couponService.updateCouponRuleById(couponRule);
+            couponService.updateCouponStatus(id);
+            return ResponseUtil.ok();
+            //再进行退款操作
+
+
+        }else if(inTime==false){
+            //预售未开始或者已经结束可以修改信息
             if (couponService.updateCouponRuleById(couponRule) == 0) {
                 return ResponseUtil.updatedDataFailed();
             }
             return ResponseUtil.ok(couponRule);
+
+        }else{
+            //在预售开始到结束时间内且未作废的情况，不能改动信息
+            return ResponseUtil.updatedDataFailed();
         }
+
     }
 
     /**

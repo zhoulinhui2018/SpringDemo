@@ -1,8 +1,8 @@
 package xmu.oomall.topic.service;
 
-import net.sf.jsqlparser.statement.select.Top;
 import org.springframework.stereotype.Service;
-import xmu.oomall.topic.domain.*;
+import xmu.oomall.topic.domain.Topic;
+import xmu.oomall.topic.domain.TopicPo;
 import xmu.oomall.topic.util.MallException;
 
 import java.util.List;
@@ -15,13 +15,13 @@ import java.util.List;
  **/
 @Service
 public interface ITopicService {
-    public List<Topic> findTopicList(Integer page, Integer limit) throws MallException;
+    public List<Topic> findTopicList(Integer page, Integer limit);
 
-    public Integer adminAddTopic(Topic newtopic) throws MallException;
+    public Integer adminAddTopic(TopicPo topicPo) throws MallException;
 
     public Topic findTopicById (Integer id) throws MallException;
 
-    public Integer adminUpdateTopicById(Topic newtopic);
+    public Integer adminUpdateTopicById(TopicPo topicPo);
 
     public Integer adminDeleteTopicById(Integer id);
 }
