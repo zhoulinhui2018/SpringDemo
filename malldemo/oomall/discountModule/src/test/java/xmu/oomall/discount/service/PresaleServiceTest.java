@@ -13,12 +13,12 @@ import java.util.List;
 public class PresaleServiceTest {
     @Autowired
     private PresaleDao presaleDao;
-
-    @Test
-    public void findByGoodsId(){
-       List<PresaleRule> ruleList=presaleDao.findByGoodsId(600001);
-       System.out.println(ruleList);
-    }
+//
+//    @Test
+//    public void findByGoodsId(){
+//       List<PresaleRule> ruleList=presaleDao.findByGoodsId(600001);
+//       System.out.println(ruleList);
+//    }
 
 //    @Test
 //    public void isPresaleOrder()

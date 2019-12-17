@@ -6,12 +6,14 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.Payment;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
 import xmu.oomall.util.ResponseUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,17 +25,45 @@ public class PresaleController {
     private PresaleServiceImpl presaleService;
 
 
-
     /**
      * 判断presaleRule是否符合规范
      * @param presaleRule
      * @return
      */
     private Object validate(PresaleRule presaleRule) {
-        Integer id = presaleRule.getGoodsId();
-        if (StringUtils.isEmpty(String.valueOf(id))) {
+       LocalDateTime startTime=presaleRule.getStartTime();
+       LocalDateTime adEndTime=presaleRule.getAdEndTime();
+       LocalDateTime finalStartTime=presaleRule.getFinalStartTime();
+       LocalDateTime endTime=presaleRule.getEndTime();
+       Boolean statusCode=presaleRule.getStatusCode();
+       Integer goodsId=presaleRule.getGoodsId();
+       BigDecimal deposit=presaleRule.getDeposit();
+       BigDecimal finalPayment=presaleRule.getFinalPayment();
+       if (StringUtils.isEmpty(String.valueOf(startTime))) {
             return ResponseUtil.badArgument();
         }
+        else if(StringUtils.isEmpty(String.valueOf(adEndTime))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(finalStartTime))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(endTime))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(statusCode))){
+            return  ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(goodsId))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(deposit))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(finalPayment))){
+            return ResponseUtil.badArgument();
+        }
+
         return null;
     }
     /**
@@ -45,6 +75,10 @@ public class PresaleController {
      */
     @PostMapping("/presaleRule")
     public Object create(@RequestBody PresaleRule presaleRule){
+        Object error = validate(presaleRule);
+        if (error != null) {
+            return error;
+        }
         presaleService.add(presaleRule);
         return ResponseUtil.ok(presaleRule);
     }
@@ -58,8 +92,8 @@ public class PresaleController {
      */
     @GetMapping("/presaleRule/{id}")
     public Object detail(@PathVariable Integer id){
-        PresaleRule presaleRule = presaleService.findById(id);
-        return ResponseUtil.ok(presaleRule);
+        PresaleRuleVo presaleRuleVo = presaleService.findById(id);
+        return ResponseUtil.ok(presaleRuleVo);
     }
 
     /**
@@ -71,14 +105,17 @@ public class PresaleController {
      * @Date: 2019/12/16
      */
     @PutMapping("/presaleRule/{id}")
-    public Object update(@PathVariable Integer id,PresaleRule presaleRule){
+    public Object update(@PathVariable Integer id,@RequestBody PresaleRule presaleRule){
         Object error = validate(presaleRule);
         if (error != null) {
             return error;
         }
         presaleRule.setId(id);
 
-        PresaleRule ruleInDB=presaleService.findById(id);
+        PresaleRuleVo ruleVoInDB=presaleService.findById(id);
+        PresaleRule ruleInDB=ruleVoInDB.getPresaleRule();
+
+
         Boolean oldStatusCode=ruleInDB.getStatusCode();
         Boolean newStatusCode=presaleRule.getStatusCode();
         LocalDateTime beginTime=ruleInDB.getStartTime();
@@ -87,6 +124,7 @@ public class PresaleController {
 
         Boolean inTime=(nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0);
         Boolean changeStatus= (newStatusCode==false) && (oldStatusCode==true);
+
 
         //作废
         if(inTime==true&&changeStatus==true) {
@@ -125,7 +163,8 @@ public class PresaleController {
      */
     @DeleteMapping("/presaleRule/{id}")
     public Object delete(@PathVariable Integer id){
-        PresaleRule ruleInDB=presaleService.findById(id);
+        PresaleRuleVo ruleInDBVo=presaleService.findById(id);
+        PresaleRule ruleInDB=ruleInDBVo.getPresaleRule();
         Boolean statusCode=ruleInDB.getStatusCode();
         LocalDateTime beginTime=ruleInDB.getStartTime();
         LocalDateTime endTime=ruleInDB.getEndTime();
@@ -144,6 +183,52 @@ public class PresaleController {
         }
     }
 
+    /**
+     * 用户根据商品ID搜索预售规则
+     * @param goodsId
+     * @param page
+     * @param limit
+     * @return
+     */
+    @GetMapping("/presaleRules")
+    public Object selectPresaleRule(@RequestParam Integer goodsId,@RequestParam Integer page,@RequestParam Integer limit){
+        List<PresaleRuleVo> list=presaleService.findPresaleRule(goodsId,page,limit);
+        return ResponseUtil.ok(list);
+    }
+
+    /**
+     * 管理员查看预售规则列表
+     * @param page
+     * @param limit
+     * @return
+     */
+    @GetMapping("/admins/presaleGoods")
+    public Object findAllPresaleRules(@RequestParam Integer page,@RequestParam Integer limit){
+        List<PresaleRuleVo> list=presaleService.findAllPresaleRules(page, limit);
+        return ResponseUtil.ok(list);
+    }
+
+    /**
+     * 用户根据ID查看预售规则详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/presaleRules/{id}")
+    public Object getPresaleRuleById(@PathVariable Integer id){
+        PresaleRuleVo presaleRuleVo=presaleService.findById(id);
+        return ResponseUtil.ok(presaleRuleVo);
+    }
 
 
+    /**
+     * 用户查看预售商品列表
+     * @param page
+     * @param limit
+     * @return
+     */
+    @GetMapping("/presaleGoods")
+    public Object getPresaleGoods(@RequestParam Integer page,@RequestParam Integer limit){
+        List<PresaleRuleVo> ruleVos=presaleService.findOnPresaleRules(page, limit);
+        return ResponseUtil.ok(ruleVos);
+    }
 }

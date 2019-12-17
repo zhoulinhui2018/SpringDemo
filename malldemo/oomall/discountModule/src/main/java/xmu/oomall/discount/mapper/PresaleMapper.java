@@ -1,6 +1,7 @@
 package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 
@@ -44,10 +45,8 @@ public interface PresaleMapper {
     List<PresaleRule> findByGoodsId(Integer goodsId);
 
     /**
-     * 获取订单求当前
-     * @param order
+     * 管理员查看预售商品列表
      * @return
      */
-    BigDecimal getIntegralPrice(Order order);
-
+    List<PresaleRule> findAllPresaleRules();
 }

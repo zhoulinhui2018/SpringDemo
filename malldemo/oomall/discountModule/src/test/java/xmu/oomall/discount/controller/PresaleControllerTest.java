@@ -1,10 +1,15 @@
 package xmu.oomall.discount.controller;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
+
+import javax.validation.constraints.Max;
+import java.util.List;
 
 @SpringBootTest(classes = DiscountApplication.class)
 @AutoConfigureMockMvc
@@ -89,4 +94,21 @@ public class PresaleControllerTest {
 //        System.out.println(object.toString());
 //    }
 
+    @Test
+    public void selectPresaleRuleTest(){
+        Object object=presaleController.selectPresaleRule(600001,1,10);
+        System.out.println(object.toString());
+    }
+
+    @Test
+    public void findAllPresaleRulesTest(){
+        Object object=presaleController.findAllPresaleRules(1,10);
+        System.out.println(object.toString());
+    }
+
+    @Test
+    public void getPresaleRuleByIdTest(){
+        Object object=presaleController.getPresaleRuleById(100001);
+        System.out.println(object.toString());
+    }
 }

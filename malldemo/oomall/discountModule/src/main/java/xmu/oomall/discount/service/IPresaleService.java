@@ -1,6 +1,7 @@
 package xmu.oomall.discount.service;
 
 import org.springframework.stereotype.Service;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.OrderItem;
@@ -32,7 +33,7 @@ public interface IPresaleService {
      * @param id
      * @return
      */
-    PresaleRule findById(Integer id);
+    PresaleRuleVo findById(Integer id);
 
     /**
      * 管理员更新预售规则
@@ -63,11 +64,36 @@ public interface IPresaleService {
      * @param goodsId
      * @return
      */
-    PresaleRule isPresaleOrder(Integer goodsId);
+    PresaleRuleVo isPresaleOrder(Integer goodsId);
 
     List<Order> getPresaleRuleOrders(PresaleRule presaleRule);
 
     List<Payment> getPaymentList(List<Order> orderList);
 
     void presaleRefund(List<Payment> paymentList);
+
+    /**
+     *根据商品ID找到预售规则列表
+     * @param goodsId
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<PresaleRuleVo> findPresaleRule(Integer goodsId, Integer page, Integer limit);
+
+    /**
+     * 管理员找到所有的预售规则
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<PresaleRuleVo> findAllPresaleRules(Integer page,Integer limit);
+
+    /**
+     * 用户查看所有上架预售规则
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<PresaleRuleVo> findOnPresaleRules(Integer page, Integer limit);
 }

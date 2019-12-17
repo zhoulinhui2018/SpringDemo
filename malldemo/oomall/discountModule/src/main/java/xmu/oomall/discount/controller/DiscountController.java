@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.GrouponRuleVo;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
@@ -343,7 +344,8 @@ public class DiscountController {
                 }
                 else {
                     //判断是否是预售订单
-                   PresaleRule rule=presaleService.isPresaleOrder(goodsId);
+                   PresaleRuleVo ruleVo=presaleService.isPresaleOrder(goodsId);
+                   PresaleRule rule=ruleVo.getPresaleRule();
                    List<OrderItem> orderItemList2=new ArrayList<>();
                    if(rule!=null){
                        item.setItemType(1);
