@@ -24,6 +24,15 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Override
+    public void returnBackRate(GrouponRulePo grouponRulePo,BigDecimal rate) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("orderService");
+        System.out.println(instance.getHost());
+        System.out.println(instance.getPort());
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
+        restTemplate.postForObject(reqURL,grouponRulePo,Boolean.class,rate);
+    }
 
     @Override
     public void log(Log log){
@@ -62,13 +71,6 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         list.add(grouponPayment);
         return list;
     }
-    @Override
-    public void refund(List<Payment> payments) {
-        RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Order");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
-        restTemplate.postForObject(reqURL,payments,Void.class);
-    }
 
 
     @Override
@@ -93,11 +95,11 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
 
     @Override
-    public List<Order> getGrouponOrders(GrouponRulePo grouponRulePo){
+    public Integer getGrouponNum(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Order");
+        ServiceInstance instance = loadBalancerClient.choose("orderService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/grouponOrders");
-        return restTemplate.getForObject(reqURL, List.class);
+        return restTemplate.getForObject(reqURL, Integer.class);
     }
 
     @Override
@@ -117,8 +119,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
     @Override
     public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo) {
-        List<Order> orders = this.getGrouponOrders(grouponRulePo);
-        int grouponNumber=orders.size();
+        Integer grouponNumber=this.getGrouponNum(grouponRulePo);
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
         boolean isEnough= false;
         GrouponRuleStrategy grouponRuleStrategyBest =new GrouponRuleStrategy();

@@ -48,30 +48,13 @@ public class DiscountController {
     public Object executeAllGroupon(){
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
         for (GrouponRulePo finishedGrouponRule : finishedGrouponRules) {
-            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(finishedGrouponRule);
             GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule);
             BigDecimal rate = accessStrategy.getRate();
-            List<Payment> payments =new ArrayList<>();
-            for (int i = 0; i < grouponOrders.size(); i++) {
-                Order order =  grouponOrders.get(i);
-                List<OrderItem> orderItemList = order.getOrderItemList();
-                OrderItem orderItem = orderItemList.get(0);
-                BigDecimal price = orderItem.getPrice();
-                Integer number1 = orderItem.getNumber();
-                BigDecimal number=new BigDecimal(number1);
-                BigDecimal dealPrice = price.multiply(number).multiply(rate).setScale(2,BigDecimal.ROUND_FLOOR);
-                orderItem.setDealPrice(dealPrice);
-                Payment payment=new Payment();
-                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
-                payment.setOrderId(order.getId());
-                payments.add(payment);
-            }
-            groupOnRuleService.refund(payments);
-//            groupOnRuleService.putOrdersBack(grouponOrders);
+            groupOnRuleService.returnBackRate(finishedGrouponRule,rate);
         }
-        System.out.println("test");
         return null;
     }
+
 
     /**
      * @Description: 管理员新增团购规则
@@ -160,23 +143,8 @@ public class DiscountController {
         }
         Boolean statusCode = grouponRulePo1.getStatusCode();
 
-        if(inTime==true && statusCode==true) {
-            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(grouponRulePo);
-            List<Payment> payments =new ArrayList<>();
-            for (int i = 0; i < grouponOrders.size(); i++) {
-                Order order =  grouponOrders.get(i);
-                List<OrderItem> orderItemList = order.getOrderItemList();
-                OrderItem orderItem = orderItemList.get(0);
-                BigDecimal price = orderItem.getPrice();
-                Integer number1 = orderItem.getNumber();
-                BigDecimal number=new BigDecimal(number1);
-                BigDecimal dealPrice = price.multiply(number).setScale(2,BigDecimal.ROUND_FLOOR);
-                orderItem.setDealPrice(dealPrice);
-                Payment payment=new Payment();
-                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
-                payment.setOrderId(order.getId());
-                payments.add(payment);
-            }groupOnRuleService.refund(payments);
+        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
+            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
             log.setStatusCode(1);
             groupOnRuleService.log(log);
             return ResponseUtil.ok(grouponRulePo);

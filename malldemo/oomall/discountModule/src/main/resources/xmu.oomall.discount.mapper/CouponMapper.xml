@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
+    <select id="getMyCoupons0" parameterType="integer" resultMap="couponType">
+        select *
+        from oomall_coupon
+        where is_deleted=0 and user_id = #{userId} and  status = 0
+    </select>
+
+    <select id="getMyCoupons1" parameterType="integer" resultMap="couponType">
+        select *
+        from oomall_coupon
+        where is_deleted=0 and user_id = #{userId} and  status = 1
+    </select>
+
+    <select id="getMyCoupons2" parameterType="integer" resultMap="couponType">
+        select *
+        from oomall_coupon
+        where is_deleted=0 and user_id = #{userId} and  status = 2
+    </select>
 
     <select id="findCouponRuleById" parameterType="Integer" resultMap="couponRuleType">
             select *
@@ -52,7 +69,8 @@
 
     <select id="getCouponMyList" parameterType="Integer" resultMap="couponType">
         select *
-        from oomall_coupon where user_id=#{userId} and statusCode=0;
+        from oomall_coupon
+        where user_id=#{userId} and is_deleted = 0
     </select>
 
     <select id="getProductId" parameterType="Integer" resultType="Integer">

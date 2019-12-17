@@ -6,12 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.FootprintItemPo;
 import xmu.oomall.footprint.domain.Log;
-import xmu.oomall.footprint.domain.VO.FootprintItemVo;
 import xmu.oomall.footprint.service.impl.FootprintService;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.footprint.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

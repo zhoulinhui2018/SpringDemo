@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.OrderItemPo;
 import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
@@ -32,6 +31,32 @@ public class CouponDao {
     private static final Logger logger = LoggerFactory.getLogger(CouponDao.class);
     @Autowired
     private CouponMapper couponMapper;
+
+
+    public List<CouponPo> getMyCoupons0(Integer userId){
+        return couponMapper.getMyCoupons0(userId);
+    }
+
+    public List<CouponPo> getMyCoupons1(Integer userId){
+        return couponMapper.getMyCoupons1(userId);
+    }
+
+    public List<CouponPo> getMyCoupons2(Integer userId){
+        return couponMapper.getMyCoupons2(userId);
+    }
+
+    public List<CouponPo> getMyCoupons3(Integer userId){
+        List<CouponPo> couponMyList = couponMapper.getCouponMyList(userId);
+        Iterator<CouponPo> iterator = couponMyList.iterator();
+        while (iterator.hasNext()){
+            CouponPo next = iterator.next();
+            if (next.getEndTime().isBefore(LocalDateTime.now())){
+                iterator.remove();
+            }
+        }
+        return couponMyList;
+    }
+
 
     /**
      * 管理员增加优惠券规则

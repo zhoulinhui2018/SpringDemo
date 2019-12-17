@@ -32,6 +32,30 @@ public class CouponServiceImpl implements ICouponService {
 
 
     @Override
+    public List<CouponPo> getMyCoupons0(Integer page, Integer limit, Integer userId) {
+        PageHelper.startPage(page,limit);
+        return couponDao.getMyCoupons0(userId);
+    }
+
+    @Override
+    public List<CouponPo> getMyCoupons1(Integer page, Integer limit, Integer userId) {
+        PageHelper.startPage(page,limit);
+        return couponDao.getMyCoupons1(userId);
+    }
+
+    @Override
+    public List<CouponPo> getMyCoupons2(Integer page, Integer limit, Integer userId) {
+        PageHelper.startPage(page,limit);
+        return couponDao.getMyCoupons2(userId);
+    }
+
+    @Override
+    public List<CouponPo> getMyCoupons3(Integer page, Integer limit, Integer userId) {
+        PageHelper.startPage(page,limit);
+        return couponDao.getMyCoupons3(userId);
+    }
+
+    @Override
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("Log");

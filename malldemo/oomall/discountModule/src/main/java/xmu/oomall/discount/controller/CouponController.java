@@ -43,6 +43,9 @@ public class CouponController {
         }
         return null;
     }
+
+
+
     /**
      * 管理员获取优惠券列表（第一次修改）
      * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
@@ -51,8 +54,8 @@ public class CouponController {
      */
     @GetMapping("/admin/couponRules")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
-                                   @RequestParam(defaultValue = "10") Integer limit,
-                                   HttpServletRequest request)
+                       @RequestParam(defaultValue = "10") Integer limit,
+                       HttpServletRequest request)
     {
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -262,15 +265,37 @@ public class CouponController {
      * @return
      */
     @GetMapping("/coupons")
-    public List<CouponPo> mylist(HttpServletRequest request,
+    public Object mylist(HttpServletRequest request,
                                  @RequestParam(defaultValue = "1") Integer page,
-                                 @RequestParam(defaultValue = "10") Integer limit)
+                                 @RequestParam(defaultValue = "10") Integer limit,
+                                 @RequestParam Integer showType)
     {
         String id=request.getHeader("id");
         Integer userId=Integer.valueOf(id);
-
-        List<CouponPo> myList=couponService.getCouponMyList(userId,page,limit);
-        return myList;
+        if (userId==null){
+            return ResponseUtil.unlogin();
+        }
+        if (showType==0){
+            List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
+            if (myCoupons0==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons0);
+        }else if (showType==1){
+            List<CouponPo> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
+            if (myCoupons1==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons1);
+        }else if (showType==2){
+            List<CouponPo> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
+            if (myCoupons2==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons2);
+        }else{
+            List<CouponPo> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
+            if (myCoupons3==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons3);
+        }
     }
 
     /**

@@ -17,6 +17,12 @@ import java.util.List;
 @Mapper
 public interface CouponMapper {
 
+    public List<CouponPo> getMyCoupons0(Integer userId);
+
+    public List<CouponPo> getMyCoupons1(Integer userId);
+    public List<CouponPo> getMyCoupons2(Integer userId);
+
+
     /**
      * 用id找优惠卷规则
      * @param id 优惠卷规则id
