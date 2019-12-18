@@ -54,7 +54,7 @@ public class CouponPo {
     /**
      * 优惠券是否已经使用，0未使用，1已使用
      */
-    private Boolean statusCode;
+    private Integer statusCode;
 
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
@@ -135,11 +135,11 @@ public class CouponPo {
         this.picUrl = picUrl;
     }
 
-    public Boolean getStatusCode() {
+    public Integer getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(Boolean statusCode) {
+    public void setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
     }
 
