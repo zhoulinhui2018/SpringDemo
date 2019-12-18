@@ -34,15 +34,15 @@ public interface IFootprintService {
 
     /**
      * 管理员按条件查询足迹信息
-     * @param userName 查询的用户名
-     * @param goodsName 查询的商品名
      * @param page 分页大小
      * @param limit 分页限制
+     * @param userId 查询的用户id
+     * @param goodsId 查询的商品id
      * @return 足迹列表
      * @Author: Zhang Yaqing
      * @Date: 2019/12/14
      */
-    List<FootprintItem> listFootprintByCondition(Integer page, Integer limit, String userName, String goodsName);
+    List<FootprintItem> listFootprintByCondition(Integer page, Integer limit, Integer userId, Integer goodsId);
 
     /**
      * 内部接口：增加足迹

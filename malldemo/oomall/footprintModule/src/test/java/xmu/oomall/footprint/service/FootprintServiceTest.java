@@ -38,7 +38,7 @@ public class FootprintServiceTest {
     @Test
     public void listFootprintByConditionTest()
     {
-        List<FootprintItem> userFootprintList=footprintService.listFootprintByCondition(1,10,"张雅晴","菠萝");
+        List<FootprintItem> userFootprintList=footprintService.listFootprintByCondition(1,10,1,1);
         for(int i=0;i<userFootprintList.size();++i){
             FootprintItem footprint=userFootprintList.get(i);
             System.out.println(footprint);

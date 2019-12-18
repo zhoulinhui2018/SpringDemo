@@ -36,7 +36,13 @@ public class FootprintController {
         if(userId==0){
             return ResponseUtil.unlogin();
         }
-        List<FootprintItem> footprintList= footprintService.getUserFootprintList(page,limit,userId);
+
+        List<FootprintItem> footprintList;
+        try {
+            footprintList= footprintService.getUserFootprintList(page,limit,userId);
+        } catch (Exception e) {
+            return ResponseUtil.serious();
+        }
         return ResponseUtil.ok(footprintList);
     }
 
@@ -54,7 +60,7 @@ public class FootprintController {
             return ResponseUtil.ok(result);
         }
         else{
-            return ResponseUtil.badArgument();
+            return ResponseUtil.inValidateFootprint();
         }
     }
 
@@ -64,8 +70,8 @@ public class FootprintController {
      * 1. username和goodsname都有
      * 2. username或goodsname为空
      * 3. 两个都为空（默认返回所有）
-     * @param userName 查询的用户名
-     * @param goodsName 查询的商品名
+     * @param userId 查询的用户id
+     * @param goodsId 查询的商品id
      * @param page 分页大小
      * @param limit 分页限制
      * @return 足迹列表
@@ -74,8 +80,8 @@ public class FootprintController {
      */
     @GetMapping("/admin/footprints")
     public Object listFootprintByCondition(HttpServletRequest request,
-                                           @RequestParam String userName,
-                                           @RequestParam String goodsName,
+                                           @RequestParam Integer userId,
+                                           @RequestParam Integer goodsId,
                                            @RequestParam(defaultValue = "1") Integer page,
                                            @RequestParam(defaultValue = "10") Integer limit) {
         String adminid= request.getHeader("id");
@@ -88,17 +94,49 @@ public class FootprintController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("查询足迹信息");
+        log.setActionId(1);
+
         List<FootprintItem> footprintList;
         try {
-            footprintList=footprintService.listFootprintByCondition(page,limit,userName,goodsName);
+            footprintList=footprintService.listFootprintByCondition(page,limit,userId,goodsId);
         } catch (Exception e) {
             log.setStatusCode(0);
+            System.out.println(log);
             footprintService.log(log);
-            return ResponseUtil.updatedDataFailed();
+            return ResponseUtil.inValidateFootprint();
         }
         footprintService.log(log);
         return ResponseUtil.ok(footprintList);
     }
+//    @GetMapping("/admin/footprints")
+//    public Object listFootprintByCondition(HttpServletRequest request,
+//                                           @RequestParam String userName,
+//                                           @RequestParam String goodsName,
+//                                           @RequestParam(defaultValue = "1") Integer page,
+//                                           @RequestParam(defaultValue = "10") Integer limit) {
+//        String adminid= request.getHeader("id");
+//        if (adminid==null){
+//            return ResponseUtil.unlogin();
+//        }
+//        Log log=new Log();
+//        log.setAdminId(Integer.valueOf(adminid));
+//        log.setIp(request.getRemoteAddr());
+//        log.setType(0);
+//        log.setStatusCode(1);
+//        log.setActions("查询足迹信息");
+//        List<FootprintItem> footprintList;
+//        try {
+//            footprintList=footprintService.listFootprintByCondition(page,limit,userName,goodsName);
+//        } catch (Exception e) {
+//            log.setStatusCode(0);
+//            footprintService.log(log);
+//            return ResponseUtil.inValidateFootprint();
+//        }
+//        footprintService.log(log);
+//        return ResponseUtil.ok(footprintList);
+//    }
+
+
 
     /**
      * 内部接口：增加足迹
@@ -114,7 +152,7 @@ public class FootprintController {
             return ResponseUtil.ok(footprintItemPo);
         }
         else{
-            return ResponseUtil.badArgument();
+            return ResponseUtil.addFootprintFailed();
         }
     }
 }

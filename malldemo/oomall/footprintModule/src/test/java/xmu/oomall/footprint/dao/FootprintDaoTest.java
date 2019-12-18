@@ -37,7 +37,7 @@ class FootprintDaoTest {
     @Test
     public void listFootprintByConditionTest()
     {
-        List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition("张雅晴","菠萝");
+        List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition(1,1);
         for(int i=0;i<userFootprintList.size();++i){
             FootprintItem footprint=userFootprintList.get(i);
             System.out.println(footprint.getId());

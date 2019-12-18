@@ -14,7 +14,6 @@
         values (#{gmtCreate}, #{birthTime},#{userId},#{goodsId});
     </insert>
 
-
     <delete id="deleteFootprint" parameterType="integer">
         delete from oomall_footprint_item
         where id=#{id};
@@ -28,22 +27,40 @@
         <result property="userId" column="user_id"/>
         <result property="goodsId" column="goods_id"/>
     </resultMap>
-    <select id="listFootprintByCondition" resultMap="footprintItemResultMap">
-        select oomall_footprint_item.id,
-        oomall_footprint_item.gmt_create,
-        oomall_footprint_item.birth_time,
-        oomall_footprint_item.user_id,
-        oomall_footprint_item.goods_id
-        from oomall_footprint_item,oomall_goods,oomall_user
-        where
-        <if test="goodsName!=null and goodsName!=''">
-            (oomall_footprint_item.goods_id=(select oomall_goods.id from oomall_goods where oomall_goods.name=#{goodsName})) and
-        </if>
-        <if test="userName!=null and userName!=''">
-            (oomall_footprint_item.user_id=(select oomall_user.id from oomall_user where oomall_user.name=#{userName})) and
-        </if>
-        true
-        order by oomall_footprint_item.birth_time desc
-    </select>
+<!--    <select id="listFootprintByCondition" resultMap="footprintItemResultMap">-->
+<!--        select oomall_footprint_item.id,-->
+<!--        oomall_footprint_item.gmt_create,-->
+<!--        oomall_footprint_item.birth_time,-->
+<!--        oomall_footprint_item.user_id,-->
+<!--        oomall_footprint_item.goods_id-->
+<!--        from oomall_footprint_item,oomall_goods,oomall_user-->
+<!--        where-->
+<!--        <if test="goodsName!=null and goodsName!=''">-->
+<!--            (oomall_footprint_item.goods_id=(select oomall_goods.id from oomall_goods where oomall_goods.name=#{goodsName})) and-->
+<!--        </if>-->
+<!--        <if test="userName!=null and userName!=''">-->
+<!--            (oomall_footprint_item.user_id=(select oomall_user.id from oomall_user where oomall_user.name=#{userName})) and-->
+<!--        </if>-->
+<!--        true-->
+<!--        order by oomall_footprint_item.birth_time desc-->
+<!--    </select>-->
+
+        <select id="listFootprintByCondition" resultMap="footprintItemResultMap">
+            select oomall_footprint_item.id,
+            oomall_footprint_item.gmt_create,
+            oomall_footprint_item.birth_time,
+            oomall_footprint_item.user_id,
+            oomall_footprint_item.goods_id
+            from oomall_footprint_item,oomall_goods,oomall_user
+            where
+            <if test="goodsName!=null and goodsName!=''">
+                (oomall_footprint_item.goods_id=#{goodsId}) and
+            </if>
+            <if test="userName!=null and userName!=''">
+                (oomall_footprint_item.user_id=#{userId}) and
+            </if>
+            true
+            order by oomall_footprint_item.birth_time desc
+        </select>
 
 </mapper>

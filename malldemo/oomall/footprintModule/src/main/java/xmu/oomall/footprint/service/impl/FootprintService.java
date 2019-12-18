@@ -30,8 +30,9 @@ public class FootprintService implements IFootprintService {
      */
     @Override
     public void log(Log log){
+        System.out.println("进入FootprintService.log");
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Log");
+        ServiceInstance instance = loadBalancerClient.choose("logService");
         System.out.println(instance.getHost());
         System.out.println(instance.getPort());
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
@@ -50,9 +51,9 @@ public class FootprintService implements IFootprintService {
     }
 
     @Override
-    public List<FootprintItem> listFootprintByCondition(Integer page, Integer limit, String userName, String goodsName) {
+    public List<FootprintItem> listFootprintByCondition(Integer page, Integer limit, Integer userId, Integer goodsId) {
         PageHelper.startPage(page,limit);
-        List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition(userName,goodsName);
+        List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition(userId,goodsId);
         return userFootprintList;
     }
 

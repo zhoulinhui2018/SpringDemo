@@ -26,8 +26,8 @@ public class FootprintDao {
         return footprintMapper.deleteFootprint(id);
     }
 
-    public List<FootprintItem> listFootprintByCondition(String userName, String goodsName) {
-        List<FootprintItem> userFootprintList=footprintMapper.listFootprintByCondition(userName,goodsName);
+    public List<FootprintItem> listFootprintByCondition(Integer userId, Integer goodsId) {
+        List<FootprintItem> userFootprintList=footprintMapper.listFootprintByCondition(userId,goodsId);
         return userFootprintList;
     }
 

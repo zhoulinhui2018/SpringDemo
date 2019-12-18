@@ -167,13 +167,14 @@ public class AddressController {
         if(validate(addressPo)==2){
             return ResponseUtil.badArgumentValue();
         }
-        AddressPo newAddressPo=addressService.addNewAddress(addressPo);
+        AddressPo newAddressPo;
 
-        if(newAddressPo==null){
+        try {
+            newAddressPo=addressService.addNewAddress(addressPo);
+        } catch (Exception e) {
             return ResponseUtil.addAddressFailed();
-        }else{
-            return ResponseUtil.ok(newAddressPo);
         }
+        return ResponseUtil.ok(newAddressPo);
     }
 
     /**
