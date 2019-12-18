@@ -1,13 +1,21 @@
-
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://42.52.88.176:3306/DB2_2?serverTimezone=GMT
-    username: user2_2
-    password: OOAD2
+    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+    username: root
+    password: Zhangyaqing123
   application:
     name: logService #服务名称--调用的时候根据名称来调用该服务的方法
+
+#
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://42.52.88.176:3306/DB2_2?serverTimezone=GMT
+#    username: user2_2
+#    password: OOAD2
+#  application:
+#    name: logService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
   port: 8803

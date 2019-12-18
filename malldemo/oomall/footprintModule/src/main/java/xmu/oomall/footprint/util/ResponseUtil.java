@@ -40,14 +40,14 @@ import java.util.Map;
 public class ResponseUtil {
     public static Object ok() {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 0);
+        obj.put("errno", 200);
         obj.put("errmsg", "Success");
         return obj;
     }
 
     public static Object ok(Object data) {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 0);
+        obj.put("errno", 200);
         obj.put("errmsg", "Success");
         obj.put("data", data);
         return obj;
@@ -95,8 +95,14 @@ public class ResponseUtil {
         return fail(505, "更新数据失败");
     }
 
-    public static Object unauthz() {
-        return fail(506, "无操作权限");
+    public static Object inValidateFootprint() {
+        return fail(740, "该足迹是无效足迹（不在数据库里的或者逻辑删除）");
     }
+
+    public static Object addFootprintFailed() {
+        return fail(741, "足迹添加失败");
+    }
+
+
 }
 

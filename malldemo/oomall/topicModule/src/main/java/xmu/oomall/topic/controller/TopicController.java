@@ -118,7 +118,7 @@ public class TopicController {
         log.setActions("查询专题列表");
         logService.addlog(log);
         List<Topic> topics = new ArrayList<Topic>();
-            topics = topicService.findTopicList(page,limit);
+        topics = topicService.findTopicList(page,limit);
         return ResponseUtil.ok(topics);
     }
 
