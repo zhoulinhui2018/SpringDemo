@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
-import xmu.oomall.address.domain.Log;
+//import xmu.oomall.address.domain.Log;
 import xmu.oomall.address.domain.Region;
 import xmu.oomall.address.service.impl.AddressService;
 import xmu.oomall.address.util.FomatUtil;
@@ -75,8 +75,12 @@ public class AddressController {
     @GetMapping("/addresses/{id}")
     public Object getAddressDetail(@PathVariable Integer id){
         Address address=addressService.getAddressDetail(id);
-        changePoToAddress(address);
-        return ResponseUtil.ok(address);
+        if(address==null){
+            return ResponseUtil.addressNotExist();
+        }else{
+            changePoToAddress(address);
+            return ResponseUtil.ok(address);
+        }
     }
 
     /**
@@ -164,7 +168,12 @@ public class AddressController {
             return ResponseUtil.badArgumentValue();
         }
         AddressPo newAddressPo=addressService.addNewAddress(addressPo);
-        return ResponseUtil.ok(newAddressPo);
+
+        if(newAddressPo==null){
+            return ResponseUtil.addAddressFailed();
+        }else{
+            return ResponseUtil.ok(newAddressPo);
+        }
     }
 
     /**
@@ -176,7 +185,12 @@ public class AddressController {
      */
     @DeleteMapping("/addresses/{id}")
     public Object deleteAddress(@PathVariable Integer id){
-        return ResponseUtil.ok(addressService.deleteAddress(id));
+        boolean result=addressService.deleteAddress(id);
+        if(!result){
+            return ResponseUtil.deleteAddressFailed();
+        }else{
+            return ResponseUtil.ok(result);
+        }
     }
 
     /**
@@ -196,11 +210,12 @@ public class AddressController {
             return ResponseUtil.badArgumentValue();
         }
         addressPo.setId(id);
-        if(addressService.updateAddress(addressPo)==null)
-        {
-            return ResponseUtil.updatedDataFailed();
+        AddressPo newAddressPo=addressService.updateAddress(addressPo);
+        if(newAddressPo==null) {
+            return ResponseUtil.updateAddressFailed();
+        }else{
+            return ResponseUtil.ok(addressPo);
         }
-        return ResponseUtil.ok(addressPo);
     }
 
 //    /**

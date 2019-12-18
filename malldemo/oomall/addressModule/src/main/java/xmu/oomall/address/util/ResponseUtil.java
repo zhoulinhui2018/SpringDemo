@@ -40,14 +40,14 @@ import java.util.Map;
 public class ResponseUtil {
     public static Object ok() {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 0);
+        obj.put("errno", 200);
         obj.put("errmsg", "Success");
         return obj;
     }
 
     public static Object ok(Object data) {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 0);
+        obj.put("errno", 200);
         obj.put("errmsg", "Success");
         obj.put("data", data);
         return obj;
@@ -95,8 +95,19 @@ public class ResponseUtil {
         return fail(505, "更新数据失败");
     }
 
-    public static Object unauthz() {
-        return fail(506, "无操作权限");
+    public static Object addAddressFailed() {
+        return fail(751, "地址新增失败");
     }
+
+    public static Object updateAddressFailed() {
+        return fail(752, "地址修改失败");
+    }
+    public static Object deleteAddressFailed() {
+        return fail(743, "地址删除失败");
+    }
+    public static Object addressNotExist() {
+        return fail(744, "地址不存在");
+    }
+
 }
 
