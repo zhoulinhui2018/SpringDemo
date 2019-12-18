@@ -8,9 +8,6 @@ spring:
   application:
     name: logService #服务名称--调用的时候根据名称来调用该服务的方法
 
-server:
-  port: 8803
-
 eureka:
   client:
     serviceUrl:
