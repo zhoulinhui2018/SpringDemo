@@ -19,7 +19,7 @@ public interface ITopicService {
 
     public Integer adminAddTopic(TopicPo topicPo) throws MallException;
 
-    public Topic findTopicById (Integer id) throws MallException;
+    public Topic findTopicById (Integer id);
 
     public Integer adminUpdateTopicById(TopicPo topicPo);
 

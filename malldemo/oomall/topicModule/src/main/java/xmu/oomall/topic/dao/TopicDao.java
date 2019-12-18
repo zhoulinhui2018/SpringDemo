@@ -47,11 +47,8 @@ public class TopicDao {
     1. 由于mybatis出错导致，从数据库中查出来的内容为空
     2. 从数据库中查到的是be_deleted=1的数据
      */
-    public Topic findTopicById(Integer id) throws MallException {
+    public Topic findTopicById(Integer id)  {
         TopicPo topicPo =topicMapper.findTopicById(id);
-        if(topicPo == null){
-            throw new MallException(ResponseUtil.serious());
-        }
         Topic topic = new Topic(topicPo);
         topic.setPictures();
         return topic;

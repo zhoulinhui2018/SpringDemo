@@ -35,7 +35,7 @@ public class TopicDaoTest {
             Topic topic = topicDao.findTopicById(200005);
             System.out.println(topic);
         }
-        catch (MallException e){
+        catch (Exception e){
 
         }
     }
