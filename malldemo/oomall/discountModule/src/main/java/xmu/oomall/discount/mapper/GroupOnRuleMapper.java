@@ -10,6 +10,8 @@ import java.util.List;
 @Service
 @Mapper
 public interface GroupOnRuleMapper {
+
+    public List<GrouponRulePo> findGrouponByGoodsId(Integer goodsId);
     public int add(GrouponRulePo grouponRulePo);
 
     public GrouponRulePo findGroupOnRuleById(Integer id);

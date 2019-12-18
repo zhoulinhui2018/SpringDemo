@@ -8,6 +8,14 @@ import java.util.List;
 
 @Service
 public interface IGroupOnRuleService {
+    /** 
+    * @Description: 判断可以插入吗 
+    * @Param: [grouponRulePo] 
+    * @return: java.lang.Boolean 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/18 
+    */ 
+    public Boolean canAdd(GrouponRulePo grouponRulePo);
     
     /** 
     * @Description: 将rate返回给Order 

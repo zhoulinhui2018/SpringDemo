@@ -70,7 +70,11 @@ public class DiscountController {
             return ResponseUtil.unlogin();
         }
         Log log = LogUtil.newLog("插入团购", grouponRulePo.getId(), Integer.valueOf(adminid), 1, request.getRemoteAddr());
-
+        if (groupOnRuleService.canAdd(grouponRulePo)==false){
+            log.setStatusCode(1);
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail();
+        }
         Object error = validate(grouponRulePo);
         if (error != null) {
             groupOnRuleService.log(log);
@@ -147,6 +151,7 @@ public class DiscountController {
             groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
             log.setStatusCode(1);
             groupOnRuleService.log(log);
+            groupOnRuleService.update(grouponRulePo);
             return ResponseUtil.ok(grouponRulePo);
         }else if(inTime==false){
             //预售未开始或者已经结束可以修改信息
@@ -182,6 +187,16 @@ public class DiscountController {
 
         GrouponRulePo grouponRulePo=new GrouponRulePo();
         grouponRulePo.setId(id);
+        GrouponRulePo byId = groupOnRuleService.findById(id);
+        LocalDateTime now = LocalDateTime.now();
+        if (byId==null){
+            groupOnRuleService.log(log);
+            return ResponseUtil.badArgumentValue();
+        }
+        if (byId.getStartTime().isBefore(now)&&byId.getEndTime().isAfter(now)){
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail();
+        }
         int delete = groupOnRuleService.delete(grouponRulePo);
         if (delete==0){
             groupOnRuleService.log(log);

@@ -107,7 +107,7 @@ public class FootprintController {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/14
      */
-    @PostMapping("/footprints/{userId}")
+    @PostMapping("/footprints")
     public Object addFootprint( FootprintItemPo footprintItemPo){
         boolean result=footprintService.addFootprint(footprintItemPo);
         if(result){

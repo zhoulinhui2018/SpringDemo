@@ -174,7 +174,7 @@ public class CouponController {
         if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)){
             inTime=true;
         }
-        if(inTime==true && oldStatusCode==true) {
+        if(inTime==true && oldStatusCode==true && couponRule.getStatusCode()==false) {
             //先修改预售状态
             couponService.updateCouponRuleById(couponRule);
             couponService.updateCouponStatus(id);
@@ -329,7 +329,7 @@ public class CouponController {
         Integer userId=Integer.valueOf(id);
         Integer couponRuleId=coupon.getCouponRuleId();
         //判断当前优惠券是否已经领取过
-        List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,10);
+        List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,100);
         List<Integer> couponRuleIds=new ArrayList<>();
         //获取已领取优惠券的ids
         for(CouponPo couponPo:couponPos){
@@ -346,6 +346,7 @@ public class CouponController {
         LocalDateTime endTime=coupon.getEndTime();
         //判断是否在起止期限内
         if((now.compareTo(beginTime)>=0)&&(now.compareTo(endTime)<=0)){
+            coupon.setStatusCode(0);
             couponService.addCoupon(coupon);
             return ResponseUtil.ok(coupon);
         }

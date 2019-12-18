@@ -72,6 +72,12 @@
         where is_deleted = 0
     </select>
 
+    <select id="findGrouponByGoodsId" parameterType="integer" resultMap="GrouponRuleType">
+        select *
+        from oomall_groupon_rule
+        where goods_id=#{goodsId}
+    </select>
+
     <insert id="add" parameterType="GrouponRulePo" useGeneratedKeys="true" keyProperty="id">
         insert into oomall_groupon_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, status,

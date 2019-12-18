@@ -25,6 +25,23 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     private LoadBalancerClient loadBalancerClient;
 
     @Override
+    public Boolean canAdd(GrouponRulePo grouponRulePo) {
+        Integer goodsId = grouponRulePo.getGoodsId();
+        LocalDateTime now=LocalDateTime.now();
+        List<GrouponRulePo> grouponByGoodsId = groupOnDao.findGrouponByGoodsId(goodsId);
+        if (grouponByGoodsId==null){
+            return true;
+        }else {
+            for (int i = 0; i < grouponByGoodsId.size(); i++) {
+                GrouponRulePo rulePo =  grouponByGoodsId.get(i);
+                if (rulePo.getStartTime().isBefore(now)&& rulePo.getEndTime().isAfter(now)){
+                    return false;
+                }
+            }return true;
+        }
+    }
+
+    @Override
     public void returnBackRate(GrouponRulePo grouponRulePo,BigDecimal rate) {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("orderService");
@@ -143,9 +160,9 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     @Override
     public GoodsPo getGrouponGoods(GrouponRulePo grouponRulePo) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
+        ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-        Goods goods = restTemplate.getForObject(reqURL, Goods.class);
+        Goods goods = restTemplate.getForObject(reqURL, Goods.class,grouponRulePo.getGoodsId());
         GoodsPo goodsPo=new GoodsPo();
         goodsPo.setId(goods.getId());
         goodsPo.setGmtCreate(goods.getGmtCreate());
