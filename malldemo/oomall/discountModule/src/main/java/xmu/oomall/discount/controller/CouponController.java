@@ -44,8 +44,6 @@ public class CouponController {
         return null;
     }
 
-
-
     /**
      * 管理员获取优惠券列表（第一次修改）
      * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
@@ -225,35 +223,26 @@ public class CouponController {
         LocalDateTime beginTime=ruleInDB.getBeginTime();
         LocalDateTime endTime=ruleInDB.getEndTime();
         LocalDateTime nowTime=LocalDateTime.now();
-        //优惠券规则未失效
-        if(statusCode==true) {
-            //在优惠券开始到结束时间内不能删除优惠券
-            if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
-                log.setStatusCode(0);
-                couponService.log(log);
-                return ResponseUtil.fail();
-            }
-            //出现非法id情况，删除失败
-            if(couponService.deleteCouponRuleById(id)==0){
+
+        Boolean inTime=(nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0);
+
+        //优惠规则已失效，或不在时间范围内，可以删除
+        if(statusCode==true&&!inTime){
+            int result=couponService.deleteCouponRuleById(id);
+            if(result==0){ //出现非法id情况，删除失败
                 log.setStatusCode(0);
                 couponService.log(log);
                 return ResponseUtil.badArgumentValue();
-            }
-            else {
+            }else{ //成功删除
                 log.setStatusCode(1);
                 couponService.log(log);
-            }
                 return ResponseUtil.ok();
-        }else {//优惠券规则已失效
-            if(couponService.deleteCouponRuleById(id)==0){
-                log.setStatusCode(0);
-                couponService.log(log);
             }
-            else{
-                log.setStatusCode(1);
-                couponService.log(log);
-            }
-            return ResponseUtil.ok();
+        }
+        else{ //不能删除
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.fail();
         }
     }
 

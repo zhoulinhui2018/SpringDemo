@@ -82,6 +82,8 @@ public class CouponDao {
      * @return
      */
     public int deleteCouponRuleById(Integer id) {
+        //需要级联删除所有使用此规则的优惠券
+        couponMapper.deleteAllCoupons(id);
         return couponMapper.deleteCouponRuleById(id);
     }
 

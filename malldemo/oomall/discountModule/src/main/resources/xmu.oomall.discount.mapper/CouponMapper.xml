@@ -44,6 +44,10 @@
     <delete id="deleteCouponRuleById" parameterType="Integer">
         update oomall_coupon_rule set is_deleted=1 where id = #{id};
     </delete>
+    <update id="deleteAllCoupons">
+        update
+
+    </update>
 
     <update id="updateCouponRuleById" parameterType="couponRulePo" >
         update oomall_coupon_rule
