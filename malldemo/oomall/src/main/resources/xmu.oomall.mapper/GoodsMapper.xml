@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.mapper.GoodsMapper">
 
-    <select id="findGoodsById" resultType="goods" parameterType="Integer">
+    <select id="findGoodsById" resultType="goodsInfo" parameterType="Integer">
         select *
-        from goods where id = #{id}
+        from goodsInfo where id = #{id}
     </select>
 
     <select id="findProductById" resultType="product" parameterType="Integer">
@@ -49,7 +49,7 @@
     </update>
 
     <update id="updateGoodsById"  parameterType="Goods" >
-        update goods
+        update goodsInfo
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate !=null">gmt_create=#{gmtCreate},</if>
             <if test="gmtModified !=null">gmt_modified=#{gmtModified},</if>
@@ -76,11 +76,11 @@
 
     <select id="getGoodList" resultType="Goods">
         select *
-        from goods;
+        from goodsInfo;
     </select>
 
     <insert id="addGoods" parameterType="Goods">
-        insert into goods
+        insert into goodsInfo
         values (#{id}, #{gmtCreate}, #{gmtModified},
                 #{name}, #{nameSn}, #{shortName},
                 #{description}, #{brief}, #{picUrl},
@@ -90,7 +90,7 @@
     </insert>
 
     <delete id="deleteGoodsbyId" parameterType="Integer">
-        delete from goods where id=#{id};
+        delete from goodsInfo where id=#{id};
     </delete>
 
 <!--    关于商品分类的数据库操作   -->
@@ -142,7 +142,7 @@
 
     <select id="getGoodsByCategoryId" parameterType="Integer" resultType="Goods">
         select *
-        from goods
+        from goodsInfo
         where goods_category_ids=#{id};
     </select>
 

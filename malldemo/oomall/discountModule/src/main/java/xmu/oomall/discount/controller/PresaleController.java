@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.Log;
-import xmu.oomall.discount.domain.Order;
-import xmu.oomall.discount.domain.Payment;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.discount.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;

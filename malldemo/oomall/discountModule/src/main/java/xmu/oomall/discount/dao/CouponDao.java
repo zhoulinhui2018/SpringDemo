@@ -8,9 +8,9 @@ import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
+import xmu.oomall.discount.domain.goods.GoodsInfo;
 import xmu.oomall.discount.mapper.CouponMapper;
-import xmu.oomall.domain.goods.Goods;
-import xmu.oomall.util.JacksonUtil;
+import xmu.oomall.discount.util.JacksonUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -182,7 +182,7 @@ public class CouponDao {
         Set<Integer> goodsIds=new TreeSet<>();
         goodsIds.clear();
         goodsIds.addAll(getGoodsIdsInCouponRule(couponRule));
-        if(goodsIds.contains(Goods.ALL_GOODS.getId()))
+        if(goodsIds.contains(GoodsInfo.allGoodsInfo.getId()))
         {
             return true;
         }

@@ -69,7 +69,7 @@ public class PresaleDao {
         Integer goodsId=rule.getGoodsId();
         //根据商品ID调用商品模块的服务获取GoodsPo
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Goods");
+        ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
         ruleVo.setGoodsPo(goods);
@@ -86,7 +86,7 @@ public class PresaleDao {
 
         //根据商品ID调用商品模块的服务获取GoodsPo
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Goods");
+        ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
 
@@ -174,7 +174,7 @@ public class PresaleDao {
             Integer goodsId=rule.getGoodsId();
             //根据商品ID调用商品模块的服务获取GoodsPo
             RestTemplate restTemplate = new RestTemplate();
-            ServiceInstance instance = loadBalancerClient.choose("Goods");
+            ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
             String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
             Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
             ruleVo.setGoodsPo(goods);
@@ -199,7 +199,7 @@ public class PresaleDao {
                 Integer goodsId=rule.getGoodsId();
                 //根据商品ID调用商品模块的服务获取GoodsPo
                 RestTemplate restTemplate = new RestTemplate();
-                ServiceInstance instance = loadBalancerClient.choose("Goods");
+                ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
                 String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
                 Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
                 ruleVo.setGoodsPo(goods);

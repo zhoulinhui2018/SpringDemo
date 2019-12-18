@@ -238,10 +238,10 @@ CREATE TABLE `footprint_item` (
 );
 
 -- ----------------------------
--- Table structure for goods
+-- Table structure for goodsInfo
 -- ----------------------------
-DROP TABLE IF EXISTS `goods`;
-CREATE TABLE `goods` (
+DROP TABLE IF EXISTS `goodsInfo`;
+CREATE TABLE `goodsInfo` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,

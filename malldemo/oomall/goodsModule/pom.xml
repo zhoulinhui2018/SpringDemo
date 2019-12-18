@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>xmu.oomall</groupId>
-    <artifactId>goods</artifactId>
+    <artifactId>goodsInfo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>goods</name>
+    <name>goodsInfo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

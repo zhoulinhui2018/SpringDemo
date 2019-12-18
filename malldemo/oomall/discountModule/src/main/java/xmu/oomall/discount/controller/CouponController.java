@@ -11,7 +11,7 @@ import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.discount.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;

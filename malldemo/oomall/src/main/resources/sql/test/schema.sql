@@ -275,7 +275,7 @@ CREATE TABLE `oomall_footprint_item` (
 );
 
 -- ----------------------------
--- Table structure for goods
+-- Table structure for goodsInfo
 -- ----------------------------
 DROP TABLE IF EXISTS `oomall_goods`;
 CREATE TABLE `oomall_goods` (
