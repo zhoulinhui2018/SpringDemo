@@ -205,21 +205,21 @@ public class CouponController {
      * @return
      */
     @DeleteMapping("/couponRules/{id}")
-//    public Object delete(@PathVariable Integer id,HttpServletRequest request){
-    public Object delete(@PathVariable Integer id){
-//        String adminid= request.getHeader("id");
-//        if (adminid==null){
-//            return ResponseUtil.unlogin();
-//        }
-//        Log log=new Log();
-//        log.setAdminId(Integer.valueOf(adminid));
-//        log.setIp(request.getRemoteAddr());
-//        log.setType(3);
-//        log.setStatusCode(1);
-//        log.setActionId(id);
-//        log.setActions("删除优惠券规则");
+    public Object delete(@PathVariable Integer id,HttpServletRequest request){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(3);
+        log.setStatusCode(1);
+        log.setActionId(id);
+        log.setActions("删除优惠券规则");
 
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
+        System.out.println(ruleInDB);
         Boolean statusCode=ruleInDB.getStatusCode();
         LocalDateTime beginTime=ruleInDB.getBeginTime();
         LocalDateTime endTime=ruleInDB.getEndTime();
@@ -228,24 +228,21 @@ public class CouponController {
         Boolean inTime=(nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0);
 
         //优惠规则已失效，或不在时间范围内，可以删除
-        if((statusCode==true)&&(!inTime)){
+        if(statusCode==false||!inTime){
             int result=couponService.deleteCouponRuleById(id);
-            //出现非法id情况，删除失败
-            if(result==0){
-//                log.setStatusCode(0);
-//                couponService.log(log);
+            if(result==0){ //出现非法id情况，删除失败
+                log.setStatusCode(0);
+                couponService.log(log);
                 return ResponseUtil.badArgumentValue();
-            }
-            //成功删除
-            else{
-//                log.setStatusCode(1);
-//                couponService.log(log);
+            }else{ //成功删除
+                log.setStatusCode(1);
+                couponService.log(log);
                 return ResponseUtil.ok();
             }
         }
         else{ //不能删除
-//            log.setStatusCode(0);
-//            couponService.log(log);
+            log.setStatusCode(0);
+            couponService.log(log);
             return ResponseUtil.fail();
         }
     }

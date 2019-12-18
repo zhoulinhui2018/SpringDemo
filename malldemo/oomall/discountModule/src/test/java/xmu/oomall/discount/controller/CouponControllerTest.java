@@ -107,10 +107,10 @@ public class CouponControllerTest {
 //        System.out.println(object.toString());
 //    }
 
-    @Test
-    public void deleteTest(){
-        Object result=couponController.delete(100001);
-        System.out.println(result);
-    }
+//    @Test
+//    public void deleteTest(){
+//        Object result=couponController.delete(100001);
+//        System.out.println(result);
+//    }
 
 }
