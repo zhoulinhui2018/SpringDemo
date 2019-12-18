@@ -6,14 +6,15 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
-import xmu.oomall.discount.domain.*;
+import xmu.oomall.discount.domain.Goods;
+import xmu.oomall.discount.domain.Order;
+import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.Payment;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.mapper.PresaleMapper;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,11 @@ public class PresaleDao {
      * 管理员添加预售规则
      * @param presaleRule
      */
-    public void add(PresaleRule presaleRule){
+    public Integer add(PresaleRule presaleRule){
         presaleRule.setGmtCreate(LocalDateTime.now());
         presaleRule.setGmtModified(LocalDateTime.now());
         presaleRule.setBeDeleted(false);
-        presaleMapper.add(presaleRule);
+        return presaleMapper.add(presaleRule);
     }
 
     /**

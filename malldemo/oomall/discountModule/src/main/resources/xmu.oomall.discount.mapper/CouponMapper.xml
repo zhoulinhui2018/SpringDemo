@@ -98,7 +98,7 @@
 
     <update id="updateCouponStatus" parameterType="Integer" >
         update oomall_coupon
-        set status=1 where coupon_rule_id = #{id};
+        set status=2 where coupon_rule_id = #{id};
     </update>
 
     <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
@@ -114,6 +114,7 @@
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
         <result column="status" property="statusCode"/>
+        <result column="used_time" property="usedTime"/>
     </resultMap>
 
     <resultMap id="couponRuleType" type="xmu.oomall.discount.domain.coupon.CouponRulePo">
@@ -129,6 +130,10 @@
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
         <result column="status" property="statusCode"/>
+        <result column="goods_list1" property="goodsList1"/>
+        <result column="goods_list2" property="goodsList2"/>
+        <result column="total" property="total"/>
+        <result column="collected_num" property="collectedNum"/>
     </resultMap>
 
     <select id="findCouponRulesAvailable" resultMap="CouponRuleResultType">

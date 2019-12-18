@@ -147,6 +147,7 @@ public class DiscountController {
             groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
             log.setStatusCode(1);
             groupOnRuleService.log(log);
+            groupOnRuleService.update(grouponRulePo);
             return ResponseUtil.ok(grouponRulePo);
         }else if(inTime==false){
             //预售未开始或者已经结束可以修改信息
