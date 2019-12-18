@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
+import xmu.oomall.address.domain.Region;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface AddressMapper {
 
     public Address getAddressDetail(Integer id);
 
+    public Region getRegion(Integer id);
 }

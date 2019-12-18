@@ -38,7 +38,7 @@
         set is_deleted=1 where id=#{id}
     </update>
 
-    <update id="updateAddress"  parameterType="xmu.oomall.address.domain.Address" >
+    <update id="updateAddress"  parameterType="xmu.oomall.address.domain.AddressPo" >
         update oomall_address
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate != null">
@@ -50,14 +50,14 @@
             <if test="beDeleted != null">
                 is_deleted = #{beDeleted},
             </if>
-            <if test="county != null">
-                county = #{county},
+            <if test="countyId != null">
+                county_id = #{countyId},
             </if>
-            <if test="province != null">
-                province = #{province},
+            <if test="provinceId != null">
+                province_id = #{provinceId},
             </if>
-            <if test="city != null">
-                city = #{city},
+            <if test="cityId != null">
+                city_id = #{cityId},
             </if>
             <if test="addressDetail != null">
                 address_detail = #{addressDetail},
@@ -74,8 +74,8 @@
             <if test="userId != null">
                 user_id=#{userId},
             </if>
-            <if test="countyId != null">
-                county_id=#{countyId},
+            <if test="consignee != null">
+                consignee=#{consignee},
             </if>
         </trim>
         where id=#{id}
@@ -84,6 +84,12 @@
     <select id="getAddressDetail" resultType="xmu.oomall.address.domain.Address" parameterType="Integer">
         select *
         from oomall_address
+        where id=#{id}
+    </select>
+
+    <select id="getRegion" resultType="xmu.oomall.address.domain.Region">
+        select *
+        from oomall_region
         where id=#{id}
     </select>
 

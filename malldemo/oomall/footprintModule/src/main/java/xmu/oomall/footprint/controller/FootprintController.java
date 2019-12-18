@@ -119,5 +119,4 @@ public class FootprintController {
             return ResponseUtil.badArgument();
         }
     }
-
 }

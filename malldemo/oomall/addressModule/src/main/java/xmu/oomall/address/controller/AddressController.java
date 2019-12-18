@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.domain.Log;
+import xmu.oomall.address.domain.Region;
 import xmu.oomall.address.service.impl.AddressService;
+import xmu.oomall.address.util.FomatUtil;
 import xmu.oomall.address.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +23,25 @@ public class AddressController {
     private AddressService addressService;
 
     /**
-     * 用户查看自己的收货地址列表
+     * 由AddressPoList生成AddressList
+     * @param address
+     * @return void
+     * @Author: Zhang Yaqing
+     * @Date: 2019/12/18
+     */
+    private void changePoToAddress(Address address){
+            Integer countyId=address.getCountyId();
+            Integer provinceId=address.getProvinceId();
+            Integer cityId=address.getCityId();
+            String county=addressService.getRegion(countyId).getName();
+            String province=addressService.getRegion(provinceId).getName();
+            String city=addressService.getRegion(cityId).getName();
+            address.setCity(city);
+            address.setProvince(province);
+            address.setCounty(county);
+    }
+    /**
+     * 用户查看收货地址列表（测试已通过）
      * @param request
      * @param page
      * @param limit
@@ -38,11 +58,15 @@ public class AddressController {
             return ResponseUtil.unlogin();
         }
         List<Address> addressList= addressService.getUserAddresslist(page,limit,userId);
+        for(int i=0;i<addressList.size();i++) {
+            changePoToAddress(addressList.get(i));
+        }
         return ResponseUtil.ok(addressList);
     }
 
+
     /**
-     * 收货地址详情
+     * 收货地址详情（测试已通过）
      * @param id 收货地址ID
      * @return 收货地址详情
      * @Author: Zhang Yaqing
@@ -51,47 +75,81 @@ public class AddressController {
     @GetMapping("/addresses/{id}")
     public Object getAddressDetail(@PathVariable Integer id){
         Address address=addressService.getAddressDetail(id);
+        changePoToAddress(address);
         return ResponseUtil.ok(address);
     }
 
     /**
-     * 测试地址是否合法，比如是否有country/province等
+     * 测试地址是否合法，比如是否有country/province等（测试已通过）
      * @param addressPo
-     * @return 返回值表示成功与否
+     * @return 0-合法，1-参数错误(为空)，2-参数值错误(类型等错误)
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    private Object validate(@RequestBody AddressPo addressPo){
+    private Integer validate(@RequestBody AddressPo addressPo){
         Integer countryId=addressPo.getCountyId();
         Integer provinceId=addressPo.getProvinceId();
         Integer cityId=addressPo.getCityId();
+        Integer userId=addressPo.getUserId();
         String address_detail=addressPo.getAddressDetail();
         String postal_code=addressPo.getPostalCode();
         String mobile=addressPo.getMobile();
-        if(countryId==0)
-        {
-            return ResponseUtil.badArgument();
+        String consignee=addressPo.getConsignee();
+
+        //判断省市县是否为空
+        if(countryId==0||provinceId==0||cityId==0) {
+            return 1;
         }
-        if (countryId==0) {
-            return ResponseUtil.badArgument();
+        //判断userId是否为空
+        if(userId==0){
+            return 1;
         }
-        if (countryId==0) {
-            return ResponseUtil.badArgument();
-        }
+        //判断各个string字段是否为空
         if (StringUtils.isEmpty(address_detail)) {
-            return ResponseUtil.badArgument();
+            return 1;
         }
         if (StringUtils.isEmpty(postal_code)) {
-            return ResponseUtil.badArgument();
+            return 1;
         }
         if (StringUtils.isEmpty(mobile)) {
-            return ResponseUtil.badArgument();
+            return 1;
         }
-        return ResponseUtil.ok();
+        if (StringUtils.isEmpty(consignee)) {
+            return 1;
+        }
+
+        //判断省市县是否合法，且有正确的层级关系
+        Region provinceRegion=addressService.getRegion(provinceId);
+        Region cityRegion=addressService.getRegion(cityId);
+        Region countryRegion=addressService.getRegion(countryId);
+        if(provinceRegion.getType()!=1){
+            return 2;
+        }
+        if(cityRegion.getType()!=2){
+            return 2;
+        }
+        if(countryRegion.getType()!=3){
+            return 2;
+        }
+        if(!cityRegion.getPid().equals(provinceRegion.getId())){
+            return 2;
+        }
+        if(!countryRegion.getPid().equals(cityRegion.getId())){
+            return 2;
+        }
+
+        //判断电话号码、邮政编码是否合法
+        if(!FomatUtil.isValidateMobile(mobile)){
+            return 2;
+        }
+        if(!FomatUtil.isValidatePostcode(postal_code)){
+            return 2;
+        }
+        return 0;
     }
 
     /**
-     * 新增收货地址
+     * 新增收货地址（测试已通过）
      * @param addressPo 用户收货地址
      * @return 新增操作结果
      * @Author: Zhang Yaqing
@@ -99,24 +157,30 @@ public class AddressController {
      */
     @PostMapping("/addresses")
     public Object addNewAddress(@RequestBody AddressPo addressPo){
+        if(validate(addressPo)==1){
+            return ResponseUtil.badArgument();
+        }
+        if(validate(addressPo)==2){
+            return ResponseUtil.badArgumentValue();
+        }
         AddressPo newAddressPo=addressService.addNewAddress(addressPo);
         return ResponseUtil.ok(newAddressPo);
     }
 
     /**
-     * 删除收货地址
+     * 删除收货地址（测试已通过）
      * @param id
      * @return 用boolean表示删除操作是否成功
      * @Author: Zhang Yaqing
      * @Date: 2019/12/12
      */
-    @DeleteMapping("/address/{id}")
+    @DeleteMapping("/addresses/{id}")
     public Object deleteAddress(@PathVariable Integer id){
         return ResponseUtil.ok(addressService.deleteAddress(id));
     }
 
     /**
-     * 更新收货地址
+     * 更新收货地址（测试已通过）
      * @param id  地址id
      * @param addressPo 用户收货地址
      * @return 更新操作结果
@@ -125,9 +189,11 @@ public class AddressController {
      */
     @PutMapping("/addresses/{id}")
     public Object updateAddress(@PathVariable Integer id, @RequestBody AddressPo addressPo){
-        Object error=validate(addressPo);
-        if (error != null) {
-            return error;
+        if(validate(addressPo)==1){
+            return ResponseUtil.badArgument();
+        }
+        if(validate(addressPo)==2){
+            return ResponseUtil.badArgumentValue();
         }
         addressPo.setId(id);
         if(addressService.updateAddress(addressPo)==null)
@@ -137,40 +203,38 @@ public class AddressController {
         return ResponseUtil.ok(addressPo);
     }
 
-    /**
-     * 管理员根据条件查找地址
-     * @param
-     * @return 全部地址列表
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
-     */
-    @GetMapping("/admin/addresses")
-    public Object adminFindUserAddress(HttpServletRequest request,
-                                       @RequestParam Integer userId,
-                                       @RequestParam String name,
-                                       @RequestParam(defaultValue = "1") Integer page,
-                                       @RequestParam(defaultValue = "10") Integer limit){
-        String adminid= request.getHeader("id");
-        if (adminid==null){
-            return ResponseUtil.unlogin();
-        }
-        Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
-        log.setIp(request.getRemoteAddr());
-        log.setType(0);
-        log.setStatusCode(1);
-        log.setActions("获取根据条件查找地址");
-        log.setActionId(0);
-        List<Address> addressList;
-        try {
-            addressList=addressService.adminFindUserAddress(page,limit,userId,name);
-        } catch (Exception e) {
-            log.setStatusCode(0);
-            addressService.log(log);
-            return ResponseUtil.updatedDataFailed();
-        }
-        addressService.log(log);
-        return ResponseUtil.ok(addressList);
-    }
-
+//    /**
+//     * 管理员根据条件查找地址
+//     * @param
+//     * @return 全部地址列表
+//     * @Author: Zhang Yaqing
+//     * @Date: 2019/12/12
+//     */
+//    @GetMapping("/admin/addresses")
+//    public Object adminFindUserAddress(HttpServletRequest request,
+//                                       @RequestParam Integer userId,
+//                                       @RequestParam String name,
+//                                       @RequestParam(defaultValue = "1") Integer page,
+//                                       @RequestParam(defaultValue = "10") Integer limit){
+//        String adminid= request.getHeader("id");
+//        if (adminid==null){
+//            return ResponseUtil.unlogin();
+//        }
+//        Log log=new Log();
+//        log.setAdminId(Integer.valueOf(adminid));
+//        log.setIp(request.getRemoteAddr());
+//        log.setType(0);
+//        log.setStatusCode(1);
+//        log.setActions("获取根据条件查找地址");
+//        List<Address> addressList;
+//        try {
+//            addressList=addressService.adminFindUserAddress(page,limit,userId,name);
+//        } catch (Exception e) {
+//            log.setStatusCode(0);
+//            addressService.log(log);
+//            return ResponseUtil.updatedDataFailed();
+//        }
+//        addressService.log(log);
+//        return ResponseUtil.ok(addressList);
+//    }
 }

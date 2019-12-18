@@ -46,15 +46,15 @@ class AddressDaoTest {
     public void addNewAddressTest()
     {
         Address address=new Address();
-        address.setGmtCreate(LocalDateTime.now());
-        address.setGmtModified(LocalDateTime.now());
+//        address.setGmtCreate(LocalDateTime.now());
+//        address.setGmtModified(LocalDateTime.now());
         address.setCountyId(1);
         address.setProvinceId(1);
         address.setCityId(1);
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
-        address.setConsignee("虎大王");
+        address.setConsignee("zyq");
         address.setBeDefault(0);
         address.setUserId(1);
         addressDao.addNewAddress(address);
@@ -73,9 +73,10 @@ class AddressDaoTest {
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
-        address.setConsignee("虎大王");
+        address.setConsignee("zyq");
         address.setBeDefault(0);
         address.setUserId(1);
+        address.setId(3);
         addressDao.updateAddress(address);
         System.out.println(address);
     }

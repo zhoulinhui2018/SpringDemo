@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
+import xmu.oomall.address.domain.Region;
 import xmu.oomall.address.mapper.AddressMapper;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class AddressDao {
     public AddressPo addNewAddress(AddressPo addressPo) {
         addressPo.setGmtCreate(LocalDateTime.now());
         addressPo.setGmtModified(LocalDateTime.now());
+        addressPo.setBeDeleted(false);
         boolean resultMsg=addressMapper.addNewAddress(addressPo);
         if(resultMsg){
             return addressPo;
@@ -53,5 +55,9 @@ public class AddressDao {
     public List<Address> adminFindUserAddress(Integer userId, String name) {
         List<Address> addresses = addressMapper.adminFindUserAddress(userId,name);
         return addresses;
+    }
+
+    public Region getRegion(Integer id) {
+        return addressMapper.getRegion(id);
     }
 }

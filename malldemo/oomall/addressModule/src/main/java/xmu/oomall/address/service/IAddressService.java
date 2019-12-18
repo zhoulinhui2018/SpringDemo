@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.domain.Log;
+import xmu.oomall.address.domain.Region;
 
 import java.util.List;
 
@@ -73,4 +74,5 @@ public interface IAddressService {
     public List<Address> adminFindUserAddress(Integer page, Integer limit, Integer userId, String name);
 
 
+    Region getRegion(Integer id);
 }

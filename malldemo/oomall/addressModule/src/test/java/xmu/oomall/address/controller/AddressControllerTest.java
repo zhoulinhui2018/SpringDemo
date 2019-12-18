@@ -7,6 +7,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.address.AddressApplication;
 import xmu.oomall.address.domain.Address;
+import xmu.oomall.address.domain.AddressPo;
+
 import java.time.LocalDateTime;
 
 @SpringBootTest(classes = AddressApplication.class)
@@ -45,19 +47,18 @@ public class AddressControllerTest {
     @Rollback
     @Test
     public void addNewAddressTest(){
-        Address address=new Address();
-        address.setCounty(" ");
-        address.setProvince("河北省");
-        address.setCity(" ");
-        address.setAddressDetail("某街道");
-        address.setPostalCode("123456");
-        address.setMobile("19032");
-        address.setBeDefault(0);
-        address.setUserId(1);
-        address.setGmtCreate(LocalDateTime.now());
-        address.setGmtModified(LocalDateTime.now());
+        AddressPo addressPo=new AddressPo();
+        addressPo.setCountyId(1);
+        addressPo.setProvinceId(2);
+        addressPo.setCityId(5);
+        addressPo.setAddressDetail("某街道");
+        addressPo.setPostalCode("123456");
+        addressPo.setMobile("19032");
+        addressPo.setBeDefault(0);
+        addressPo.setUserId(1);
+        addressPo.setConsignee("张雅晴");
 
-        Object addressObject=addressController.addNewAddress(address);
+        Object addressObject=addressController.addNewAddress(addressPo);
         System.out.println(addressObject);
     }
 

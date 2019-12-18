@@ -11,6 +11,7 @@ import xmu.oomall.address.dao.AddressDao;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.domain.Log;
+import xmu.oomall.address.domain.Region;
 import xmu.oomall.address.service.IAddressService;
 
 import java.util.List;
@@ -64,5 +65,10 @@ public class AddressService implements IAddressService {
     public List<Address> adminFindUserAddress(Integer page, Integer limit, Integer userId, String name) {
         PageHelper.startPage(page,limit);
         return addressDao.adminFindUserAddress(userId,name);
+    }
+
+    @Override
+    public Region getRegion(Integer id) {
+        return addressDao.getRegion(id);
     }
 }
