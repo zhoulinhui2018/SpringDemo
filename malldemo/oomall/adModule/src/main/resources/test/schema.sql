@@ -105,13 +105,13 @@ INSERT INTO `coupon_rule` VALUES (1,'测试优惠卷1',NULL,'2019-11-23 21:28:30
 
 
 --
--- Table structure for table `goods`
+-- Table structure for table `goodsInfo`
 --
 
-DROP TABLE IF EXISTS `goods`;
+DROP TABLE IF EXISTS `goodsInfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `goods` (
+CREATE TABLE `goodsInfo` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_sn` varchar(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -143,13 +143,13 @@ CREATE TABLE `goods` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `goods`
+-- Dumping data for table `goodsInfo`
 --
 
 
-/*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` VALUES (1,'G001','测试商品1','测试商品短名1','English name 1','111111111111','台',10,10,10,10,9,'分类1','品牌1',1,0,0,'从v ','尺寸','','','2019-11-24 23:45:21',NULL,0,1,1),(2,'G002','测试商品2','测试商品短名2','English Name 2','222222222222','条',20,20,20,20,19,'分类2','品牌2',1,1,1,'烦烦烦','订单','d','d','2019-11-24 23:45:25',NULL,0,1,1),(3,'G003','测试商品3','测试商品短名3','English Name3','333333333333','个',30,30,30,30,30,'分类3',NULL,1,0,0,'测试3','的','d','d',NULL,NULL,0,2,2);
-/*!40000 ALTER TABLE `goods` ENABLE KEYS */;
+/*!40000 ALTER TABLE `goodsInfo` DISABLE KEYS */;
+INSERT INTO `goodsInfo` VALUES (1,'G001','测试商品1','测试商品短名1','English name 1','111111111111','台',10,10,10,10,9,'分类1','品牌1',1,0,0,'从v ','尺寸','','','2019-11-24 23:45:21',NULL,0,1,1),(2,'G002','测试商品2','测试商品短名2','English Name 2','222222222222','条',20,20,20,20,19,'分类2','品牌2',1,1,1,'烦烦烦','订单','d','d','2019-11-24 23:45:25',NULL,0,1,1),(3,'G003','测试商品3','测试商品短名3','English Name3','333333333333','个',30,30,30,30,30,'分类3',NULL,1,0,0,'测试3','的','d','d',NULL,NULL,0,2,2);
+/*!40000 ALTER TABLE `goodsInfo` ENABLE KEYS */;
 
 
 --

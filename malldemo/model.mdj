@@ -5908,7 +5908,7 @@
 									"hostEdge": {
 										"$ref": "AAAAAAFuOjkNZ/m2nMg="
 									},
-									"text": "+goods"
+									"text": "+goodsInfo"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -6942,7 +6942,7 @@
 										"$ref": "AAAAAAFuOnVJv0ri4Ko="
 									},
 									"edgePosition": 2,
-									"text": "+goods"
+									"text": "+goodsInfo"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -10945,7 +10945,7 @@
 								"_parent": {
 									"$ref": "AAAAAAFuOjkNZvmyPzk="
 								},
-								"name": "goods",
+								"name": "goodsInfo",
 								"reference": {
 									"$ref": "AAAAAAFuOWqeU2dlacA="
 								}
@@ -11029,7 +11029,7 @@
 								"_parent": {
 									"$ref": "AAAAAAFuOnVJv0reL2w="
 								},
-								"name": "goods",
+								"name": "goodsInfo",
 								"reference": {
 									"$ref": "AAAAAAFuOWqeU2dlacA="
 								}

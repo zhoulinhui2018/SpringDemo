@@ -17,14 +17,14 @@ class CashOffStrategyTest {
 //        item.setQuantity(1);
 //        item.setPrice(BigDecimal.valueOf(10.01));
 //        Product p = new Product();
-//        Goods g = new Goods(1);
+//        GoodsInfo g = new GoodsInfo(1);
 //        p.setDesc(g);
 //        item.setProduct(p);
 //        this.validItems.add(item);
 //
 //        item = new OrderItem();
 //        p = new Product();
-//        g = new Goods(2);
+//        g = new GoodsInfo(2);
 //        p.setDesc(g);
 //        item.setProduct(p);
 //        item.setQuantity(2);
@@ -33,7 +33,7 @@ class CashOffStrategyTest {
 //
 //        item = new OrderItem();
 //        p = new Product();
-//        g = new Goods(3);
+//        g = new GoodsInfo(3);
 //        p.setDesc(g);
 //        item.setProduct(p);
 //        item.setQuantity(3);
