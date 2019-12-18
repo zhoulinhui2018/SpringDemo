@@ -187,6 +187,16 @@ public class DiscountController {
 
         GrouponRulePo grouponRulePo=new GrouponRulePo();
         grouponRulePo.setId(id);
+        GrouponRulePo byId = groupOnRuleService.findById(id);
+        LocalDateTime now = LocalDateTime.now();
+        if (byId==null){
+            groupOnRuleService.log(log);
+            return ResponseUtil.badArgumentValue();
+        }
+        if (byId.getStartTime().isBefore(now)&&byId.getEndTime().isAfter(now)){
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail();
+        }
         int delete = groupOnRuleService.delete(grouponRulePo);
         if (delete==0){
             groupOnRuleService.log(log);
