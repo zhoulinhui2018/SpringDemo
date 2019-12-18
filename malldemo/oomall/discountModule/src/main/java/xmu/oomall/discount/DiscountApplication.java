@@ -9,7 +9,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class DiscountApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DiscountApplication.class, args);
+
+        try {
+            SpringApplication.run(DiscountApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

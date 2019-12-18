@@ -70,7 +70,11 @@ public class DiscountController {
             return ResponseUtil.unlogin();
         }
         Log log = LogUtil.newLog("插入团购", grouponRulePo.getId(), Integer.valueOf(adminid), 1, request.getRemoteAddr());
-
+        if (groupOnRuleService.canAdd(grouponRulePo)==false){
+            log.setStatusCode(1);
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail();
+        }
         Object error = validate(grouponRulePo);
         if (error != null) {
             groupOnRuleService.log(log);

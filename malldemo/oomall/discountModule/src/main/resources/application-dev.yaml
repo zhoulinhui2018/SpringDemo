@@ -8,7 +8,7 @@ spring:
     name: discountService
 
 server:
-  port: 8809
+  port: 8802
 
 eureka:
   client:

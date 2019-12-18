@@ -19,6 +19,10 @@ public class GroupOnDao {
     @Autowired
     private GroupOnRuleMapper groupOnRuleMapper;
 
+    public List<GrouponRulePo> findGrouponByGoodsId(Integer goodsId){
+        return groupOnRuleMapper.findGrouponByGoodsId(goodsId);
+    }
+
     public GrouponRule getStrategy(GrouponRulePo grouponRulePo){
         System.out.println("getStrategy参数：");
         String jsonString = grouponRulePo.getGrouponLevelStrategy();
