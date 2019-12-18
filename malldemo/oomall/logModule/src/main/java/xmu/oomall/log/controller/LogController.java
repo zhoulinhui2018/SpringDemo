@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.log.domain.Log;
 import xmu.oomall.log.service.impl.LogService;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.log.util.ResponseUtil;
 
 import java.util.List;
 
