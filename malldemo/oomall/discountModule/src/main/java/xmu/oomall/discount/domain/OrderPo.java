@@ -109,4 +109,187 @@ public class OrderPo {
     private LocalDateTime gmtModified;
     private Boolean beDeleted;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getOrderSn() {
+        return orderSn;
+    }
+
+    public void setOrderSn(String orderSn) {
+        this.orderSn = orderSn;
+    }
+
+    public Integer getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getConsignee() {
+        return consignee;
+    }
+
+    public void setConsignee(String consignee) {
+        this.consignee = consignee;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public BigDecimal getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(BigDecimal goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
+
+    public BigDecimal getCouponPrice() {
+        return couponPrice;
+    }
+
+    public void setCouponPrice(BigDecimal couponPrice) {
+        this.couponPrice = couponPrice;
+    }
+
+    public BigDecimal getRebatePrice() {
+        return rebatePrice;
+    }
+
+    public void setRebatePrice(BigDecimal rebatePrice) {
+        this.rebatePrice = rebatePrice;
+    }
+
+    public BigDecimal getFreightPrice() {
+        return freightPrice;
+    }
+
+    public void setFreightPrice(BigDecimal freightPrice) {
+        this.freightPrice = freightPrice;
+    }
+
+    public BigDecimal getIntegralPrice() {
+        return integralPrice;
+    }
+
+    public void setIntegralPrice(BigDecimal integralPrice) {
+        this.integralPrice = integralPrice;
+    }
+
+    public String getShipSn() {
+        return shipSn;
+    }
+
+    public void setShipSn(String shipSn) {
+        this.shipSn = shipSn;
+    }
+
+    public String getShipChannel() {
+        return shipChannel;
+    }
+
+    public void setShipChannel(String shipChannel) {
+        this.shipChannel = shipChannel;
+    }
+
+    public LocalDateTime getShipTime() {
+        return shipTime;
+    }
+
+    public void setShipTime(LocalDateTime shipTime) {
+        this.shipTime = shipTime;
+    }
+
+    public LocalDateTime getConfirmTime() {
+        return confirmTime;
+    }
+
+    public void setConfirmTime(LocalDateTime confirmTime) {
+        this.confirmTime = confirmTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public LocalDateTime getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(LocalDateTime payTime) {
+        this.payTime = payTime;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public LocalDateTime getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(LocalDateTime gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public LocalDateTime getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(LocalDateTime gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Boolean getBeDeleted() {
+        return beDeleted;
+    }
+
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
+    }
 }
