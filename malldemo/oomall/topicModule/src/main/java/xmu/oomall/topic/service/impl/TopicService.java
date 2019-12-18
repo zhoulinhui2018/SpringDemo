@@ -35,7 +35,7 @@ public class TopicService implements ITopicService{
     }
 
     @Override
-    public Topic findTopicById(Integer id) throws MallException {
+    public Topic findTopicById(Integer id)  {
         return topicDao.findTopicById(id);
     }
 

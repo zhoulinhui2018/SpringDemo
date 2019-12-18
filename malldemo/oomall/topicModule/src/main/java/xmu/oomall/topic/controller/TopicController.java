@@ -56,7 +56,7 @@ public class TopicController {
 
 
     /**
-     * 管理员上传专题的图片（未测试）
+     * 管理员上传话题的图片（未测试）
      * @param file
      * @return
      * @throws Exception
@@ -80,7 +80,7 @@ public class TopicController {
     }
 
     /**
-     * 用户查看所有专题（已通过）
+     * 用户查看所有专题（重测已通过）
      *
      * @param
      * @Author Ren tianhe
@@ -91,12 +91,16 @@ public class TopicController {
                                     @RequestParam(defaultValue = "10") Integer limit
                                ) {
         List<Topic> topics = new ArrayList<Topic>();
-        topics = topicService.findTopicList(page,limit);
+        try{
+            topics = topicService.findTopicList(page,limit);
+        }catch (Exception e){
+            return ResponseUtil.fail(654,"话题查看失败");
+        }
         return ResponseUtil.ok(topics);
     }
 
     /**
-     * 管理员查看所有专题 （已通过）
+     * 管理员查看所有专题 （重测已通过）
      *
      * @param
      * @Author Ren tianhe
@@ -115,21 +119,27 @@ public class TopicController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
-        log.setActions("查询专题列表");
+        log.setActions("查询话题列表");
         logService.addlog(log);
         List<Topic> topics = new ArrayList<Topic>();
+        try{
             topics = topicService.findTopicList(page,limit);
+        }catch (Exception e){
+            log.setStatusCode(0);
+            logService.addlog(log);
+            return ResponseUtil.fail(654,"话题查看失败");
+        }
         return ResponseUtil.ok(topics);
     }
 
     /**
-     * 管理员添加专题（已测试）
-     *
+     * 管理员添加专题（重测已通过）
+     * 添加了@RequestBody后使用Json测试
      * @Author Ren tianhe
      * @Date 2019/12/13
      */
     @PostMapping("/topics")
-    public Object adminAddTopic(TopicPo topicPo, HttpServletRequest request) {
+    public Object adminAddTopic(@RequestBody TopicPo topicPo, HttpServletRequest request) {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -139,7 +149,8 @@ public class TopicController {
         log.setAdminId(Integer.valueOf(adminid));
         log.setIp(request.getRemoteAddr());
         log.setType(1);
-        log.setActions("添加一个专题");
+        log.setActions("添加一个话题");
+        log.setStatusCode(1);
         Object error=validate(topicPo);
         if (error != null) {
             log.setStatusCode(0);
@@ -152,6 +163,7 @@ public class TopicController {
         }catch (Exception e){
             log.setStatusCode(0);
             logService.addlog(log);
+            return ResponseUtil.fail(602,"话题添加失败");
         }
         logService.addlog(log);
         return ResponseUtil.ok(topicPo);
@@ -175,18 +187,20 @@ public class TopicController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
-        log.setActions("查看专题详情");
+        log.setActions("查看话题详情");
         log.setActionId(id);
         Topic topicById = new Topic();
         try{
             topicById = topicService.findTopicById(id);
-            if (topicById==null){
-                return ResponseUtil.badArgumentValue();
+            if (topicById==null||topicById.getDeleted()){
+                log.setStatusCode(0);
+                logService.addlog(log);
+                return ResponseUtil.fail(650,"该话题是无效话题");
             }
-        }catch (MallException e){
+        }catch (Exception e){
             log.setStatusCode(0);
             logService.addlog(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.fail(654,"话题查看失败");
         }
         log.setStatusCode(1);
         logService.addlog(log);
@@ -202,11 +216,14 @@ public class TopicController {
      */
     @GetMapping("/topics/{id}")
     public Object userFindTopicById(@PathVariable Integer id){
-        Topic topic=new Topic();
+        Topic topic = new Topic();
         try{
             topic = topicService.findTopicById(id);
-        }catch (MallException e){
-            return ResponseUtil.badArgumentValue();
+            if(topic==null||topic.getDeleted()){
+            return ResponseUtil.fail(650,"该话题是无效话题");
+        }
+        }catch (Exception e){
+            return ResponseUtil.fail(654,"话题查看失败");
         }
         return ResponseUtil.ok(topic);
     }
@@ -229,7 +246,7 @@ public class TopicController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
-        log.setActions("编辑专题");
+        log.setActions("编辑话题");
         log.setActionId(id);
         //进行合法性判断（内容不为空）
         Object error=validate(topicPo);
@@ -242,7 +259,7 @@ public class TopicController {
         if(topicService.adminUpdateTopicById(topicPo)==0){
             log.setStatusCode(0);
             logService.addlog(log);
-            return ResponseUtil.updatedDataFailed();
+            return ResponseUtil.fail(651,"话题更新失败");
         }
         log.setStatusCode(1);
         logService.addlog(log);
@@ -267,12 +284,12 @@ public class TopicController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
-        log.setActions("删除专题");
+        log.setActions("删除话题");
         log.setActionId(id);
         if(topicService.adminDeleteTopicById(id)==0){
             log.setStatusCode(0);
             logService.addlog(log);
-            return ResponseUtil.updatedDataFailed();
+            return ResponseUtil.fail(653,"话题删除失败");
         }
         log.setStatusCode(1);
         logService.addlog(log);
