@@ -43,6 +43,9 @@ public class CouponController {
         }
         return null;
     }
+
+
+
     /**
      * 管理员获取优惠券列表（第一次修改）
      * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
@@ -51,13 +54,19 @@ public class CouponController {
      */
     @GetMapping("/admin/couponRules")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
-                                   @RequestParam(defaultValue = "10") Integer limit,
-                                   HttpServletRequest request)
+                       @RequestParam(defaultValue = "10") Integer limit,
+                       HttpServletRequest request)
     {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查看优惠券规则列表");
         List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
         return ResponseUtil.ok(couponList);
     }
@@ -165,7 +174,7 @@ public class CouponController {
         if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)){
             inTime=true;
         }
-        if(inTime==true && oldStatusCode==true) {
+        if(inTime==true && oldStatusCode==true && couponRule.getStatusCode()==false) {
             //先修改预售状态
             couponService.updateCouponRuleById(couponRule);
             couponService.updateCouponStatus(id);
@@ -256,15 +265,37 @@ public class CouponController {
      * @return
      */
     @GetMapping("/coupons")
-    public List<CouponPo> mylist(HttpServletRequest request,
+    public Object mylist(HttpServletRequest request,
                                  @RequestParam(defaultValue = "1") Integer page,
-                                 @RequestParam(defaultValue = "10") Integer limit)
+                                 @RequestParam(defaultValue = "10") Integer limit,
+                                 @RequestParam Integer showType)
     {
         String id=request.getHeader("id");
         Integer userId=Integer.valueOf(id);
-
-        List<CouponPo> myList=couponService.getCouponMyList(userId,page,limit);
-        return myList;
+        if (userId==null){
+            return ResponseUtil.unlogin();
+        }
+        if (showType==0){
+            List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
+            if (myCoupons0==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons0);
+        }else if (showType==1){
+            List<CouponPo> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
+            if (myCoupons1==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons1);
+        }else if (showType==2){
+            List<CouponPo> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
+            if (myCoupons2==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons2);
+        }else{
+            List<CouponPo> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
+            if (myCoupons3==null){
+                return ResponseUtil.ok();
+            }return ResponseUtil.ok(myCoupons3);
+        }
     }
 
     /**
@@ -298,7 +329,7 @@ public class CouponController {
         Integer userId=Integer.valueOf(id);
         Integer couponRuleId=coupon.getCouponRuleId();
         //判断当前优惠券是否已经领取过
-        List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,10);
+        List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,100);
         List<Integer> couponRuleIds=new ArrayList<>();
         //获取已领取优惠券的ids
         for(CouponPo couponPo:couponPos){
@@ -315,6 +346,7 @@ public class CouponController {
         LocalDateTime endTime=coupon.getEndTime();
         //判断是否在起止期限内
         if((now.compareTo(beginTime)>=0)&&(now.compareTo(endTime)<=0)){
+            coupon.setStatusCode(0);
             couponService.addCoupon(coupon);
             return ResponseUtil.ok(coupon);
         }
@@ -345,7 +377,7 @@ public class CouponController {
             Integer id = cartItemIds.get(i);
             //调用购物车模块服务通过cartItemId找货品id
             RestTemplate restTemplate = new RestTemplate();
-            ServiceInstance instance = loadBalancerClient.choose("Cart");
+            ServiceInstance instance = loadBalancerClient.choose("cartService");
             String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/cartItems/{id}");
             CartItem cartItem = restTemplate.getForObject(reqURL,CartItem.class,id);
 

@@ -5,6 +5,7 @@ import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -16,6 +17,12 @@ import java.util.List;
 
 @Mapper
 public interface CouponMapper {
+
+    public List<CouponPo> getMyCoupons0(Integer userId);
+
+    public List<CouponPo> getMyCoupons1(Integer userId);
+    public List<CouponPo> getMyCoupons2(Integer userId);
+
 
     /**
      * 用id找优惠卷规则
@@ -76,4 +83,11 @@ public interface CouponMapper {
      * @return
      */
     List<CouponRulePo> findCouponRulesAvailable();
+
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponPo
+     * @return
+     */
+    int updateUserCouponStatus(CouponPo couponPo);
 }

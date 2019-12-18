@@ -1,8 +1,6 @@
 package xmu.oomall.discount.service;
 
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.CouponPo;
@@ -19,6 +17,12 @@ import java.util.Set;
  **/
 @Service
 public interface ICouponService {
+
+    public List<CouponPo> getMyCoupons0(Integer page,Integer limit,Integer userId);
+    public List<CouponPo> getMyCoupons1(Integer page,Integer limit,Integer userId);
+    public List<CouponPo> getMyCoupons2(Integer page,Integer limit,Integer userId);
+    public List<CouponPo> getMyCoupons3(Integer page,Integer limit,Integer userId);
+
 
     /**
      * 管理员操作添加Log
@@ -109,4 +113,11 @@ public interface ICouponService {
      * @return
      */
     List<CouponRulePo> findUserCouponRules();
+
+    /**
+     * 使用优惠券后置成已使用
+     * @param userId
+     * @param couponId
+     */
+    int updateUserCouponStatus(Integer userId, Integer couponId);
 }

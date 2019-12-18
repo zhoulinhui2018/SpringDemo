@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.GrouponRuleVo;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
@@ -47,30 +48,13 @@ public class DiscountController {
     public Object executeAllGroupon(){
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
         for (GrouponRulePo finishedGrouponRule : finishedGrouponRules) {
-            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(finishedGrouponRule);
             GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule);
             BigDecimal rate = accessStrategy.getRate();
-            List<Payment> payments =new ArrayList<>();
-            for (int i = 0; i < grouponOrders.size(); i++) {
-                Order order =  grouponOrders.get(i);
-                List<OrderItem> orderItemList = order.getOrderItemList();
-                OrderItem orderItem = orderItemList.get(0);
-                BigDecimal price = orderItem.getPrice();
-                Integer number1 = orderItem.getNumber();
-                BigDecimal number=new BigDecimal(number1);
-                BigDecimal dealPrice = price.multiply(number).multiply(rate).setScale(2,BigDecimal.ROUND_FLOOR);
-                orderItem.setDealPrice(dealPrice);
-                Payment payment=new Payment();
-                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
-                payment.setOrderId(order.getId());
-                payments.add(payment);
-            }
-            groupOnRuleService.refund(payments);
-//            groupOnRuleService.putOrdersBack(grouponOrders);
+            groupOnRuleService.returnBackRate(finishedGrouponRule,rate);
         }
-        System.out.println("test");
         return null;
     }
+
 
     /**
      * @Description: 管理员新增团购规则
@@ -86,7 +70,11 @@ public class DiscountController {
             return ResponseUtil.unlogin();
         }
         Log log = LogUtil.newLog("插入团购", grouponRulePo.getId(), Integer.valueOf(adminid), 1, request.getRemoteAddr());
-
+        if (groupOnRuleService.canAdd(grouponRulePo)==false){
+            log.setStatusCode(1);
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail();
+        }
         Object error = validate(grouponRulePo);
         if (error != null) {
             groupOnRuleService.log(log);
@@ -159,25 +147,11 @@ public class DiscountController {
         }
         Boolean statusCode = grouponRulePo1.getStatusCode();
 
-        if(inTime==true && statusCode==true) {
-            List<Order> grouponOrders = groupOnRuleService.getGrouponOrders(grouponRulePo);
-            List<Payment> payments =new ArrayList<>();
-            for (int i = 0; i < grouponOrders.size(); i++) {
-                Order order =  grouponOrders.get(i);
-                List<OrderItem> orderItemList = order.getOrderItemList();
-                OrderItem orderItem = orderItemList.get(0);
-                BigDecimal price = orderItem.getPrice();
-                Integer number1 = orderItem.getNumber();
-                BigDecimal number=new BigDecimal(number1);
-                BigDecimal dealPrice = price.multiply(number).setScale(2,BigDecimal.ROUND_FLOOR);
-                orderItem.setDealPrice(dealPrice);
-                Payment payment=new Payment();
-                payment.setActualPrice(dealPrice.subtract(price.multiply(number)));
-                payment.setOrderId(order.getId());
-                payments.add(payment);
-            }groupOnRuleService.refund(payments);
+        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
+            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
             log.setStatusCode(1);
             groupOnRuleService.log(log);
+            groupOnRuleService.update(grouponRulePo);
             return ResponseUtil.ok(grouponRulePo);
         }else if(inTime==false){
             //预售未开始或者已经结束可以修改信息
@@ -213,6 +187,16 @@ public class DiscountController {
 
         GrouponRulePo grouponRulePo=new GrouponRulePo();
         grouponRulePo.setId(id);
+        GrouponRulePo byId = groupOnRuleService.findById(id);
+        LocalDateTime now = LocalDateTime.now();
+        if (byId==null){
+            groupOnRuleService.log(log);
+            return ResponseUtil.badArgumentValue();
+        }
+        if (byId.getStartTime().isBefore(now)&&byId.getEndTime().isAfter(now)){
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail();
+        }
         int delete = groupOnRuleService.delete(grouponRulePo);
         if (delete==0){
             groupOnRuleService.log(log);
@@ -301,9 +285,14 @@ public class DiscountController {
     public Object discountOrder(Order order){
         Integer couponId=order.getCouponId();
         if(couponId!=0){
+
             //使用优惠券的普通订单
             List<OrderItem> oldOrderItems=order.getOrderItemList();
             List<OrderItem> newOrderItems=couponService.calcDiscount(oldOrderItems,couponId);
+            Integer userId=order.getUserId();
+            //使用的优惠券状态置成已使用
+            couponService.updateUserCouponStatus(userId,couponId);
+
             //修改订单中的明细
             order.setOrderItemList(newOrderItems);
             //使用优惠券的List<Payment>为空
@@ -342,7 +331,8 @@ public class DiscountController {
                 }
                 else {
                     //判断是否是预售订单
-                   PresaleRule rule=presaleService.isPresaleOrder(goodsId);
+                   PresaleRuleVo ruleVo=presaleService.isPresaleOrder(goodsId);
+                   PresaleRule rule=ruleVo.getPresaleRule();
                    List<OrderItem> orderItemList2=new ArrayList<>();
                    if(rule!=null){
                        item.setItemType(1);

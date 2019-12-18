@@ -213,6 +213,7 @@ CREATE TABLE `oomall_coupon_rule` (
   `brief` varchar(63) DEFAULT NULL,
   `begin_time` datetime(2) DEFAULT NULL,
   `end_time` datetime(2) DEFAULT NULL,
+  `status` tinyint(2) unsigned DEFAULT NULL,
   `pic_url` varchar(255) DEFAULT NULL,
   `valid_period` int(4) unsigned DEFAULT NULL,
   `strategy` varchar(5000) DEFAULT NULL,
@@ -253,11 +254,11 @@ DROP TABLE IF EXISTS `oomall_default_piece_freight`;
 CREATE TABLE `oomall_default_piece_freight` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
   `destination` varchar(255) DEFAULT NULL,
-  `require_days` varchar(255) DEFAULT NULL,
   `unit_rate` decimal(10,2) DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '0',
+  `require_days` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -400,6 +401,7 @@ CREATE TABLE `oomall_order_item` (
   `gmt_modified` datetime(2) DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '0',
   `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `pic_url` varchar(255) DEFAULT NULL,
   `name_with_specifications` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
@@ -410,9 +412,9 @@ CREATE TABLE `oomall_order_item` (
 DROP TABLE IF EXISTS `oomall_payment`;
 CREATE TABLE `oomall_payment` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
-  `actual_price` decimal(10,2) unsigned DEFAULT NULL,
+  `actual_price` decimal(10,2) DEFAULT NULL,
   `pay_channel` tinyint(3) unsigned DEFAULT NULL,
-  `is_successful` tinyint(1) unsigned DEFAULT '0',
+  `status` smallint(5) unsigned DEFAULT '0',
   `pay_time` datetime(2) DEFAULT NULL,
   `pay_sn` varchar(63) DEFAULT NULL,
   `begin_time` datetime(2) DEFAULT NULL,
@@ -542,8 +544,8 @@ CREATE TABLE `oomall_user` (
 -- ----------------------------
 -- Table structure for presale_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `presale_rule`;
-CREATE TABLE `presale_rule` (
+DROP TABLE IF EXISTS `oomall_presale_rule`;
+CREATE TABLE `oomall_presale_rule` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
   `goods_id` bigint(9) unsigned NOT NULL,
   `start_time` datetime DEFAULT NULL,

@@ -53,6 +53,7 @@ public class TopicDao {
             throw new MallException(ResponseUtil.serious());
         }
         Topic topic = new Topic(topicPo);
+        topic.setPictures();
         return topic;
     }
 

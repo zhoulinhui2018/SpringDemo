@@ -14,11 +14,11 @@
         values (#{gmtCreate},#{gmtModified},#{beDeleted},#{picUrlList},#{content})
     </insert>
 
-    <select id="findTopicById" parameterType="Integer" resultType="TopicPo">
+    <select id="findTopicById" parameterType="Integer" resultMap="TopicPoMap">
         select * from oomall_topic where id=#{id}
     </select>
 
-    <select id="findTopicList" resultType="xmu.oomall.topic.domain.TopicPo">
+    <select id="findTopicList" resultMap="TopicPoMap">
         select *
         from oomall_topic where is_deleted = 0
     </select>

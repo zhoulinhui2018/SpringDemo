@@ -14,5 +14,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-
+      #    prefer-ip-address: true
+      #    ip-address: 47.97.43.141
+      #    non-secure-port: 8762
 

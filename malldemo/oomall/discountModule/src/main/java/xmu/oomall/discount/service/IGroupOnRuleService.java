@@ -3,10 +3,28 @@ package xmu.oomall.discount.service;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public interface IGroupOnRuleService {
+    /** 
+    * @Description: 判断可以插入吗 
+    * @Param: [grouponRulePo] 
+    * @return: java.lang.Boolean 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/18 
+    */ 
+    public Boolean canAdd(GrouponRulePo grouponRulePo);
+    
+    /** 
+    * @Description: 将rate返回给Order 
+    * @Param: [] 
+    * @return: void 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/17 
+    */ 
+    public void returnBackRate(GrouponRulePo grouponRulePo, BigDecimal rate);
 
 
     /**
@@ -31,7 +49,6 @@ public interface IGroupOnRuleService {
     List<Payment> getGrouponPayment(Order order);
 
 
-    void refund(List<Payment> payments);
 
     /**
     * @Description: 将新订单传回去给order模块
@@ -76,7 +93,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/13
     */
-    List<Order> getGrouponOrders(GrouponRulePo grouponRulePo);
+    Integer getGrouponNum(GrouponRulePo grouponRulePo);
 
     /**
     * @Description: 管理员新增团购规则

@@ -1,11 +1,15 @@
 package xmu.oomall.discount.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import net.sf.ezmorph.array.BooleanObjectArrayMorpher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.PresaleDao;
+import xmu.oomall.discount.domain.GoodsPo;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.Order;
 import xmu.oomall.discount.domain.Payment;
@@ -31,7 +35,7 @@ public class PresaleServiceImpl implements IPresaleService {
     @Override
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Log");
+        ServiceInstance instance = loadBalancerClient.choose("logService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
         restTemplate.postForObject(reqURL,log,Log.class);
     }
@@ -42,6 +46,7 @@ public class PresaleServiceImpl implements IPresaleService {
      */
     @Override
     public Integer add(PresaleRule presaleRule) {
+
         return presaleDao.add(presaleRule);
     }
 
@@ -51,7 +56,7 @@ public class PresaleServiceImpl implements IPresaleService {
      * @return
      */
     @Override
-    public PresaleRule findById(Integer id) {
+    public PresaleRuleVo findById(Integer id) {
         return presaleDao.findById(id);
     }
 
@@ -81,8 +86,16 @@ public class PresaleServiceImpl implements IPresaleService {
      * @return
      */
     @Override
-    public PresaleRule isPresaleOrder(Integer goodsId){
-        return presaleDao.isPresaleOrder(goodsId);
+    public PresaleRuleVo isPresaleOrder(Integer goodsId){
+        PresaleRule rule= presaleDao.isPresaleOrder(goodsId);
+        PresaleRuleVo ruleVo=new PresaleRuleVo();
+        ruleVo.setPresaleRule(rule);
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("goodsService");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
+        GoodsPo goodsPo= restTemplate.getForObject(reqURL, GoodsPo.class,goodsId);
+        ruleVo.setGoodsPo(goodsPo);
+        return ruleVo;
     }
 
 
@@ -99,12 +112,12 @@ public class PresaleServiceImpl implements IPresaleService {
 
 
     @Override
-    public List<Order> getPresaleRuleOrders(PresaleRule presaleRule) {
+    public Boolean getPresaleRuleOrders(PresaleRule presaleRule) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Order");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders");
-        List<Order> orderList = restTemplate.getForObject(reqURL,List.class,presaleRule);
-        return orderList;
+        ServiceInstance instance = loadBalancerClient.choose("orderService");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleRule/refund");
+        Boolean flag = restTemplate.postForObject(reqURL,presaleRule,Boolean.class);
+        return flag;
     }
 
 
@@ -124,8 +137,28 @@ public class PresaleServiceImpl implements IPresaleService {
     @Override
     public void presaleRefund(List<Payment> paymentList) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Payment");
+        ServiceInstance instance = loadBalancerClient.choose("paymentService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders/refund");
         restTemplate.getForObject(reqURL,List.class,paymentList);
+    }
+
+    @Override
+    public List<PresaleRuleVo> findPresaleRule(Integer goodsId, Integer page, Integer limit){
+        PageHelper.startPage(page,limit);
+        List<PresaleRuleVo> list=presaleDao.findByGoodsId(goodsId);
+        return list;
+    }
+    @Override
+    public List<PresaleRuleVo> findAllPresaleRules(Integer page,Integer limit){
+        PageHelper.startPage(page,limit);
+        List<PresaleRuleVo> list=presaleDao.findAllPresaleRules();
+        return list;
+    }
+
+    @Override
+    public List<PresaleRuleVo> findOnPresaleRules(Integer page, Integer limit){
+        PageHelper.startPage(page,limit);
+        List<PresaleRuleVo> list=presaleDao.findOnPresaleRules();
+        return list;
     }
 }

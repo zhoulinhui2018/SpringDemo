@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
+    <select id="getMyCoupons0" parameterType="integer" resultMap="couponType">
+        select *
+        from oomall_coupon
+        where is_deleted=0 and user_id = #{userId} and  status = 0
+    </select>
+
+    <select id="getMyCoupons1" parameterType="integer" resultMap="couponType">
+        select *
+        from oomall_coupon
+        where is_deleted=0 and user_id = #{userId} and  status = 1
+    </select>
+
+    <select id="getMyCoupons2" parameterType="integer" resultMap="couponType">
+        select *
+        from oomall_coupon
+        where is_deleted=0 and user_id = #{userId} and  status = 2
+    </select>
 
     <select id="findCouponRuleById" parameterType="Integer" resultMap="couponRuleType">
             select *
@@ -52,7 +69,8 @@
 
     <select id="getCouponMyList" parameterType="Integer" resultMap="couponType">
         select *
-        from oomall_coupon where user_id=#{userId} and statusCode=0;
+        from oomall_coupon
+        where user_id=#{userId} and is_deleted = 0
     </select>
 
     <select id="getProductId" parameterType="Integer" resultType="Integer">
@@ -80,7 +98,21 @@
 
     <update id="updateCouponStatus" parameterType="Integer" >
         update oomall_coupon
-        set status=1 where coupon_rule_id = #{id};
+        set status=2 where coupon_rule_id = #{id};
+    </update>
+
+    <!--updateUserCouponStatus-->
+    <update id="updateUserCouponStatus" parameterType="couponPo">
+        update oomall_coupon
+        <trim prefix="set" suffixOverrides=",">
+        <if test="statusCode!= null">
+            status = #{statusCode},
+        </if>
+        <if test="usedTime != null">
+            used_time = #{usedTime},
+        </if>
+        </trim>
+        where id=#{id} and user_id=#{userId}
     </update>
 
     <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
@@ -96,6 +128,7 @@
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
         <result column="status" property="statusCode"/>
+        <result column="used_time" property="usedTime"/>
     </resultMap>
 
     <resultMap id="couponRuleType" type="xmu.oomall.discount.domain.coupon.CouponRulePo">
@@ -111,6 +144,10 @@
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
         <result column="status" property="statusCode"/>
+        <result column="goods_list1" property="goodsList1"/>
+        <result column="goods_list2" property="goodsList2"/>
+        <result column="total" property="total"/>
+        <result column="collected_num" property="collectedNum"/>
     </resultMap>
 
     <select id="findCouponRulesAvailable" resultMap="CouponRuleResultType">

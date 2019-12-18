@@ -1,15 +1,18 @@
 package xmu.oomall.discount.service;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.OoMallApplication;
+import xmu.oomall.discount.DiscountApplication;
 
 
-@SpringBootTest(classes = OoMallApplication.class)
+@SpringBootTest(classes = DiscountApplication.class)
 class CouponServiceImplTest {
 
     @Autowired
     private ICouponService couponService;
+
 
 //    @Test
 //    public void findCouponById1(){
@@ -26,4 +29,10 @@ class CouponServiceImplTest {
 //        assertEquals(coupon.getCouponRuleId(), 2);
 //        assertEquals(coupon.getName(), "测试优惠卷2");
 //    }
+
+    @Test
+    public void updateUsercouponTest(){
+        int flag=couponService.updateUserCouponStatus(100001,100001);
+        System.out.println("更新操作成功");
+    }
 }
