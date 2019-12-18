@@ -1,5 +1,6 @@
 package xmu.oomall.discount.controller;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -106,5 +107,10 @@ public class CouponControllerTest {
 //        System.out.println(object.toString());
 //    }
 
+    @Test
+    public void deleteTest(){
+        Object result=couponController.delete(100001);
+        System.out.println(result);
+    }
 
 }

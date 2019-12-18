@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.OoMallApplication;
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 
 
 @SpringBootTest(classes = DiscountApplication.class)
-class CouponServiceImplTest {
+class CouponServiceTest {
 
     @Autowired
-    private ICouponService couponService;
+    private CouponServiceImpl couponService;
 
 
 //    @Test
@@ -34,5 +35,11 @@ class CouponServiceImplTest {
     public void updateUsercouponTest(){
         int flag=couponService.updateUserCouponStatus(100001,100001);
         System.out.println("更新操作成功");
+    }
+
+    @Test
+    public void deleteCouponRuleByIdTest(){
+        int result=couponService.deleteCouponRuleById(100001);
+        System.out.println(result);
     }
 }
