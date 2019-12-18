@@ -52,7 +52,7 @@ public class CouponPo {
      */
     private String picUrl;
     /**
-     * 优惠券是否已经使用，0未使用，1已使用
+     * 优惠券是否已经使用，0未使用，1已使用,2已失效
      */
     private Integer statusCode;
 

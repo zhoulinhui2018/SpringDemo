@@ -5,6 +5,7 @@ import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -82,4 +83,11 @@ public interface CouponMapper {
      * @return
      */
     List<CouponRulePo> findCouponRulesAvailable();
+
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponPo
+     * @return
+     */
+    int updateUserCouponStatus(CouponPo couponPo);
 }

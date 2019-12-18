@@ -376,7 +376,7 @@ public class CouponController {
             Integer id = cartItemIds.get(i);
             //调用购物车模块服务通过cartItemId找货品id
             RestTemplate restTemplate = new RestTemplate();
-            ServiceInstance instance = loadBalancerClient.choose("Cart");
+            ServiceInstance instance = loadBalancerClient.choose("cartService");
             String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/cartItems/{id}");
             CartItem cartItem = restTemplate.getForObject(reqURL,CartItem.class,id);
 

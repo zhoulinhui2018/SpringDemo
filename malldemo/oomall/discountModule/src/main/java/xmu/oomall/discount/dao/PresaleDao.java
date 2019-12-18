@@ -30,11 +30,11 @@ public class PresaleDao {
      * 管理员添加预售规则
      * @param presaleRule
      */
-    public void add(PresaleRule presaleRule){
+    public Integer add(PresaleRule presaleRule){
         presaleRule.setGmtCreate(LocalDateTime.now());
         presaleRule.setGmtModified(LocalDateTime.now());
         presaleRule.setBeDeleted(false);
-        presaleMapper.add(presaleRule);
+        return presaleMapper.add(presaleRule);
     }
 
     /**

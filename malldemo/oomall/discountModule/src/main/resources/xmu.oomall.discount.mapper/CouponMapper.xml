@@ -101,6 +101,20 @@
         set status=1 where coupon_rule_id = #{id};
     </update>
 
+    <!--updateUserCouponStatus-->
+    <update id="updateUserCouponStatus" parameterType="couponPo">
+        update oomall_coupon
+        <trim prefix="set" suffixOverrides=",">
+        <if test="statusCode!= null">
+            status = #{statusCode},
+        </if>
+        <if test="usedTime != null">
+            used_time = #{usedTime},
+        </if>
+        </trim>
+        where id=#{id} and user_id=#{userId}
+    </update>
+
     <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>

@@ -1,6 +1,7 @@
 package xmu.oomall.discount.service.Impl;
 
 import com.github.pagehelper.PageHelper;
+import net.sf.ezmorph.array.BooleanObjectArrayMorpher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -34,7 +35,7 @@ public class PresaleServiceImpl implements IPresaleService {
     @Override
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Log");
+        ServiceInstance instance = loadBalancerClient.choose("logService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
         restTemplate.postForObject(reqURL,log,Log.class);
     }
@@ -89,7 +90,7 @@ public class PresaleServiceImpl implements IPresaleService {
         PresaleRuleVo ruleVo=new PresaleRuleVo();
         ruleVo.setPresaleRule(rule);
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Goods");
+        ServiceInstance instance = loadBalancerClient.choose("goodsService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         GoodsPo goodsPo= restTemplate.getForObject(reqURL, GoodsPo.class,goodsId);
         ruleVo.setGoodsPo(goodsPo);
@@ -110,12 +111,12 @@ public class PresaleServiceImpl implements IPresaleService {
 
 
     @Override
-    public List<Order> getPresaleRuleOrders(PresaleRule presaleRule) {
+    public Boolean getPresaleRuleOrders(PresaleRule presaleRule) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Order");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders");
-        List<Order> orderList = restTemplate.getForObject(reqURL,List.class,presaleRule);
-        return orderList;
+        ServiceInstance instance = loadBalancerClient.choose("orderService");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleRule/refund");
+        Boolean flag = restTemplate.postForObject(reqURL,presaleRule,Boolean.class);
+        return flag;
     }
 
 
@@ -135,7 +136,7 @@ public class PresaleServiceImpl implements IPresaleService {
     @Override
     public void presaleRefund(List<Payment> paymentList) {
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Payment");
+        ServiceInstance instance = loadBalancerClient.choose("paymentService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders/refund");
         restTemplate.getForObject(reqURL,List.class,paymentList);
     }

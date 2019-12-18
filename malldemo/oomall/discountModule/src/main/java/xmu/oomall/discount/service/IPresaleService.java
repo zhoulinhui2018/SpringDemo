@@ -66,7 +66,7 @@ public interface IPresaleService {
      */
     PresaleRuleVo isPresaleOrder(Integer goodsId);
 
-    List<Order> getPresaleRuleOrders(PresaleRule presaleRule);
+    Boolean getPresaleRuleOrders(PresaleRule presaleRule);
 
     List<Payment> getPaymentList(List<Order> orderList);
 

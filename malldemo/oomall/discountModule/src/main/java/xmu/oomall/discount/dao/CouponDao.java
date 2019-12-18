@@ -318,4 +318,19 @@ public class CouponDao {
 
         return allCouponRules;
     }
+
+    /**
+     * 用户使用优惠券后修改状态
+     * @param userId
+     * @param couponId
+     * @return
+     */
+    public int updateUserCouponStatus(Integer userId, Integer couponId) {
+        CouponPo couponPo=new CouponPo();
+        couponPo.setId(couponId);
+        couponPo.setStatusCode(1);
+        couponPo.setUsedTime(LocalDateTime.now());
+        couponPo.setUserId(userId);
+        return couponMapper.updateUserCouponStatus(couponPo);
+    }
 }

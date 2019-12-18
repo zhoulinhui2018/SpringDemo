@@ -37,19 +37,19 @@ public class PresaleController {
        Integer goodsId=presaleRule.getGoodsId();
        BigDecimal deposit=presaleRule.getDeposit();
        BigDecimal finalPayment=presaleRule.getFinalPayment();
-       if (StringUtils.isEmpty(String.valueOf(startTime))) {
-            return ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(adEndTime))){
-            return ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(finalStartTime))){
-            return ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(endTime))){
-            return ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(statusCode))){
+//       if (StringUtils.isEmpty(String.valueOf(startTime))) {
+//            return ResponseUtil.badArgument();
+//        }
+//        else if(StringUtils.isEmpty(String.valueOf(adEndTime))){
+//            return ResponseUtil.badArgument();
+//        }
+//        else if(StringUtils.isEmpty(String.valueOf(finalStartTime))){
+//            return ResponseUtil.badArgument();
+//        }
+//        else if(StringUtils.isEmpty(String.valueOf(endTime))){
+//            return ResponseUtil.badArgument();
+//        }
+        if(StringUtils.isEmpty(String.valueOf(statusCode))){
             return  ResponseUtil.badArgument();
         }
         else if(StringUtils.isEmpty(String.valueOf(goodsId))){
@@ -109,7 +109,7 @@ public class PresaleController {
      * @Author: Zhang Yaqing
      * @Date: 2019/12/10
      */
-    @GetMapping("/presaleRules/{id}")
+    @GetMapping("/admin/presaleRules/{id}")
     public Object detail(@PathVariable Integer id,HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -130,6 +130,17 @@ public class PresaleController {
         }
         presaleService.log(log);
         return ResponseUtil.ok(presaleRule);
+    }
+
+    /**
+     * 用户根据ID查看预售规则详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/presaleRules/{id}")
+    public Object getPresaleRuleById(@PathVariable Integer id){
+        PresaleRuleVo presaleRuleVo=presaleService.findById(id);
+        return ResponseUtil.ok(presaleRuleVo);
     }
 
     /**
@@ -184,13 +195,9 @@ public class PresaleController {
                 return ResponseUtil.updatedDataFailed();
             }
             //再进行退款操作
-            //新建orderList，获取所有涉及此presaleRule的订单
-            List<Order> orderList=presaleService.getPresaleRuleOrders(presaleRule);
-            //新建paymentList，获取所有订单需要退款的金额
-            List<Payment> paymentList=presaleService.getPaymentList(orderList);
-            //调用payment模块的接口，处理退款
-            presaleService.presaleRefund(paymentList);
-            return ResponseUtil.ok(presaleRule);
+            //传递presaleRule给订单
+            Boolean flag=presaleService.getPresaleRuleOrders(presaleRule);
+            return ResponseUtil.ok(flag);
 
         }else if(inTime==false){
             //预售未开始或者已经结束可以修改信息
@@ -284,16 +291,7 @@ public class PresaleController {
         return ResponseUtil.ok(list);
     }
 
-    /**
-     * 用户根据ID查看预售规则详情
-     * @param id
-     * @return
-     */
-    @GetMapping("/presaleRules/{id}")
-    public Object getPresaleRuleById(@PathVariable Integer id){
-        PresaleRuleVo presaleRuleVo=presaleService.findById(id);
-        return ResponseUtil.ok(presaleRuleVo);
-    }
+
 
 
     /**

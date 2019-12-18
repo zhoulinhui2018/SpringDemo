@@ -113,4 +113,11 @@ public interface ICouponService {
      * @return
      */
     List<CouponRulePo> findUserCouponRules();
+
+    /**
+     * 使用优惠券后置成已使用
+     * @param userId
+     * @param couponId
+     */
+    int updateUserCouponStatus(Integer userId, Integer couponId);
 }

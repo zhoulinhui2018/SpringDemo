@@ -58,7 +58,7 @@ public class CouponServiceImpl implements ICouponService {
     @Override
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("Log");
+        ServiceInstance instance = loadBalancerClient.choose("logService");
         System.out.println(instance.getHost());
         System.out.println(instance.getPort());
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
@@ -136,6 +136,17 @@ public class CouponServiceImpl implements ICouponService {
     @Override
     public int updateCouponStatus(Integer id){
         return couponDao.updateCouponStatus(id);
+    }
+
+    /**
+     * 优惠券使用后修改状态
+     * @param userId
+     * @param couponId
+     * @return
+     */
+    @Override
+    public int updateUserCouponStatus(Integer userId, Integer couponId){
+        return couponDao.updateUserCouponStatus(userId,couponId);
     }
 
 }

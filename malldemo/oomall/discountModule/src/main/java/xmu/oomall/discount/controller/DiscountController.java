@@ -270,9 +270,14 @@ public class DiscountController {
     public Object discountOrder(Order order){
         Integer couponId=order.getCouponId();
         if(couponId!=0){
+
             //使用优惠券的普通订单
             List<OrderItem> oldOrderItems=order.getOrderItemList();
             List<OrderItem> newOrderItems=couponService.calcDiscount(oldOrderItems,couponId);
+            Integer userId=order.getUserId();
+            //使用的优惠券状态置成已使用
+            couponService.updateUserCouponStatus(userId,couponId);
+
             //修改订单中的明细
             order.setOrderItemList(newOrderItems);
             //使用优惠券的List<Payment>为空
