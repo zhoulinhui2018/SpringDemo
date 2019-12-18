@@ -35,6 +35,9 @@ eureka:
   client: # 客户端进行Eureka注册的配置
     service-url:
       defaultZone: http://148.70.28.112:8761/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 172.20.10.7
 
 spring:
   datasource:

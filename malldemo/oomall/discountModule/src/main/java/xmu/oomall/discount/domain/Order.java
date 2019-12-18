@@ -26,6 +26,7 @@ public class Order extends OrderPo {
 
     //添加getter和setter方法
 
+
     public Address getAddressObj() {
         return addressObj;
     }

@@ -10,6 +10,7 @@ import xmu.oomall.ad.domain.Log;
 import xmu.oomall.ad.service.impl.AdService;
 import xmu.oomall.ad.util.FileUploadUtil;
 import xmu.oomall.ad.util.IdUtil;
+import xmu.oomall.ad.util.LogUtil;
 import xmu.oomall.ad.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,17 +77,12 @@ public class AdController {
         if (id==null){
             return ResponseUtil.unlogin();
         }
-        Log log=new Log();
-        log.setAdminId(Integer.valueOf(id));
-        log.setIp(request.getRemoteAddr());
-        log.setType(0);
+        Log log = LogUtil.newLog("查询", null, Integer.valueOf(id), 0, request.getRemoteAddr());
         log.setStatusCode(1);
-        log.setActions("查询列表");
         adService.log(log);
         Ad ad=new Ad();
         ad.setName(adTitle);
         ad.setContent(adContent);
-        System.out.println("tessssssssssssssssssss");
         return ResponseUtil.ok(adService.adminFindAllAds(page,limit,ad));
     }
 
@@ -116,19 +112,13 @@ public class AdController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-        Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
-        log.setIp(request.getRemoteAddr());
-        log.setType(0);
-        log.setActionId(id);
-        log.setStatusCode(1);
-        log.setActions("查询详情");
+        Log log = LogUtil.newLog("搜索详情", id, Integer.valueOf(adminid), 0, request.getRemoteAddr());
         Ad adById = adService.findAdById(id);
         if (adById==null){
-            log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.fail(680,"获取广告失败");
         }
+        log.setStatusCode(1);
         adService.log(log);
         return  ResponseUtil.ok(adById);
     }
@@ -143,35 +133,29 @@ public class AdController {
     * @Date: 2019/12/7
     */
     @PutMapping("/ads/{id}")
-    public Object adminUpdateAd(HttpServletRequest request,@PathVariable Integer id,Ad newAd) {
+    public Object adminUpdateAd(HttpServletRequest request,@PathVariable Integer id,@RequestBody Ad newAd) {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-        Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
-        log.setIp(request.getRemoteAddr());
-        log.setType(0);
-        log.setStatusCode(1);
-        log.setActions("修改");
-        log.setActionId(id);
+        Log log = LogUtil.newLog("修改", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
+
         Object error=validate(newAd);
         if (error != null) {
-            return error;
+            return ResponseUtil.fail(682,"修改广告失败");
         }
         newAd.setId(id);
-
         try {
             Integer integer = adService.updateAdById(newAd);
             if (integer==0){
                 log.setStatusCode(0);
                 adService.log(log);
-                return ResponseUtil.badArgumentValue();
+                return ResponseUtil.fail(682,"修改广告失败");
             }
         } catch (Exception e) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.updatedDataFailed();
+            return ResponseUtil.fail(682,"修改广告失败");
         }
         adService.log(log);
         return ResponseUtil.ok(newAd);
@@ -191,30 +175,25 @@ public class AdController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-        Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
-        log.setActionId(id);
-        log.setIp(request.getRemoteAddr());
-        log.setType(0);
-        log.setStatusCode(1);
-        log.setActions("删除广告");
+        Log log = LogUtil.newLog("删除广告", id, Integer.valueOf(adminid), 3, request.getRemoteAddr());
         if (id == null) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.fail(683,"删除广告失败");
         }
         try {
             Integer integer = adService.deleteAdbyId(id);
             if (integer==0){
                 log.setStatusCode(0);
                 adService.log(log);
-                return ResponseUtil.badArgumentValue();
+                return ResponseUtil.fail(683,"删除广告失败");
             }
         } catch (Exception e) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.serious();
+            return ResponseUtil.fail(683,"删除广告失败");
         }
+        log.setStatusCode(1);
         adService.log(log);
         return ResponseUtil.ok();
     }
@@ -227,7 +206,7 @@ public class AdController {
     * @Date: 2019/12/5
     */
     @PostMapping("/ads")
-    public Object adminCreateAd(HttpServletRequest request, Ad ad) {
+    public Object adminCreateAd(HttpServletRequest request, @RequestBody Ad ad) {
         System.out.println("test");
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -243,7 +222,7 @@ public class AdController {
         if (error != null) {
             log.setStatusCode(0);
             adService.log(log);
-            return error;
+            return ResponseUtil.fail(681,"创建广告失败");
         }
         System.out.println("test1");
         try {
@@ -251,7 +230,7 @@ public class AdController {
         } catch (Exception e) {
             log.setStatusCode(0);
             adService.log(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.fail(681,"创建广告失败");
         }
         System.out.println("test2");
         adService.log(log);
