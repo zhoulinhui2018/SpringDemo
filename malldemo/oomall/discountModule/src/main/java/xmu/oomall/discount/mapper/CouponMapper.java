@@ -90,4 +90,6 @@ public interface CouponMapper {
      * @return
      */
     int updateUserCouponStatus(CouponPo couponPo);
+
+    void deleteAllCoupons(Integer id);
 }

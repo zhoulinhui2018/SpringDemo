@@ -42,7 +42,11 @@
     </select>
 
     <delete id="deleteCouponRuleById" parameterType="Integer">
-        update oomall_coupon_rule set is_deleted=1 where id = #{id};
+        update oomall_coupon_rule set is_deleted=1 where id = #{id}
+    </delete>
+    <delete id="deleteAllCoupons" parameterType="Integer">
+        update oomall_coupon
+        set is_deleted=1 where coupon_rule_id = #{id}
     </delete>
 
     <update id="updateCouponRuleById" parameterType="couponRulePo" >

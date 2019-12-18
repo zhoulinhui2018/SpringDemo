@@ -44,5 +44,12 @@ class CouponDaoTest {
         System.out.println(strategy);
     }
 
+    @Test
+    public void deleteCouponRuleByIdTest()
+    {
+        int result=couponDao.deleteCouponRuleById(100001);
+        System.out.println(result);
+    }
+
 
 }
