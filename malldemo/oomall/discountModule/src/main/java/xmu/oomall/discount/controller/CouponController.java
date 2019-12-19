@@ -50,6 +50,7 @@ public class CouponController {
      * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
      * 4.返回值为ResponseUtil
      * @return list<CouponRulePo>
+     *     postman测试成功
      */
     @GetMapping("/admin/couponRules")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
@@ -70,6 +71,12 @@ public class CouponController {
         return ResponseUtil.ok(couponList);
     }
 
+    /**
+     * 用户查看优惠券列表
+     * @param page
+     * @param limit
+     * @return
+     */
     @GetMapping("/couponRules")
     public Object userlist(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit){
@@ -82,6 +89,7 @@ public class CouponController {
      * 修改内容如下：1.因为为管理员的操作，所以参数添加Http头部 2.添加了log 3.log中的actionId未填写
      * @param couponRule
      * @return
+     * postman测试通过
      */
     @PostMapping("/couponRules")
     public Object create(@RequestBody CouponRulePo couponRule,HttpServletRequest request)
@@ -302,24 +310,24 @@ public class CouponController {
         }
     }
 
-//    /**
-//     * 根据id查询coupon表（已修改）
-//     * 修改内容如下：1.对于非法id的判断
-//     * @param id
-//     * @return
-//     * 备注：标准组没有该url
-//     */
-//    @GetMapping("/coupons/{id}")
-//    public Object readACoupon(Integer id)
-//    {
-//        CouponPo ACoupon=new CouponPo();
-//        try {
-//             ACoupon = couponService.findCouponById(id);
-//        }catch (Exception e){
-//           return ResponseUtil.fail();
-//        }
-//        return ResponseUtil.ok(ACoupon);
-//    }
+    /**
+     * 根据id查询coupon表（已修改）
+     * 修改内容如下：1.对于非法id的判断
+     * @param id
+     * @return
+     * 备注：标准组没有该url
+     */
+    @GetMapping("/coupons/{id}")
+    public Object readACoupon(Integer id)
+    {
+        CouponPo ACoupon=new CouponPo();
+        try {
+             ACoupon = couponService.findCouponById(id);
+        }catch (Exception e){
+           return ResponseUtil.fail();
+        }
+        return ResponseUtil.ok(ACoupon);
+    }
 
     /**
      * 用户领取一张新的优惠券

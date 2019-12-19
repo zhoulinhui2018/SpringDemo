@@ -17,4 +17,6 @@ import lombok.ToString;
 public class CouponRule extends CouponRulePo {
 
     private Object couponStrategy;
+
+
 }

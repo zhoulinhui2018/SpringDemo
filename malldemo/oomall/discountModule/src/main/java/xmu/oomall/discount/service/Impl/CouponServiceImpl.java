@@ -122,6 +122,7 @@ public class CouponServiceImpl implements ICouponService {
 
     @Override
     public List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId){
+        System.out.println("aa");
         List<OrderItem> newItems=couponDao.calcDiscount(orderItems,couponId);
         return newItems;
     }

@@ -136,13 +136,13 @@ public class FootprintController {
      * @Date: 2019/12/14
      */
     @PostMapping("/footprints")
-    public FootprintItemPo addFootprint( FootprintItemPo footprintItemPo){
+    public Object addFootprint( FootprintItemPo footprintItemPo){
         try {
             footprintService.addFootprint(footprintItemPo);
         } catch (Exception e) {
-            return null;
+            return ResponseUtil.addFootprintFailed();
         }
-        return footprintItemPo;
+        return ResponseUtil.ok(footprintItemPo);
     }
 
 
