@@ -71,7 +71,7 @@
         #{gmtModified}, #{beDeleted})
     </insert>
 
-    <update id="updateAdById" parameterType="Ad" >
+    <update id="updateAdById" parameterType="xmu.oomall.ad.domain.Ad" >
         update oomall_ad
         <trim prefix="set" suffixOverrides=",">
             <if test="name!=null">name=#{name},</if>
