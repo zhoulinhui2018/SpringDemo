@@ -48,7 +48,8 @@ public class DiscountController {
     public Object executeAllGroupon(){
         List<GrouponRulePo> finishedGrouponRules = groupOnRuleService.findFinishedGrouponRules();
         for (GrouponRulePo finishedGrouponRule : finishedGrouponRules) {
-            GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule);
+            Integer num = groupOnRuleService.getGrouponNum(finishedGrouponRule);
+            GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(finishedGrouponRule,num);
             BigDecimal rate = accessStrategy.getRate();
             groupOnRuleService.returnBackRate(finishedGrouponRule,rate);
         }

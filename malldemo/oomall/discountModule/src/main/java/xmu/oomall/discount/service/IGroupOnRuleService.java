@@ -75,7 +75,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/13 
     */ 
-    GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo);
+    GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo,Integer grouponNumber);
 
     /** 
     * @Description: 搜索目前时间点已完成团购 

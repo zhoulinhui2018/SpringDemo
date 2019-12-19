@@ -6,11 +6,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.GrouponRule;
 import xmu.oomall.discount.domain.GrouponRulePo;
+import xmu.oomall.discount.domain.GrouponRuleStrategy;
+import xmu.oomall.discount.service.Impl.GroupOnRuleService;
 
 @SpringBootTest(classes = DiscountApplication.class)
 public class GrouponRuleDaoTest {
     @Autowired
     private GroupOnDao groupOnDao;
+
+    @Autowired
+    private GroupOnRuleService groupOnRuleService;
 
     @Test
     public void getStrategyTest(){
@@ -19,5 +24,12 @@ public class GrouponRuleDaoTest {
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
         System.out.println("strategy");
         System.out.println(strategy);
+    }
+
+    @Test
+    public void test1(){
+        GrouponRulePo groupOnDaoById = groupOnDao.findById(200001);
+        GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(groupOnDaoById, 0);
+        System.out.println(accessStrategy.getRate());
     }
 }

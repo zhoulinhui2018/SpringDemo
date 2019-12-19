@@ -49,7 +49,7 @@
         <result column="is_deleted" property="beDeleted"/>
         <result column="start_time" property="startTime"/>
         <result column="end_time" property="endTime"/>
-        <result column="statusCode" property="statusCode"/>
+        <result column="status" property="statusCode"/>
         <result column="groupon_level_strategy" property="grouponLevelStrategy"/>
         <result column="goods_id" property="goodsId"/>
     </resultMap>

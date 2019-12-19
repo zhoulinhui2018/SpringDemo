@@ -55,8 +55,6 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("logService");
-        System.out.println(instance.getHost());
-        System.out.println(instance.getPort());
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
         restTemplate.postForObject(reqURL,log,Log.class);
     }
@@ -135,8 +133,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     }
 
     @Override
-    public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo) {
-        Integer grouponNumber=this.getGrouponNum(grouponRulePo);
+    public GrouponRuleStrategy getAccessStrategy(GrouponRulePo grouponRulePo,Integer grouponNumber) {
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
         boolean isEnough= false;
         GrouponRuleStrategy grouponRuleStrategyBest =new GrouponRuleStrategy();
