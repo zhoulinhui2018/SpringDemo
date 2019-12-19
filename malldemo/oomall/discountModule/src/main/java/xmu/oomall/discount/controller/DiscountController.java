@@ -128,6 +128,47 @@ public class DiscountController {
         return ResponseUtil.ok(grouponRuleVo);
     }
 
+    @PostMapping("/grouponRules/{id}/invalid")
+    public Object invalid(HttpServletRequest request,@PathVariable Integer id){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log = LogUtil.newLog("下架团购", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
+        Boolean inTime=false;
+        GrouponRulePo grouponRulePo = null;
+        try {
+            grouponRulePo = groupOnRuleService.findById(id);
+        } catch (Exception e) {
+            groupOnRuleService.log(log);
+            ResponseUtil.fail(721,"团购修改失败");
+        }
+        if (grouponRulePo==null){
+            groupOnRuleService.log(log);
+            ResponseUtil.fail(720,"团购修改失败");
+        }
+        LocalDateTime now = LocalDateTime.now();
+        if (grouponRulePo.getStartTime().isBefore(now)&&grouponRulePo.getEndTime().isAfter(now)){
+            inTime=true;
+        }
+        if (inTime == false){
+            GrouponRulePo grouponRulePoNew=new GrouponRulePo();
+            grouponRulePoNew.setStatusCode(false);
+            int update = groupOnRuleService.update(grouponRulePoNew);
+            if (update==0){
+                return ResponseUtil.fail(721,"团购修改失败");
+            }
+            log.setStatusCode(1);
+            groupOnRuleService.log(log);
+            return ResponseUtil.ok();
+        }
+        groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
+        log.setStatusCode(1);
+        groupOnRuleService.log(log);
+        //如果是下架操作的话究竟更不更改其他信息这个点不明确
+        return ResponseUtil.ok();
+    }
+
     /**
      * @Description: 管理员修改团购信息
      * @Param: [id, grouponRulePo]
@@ -149,7 +190,8 @@ public class DiscountController {
         try {
             grouponRulePo1 = groupOnRuleService.findById(id);
         } catch (Exception e) {
-            return ResponseUtil.fail(720,"该团购规则是无效团购规则");
+            groupOnRuleService.log(log);
+            return ResponseUtil.fail(721,"该团购规则是无效团购规则");
         }
         if (grouponRulePo1==null){
             groupOnRuleService.log(log);
@@ -161,32 +203,33 @@ public class DiscountController {
         }
         Boolean statusCode = grouponRulePo1.getStatusCode();
 
-        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
-            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
-            log.setStatusCode(1);
-            groupOnRuleService.log(log);
-            groupOnRuleService.update(grouponRulePo);
-            //如果是下架操作的话究竟更不更改其他信息这个点不明确
-            return ResponseUtil.ok(grouponRulePo);
-        }else if(inTime==false){
-            //预售未开始或者已经结束可以修改信息
-
-            try {
-                if (groupOnRuleService.update(grouponRulePo) == 0) {
-                    groupOnRuleService.log(log);
-                    return ResponseUtil.fail(721,"团购规则修改失败");
-                }
-            } catch (Exception e) {
-                return ResponseUtil.fail(721,"团购规则修改失败");
-            }
-            log.setStatusCode(1);
-            groupOnRuleService.log(log);
-            return ResponseUtil.ok(grouponRulePo);
-        }else{
-            //在预售开始到结束时间内且未作废的情况，不能改动信息
-            groupOnRuleService.log(log);
-            return ResponseUtil.fail(721,"团购规则修改失败");
-        }
+//        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
+//            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
+//            log.setStatusCode(1);
+//            groupOnRuleService.log(log);
+//            groupOnRuleService.update(grouponRulePo);
+//            //如果是下架操作的话究竟更不更改其他信息这个点不明确
+//            return ResponseUtil.ok(grouponRulePo);
+//        }else if(inTime==false){
+//            //预售未开始或者已经结束可以修改信息
+//
+//            try {
+//                if (groupOnRuleService.update(grouponRulePo) == 0) {
+//                    groupOnRuleService.log(log);
+//                    return ResponseUtil.fail(721,"团购规则修改失败");
+//                }
+//            } catch (Exception e) {
+//                return ResponseUtil.fail(721,"团购规则修改失败");
+//            }
+//            log.setStatusCode(1);
+//            groupOnRuleService.log(log);
+//            return ResponseUtil.ok(grouponRulePo);
+//        }else{
+//            //在预售开始到结束时间内且未作废的情况，不能改动信息
+//            groupOnRuleService.log(log);
+//            return ResponseUtil.fail(721,"团购规则修改失败");
+//        }
+        return ResponseUtil.ok();
     }
 
 
