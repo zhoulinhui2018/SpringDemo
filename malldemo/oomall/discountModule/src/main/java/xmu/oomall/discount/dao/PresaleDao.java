@@ -64,12 +64,15 @@ public class PresaleDao {
      */
     public PresaleRuleVo findById(Integer id){
         PresaleRule rule=presaleMapper.findPresaleRuleById(id);
+        if(rule==null){
+            return null;
+        }
         PresaleRuleVo ruleVo=new PresaleRuleVo();
         ruleVo.setPresaleRule(rule);
         Integer goodsId=rule.getGoodsId();
         //根据商品ID调用商品模块的服务获取GoodsPo
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
+        ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
         ruleVo.setGoodsPo(goods);
@@ -77,7 +80,7 @@ public class PresaleDao {
     }
 
     /**
-     * 根据goodsId找到所有的预售规则
+     * 根据goodsId找到预售规则
      * @param goodsId
      * @return
      */
@@ -86,7 +89,7 @@ public class PresaleDao {
 
         //根据商品ID调用商品模块的服务获取GoodsPo
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
+        ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
 
@@ -143,16 +146,22 @@ public class PresaleDao {
      * @return
      */
     public PresaleRule isPresaleOrder(Integer goodsId) {
+        System.out.println("aaaa");
         List<PresaleRule> presaleRuleList=presaleMapper.findByGoodsId(goodsId);
-        List<PresaleRule> selectRuleList=new ArrayList<>();
+        System.out.println("a");
+        if(presaleRuleList==null){
+            System.out.println();
+            return null;
+        }
+        System.out.println("b");
         LocalDateTime nowTime=LocalDateTime.now();
 
         for(PresaleRule rule:presaleRuleList){
-            //预售规则的付定金的时间段
+            //预售规则进行的时间段
             LocalDateTime beginTime=rule.getStartTime();
             LocalDateTime endTime=rule.getEndTime();
 
-            if((nowTime.compareTo(beginTime)>=0)&&(nowTime.compareTo(endTime)<=0)){
+            if((nowTime.isAfter(beginTime))&&(nowTime.isBefore(endTime))){
                 return rule;
             }
         }

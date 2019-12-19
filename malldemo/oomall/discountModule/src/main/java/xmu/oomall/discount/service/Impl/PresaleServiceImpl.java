@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.PresaleDao;
-import xmu.oomall.discount.domain.GoodsPo;
-import xmu.oomall.discount.domain.Log;
-import xmu.oomall.discount.domain.Order;
-import xmu.oomall.discount.domain.Payment;
+import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.service.IPresaleService;
 
@@ -82,18 +79,22 @@ public class PresaleServiceImpl implements IPresaleService {
 
     /**
      * 判断是否是预售订单，是的话返回对应的presaleRule
-     * @param goodsId
+     * @param item
      * @return
      */
     @Override
-    public PresaleRuleVo isPresaleOrder(Integer goodsId){
-        PresaleRule rule= presaleDao.isPresaleOrder(goodsId);
+    public PresaleRuleVo isPresaleOrder(OrderItem item){
+        Integer goodsId=item.getProduct().getGoodsId();
+
+        System.out.println("te");
+        if(presaleDao.isPresaleOrder(goodsId)==null){
+            return null;
+        }
+        System.out.println("tes1");
+        PresaleRule rule=presaleDao.isPresaleOrder(goodsId);
         PresaleRuleVo ruleVo=new PresaleRuleVo();
         ruleVo.setPresaleRule(rule);
-        RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("goodsService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-        GoodsPo goodsPo= restTemplate.getForObject(reqURL, GoodsPo.class,goodsId);
+        GoodsPo goodsPo=item.getProduct().getGoods();
         ruleVo.setGoodsPo(goodsPo);
         return ruleVo;
     }

@@ -94,10 +94,14 @@ public class CouponController {
         if (error != null) {
             log.setStatusCode(0);
             couponService.log(log);
-            return error;
+            return ResponseUtil.fail(712,"优惠券添加失败");
+        }
+        try {
+            couponService.addCouponRule(couponRule);
+        }catch (Exception e){
+            return ResponseUtil.fail(712,"优惠券添加失败");
         }
         couponService.log(log);
-        couponService.addCouponRule(couponRule);
         return ResponseUtil.ok(couponRule);
 
     }
@@ -158,7 +162,7 @@ public class CouponController {
         if (error != null) {
             log.setStatusCode(0);
             couponService.log(log);
-            return error;
+            return ResponseUtil.fail(711,"优惠券规则修改失败");
         }
         couponRule.setId(id);
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
@@ -176,7 +180,7 @@ public class CouponController {
             //先修改预售状态
             couponService.updateCouponRuleById(couponRule);
             couponService.updateCouponStatus(id);
-            return ResponseUtil.ok();
+            return ResponseUtil.ok(couponRule);
             //再进行退款操作
 
 
@@ -185,7 +189,7 @@ public class CouponController {
             if (couponService.updateCouponRuleById(couponRule) == 0) {
                 log.setStatusCode(0);
                 couponService.log(log);
-                return ResponseUtil.updatedDataFailed();
+                return ResponseUtil.fail(711,"优惠券规则修改失败");
             }
             return ResponseUtil.ok(couponRule);
 
@@ -193,7 +197,7 @@ public class CouponController {
             //在预售开始到结束时间内且未作废的情况，不能改动信息
             log.setStatusCode(0);
             couponService.log(log);
-            return ResponseUtil.updatedDataFailed();
+            return ResponseUtil.fail(711,"优惠券规则修改失败");
         }
 
     }
@@ -233,7 +237,7 @@ public class CouponController {
             if(result==0){ //出现非法id情况，删除失败
                 log.setStatusCode(0);
                 couponService.log(log);
-                return ResponseUtil.badArgumentValue();
+                return ResponseUtil.fail(713,"优惠券规则删除失败");
             }else{ //成功删除
                 log.setStatusCode(1);
                 couponService.log(log);
@@ -243,7 +247,7 @@ public class CouponController {
         else{ //不能删除
             log.setStatusCode(0);
             couponService.log(log);
-            return ResponseUtil.fail();
+            return ResponseUtil.fail(713,"优惠券规则删除失败");
         }
     }
 
@@ -328,7 +332,7 @@ public class CouponController {
         for(Integer eachId:couponRuleIds){
             if(couponRuleId.equals(eachId)){
                 //优惠券已经领取过了
-                return ResponseUtil.fail();
+                return ResponseUtil.fail(714,"领取优惠券失败");
             }
         }
         LocalDateTime now=LocalDateTime.now();
@@ -337,12 +341,16 @@ public class CouponController {
         //判断是否在起止期限内
         if((now.compareTo(beginTime)>=0)&&(now.compareTo(endTime)<=0)){
             coupon.setStatusCode(0);
-            couponService.addCoupon(coupon);
+            try {
+                couponService.addCoupon(coupon);
+            }catch (Exception e){
+                ResponseUtil.fail(714,"领取优惠券失败");
+            }
             return ResponseUtil.ok(coupon);
         }
         else{
             //优惠券过期了，无法领取
-            return ResponseUtil.fail();
+            return ResponseUtil.fail(714,"领取优惠券失败");
         }
 
     }

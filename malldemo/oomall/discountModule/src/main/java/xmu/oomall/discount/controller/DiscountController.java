@@ -317,7 +317,9 @@ public class DiscountController {
             }
             else{
                 OrderItem item=order.getOrderItemList().get(0);
-                Integer goodsId=item.getGoodsId();
+
+                //这里必须在GoodsPo里面找到goodsId
+                Integer goodsId=item.getProduct().getGoodsId();
                 //使用goodsId去预售规则和团购规则中查找
                 List<OrderItem> orderItemList1=new ArrayList<>();
 
@@ -325,29 +327,32 @@ public class DiscountController {
                 if(groupOnRuleService.isGrouponOrder(goodsId)==true){
 
                     item.setItemType(2);
-                    List<Payment> payments=groupOnRuleService.getGrouponPayment(order);
-                    order.setPaymentList(payments);
+//                    List<Payment> payments=groupOnRuleService.getGrouponPayment(order);
+//                    order.setPaymentList(payments);
                     orderItemList1.add(item);
                     order.setOrderItemList(orderItemList1);
                 }
                 else {
                     //判断是否是预售订单
-                   PresaleRuleVo ruleVo=presaleService.isPresaleOrder(goodsId);
-                   PresaleRule rule=ruleVo.getPresaleRule();
-                   List<OrderItem> orderItemList2=new ArrayList<>();
-                   if(rule!=null){
-                       item.setItemType(1);
-                       List<Payment> payments=presaleService.presalePayment(order,rule);
-                       order.setPaymentList(payments);
-                       orderItemList2.add(item);
-                       order.setOrderItemList(orderItemList2);
-                   }
+                    if (presaleService.isPresaleOrder(item) != null) {
+
+                        PresaleRuleVo ruleVo = presaleService.isPresaleOrder(item);
+                        PresaleRule rule = ruleVo.getPresaleRule();
+                        List<OrderItem> orderItemList2 = new ArrayList<>();
+                        item.setItemType(1);
+                        List<Payment> payments = presaleService.presalePayment(order, rule);
+                        order.setPaymentList(payments);
+                        orderItemList2.add(item);
+                        order.setOrderItemList(orderItemList2);
+                    }
+
                    else{
                        //明细为1的普通订单
                        List<OrderItem> orderItemList3=new ArrayList<>();
                        item.setItemType(0);
                        orderItemList3.add(item);
                        order.setOrderItemList(orderItemList3);
+
                    }
                 }
 

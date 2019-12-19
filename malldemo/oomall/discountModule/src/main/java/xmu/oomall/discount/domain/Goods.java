@@ -24,4 +24,5 @@ public class Goods extends GoodsPo {
     private GrouponRule grouponRule;
     private ShareRule shareRule;
     private PresaleRule presaleRule;
+
 }

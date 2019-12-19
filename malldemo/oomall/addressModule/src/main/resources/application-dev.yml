@@ -55,4 +55,4 @@ spring:
     name: addressService
 
 server:
-  port: 8768
+  port: 8805

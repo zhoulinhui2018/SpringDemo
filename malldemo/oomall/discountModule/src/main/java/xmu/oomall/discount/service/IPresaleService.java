@@ -61,10 +61,10 @@ public interface IPresaleService {
 
     /**
      * 根据商品id判断是否是预售订单
-     * @param goodsId
+     * @param item
      * @return
      */
-    PresaleRuleVo isPresaleOrder(Integer goodsId);
+    PresaleRuleVo isPresaleOrder(OrderItem item);
 
     Boolean getPresaleRuleOrders(PresaleRule presaleRule);
 

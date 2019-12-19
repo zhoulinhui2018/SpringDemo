@@ -96,4 +96,16 @@ public class GoodsPo {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
 
+    public static GoodsPo ALL_GOODS = new GoodsPo(0);
+    /**
+     * 用id构造Goods
+     * @param id
+     */
+    public GoodsPo(Integer id) {
+        this.id = id;
+        this.setGmtCreate(LocalDateTime.now());
+    }
+    public GoodsPo(){
+
+    }
 }
