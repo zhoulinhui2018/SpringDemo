@@ -95,6 +95,7 @@ public class AdController {
     */
     @GetMapping("/ads")
     public Object userFindAdsList(){
+        System.out.println("test");
         return ResponseUtil.ok(adService.findUserAds());
     }
 
