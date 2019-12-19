@@ -30,7 +30,7 @@ public interface CouponMapper {
      * @param id 优惠卷规则id
      * @return 优惠
      */
-    CouponRule findCouponRuleById(Integer id);
+    CouponRulePo findCouponRuleById(Integer id);
 
     /**
      * 管理员增加优惠券

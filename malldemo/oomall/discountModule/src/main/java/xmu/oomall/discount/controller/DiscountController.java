@@ -289,8 +289,9 @@ public class DiscountController {
 
             //使用优惠券的普通订单
             List<OrderItem> oldOrderItems=order.getOrderItemList();
-            List<OrderItem> newOrderItems=couponService.calcDiscount(oldOrderItems,couponId);
             Integer userId=order.getUserId();
+            List<OrderItem> newOrderItems=couponService.calcDiscount(oldOrderItems,couponId);
+
             //使用的优惠券状态置成已使用
             couponService.updateUserCouponStatus(userId,couponId);
 
@@ -327,8 +328,7 @@ public class DiscountController {
                 if(groupOnRuleService.isGrouponOrder(goodsId)==true){
 
                     item.setItemType(2);
-//                    List<Payment> payments=groupOnRuleService.getGrouponPayment(order);
-//                    order.setPaymentList(payments);
+//
                     orderItemList1.add(item);
                     order.setOrderItemList(orderItemList1);
                 }

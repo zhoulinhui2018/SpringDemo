@@ -37,7 +37,7 @@
     </insert>
 
     <select id="getCouponList" resultMap="couponRuleType">
-        select * from oomall_coupon_rule;
+        select * from oomall_coupon_rule
     </select>
 
     <delete id="deleteCouponRuleById" parameterType="Integer">

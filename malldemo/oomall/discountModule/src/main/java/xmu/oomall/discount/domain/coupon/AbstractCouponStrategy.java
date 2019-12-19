@@ -60,16 +60,21 @@ public abstract class AbstractCouponStrategy {
         Integer totalQuantity = 0;
 
         //优惠的货品
-        List<OrderItem> discountItems = new ArrayList<>(validItems.size());
+        List<OrderItem> discountItems = new ArrayList<>();
 
-        Iterator<OrderItem> itemIterator = validItems.iterator();
 
-        while (itemIterator.hasNext()) {
-            OrderItem item = itemIterator.next();
-            System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
-            totalPrice = totalPrice.add(item.getPrice().multiply(BigDecimal.valueOf(item.getNumber())));
-            totalQuantity += item.getNumber();
-            discountItems.add(item);
+        System.out.println("validItem的数量为"+validItems.size());
+
+        if(validItems.size()!=0) {
+            for (OrderItem item : validItems) {
+                System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
+
+                System.out.println("数量为：" + item.getNumber());
+
+                totalPrice = totalPrice.add(item.getPrice().multiply(BigDecimal.valueOf(item.getNumber())));
+                totalQuantity += item.getNumber();
+                discountItems.add(item);
+            }
         }
 
         System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
@@ -90,6 +95,8 @@ public abstract class AbstractCouponStrategy {
                 BigDecimal dealPrice = this.getDealPrice(item.getPrice(), totalPrice);
                 System.out.println("优惠价格 dealPrice=" + dealPrice);
                 item.setDealPrice(dealPrice);
+
+                System.out.println("订单明细数量为："+item.getNumber());
                 dealTotalPrice = dealTotalPrice.add(dealPrice.multiply(BigDecimal.valueOf(item.getNumber())));
                 System.out.println("总优惠价 dealTotalPrice=" + dealTotalPrice);
                 System.out.println("优惠明细 item=" + item);

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
 import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
 import java.util.List;

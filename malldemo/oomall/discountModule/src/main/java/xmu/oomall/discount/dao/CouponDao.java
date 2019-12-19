@@ -11,6 +11,7 @@ import xmu.oomall.discount.domain.goods.GoodsInfo;
 import xmu.oomall.discount.mapper.CouponMapper;
 import xmu.oomall.discount.util.JacksonUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -105,8 +106,8 @@ public class CouponDao {
      * @param id
      * @return
      */
-    public CouponRule findCouponRuleById(Integer id) {
-        CouponRule couponRule=couponMapper.findCouponRuleById(id);
+    public CouponRulePo findCouponRuleById(Integer id) {
+        CouponRulePo couponRule=couponMapper.findCouponRuleById(id);
         return couponRule;
     }
 
@@ -157,26 +158,81 @@ public class CouponDao {
 
 
     /**
+     * 把couponRulePo转成couponRule
+     * @param couponRulePo
+     * @return
+     */
+    public CouponRule convertToCouponRule(CouponRulePo couponRulePo){
+        CouponRule couponRule=new CouponRule();
+        couponRule.setId(couponRulePo.getId());
+        couponRule.setName(couponRulePo.getName());
+        couponRule.setBrief(couponRulePo.getBrief());
+        couponRule.setBeginTime(couponRulePo.getBeginTime());
+        couponRule.setEndTime(couponRulePo.getEndTime());
+        couponRule.setStatusCode(couponRulePo.getStatusCode());
+        couponRule.setPicUrl(couponRulePo.getPicUrl());
+        couponRule.setValidPeriod(couponRulePo.getValidPeriod());
+        couponRule.setStrategy(couponRulePo.getStrategy());
+        couponRule.setTotal(couponRulePo.getTotal());
+        couponRule.setCollectedNum(couponRulePo.getCollectedNum());
+        couponRule.setGoodsList1(couponRulePo.getGoodsList1());
+        couponRule.setGoodsList2(couponRulePo.getGoodsList2());
+        couponRule.setGmtCreate(couponRulePo.getGmtCreate());
+        couponRule.setGmtModified(couponRulePo.getGmtModified());
+        couponRule.setBeDeleted(couponRulePo.getBeDeleted());
+        couponRule.setCouponStrategy(couponRulePo.getStrategy());
+        return couponRule;
+    }
+
+    /**
+     * 把CouponPo转成Coupon
+     * @param couponPo
+     * @return
+     */
+    public Coupon convertToCoupon(CouponPo couponPo){
+        Coupon coupon=new Coupon();
+        coupon.setId(couponPo.getId());
+        coupon.setUserId(couponPo.getUserId());
+        coupon.setCouponRuleId(couponPo.getCouponRuleId());
+        coupon.setCouponSn(couponPo.getCouponSn());
+        coupon.setBeginTime(couponPo.getBeginTime());
+        coupon.setEndTime(couponPo.getEndTime());
+        coupon.setUsedTime(couponPo.getUsedTime());
+        coupon.setName(couponPo.getName());
+        coupon.setPicUrl(couponPo.getPicUrl());
+        coupon.setGmtCreate(couponPo.getGmtCreate());
+        coupon.setGmtModified(couponPo.getGmtModified());
+        coupon.setBeDeleted(couponPo.getBeDeleted());
+        coupon.setStatusCode(couponPo.getStatusCode());
+        Integer couponRuleId=couponPo.getCouponRuleId();
+        CouponRulePo couponRulePo=couponMapper.findCouponRuleById(couponRuleId);
+        CouponRule couponRule=convertToCouponRule(couponRulePo);
+        coupon.setCouponRule(couponRule);
+        return coupon;
+    }
+    /**
      * 获取可用优惠券列表
      * @param goodsIdList
      * @param userId
      * @return
      */
     public List<Coupon> getCanUsedCoupons(List<Integer> goodsIdList,Integer userId) {
+        //获取用户所有可用优惠券
         List<CouponPo> coupons=couponMapper.getCouponMyList(userId);
-
 
         List<Coupon> canUsedCoupons=new ArrayList<>();
         for(int i=0;i<goodsIdList.size();i++)
         {
             for(int j=0;j<coupons.size();j++) {
                 //用CouponRule给CouponRulePo赋值
-                CouponRulePo couponRulePo=couponMapper.findCouponRuleById(coupons.get(j).getCouponRuleId());
-                if(isUsedOnGoods(goodsIdList.get(i),couponRulePo)==true)
+                Integer couponRuleId=coupons.get(j).getCouponRuleId();
+                CouponRulePo couponRulePo=couponMapper.findCouponRuleById(couponRuleId);
+                Integer goodsId=goodsIdList.get(i);
+                if(isUsedOnGoods(goodsId,couponRulePo)==true)
                 {
-                    Coupon coupon=new Coupon(coupons.get(j));
-                    CouponRule rule=findCouponRuleById(coupons.get(j).getCouponRuleId());
-                    coupon.setCouponRule(rule);
+                    Coupon coupon=convertToCoupon(coupons.get(j));
+                    CouponRule couponRule=convertToCouponRule(couponRulePo);
+                    coupon.setCouponRule(couponRule);
                     canUsedCoupons.add(coupon);
 
                 }
@@ -194,9 +250,12 @@ public class CouponDao {
      * @return
      */
     private boolean isUsedOnGoods(Integer goodsId, CouponRulePo couponRule) {
-        Set<Integer> goodsIds=new TreeSet<>();
+        System.out.println("usedonGoods");
+        List<Integer> goodsIds=new ArrayList<>();
         goodsIds.clear();
         goodsIds.addAll(getGoodsIdsInCouponRule(couponRule));
+
+        System.out.println("addAll");
         if(goodsIds.contains(Goods.ALL_GOODS.getId()))
         {
             return true;
@@ -208,16 +267,38 @@ public class CouponDao {
     }
 
     /**
-     * 获取优惠券中适用的所有商品
-     * @param
+     * 获得适用商品id列表
+     ** { gIDs：[xxx,xxx,xxx,xxx,xxx]}
      * @param couponRule
      * @return
      */
     public List<Integer> getGoodsIdsInCouponRule(CouponRulePo couponRule){
+        String jsonString1 = couponRule.getGoodsList1();
+        String jsonString2=couponRule.getGoodsList2();
+        jsonString1 = org.apache.commons.text.StringEscapeUtils.unescapeJson(jsonString1);
+        jsonString2 = org.apache.commons.text.StringEscapeUtils.unescapeJson(jsonString2);
+        System.out.println("jsonString1="+jsonString1);
+        System.out.println("jsonString2="+jsonString2);
 
-            String jsonString = couponRule.getGoodsList1() + "," + couponRule.getGoodsList2();
-            List<Integer> goodsIds = Arrays.asList(jsonString.split(",")).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
-            return goodsIds;
+        List<Integer> goodsId1=new ArrayList<>();
+        List<Integer> goodsId2=new ArrayList<>();
+        if(jsonString1!=null) {
+            goodsId1 = JacksonUtil.parseIntegerList(jsonString1, "goodsIds");
+            System.out.println("goodsId1参数" + goodsId1);
+        }
+        if(jsonString2!=null){
+            goodsId2=JacksonUtil.parseIntegerList(jsonString2, "goodsIds");
+            System.out.println("goodsId2参数"+goodsId2);
+        }
+
+        if(goodsId2!=null) {
+            for (Integer goodsId : goodsId2) {
+                goodsId1.add(goodsId);
+            }
+        }
+        System.out.println(goodsId1);
+        return goodsId1;
+
 
     }
 
@@ -231,9 +312,12 @@ public class CouponDao {
         System.out.println("getValidItems参数：items = "+items);
         List<OrderItem> validItems = new ArrayList<OrderItem>(items.size());
         CouponPo coupon=couponMapper.findCouponById(couponId);
-        CouponRulePo couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
+        System.out.println("coupon");
+        Integer couponRuleId=coupon.getCouponRuleId();
+        CouponRulePo couponRule=couponMapper.findCouponRuleById(couponRuleId);
+        System.out.println("couponRule");
+
         for (OrderItem item: items){
-            //根据orderitem->product->GoodsPo->GoodsId
             Integer goodsId=item.getProduct().getGoodsId();
             if (isUsedOnGoods(goodsId,couponRule)){
                 validItems.add(item);
@@ -288,15 +372,26 @@ public class CouponDao {
      * @return
      */
     public List<OrderItem> calcDiscount(List<OrderItem> orderItems, Integer couponId) {
+        System.out.println("aaa");
       List<OrderItem> validItems=getValidItems(orderItems, couponId);
+
+
       CouponPo coupon=couponMapper.findCouponById(couponId);
+
+      System.out.println("bbb");
+
+      //这里需要判断一下从用户已经领取的优惠券中使用
       BigDecimal totalPrice=BigDecimal.ZERO;
+
+      //findCouponRuleById返回的的是CouponRulePo
       CouponRulePo couponRule=couponMapper.findCouponRuleById(coupon.getCouponRuleId());
+
+      System.out.println("ccc");
 
       if(validItems.size()!=0)
       {
           List<OrderItem> newItems=this.getStrategy(couponRule).cacuDiscount(orderItems,couponId);
-          //System.out.println(newItems);
+          System.out.println("ddd");
           return newItems;
       }
       else

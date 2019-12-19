@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 
 
@@ -40,5 +41,10 @@ class CouponServiceTest {
     public void deleteCouponRuleByIdTest(){
         int result=couponService.deleteCouponRuleById(100001);
         System.out.println(result);
+    }
+    @Test
+    public void findcouponByIdTest(){
+        CouponPo couponPo=couponService.findCouponById(1);
+        System.out.println(couponPo);
     }
 }

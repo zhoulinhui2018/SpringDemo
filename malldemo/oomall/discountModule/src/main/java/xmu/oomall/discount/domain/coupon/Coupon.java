@@ -17,7 +17,4 @@ import lombok.ToString;
 public class Coupon extends CouponPo {
     private CouponRule couponRule;
 
-    public Coupon(CouponPo couponPo) {
-        super();
-    }
 }

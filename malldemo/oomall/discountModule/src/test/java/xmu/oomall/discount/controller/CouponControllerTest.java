@@ -113,4 +113,13 @@ public class CouponControllerTest {
 //        System.out.println(result);
 //    }
 
+    @Test
+    public void getUserCouponRulesTest(){
+        Object object=couponController.userlist(1,10);
+        System.out.println(object);
+
+    }
+
+
+
 }
