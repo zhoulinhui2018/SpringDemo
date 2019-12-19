@@ -34,7 +34,6 @@ public class LogController {
                                        @RequestParam(defaultValue = "10") Integer limit,
                                        @RequestParam Integer adminId,
                                        HttpServletRequest request){
-//                                       HttpServletRequest request) {
 //        if(request.getIntHeader("userId")==0){
 //            return ResponseUtil.unlogin();
 //        }
@@ -52,15 +51,15 @@ public class LogController {
 
         Log newlog = new Log();
         newlog.setId(adminId);
-        List<Log> loglist = new ArrayList<Log>();
+        List<Log> logList;
         try {
-            loglist = logService.findLogListByAdminId(page, limit, newlog);
+            logList = logService.findLogListByAdminId(page, limit, newlog);
         }catch (Exception e){
             log.setStatusCode(0);
             logService.addLog(log);
             return ResponseUtil.fail(901,"查看日志失败");
         }
-        return ResponseUtil.ok(loglist);
+        return ResponseUtil.ok(logList);
     }
 
     @PostMapping("/logs")
