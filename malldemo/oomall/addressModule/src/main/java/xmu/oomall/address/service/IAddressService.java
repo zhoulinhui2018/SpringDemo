@@ -43,15 +43,6 @@ public interface IAddressService {
     public AddressPo addNewAddress(AddressPo address);
 
     /**
-     * 删除收货地址
-     * @param id
-     * @return 用boolean表示删除操作是否成功
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
-     */
-    public boolean deleteAddress(Integer id);
-
-    /**
      * 更新收货地址
      * @param address 用户收货地址
      * @return 更新操作结果

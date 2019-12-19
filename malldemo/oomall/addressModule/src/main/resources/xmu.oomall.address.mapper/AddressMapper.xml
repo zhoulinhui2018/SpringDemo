@@ -33,12 +33,7 @@
         #{mobile},#{beDefault},#{userId})
     </insert>
 
-    <update id="deleteAddress" parameterType="integer">
-        update oomall_address
-        set is_deleted=1 where id=#{id}
-    </update>
-
-    <update id="updateAddress"  parameterType="xmu.oomall.address.domain.AddressPo" >
+    <update id="updateAddress"  parameterType="xmu.oomall.address.domain.Address" >
         update oomall_address
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate != null">
@@ -68,8 +63,11 @@
             <if test="mobile != null">
                 mobile=#{mobile},
             </if>
-            <if test="beDefault != null">
-                is_default=#{beDefault},
+            <if test="beDefault ==true">
+                is_default=1,
+            </if>
+            <if test="beDefault ==false">
+                is_default=0,
             </if>
             <if test="userId != null">
                 user_id=#{userId},
@@ -77,11 +75,35 @@
             <if test="consignee != null">
                 consignee=#{consignee},
             </if>
+            <if test="beDeleted == true">
+                is_deleted=1,
+            </if>
+
         </trim>
         where id=#{id}
     </update>
+    <update id="setDefaultAddress">
 
-    <select id="getAddressDetail" resultType="xmu.oomall.address.domain.Address" parameterType="Integer">
+
+    </update>
+
+    <resultMap id="AddressPoResultMap" type="xmu.oomall.address.domain.Address">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="beDeleted" column="is_deleted"/>
+        <result property="countyId" column="county_id"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="cityId" column="city_id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="postalCode" column="postal_code"/>
+        <result property="addressDetail" column="address_detail"/>
+        <result property="mobile" column="mobile"/>
+        <result property="beDefault" column="is_default"/>
+        <result property="consignee" column="consignee"/>
+    </resultMap>
+
+    <select id="getAddressDetail" resultMap="AddressPoResultMap" parameterType="Integer">
         select *
         from oomall_address
         where id=#{id}

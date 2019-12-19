@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="xmu.oomall.goodsInfo.mapper.ProductMapper">
-    <select id="listProductByGoodsId" parameterType="Integer" resultType="Product">
+<mapper namespace="xmu.oomall.goods.mapper.ProductMapper">
+    <select id="listProductByGoodsId" parameterType="Integer" resultType="xmu.oomall.goods.domain.Product">
             select *
 
             from product where goods_id = #{goodsId}
@@ -38,9 +38,10 @@
     </update>
 
 
+    <select id="getGoodsPoById" parameterType="Integer" resultType="xmu.oomall.goods.domain.GoodsPo">
+        select *
+        from oomall_goods
+        where id=#{id}
+    </select>
 
-<!--    <select id="findUserAds" parameterType="date" resultType="Ad">-->
-<!--        select * from ad-->
-<!--        where #{now} between start_time and end_time-->
-<!--    </select>-->
 </mapper>

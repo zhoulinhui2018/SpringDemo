@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.FootprintItemPo;
+import xmu.oomall.footprint.domain.GoodsPo;
 import xmu.oomall.footprint.domain.Log;
 import xmu.oomall.footprint.service.impl.FootprintService;
 import xmu.oomall.footprint.util.ResponseUtil;
@@ -19,8 +20,13 @@ public class FootprintController {
     @Autowired
     private FootprintService footprintService;
 
+    private void changePoToFootprintItem(FootprintItem footprintItem){
+        Integer goodsId=footprintItem.getGoodsId();
+        GoodsPo goodsPo=footprintService.getGoodsPoById(goodsId);
+        footprintItem.setGoodsPo(goodsPo);
+    }
     /**
-     * 用户查询足迹信息（测试已通过）
+     * 用户查询足迹信息
      * @param request 前端请求
      * @param page 分页大小
      * @param limit 分页限制
@@ -36,40 +42,21 @@ public class FootprintController {
         if(userId==0){
             return ResponseUtil.unlogin();
         }
-
         List<FootprintItem> footprintList;
         try {
             footprintList= footprintService.getUserFootprintList(page,limit,userId);
         } catch (Exception e) {
             return ResponseUtil.serious();
         }
+        for(int i=0;i<footprintList.size();i++){
+            changePoToFootprintItem(footprintList.get(i));
+        }
         return ResponseUtil.ok(footprintList);
     }
 
-    /**
-     * 用户删除足迹信息（测试已通过）
-     * @param id 足迹id
-     * @return 用boolean表示删除操作是否成功
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
-     */
-    @DeleteMapping("/footprints/{id}")
-    public Object deleteFootprint(@PathVariable Integer id){
-        boolean result=footprintService.deleteFootprint(id);
-        if(result){
-            return ResponseUtil.ok(result);
-        }
-        else{
-            return ResponseUtil.inValidateFootprint();
-        }
-    }
 
     /**
-     * 管理员按条件查询足迹信息（测试已通过）
-     * 测试内容：
-     * 1. username和goodsname都有
-     * 2. username或goodsname为空
-     * 3. 两个都为空（默认返回所有）
+     * 管理员按条件查询足迹信息
      * @param userId 查询的用户id
      * @param goodsId 查询的商品id
      * @param page 分页大小
@@ -101,13 +88,17 @@ public class FootprintController {
             footprintList=footprintService.listFootprintByCondition(page,limit,userId,goodsId);
         } catch (Exception e) {
             log.setStatusCode(0);
-            System.out.println(log);
             footprintService.log(log);
             return ResponseUtil.inValidateFootprint();
         }
         footprintService.log(log);
+        for(int i=0;i<footprintList.size();i++){
+            changePoToFootprintItem(footprintList.get(i));
+        }
         return ResponseUtil.ok(footprintList);
     }
+
+    /*******    管理员通过姓名搜索足迹的实现      ********/
 //    @GetMapping("/admin/footprints")
 //    public Object listFootprintByCondition(HttpServletRequest request,
 //                                           @RequestParam String userName,
@@ -137,7 +128,6 @@ public class FootprintController {
 //    }
 
 
-
     /**
      * 内部接口：增加足迹
      * @param footprintItemPo
@@ -146,13 +136,35 @@ public class FootprintController {
      * @Date: 2019/12/14
      */
     @PostMapping("/footprints")
-    public Object addFootprint( FootprintItemPo footprintItemPo){
-        boolean result=footprintService.addFootprint(footprintItemPo);
-        if(result){
-            return ResponseUtil.ok(footprintItemPo);
+    public FootprintItemPo addFootprint( FootprintItemPo footprintItemPo){
+        try {
+            footprintService.addFootprint(footprintItemPo);
+        } catch (Exception e) {
+            return null;
         }
-        else{
-            return ResponseUtil.addFootprintFailed();
-        }
+        return footprintItemPo;
     }
+
+
+//    /**
+//     * 用户删除足迹信息（功能已删除）
+//     * @param id 足迹id
+//     * @return 用boolean表示删除操作是否成功
+//     * @Author: Zhang Yaqing
+//     * @Date: 2019/12/12
+//     */
+//    @DeleteMapping("/footprints/{id}")
+//    public Object deleteFootprint(@PathVariable Integer id){
+//        boolean result=footprintService.deleteFootprint(id);
+//        if(result){
+//            return ResponseUtil.ok();
+//        }
+//        else{
+//            return ResponseUtil.inValidateFootprint();
+//        }
+//    }
+
 }
+
+
+

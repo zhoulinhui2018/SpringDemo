@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import xmu.oomall.footprint.dao.FootprintDao;
 import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.FootprintItemPo;
+import xmu.oomall.footprint.domain.GoodsPo;
 import xmu.oomall.footprint.domain.Log;
 import xmu.oomall.footprint.service.IFootprintService;
 
@@ -30,11 +31,8 @@ public class FootprintService implements IFootprintService {
      */
     @Override
     public void log(Log log){
-        System.out.println("进入FootprintService.log");
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("logService");
-        System.out.println(instance.getHost());
-        System.out.println(instance.getPort());
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
         restTemplate.postForObject(reqURL,log,Log.class);
     }
@@ -60,5 +58,12 @@ public class FootprintService implements IFootprintService {
     @Override
     public boolean addFootprint(FootprintItemPo footprintItemPo) {
         return footprintDao.addFootprint(footprintItemPo);
+    }
+
+    public GoodsPo getGoodsPoById(Integer goodsId) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("goodsService");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
+        return restTemplate.getForObject(reqURL,GoodsPo.class);
     }
 }

@@ -6,6 +6,7 @@ import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
 import xmu.oomall.address.domain.Region;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,11 +19,11 @@ public interface AddressMapper {
 
     public boolean addNewAddress(AddressPo address);
 
-    public boolean deleteAddress(Integer id);
-
     public boolean updateAddress(AddressPo address);
 
     public Address getAddressDetail(Integer id);
 
     public Region getRegion(Integer id);
+
+    void setDefaultAddress(Integer id);
 }

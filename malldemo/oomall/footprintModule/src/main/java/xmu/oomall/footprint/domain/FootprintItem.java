@@ -17,12 +17,4 @@ import lombok.ToString;
 public class FootprintItem extends FootprintItemPo {
 
     private GoodsPo goodsPo;
-
-    public GoodsPo getGoodsPo() {
-        return goodsPo;
-    }
-
-    public void setGoodsPo(GoodsPo goodsPo) {
-        this.goodsPo = goodsPo;
-    }
 }

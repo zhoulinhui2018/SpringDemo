@@ -2,6 +2,7 @@ package xmu.oomall.goods.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import xmu.oomall.goods.domain.GoodsPo;
 import xmu.oomall.goods.domain.Product;
 import xmu.oomall.goods.service.impl.ProductService;
 import xmu.oomall.util.ResponseUtil;
@@ -68,5 +69,10 @@ public class ProductController {
     public Object deleteProductById(@PathVariable Integer id){
         productService.deleteProductById(id);
         return ResponseUtil.ok();
+    }
+
+    @GetMapping("/inner/goods/{id}")
+    public GoodsPo getGoodsPoById(@PathVariable Integer id){
+        return productService.getGoodsPoById(id);
     }
 }

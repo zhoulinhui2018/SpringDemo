@@ -2,6 +2,7 @@ package xmu.oomall.goods.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import xmu.oomall.goods.domain.GoodsPo;
 import xmu.oomall.goods.domain.Product;
 import xmu.oomall.goods.mapper.ProductMapper;
 import java.util.ArrayList;
@@ -26,4 +27,7 @@ public class ProductDao {
 
     public List<Product> listProductByGoodsId(Integer id){return productMapper.listProductByGoodsId(id);}
 
+    public GoodsPo getGoodsPoById(Integer id) {
+        return productMapper.getGoodsPoById(id);
+    }
 }

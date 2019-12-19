@@ -6,6 +6,7 @@
         select *
         from oomall_footprint_item
         where user_id= #{userId}
+        order by oomall_footprint_item.birth_time desc
     </select>
 
     <insert id="addFootprint" parameterType="xmu.oomall.footprint.domain.FootprintItem" useGeneratedKeys="true" keyProperty="id">
@@ -46,18 +47,14 @@
 <!--    </select>-->
 
         <select id="listFootprintByCondition" resultMap="footprintItemResultMap">
-            select oomall_footprint_item.id,
-            oomall_footprint_item.gmt_create,
-            oomall_footprint_item.birth_time,
-            oomall_footprint_item.user_id,
-            oomall_footprint_item.goods_id
-            from oomall_footprint_item,oomall_goods,oomall_user
+            select *
+            from oomall_footprint_item
             where
-            <if test="goodsName!=null and goodsName!=''">
-                (oomall_footprint_item.goods_id=#{goodsId}) and
+            <if test="goodsId!=0">
+                goods_id=#{goodsId} and
             </if>
-            <if test="userName!=null and userName!=''">
-                (oomall_footprint_item.user_id=#{userId}) and
+            <if test="userId!=0">
+                user_id=#{userId} and
             </if>
             true
             order by oomall_footprint_item.birth_time desc

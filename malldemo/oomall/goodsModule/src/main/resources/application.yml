@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ad
+    name: goods
   profiles:
     active: dev
 

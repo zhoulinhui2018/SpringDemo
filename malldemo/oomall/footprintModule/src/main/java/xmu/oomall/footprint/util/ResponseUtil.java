@@ -96,7 +96,7 @@ public class ResponseUtil {
     }
 
     public static Object inValidateFootprint() {
-        return fail(740, "该足迹是无效足迹（不在数据库里的或者逻辑删除）");
+        return fail(740, "该足迹是无效足迹");
     }
 
     public static Object addFootprintFailed() {
