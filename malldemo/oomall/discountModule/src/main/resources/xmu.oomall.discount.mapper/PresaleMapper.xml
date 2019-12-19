@@ -4,35 +4,35 @@
 
 
     <insert id="add" parameterType="PresaleRule" useGeneratedKeys="true" keyProperty="id">
-        insert into presale_rule(id,goods_id,start_time,ad_end_time,final_start_time,end_time,
+        insert into oomall_presale_rule(id,goods_id,start_time,ad_end_time,final_start_time,end_time,
                                   status,gmt_create, gmt_modified, is_deleted,deposit,final_payment)
         values (#{id},#{goodsId},#{startTime},#{adEndTime},#{finalStartTime},#{endTime},
                 #{statusCode},#{gmtCreate}, #{gmtModified}, #{beDeleted},#{deposit},#{finalPayment})
     </insert>
 
     <delete id="deleteById" parameterType="Integer">
-        delete from presale_rule  where id=#{id};
+        delete from oomall_presale_rule  where id=#{id};
     </delete>
 
     <select id="findPresaleRuleById" resultMap="PresaleRuleResultType" parameterType="Integer">
         select *
-        from presale_rule
+        from oomall_presale_rule
         where id= #{id}
     </select>
 
     <select id="findByGoodsId" resultMap="PresaleRuleResultType" parameterType="Integer">
         select *
-        from presale_rule
+        from oomall_presale_rule
         where goods_id= #{goodsId}
     </select>
 
     <select id="findAllPresaleRules" resultMap="PresaleRuleResultType" parameterType="Integer">
         select *
-        from presale_rule
+        from oomall_presale_rule
     </select>
 
     <update id="updateById"  parameterType="presaleRule" >
-        update presale_rule
+        update oomall_presale_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate != null">
                 gmt_create = #{gmtCreate},
@@ -80,7 +80,6 @@
         <result column="gmt_create" property="gmtCreate"/>
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
-        <result column="status" property="statusCode"/>
         <result column="deposit" property="deposit"/>
         <result column="final_payment" property="finalPayment"/>
     </resultMap>

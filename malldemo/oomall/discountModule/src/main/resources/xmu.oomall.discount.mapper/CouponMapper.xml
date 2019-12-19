@@ -37,8 +37,7 @@
     </insert>
 
     <select id="getCouponList" resultMap="couponRuleType">
-        select *
-        from oomall_coupon_rule;
+        select * from oomall_coupon_rule;
     </select>
 
     <delete id="deleteCouponRuleById" parameterType="Integer">
@@ -77,16 +76,6 @@
         where user_id=#{userId} and is_deleted = 0
     </select>
 
-    <select id="getProductId" parameterType="Integer" resultType="Integer">
-        select product_id
-        from oomall_cart_item where id=#{itemId};
-    </select>
-
-    <select id="getGoodsId" parameterType="Integer" resultType="Integer">
-        select goods_id
-        from oomall_product where id=#{goodsId};
-    </select>
-
     <select id="getCouponRule" parameterType="Integer" resultMap="couponRuleType">
         select *
         from oomall_coupon_rule where id=#{couponRuleId};
@@ -96,9 +85,6 @@
         select * from oomall_coupon where id = #{id}
     </select>
 
-    <select id="getProductPrice" parameterType="Integer" resultType="BigDecimal">
-        select price from oomall_product where id = #{goodsId}
-    </select>
 
     <update id="updateCouponStatus" parameterType="Integer" >
         update oomall_coupon

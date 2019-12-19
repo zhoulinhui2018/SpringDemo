@@ -2,6 +2,7 @@ package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
 import java.math.BigDecimal;
@@ -29,7 +30,7 @@ public interface CouponMapper {
      * @param id 优惠卷规则id
      * @return 优惠
      */
-    CouponRulePo findCouponRuleById(Integer id);
+    CouponRule findCouponRuleById(Integer id);
 
     /**
      * 管理员增加优惠券
@@ -59,15 +60,11 @@ public interface CouponMapper {
 
     List<CouponPo> getCouponMyList(Integer userId);
 
-    Integer getProductId(Integer itemId);
 
-    Integer getGoodsId(Integer productId);
-
-    CouponRulePo getCouponRule(Integer couponRuleId);
+    CouponRule getCouponRule(Integer couponRuleId);
 
     CouponPo findCouponById(Integer id);
 
-    BigDecimal getProductPrice(Integer productId);
 
     void addCoupon(CouponPo coupon);
 
@@ -92,4 +89,5 @@ public interface CouponMapper {
     int updateUserCouponStatus(CouponPo couponPo);
 
     void deleteAllCoupons(Integer id);
+
 }

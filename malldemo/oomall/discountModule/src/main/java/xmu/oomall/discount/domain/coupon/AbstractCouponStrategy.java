@@ -120,16 +120,15 @@ public abstract class AbstractCouponStrategy {
                     //无数量为1的明细，拆第一个
                     OrderItem item = validItems.get(0);
                     Integer quantity = item.getNumber();
-                    item.setNumber(quantity - 1);//原item的数量减一
+                    item.setNumber(quantity - 1);
 
-                    newItems.add(item);//加上第一项明细
+                    newItems.add(item);
                     try {
                         OrderItem newItem = (OrderItem) item.clone();
-                        newItem.setNumber(1);//用newItem来代替以前的item
+                        newItem.setNumber(1);
                         BigDecimal dealPrice = newItem.getDealPrice();
                         newItem.setDealPrice(dealPrice.add(error));
-                        newItems.add(newItem);//把拆出来的第一项放进新的明细中
-
+                        newItems.add(newItem);
                         //剩余明细也放进newItems里面，因为newItems是最后更新的明细
                         for(int i=1;i<validItems.size();i++)
                         {
@@ -141,7 +140,6 @@ public abstract class AbstractCouponStrategy {
                 }
 
             }
-            //System.out.println("cacuDiscount返回 newItems = " + newItems);
             return newItems;
         }
         else {

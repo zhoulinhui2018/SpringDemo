@@ -3,6 +3,7 @@ package xmu.oomall.discount.service;
 import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
@@ -78,7 +79,7 @@ public interface ICouponService {
      * @param userId
      * @return
      */
-    Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
+    List<Coupon> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId);
 
     /**
      * 根据id找到优惠券
@@ -108,11 +109,6 @@ public interface ICouponService {
      */
     int updateCouponStatus(Integer id);
 
-    /**
-     * 返回用户可见的优惠券列表
-     * @return
-     */
-    List<CouponRulePo> findUserCouponRules();
 
     /**
      * 使用优惠券后置成已使用
@@ -120,4 +116,12 @@ public interface ICouponService {
      * @param couponId
      */
     int updateUserCouponStatus(Integer userId, Integer couponId);
+
+    /**
+     * 用户查看优惠券规则
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<CouponRulePo> getUserCouponRules(Integer page, Integer limit);
 }

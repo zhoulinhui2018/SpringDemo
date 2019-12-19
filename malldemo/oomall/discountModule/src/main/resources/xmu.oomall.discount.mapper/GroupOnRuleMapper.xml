@@ -7,7 +7,7 @@
     <select id="findGroupOnRuleById" resultMap="GrouponRuleType" parameterType="Integer">
         select *
         from oomall_groupon_rule
-        where id= #{id}
+        where id= #{id} and is_deleted=0
     </select>
 
 

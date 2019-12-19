@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.dao.CouponDao;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.OrderItem;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.ICouponService;
@@ -90,10 +91,6 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public List<CouponRulePo> findUserCouponRules(){
-        return couponDao.findUserCouponRules();
-    }
-    @Override
     public void addCouponRule(CouponRulePo couponRule) {
         couponDao.addCouponRule(couponRule);
 
@@ -118,8 +115,8 @@ public class CouponServiceImpl implements ICouponService {
 
 
     @Override
-    public Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
-        Set<CouponRulePo> canUsedCoupons=couponDao.getCanUsedCoupons(goodsIdList,userId);
+    public List<Coupon> getCanUsedCoupons(List<Integer> goodsIdList, Integer userId){
+        List<Coupon> canUsedCoupons=couponDao.getCanUsedCoupons(goodsIdList,userId);
         return canUsedCoupons;
     }
 
@@ -147,6 +144,20 @@ public class CouponServiceImpl implements ICouponService {
     @Override
     public int updateUserCouponStatus(Integer userId, Integer couponId){
         return couponDao.updateUserCouponStatus(userId,couponId);
+    }
+
+    /**
+     * 用户查看优惠券规则
+     * @param page
+     * @param limit
+     * @return
+     */
+    @Override
+    public List<CouponRulePo> getUserCouponRules(Integer page, Integer limit){
+        PageHelper.startPage(page,limit);
+        List<CouponRulePo> userList=couponDao.getUserCouponRules();
+        return userList;
+
     }
 
 }
