@@ -94,7 +94,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     }
 
     @Override
-    public GrouponRulePo findById(Integer id) {
+    public GrouponRulePo findById(Integer id) throws Exception{
         return groupOnDao.findById(id);
     }
 
@@ -160,6 +160,9 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
         Goods goods = restTemplate.getForObject(reqURL, Goods.class,grouponRulePo.getGoodsId());
+        if (goods==null){
+            return null;
+        }
         GoodsPo goodsPo=new GoodsPo();
         goodsPo.setId(goods.getId());
         goodsPo.setGmtCreate(goods.getGmtCreate());

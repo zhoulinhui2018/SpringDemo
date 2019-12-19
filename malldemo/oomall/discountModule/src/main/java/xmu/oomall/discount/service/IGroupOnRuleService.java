@@ -111,7 +111,7 @@ public interface IGroupOnRuleService {
     * @Author: Zhou Linhui
     * @Date: 2019/12/7
     */
-    GrouponRulePo findById(Integer id);
+    GrouponRulePo findById(Integer id) throws Exception;
 
     int update(GrouponRulePo grouponRulePo);
 
