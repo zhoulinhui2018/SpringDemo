@@ -18,65 +18,57 @@ mybatis:
 #  profiles:
 #    active: dev
 
-#management:
-#  endpoint:
-#    health:
-#      show-details: always
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health, info
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, info
 
 
 
 
 #刘仁帅组
-eureka:
-  client: # 客户端进行Eureka注册的配置
-    service-url:
-      defaultZone: http://148.70.28.112:8761/eureka
-  instance:
-    prefer-ip-address: true
-    ip-address: 172.20.10.7
+#eureka:
+#  client: # 客户端进行Eureka注册的配置
+#    service-url:
+#      defaultZone: http://148.70.28.112:8761/eureka
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 172.20.10.7
+#
+#spring:
+#  datasource:
+#    url: jdbc:mysql://148.70.28.112:3306/wowomall?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+#    username: wowoto
+#    password: zqhlovekly
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  application:
+#    name: discountService
+#
+#server:
+#  port: 8770
 
+
+#周林辉
 spring:
   datasource:
-    url: jdbc:mysql://148.70.28.112:3306/wowomall?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    username: wowoto
-    password: zqhlovekly
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+    username: root
+    #  password: Zhangyaqing123
+    password: 123456
   application:
-    name: discountService
+    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
-  port: 8770
+  port: 8802
 
-
-
-#logging:
-#  #设置日志打印级别
-#  level:
-#    #Spring框架中的日志级别
-#    org.springframework.web: info
-#    root: error
-#    #自己项目包名下的日志级别
-#    xmu.oomall.controller: debug
-#    xmu.oomall.service: debug
-#    xmu.oomall.dao: debug
-#    xmu.oomall.mapper: error
-#    xmu.oomall.domain: debug
-#    xmu.oomall.util: debug
-#  #使用logback日志，取代默认的common日志
-#  file:
-#    path: C:\Users\Ming Qiu\log
-#  config: classpath:logback-spring.xml
-#
-#oomall:
-#  #最大付款时间, 单位分钟
-#  maxpaytime: 30
-#  #redis缓存失效时间，单位分钟
-#  redisexpiretime: 1
-#  #预提库存数量
-#  predeductQty: 3
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
 
 
