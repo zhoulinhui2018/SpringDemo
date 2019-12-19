@@ -77,7 +77,7 @@ public class AdController {
         if (id==null){
             return ResponseUtil.unlogin();
         }
-        Log log = LogUtil.newLog("查询", null, Integer.valueOf(id), 0, request.getRemoteAddr());
+        Log log = LogUtil.newLog("查询广告列表", null, Integer.valueOf(id), 0, request.getRemoteAddr());
         log.setStatusCode(1);
         adService.log(log);
         Ad ad=new Ad();
@@ -95,12 +95,13 @@ public class AdController {
     */
     @GetMapping("/ads")
     public Object userFindAdsList(){
+        System.out.println("test");
         return ResponseUtil.ok(adService.findUserAds());
     }
 
 
     /**
-    * @Description: 管理员查看单条广告 已通过
+    * @Description: 管理员查看单条广告 （需要修改）
     * @Param: []
     * @return: xmu.oomall.domain.Ad
     * @Author: Zhou Linhui
@@ -112,9 +113,17 @@ public class AdController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-        Log log = LogUtil.newLog("搜索详情", id, Integer.valueOf(adminid), 0, request.getRemoteAddr());
-        Ad adById = adService.findAdById(id);
-        if (adById==null){
+        Log log = LogUtil.newLog("搜索广告详情", id, Integer.valueOf(adminid), 0, request.getRemoteAddr());
+        Ad adById = new Ad();
+        try{
+            adById = adService.findAdById(id);
+            if(adById==null||adById.getBeDelete()){
+                log.setStatusCode(0);
+                adService.log(log);
+                return ResponseUtil.fail(680,"获取广告失败");
+            }
+        }catch (Exception e){
+            log.setStatusCode(0);
             adService.log(log);
             return ResponseUtil.fail(680,"获取广告失败");
         }
@@ -138,7 +147,7 @@ public class AdController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-        Log log = LogUtil.newLog("修改", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
+        Log log = LogUtil.newLog("修改广告内容", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
 
         Object error=validate(newAd);
         if (error != null) {
@@ -217,7 +226,7 @@ public class AdController {
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
-        log.setActions("新增");
+        log.setActions("新增一条广告");
         Object error = validate(ad);
         if (error != null) {
             log.setStatusCode(0);
