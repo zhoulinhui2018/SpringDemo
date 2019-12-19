@@ -97,6 +97,25 @@ public class AddressPo {
         return consignee;
     }
 
+    @Override
+    public String toString() {
+        return "AddressPo{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", cityId=" + cityId +
+                ", provinceId=" + provinceId +
+                ", countyId=" + countyId +
+                ", addressDetail='" + addressDetail + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", consignee='" + consignee + '\'' +
+                ", beDefault=" + beDefault +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", beDeleted=" + beDeleted +
+                '}';
+    }
+
     public int getBeDefault() {
         return beDefault;
     }

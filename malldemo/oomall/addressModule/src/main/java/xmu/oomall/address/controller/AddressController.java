@@ -23,11 +23,10 @@ public class AddressController {
     private AddressService addressService;
 
     /**
-     * 由AddressPoList生成AddressList
+     * 由AddressPo生成Address
      * @param address
-     * @return void
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/18
+     * @author Zhang Yaqing
+     * @date 2019/12/18
      */
     private void changePoToAddress(Address address){
             Integer countyId=address.getCountyId();
@@ -41,13 +40,13 @@ public class AddressController {
             address.setCounty(county);
     }
     /**
-     * 用户查看收货地址列表（测试已通过）
+     * 用户查看收货地址列表
      * @param request
      * @param page
      * @param limit
      * @return 收货地址列表
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/16
+     * @author Zhang Yaqing
+     * @date 2019/12/16
      */
     @GetMapping("/addresses")
     public Object getUserAddressList(HttpServletRequest request,
@@ -57,25 +56,29 @@ public class AddressController {
         if(userId==0){
             return ResponseUtil.unlogin();
         }
-        List<Address> addressList= addressService.getUserAddresslist(page,limit,userId);
+        List<Address> addressList;
+        try{
+            addressList=addressService.getUserAddresslist(page,limit,userId);
+        }catch (Exception e){
+            return ResponseUtil.serious();
+        }
         for(int i=0;i<addressList.size();i++) {
             changePoToAddress(addressList.get(i));
         }
         return ResponseUtil.ok(addressList);
     }
 
-
     /**
-     * 收货地址详情（测试已通过）
+     * 收货地址详情
      * @param id 收货地址ID
      * @return 收货地址详情
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
+     * @author Zhang Yaqing
+     * @date 2019/12/12
      */
     @GetMapping("/addresses/{id}")
     public Object getAddressDetail(@PathVariable Integer id){
         Address address=addressService.getAddressDetail(id);
-        if(address==null){
+        if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
         }else{
             changePoToAddress(address);
@@ -84,11 +87,11 @@ public class AddressController {
     }
 
     /**
-     * 测试地址是否合法，比如是否有country/province等（测试已通过）
+     * 测试地址是否合法，比如是否有country/province等
      * @param addressPo
      * @return 0-合法，1-参数错误(为空)，2-参数值错误(类型等错误)
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
+     * @author Zhang Yaqing
+     * @date 2019/12/12
      */
     private Integer validate(@RequestBody AddressPo addressPo){
         Integer countryId=addressPo.getCountyId();
@@ -153,7 +156,7 @@ public class AddressController {
     }
 
     /**
-     * 新增收货地址（测试已通过）
+     * 新增收货地址
      * @param addressPo 用户收货地址
      * @return 新增操作结果
      * @Author: Zhang Yaqing
@@ -178,7 +181,7 @@ public class AddressController {
     }
 
     /**
-     * 删除收货地址（测试已通过）
+     * 删除收货地址
      * @param id
      * @return 用boolean表示删除操作是否成功
      * @Author: Zhang Yaqing
@@ -186,16 +189,23 @@ public class AddressController {
      */
     @DeleteMapping("/addresses/{id}")
     public Object deleteAddress(@PathVariable Integer id){
-        boolean result=addressService.deleteAddress(id);
-        if(!result){
-            return ResponseUtil.deleteAddressFailed();
+        Address address=addressService.getAddressDetail(id);
+        if(address==null||address.getBeDeleted()==true){
+            return ResponseUtil.addressNotExist();
         }else{
-            return ResponseUtil.ok(result);
+            address.setBeDeleted(true);
+            address.setBeDefault(0);
+            AddressPo newAddressPo=addressService.updateAddress(address);
+            if(newAddressPo==null) {
+                return ResponseUtil.deleteAddressFailed();
+            }else{
+                return ResponseUtil.ok(true);
+            }
         }
     }
 
     /**
-     * 更新收货地址（测试已通过）
+     * 更新收货地址
      * @param id  地址id
      * @param addressPo 用户收货地址
      * @return 更新操作结果

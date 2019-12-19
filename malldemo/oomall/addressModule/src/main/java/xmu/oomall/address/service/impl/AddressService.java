@@ -43,16 +43,13 @@ public class AddressService implements IAddressService {
     @Override
     public List<Address> getUserAddresslist(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        return addressDao.getUserAdresslist(userId);
+        return addressDao.getUserAddresslist(userId);
     }
     @Override
     public Address getAddressDetail(Integer id) {
         return addressDao.getAddressDetail(id);
     }
-    @Override
-    public boolean deleteAddress(Integer id) {
-        return addressDao.deleteAddress(id);
-    }
+
     @Override
     public AddressPo addNewAddress(AddressPo addressPo) {
         return addressDao.addNewAddress(addressPo);

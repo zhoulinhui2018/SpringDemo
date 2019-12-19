@@ -81,11 +81,4 @@ public class AddressServiceTest {
         System.out.println(address);
     }
 
-    @Test
-    public void deleteAddressTest()
-    {
-        boolean result=addressService.deleteAddress(4);
-        System.out.println(result);
-    }
-
 }

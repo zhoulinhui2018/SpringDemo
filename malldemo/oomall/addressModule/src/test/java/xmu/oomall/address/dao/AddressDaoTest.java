@@ -18,7 +18,7 @@ class AddressDaoTest {
    @Test
    public void getUserAdresslistTest()
    {
-       List<Address> addressList=addressDao.getUserAdresslist(1);
+       List<Address> addressList=addressDao.getUserAddresslist(1);
        for(int i=0;i<addressList.size();++i){
            Address address=addressList.get(i);
            System.out.println(address);
@@ -55,7 +55,7 @@ class AddressDaoTest {
         address.setPostalCode("123456");
         address.setMobile("19032");
         address.setConsignee("zyq");
-        address.setBeDefault(0);
+        address.setBeDefault(1);
         address.setUserId(1);
         addressDao.addNewAddress(address);
         System.out.println(address);
@@ -74,17 +74,11 @@ class AddressDaoTest {
         address.setPostalCode("123456");
         address.setMobile("19032");
         address.setConsignee("zyq");
-        address.setBeDefault(0);
+        address.setBeDefault(1);
         address.setUserId(1);
         address.setId(3);
         addressDao.updateAddress(address);
         System.out.println(address);
     }
 
-    @Test
-    public void deleteAddressTest()
-    {
-        boolean result=addressDao.deleteAddress(3);
-        System.out.println(result);
-    }
 }

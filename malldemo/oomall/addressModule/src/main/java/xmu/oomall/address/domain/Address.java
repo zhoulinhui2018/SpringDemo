@@ -12,7 +12,7 @@ import lombok.ToString;
  **/
 @Getter
 @Setter
-@ToString
+//@ToString
 @EqualsAndHashCode(callSuper = true)
 public class Address extends AddressPo {
 
