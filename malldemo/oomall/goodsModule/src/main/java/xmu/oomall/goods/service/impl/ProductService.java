@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.goods.dao.ProductDao;
+import xmu.oomall.goods.domain.GoodsPo;
 import xmu.oomall.goods.domain.Product;
 import xmu.oomall.goods.service.IProductService;
 
@@ -36,4 +37,7 @@ public class ProductService implements IProductService {
         return productDao.listProductByGoodsId(id);
     }
 
+    public GoodsPo getGoodsPoById(Integer id) {
+        return productDao.getGoodsPoById(id);
+    }
 }

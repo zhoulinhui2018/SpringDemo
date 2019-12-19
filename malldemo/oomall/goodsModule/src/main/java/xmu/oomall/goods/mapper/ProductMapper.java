@@ -2,6 +2,7 @@ package xmu.oomall.goods.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
+import xmu.oomall.goods.domain.GoodsPo;
 import xmu.oomall.goods.domain.Product;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface ProductMapper {
     //查看某个商品下的product_list
     public List<Product> listProductByGoodsId(Integer id);
 
+    GoodsPo getGoodsPoById(Integer id);
 }

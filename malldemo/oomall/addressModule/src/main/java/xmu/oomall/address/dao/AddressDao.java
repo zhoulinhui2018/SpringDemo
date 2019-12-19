@@ -30,7 +30,7 @@ public class AddressDao {
 
         System.out.println(addressPo);
         //如果是默认收货地址，要把该用户原来的默认地址isDefault设为0
-        if(addressPo.getBeDefault()==1){
+        if(addressPo.getBeDefault()==true){
             changeDefaultAddress(addressPo.getUserId());
         }
         boolean resultMsg=addressMapper.addNewAddress(addressPo);
@@ -46,8 +46,8 @@ public class AddressDao {
         List<Address> addressList=getUserAddresslist(userId);
         for(int i=0;i<addressList.size();i++){
             AddressPo outAddressPo=getAddressDetail(addressList.get(i).getId());
-            if(outAddressPo.getBeDefault()==1){
-                outAddressPo.setBeDefault(0);
+            if(outAddressPo.getBeDefault()==true){
+                outAddressPo.setBeDefault(false);
                 updateAddress(outAddressPo);
             }
         }
@@ -55,7 +55,7 @@ public class AddressDao {
     public AddressPo updateAddress(AddressPo addressPo) {
         addressPo.setGmtModified(LocalDateTime.now());
         //如果是默认收货地址，要把该用户原来的默认地址isDefault设为0
-        if(addressPo.getBeDefault()==1){
+        if(addressPo.getBeDefault()==true){
             changeDefaultAddress(addressPo.getUserId());
         }
         boolean result=addressMapper.updateAddress(addressPo);

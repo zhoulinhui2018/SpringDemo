@@ -63,8 +63,11 @@
             <if test="mobile != null">
                 mobile=#{mobile},
             </if>
-            <if test="beDefault != null">
-                is_default=#{beDefault},
+            <if test="beDefault ==true">
+                is_default=1,
+            </if>
+            <if test="beDefault ==false">
+                is_default=0,
             </if>
             <if test="userId != null">
                 user_id=#{userId},

@@ -194,7 +194,7 @@ public class AddressController {
             return ResponseUtil.addressNotExist();
         }else{
             address.setBeDeleted(true);
-            address.setBeDefault(0);
+            address.setBeDefault(false);
             AddressPo newAddressPo=addressService.updateAddress(address);
             if(newAddressPo==null) {
                 return ResponseUtil.deleteAddressFailed();
