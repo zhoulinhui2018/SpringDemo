@@ -256,10 +256,21 @@ public class TopicController {
             return error;
         }
         topicPo.setId(id);
-        if(topicService.adminUpdateTopicById(topicPo)==0){
+//        if(topicService.adminUpdateTopicById(topicPo)==0){
+//            log.setStatusCode(0);
+//            logService.addlog(log);
+//            return ResponseUtil.fail(651,"话题更新失败");
+//        }
+        try{
+            if(topicService.adminUpdateTopicById(topicPo)==0){
+                log.setStatusCode(0);
+                logService.addlog(log);
+                return ResponseUtil.fail(651,"话题更新失败");
+            }
+        }catch (Exception e){
             log.setStatusCode(0);
             logService.addlog(log);
-            return ResponseUtil.fail(651,"话题更新失败");
+            return ResponseUtil.fail(653,"话题更新失败");
         }
         log.setStatusCode(1);
         logService.addlog(log);
@@ -286,7 +297,18 @@ public class TopicController {
         log.setStatusCode(1);
         log.setActions("删除话题");
         log.setActionId(id);
-        if(topicService.adminDeleteTopicById(id)==0){
+//        if(topicService.adminDeleteTopicById(id)==0){
+//            log.setStatusCode(0);
+//            logService.addlog(log);
+//            return ResponseUtil.fail(653,"话题删除失败");
+//        }
+        try{
+            if(topicService.adminDeleteTopicById(id)==0){
+                log.setStatusCode(0);
+                logService.addlog(log);
+                return ResponseUtil.fail(653,"话题删除失败");
+            }
+        }catch (Exception e){
             log.setStatusCode(0);
             logService.addlog(log);
             return ResponseUtil.fail(653,"话题删除失败");

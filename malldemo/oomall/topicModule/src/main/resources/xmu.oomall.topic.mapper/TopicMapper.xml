@@ -37,7 +37,7 @@
 
     <delete id="adminDeleteTopicById" parameterType="Integer">
         update oomall_topic
-        set is_deleted = 1
+        set is_deleted = 1, gmt_modified=now()
         where id=#{id}
     </delete>
 

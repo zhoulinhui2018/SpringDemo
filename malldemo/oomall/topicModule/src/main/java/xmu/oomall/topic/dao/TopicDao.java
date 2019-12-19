@@ -18,7 +18,7 @@ public class TopicDao {
     private TopicMapper topicMapper;
 
     //管理员/用户获得所有的专题（已重改）
-    public List<Topic> findTopicList() {
+    public List<Topic> findTopicList() throws Exception {
         List<TopicPo> topicPos = topicMapper.findTopicList();//从数据库中获取topicpo对象
         List<Topic> topics = new ArrayList<Topic>();
         for(TopicPo item:topicPos){
@@ -34,7 +34,7 @@ public class TopicDao {
     错误的情况可能有：
     1. 由于mybatis出错导致，并没有成功添加进数据库
      */
-    public Integer adminAddTopic(TopicPo topicPo) throws MallException{
+    public Integer adminAddTopic(TopicPo topicPo) throws Exception{
         topicPo.setGmtCreate(LocalDateTime.now());
         topicPo.setGmtModified(LocalDateTime.now());
         topicPo.setDeleted(false);
@@ -47,7 +47,7 @@ public class TopicDao {
     1. 由于mybatis出错导致，从数据库中查出来的内容为空
     2. 从数据库中查到的是be_deleted=1的数据
      */
-    public Topic findTopicById(Integer id)  {
+    public Topic findTopicById(Integer id)  throws Exception{
         TopicPo topicPo =topicMapper.findTopicById(id);
         Topic topic = new Topic(topicPo);
         topic.setPictures();
@@ -61,7 +61,7 @@ public class TopicDao {
     2. 传入的id在数据库中没有
     3. 修改的content和pictures为空
      */
-    public Integer adminUpdateTopicById (TopicPo topicPo){
+    public Integer adminUpdateTopicById (TopicPo topicPo) throws Exception{
         topicPo.setGmtModified(LocalDateTime.now());
         return topicMapper.adminUpdateTopicById(topicPo);
     }
@@ -72,7 +72,7 @@ public class TopicDao {
     1. 由于mybatis出错导致，数据库中的数据并没有被更新
     2. 传入的id在数据库中没有
      */
-    public int adminDeleteTopicById(Integer id){
+    public int adminDeleteTopicById(Integer id) throws Exception{
         return topicMapper.adminDeleteTopicById(id);
     }
 }

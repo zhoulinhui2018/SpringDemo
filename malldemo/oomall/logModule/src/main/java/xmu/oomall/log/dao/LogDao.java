@@ -17,7 +17,7 @@ public class LogDao {
     //ligmapper中的对应的接口，就是可以调用mapper文件里对应的xml语句
     //错误的情况可能有：
     //未查询到结果
-    public List<Log> findLogListByAdminId(Log newlog){
+    public List<Log> findLogListByAdminId(Log newlog) throws Exception{
         List<Log> loglist=logMapper.findLogListByAdminId(newlog);
         return loglist;
     }
