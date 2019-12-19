@@ -19,7 +19,13 @@ public class GrouponRuleDaoTest {
 
     @Test
     public void getStrategyTest(){
-        GrouponRulePo grouponRulePo = groupOnDao.findById(200001);
+
+        GrouponRulePo grouponRulePo = null;
+        try {
+            grouponRulePo = groupOnDao.findById(200001);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println(grouponRulePo);
         GrouponRule strategy = groupOnDao.getStrategy(grouponRulePo);
         System.out.println("strategy");
@@ -28,7 +34,13 @@ public class GrouponRuleDaoTest {
 
     @Test
     public void test1(){
-        GrouponRulePo groupOnDaoById = groupOnDao.findById(200001);
+
+        GrouponRulePo groupOnDaoById = null;
+        try {
+            groupOnDaoById = groupOnDao.findById(200001);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(groupOnDaoById, 0);
         System.out.println(accessStrategy.getRate());
     }

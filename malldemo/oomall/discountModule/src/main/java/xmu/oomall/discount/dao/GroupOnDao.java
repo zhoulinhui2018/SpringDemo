@@ -55,7 +55,7 @@ public class GroupOnDao {
         return grouponRulePo;
     }
 
-    public GrouponRulePo findById(Integer id){
+    public GrouponRulePo findById(Integer id) throws Exception{
         return groupOnRuleMapper.findGroupOnRuleById(id);
     }
 
