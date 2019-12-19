@@ -16,4 +16,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class Coupon extends CouponPo {
     private CouponRule couponRule;
+
+    public Coupon(CouponPo couponPo) {
+        super();
+    }
 }

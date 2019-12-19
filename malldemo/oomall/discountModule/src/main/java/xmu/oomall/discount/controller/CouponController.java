@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.Log;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
@@ -69,6 +70,12 @@ public class CouponController {
         return ResponseUtil.ok(couponList);
     }
 
+    @GetMapping("/couponRules")
+    public Object userlist(@RequestParam(defaultValue = "1") Integer page,
+                       @RequestParam(defaultValue = "10") Integer limit){
+        List<CouponRulePo> userList=couponService.getUserCouponRules(page,limit);
+        return ResponseUtil.ok(userList);
+    }
 
     /**
      * 管理员新建优惠券（已修改）
@@ -258,6 +265,8 @@ public class CouponController {
      * @param limit
      * @return
      */
+
+
     @GetMapping("/coupons")
     public Object mylist(HttpServletRequest request,
                                  @RequestParam(defaultValue = "1") Integer page,
@@ -269,6 +278,7 @@ public class CouponController {
         if (userId==null){
             return ResponseUtil.unlogin();
         }
+
         if (showType==0){
             List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
             if (myCoupons0==null){
@@ -292,18 +302,24 @@ public class CouponController {
         }
     }
 
-    /**
-     * 根据id查询coupon表（已修改）
-     * 修改内容如下：1.对于非法id的判断
-     * @param id
-     * @return
-     */
-    @GetMapping("/coupons/{id}")
-    public Object readACoupon(Integer id)
-    {
-        CouponPo ACoupon=couponService.findCouponById(id);
-        return ResponseUtil.ok(ACoupon);
-    }
+//    /**
+//     * 根据id查询coupon表（已修改）
+//     * 修改内容如下：1.对于非法id的判断
+//     * @param id
+//     * @return
+//     * 备注：标准组没有该url
+//     */
+//    @GetMapping("/coupons/{id}")
+//    public Object readACoupon(Integer id)
+//    {
+//        CouponPo ACoupon=new CouponPo();
+//        try {
+//             ACoupon = couponService.findCouponById(id);
+//        }catch (Exception e){
+//           return ResponseUtil.fail();
+//        }
+//        return ResponseUtil.ok(ACoupon);
+//    }
 
     /**
      * 用户领取一张新的优惠券
@@ -359,34 +375,22 @@ public class CouponController {
      * 用户查看当前购物车下单商品订单可用优惠券
      * userId不能直接使用！！！
      * @param request
-     * @param cartItemIds
+     * @param cartItems
      * @return
      */
     @GetMapping("/coupons/availableCoupons")
-    public Object selectAvailableCoupons(HttpServletRequest request,List<Integer> cartItemIds){
+    public Object selectAvailableCoupons(HttpServletRequest request,List<CartItem> cartItems){
         String Id=request.getHeader("id");
         Integer userId=Integer.valueOf(Id);
 
+        List<Integer> goodsIdList=new ArrayList<>();
         Integer goodsId;
-        List<Integer> goodsIdList=new ArrayList<Integer>(cartItemIds.size());
-        for(int i=0;i<cartItemIds.size();i++) {
-
-            //ribbon
-            Integer id = cartItemIds.get(i);
-            //调用购物车模块服务通过cartItemId找货品id
-            RestTemplate restTemplate = new RestTemplate();
-            ServiceInstance instance = loadBalancerClient.choose("cartService");
-            String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/cartItems/{id}");
-            CartItem cartItem = restTemplate.getForObject(reqURL,CartItem.class,id);
-
-            //通过货品id找商品id
-            goodsId=cartItem.getProduct().getGoodsId();
-
-            //把购物车中商品id保存到一个list当中
+        for(CartItem item:cartItems){
+            goodsId=item.getProduct().getGoodsId();
             goodsIdList.add(goodsId);
-
         }
-        Set<CouponRulePo> canUsedCoupons=couponService.getCanUsedCoupons(goodsIdList,userId);
+        List<Coupon> canUsedCoupons= couponService.getCanUsedCoupons(goodsIdList, userId);
+
         return ResponseUtil.ok(canUsedCoupons);
     }
 

@@ -35,6 +35,7 @@ public class PresaleDao {
         presaleRule.setGmtCreate(LocalDateTime.now());
         presaleRule.setGmtModified(LocalDateTime.now());
         presaleRule.setBeDeleted(false);
+        presaleRule.setStatusCode(true);
         return presaleMapper.add(presaleRule);
     }
 

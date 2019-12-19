@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import xmu.oomall.discount.domain.Goods;
 import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.coupon.AbstractCouponStrategy;
-import xmu.oomall.discount.domain.coupon.CouponPo;
-import xmu.oomall.discount.domain.coupon.CouponRulePo;
+import xmu.oomall.discount.domain.coupon.*;
 import xmu.oomall.discount.domain.goods.GoodsInfo;
 import xmu.oomall.discount.mapper.CouponMapper;
 import xmu.oomall.discount.util.JacksonUtil;
@@ -63,6 +62,10 @@ public class CouponDao {
      * @param couponRule
      */
     public void addCouponRule(CouponRulePo couponRule) {
+        couponRule.setGmtCreate(LocalDateTime.now());
+        couponRule.setGmtModified(LocalDateTime.now());
+        couponRule.setBeDeleted(false);
+        couponRule.setStatusCode(true);
         couponMapper.addCouponRule(couponRule);
     }
 
@@ -93,6 +96,7 @@ public class CouponDao {
      * @return
      */
     public int updateCouponRuleById(CouponRulePo couponRule) {
+        couponRule.setGmtModified(LocalDateTime.now());
         return couponMapper.updateCouponRuleById(couponRule);
     }
 
@@ -101,8 +105,8 @@ public class CouponDao {
      * @param id
      * @return
      */
-    public CouponRulePo findCouponRuleById(Integer id) {
-        CouponRulePo couponRule=couponMapper.findCouponRuleById(id);
+    public CouponRule findCouponRuleById(Integer id) {
+        CouponRule couponRule=couponMapper.findCouponRuleById(id);
         return couponRule;
     }
 
@@ -122,12 +126,12 @@ public class CouponDao {
      * @param coupons
      * @return
      */
-    public List<CouponRulePo> getCouponRules(List<CouponPo> coupons)
+    public List<CouponRule> getCouponRules(List<CouponPo> coupons)
     {
-        List<CouponRulePo> rules=new ArrayList<CouponRulePo>();
+        List<CouponRule> rules=new ArrayList<>();
         for(int i=0;i<coupons.size();i++)
         {
-            CouponRulePo couponRule=couponMapper.getCouponRule(coupons.get(i).getCouponRuleId());
+            CouponRule couponRule=couponMapper.getCouponRule(coupons.get(i).getCouponRuleId());
             rules.add(couponRule);
         }
         return rules;
@@ -158,21 +162,30 @@ public class CouponDao {
      * @param userId
      * @return
      */
-    public Set<CouponRulePo> getCanUsedCoupons(List<Integer> goodsIdList,Integer userId) {
+    public List<Coupon> getCanUsedCoupons(List<Integer> goodsIdList,Integer userId) {
         List<CouponPo> coupons=couponMapper.getCouponMyList(userId);
-        List<CouponRulePo> couponRules=getCouponRules(coupons);
-        Set<CouponRulePo> canUsedCoupons=new TreeSet<>();
+
+
+        List<Coupon> canUsedCoupons=new ArrayList<>();
         for(int i=0;i<goodsIdList.size();i++)
         {
-            for(int j=0;j<couponRules.size();j++) {
-                if(isUsedOnGoods(goodsIdList.get(i),couponRules.get(j))==true)
+            for(int j=0;j<coupons.size();j++) {
+                //用CouponRule给CouponRulePo赋值
+                CouponRulePo couponRulePo=couponMapper.findCouponRuleById(coupons.get(j).getCouponRuleId());
+                if(isUsedOnGoods(goodsIdList.get(i),couponRulePo)==true)
                 {
-                   canUsedCoupons.add(couponRules.get(j));
+                    Coupon coupon=new Coupon(coupons.get(j));
+                    CouponRule rule=findCouponRuleById(coupons.get(j).getCouponRuleId());
+                    coupon.setCouponRule(rule);
+                    canUsedCoupons.add(coupon);
+
                 }
             }
         }
         return canUsedCoupons;
     }
+
+
 
     /**
      * 判断商品是否可用于该优惠券
@@ -184,7 +197,7 @@ public class CouponDao {
         Set<Integer> goodsIds=new TreeSet<>();
         goodsIds.clear();
         goodsIds.addAll(getGoodsIdsInCouponRule(couponRule));
-        if(goodsIds.contains(GoodsInfo.allGoodsInfo.getId()))
+        if(goodsIds.contains(Goods.ALL_GOODS.getId()))
         {
             return true;
         }
@@ -334,5 +347,26 @@ public class CouponDao {
         couponPo.setUsedTime(LocalDateTime.now());
         couponPo.setUserId(userId);
         return couponMapper.updateUserCouponStatus(couponPo);
+    }
+
+    /**
+     * 用户查看优惠券规则
+     * @return
+     */
+    public List<CouponRulePo> getUserCouponRules() {
+        List<CouponRulePo> userList=new ArrayList<>();
+        List<CouponRulePo> rulePos=couponMapper.getCouponList();
+        if(rulePos.size()==0){
+            return null;
+        }
+        for(CouponRulePo rule:rulePos){
+            LocalDateTime now=LocalDateTime.now();
+            LocalDateTime beginTime=rule.getBeginTime();
+            LocalDateTime endTime=rule.getEndTime();
+            if(now.isAfter(beginTime)&&now.isBefore(endTime)){
+                userList.add(rule);
+            }
+        }
+        return userList;
     }
 }
