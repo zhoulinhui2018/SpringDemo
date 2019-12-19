@@ -52,6 +52,9 @@ public class AdService implements IAdService {
 
     @Override
     public Integer deleteAdbyId(Integer id) throws Exception{
+        Ad ad=new Ad();
+        ad.setId(id);
+        adDao.updateAdById(ad);
         return adDao.deleteAdbyId(id);
     }
 
