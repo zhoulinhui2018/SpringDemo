@@ -199,7 +199,7 @@ public class AddressController {
             if(newAddressPo==null) {
                 return ResponseUtil.deleteAddressFailed();
             }else{
-                return ResponseUtil.ok(true);
+                return ResponseUtil.ok();
             }
         }
     }

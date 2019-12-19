@@ -20,7 +20,7 @@ public class FootprintController {
     private FootprintService footprintService;
 
     /**
-     * 用户查询足迹信息（测试已通过）
+     * 用户查询足迹信息
      * @param request 前端请求
      * @param page 分页大小
      * @param limit 分页限制
@@ -36,7 +36,6 @@ public class FootprintController {
         if(userId==0){
             return ResponseUtil.unlogin();
         }
-
         List<FootprintItem> footprintList;
         try {
             footprintList= footprintService.getUserFootprintList(page,limit,userId);
@@ -46,23 +45,6 @@ public class FootprintController {
         return ResponseUtil.ok(footprintList);
     }
 
-    /**
-     * 用户删除足迹信息（测试已通过）
-     * @param id 足迹id
-     * @return 用boolean表示删除操作是否成功
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/12
-     */
-    @DeleteMapping("/footprints/{id}")
-    public Object deleteFootprint(@PathVariable Integer id){
-        boolean result=footprintService.deleteFootprint(id);
-        if(result){
-            return ResponseUtil.ok(result);
-        }
-        else{
-            return ResponseUtil.inValidateFootprint();
-        }
-    }
 
     /**
      * 管理员按条件查询足迹信息（测试已通过）
@@ -101,7 +83,6 @@ public class FootprintController {
             footprintList=footprintService.listFootprintByCondition(page,limit,userId,goodsId);
         } catch (Exception e) {
             log.setStatusCode(0);
-            System.out.println(log);
             footprintService.log(log);
             return ResponseUtil.inValidateFootprint();
         }
@@ -155,4 +136,28 @@ public class FootprintController {
             return ResponseUtil.addFootprintFailed();
         }
     }
+
+
+
+//    /**
+//     * 用户删除足迹信息（测试已通过）
+//     * @param id 足迹id
+//     * @return 用boolean表示删除操作是否成功
+//     * @Author: Zhang Yaqing
+//     * @Date: 2019/12/12
+//     */
+//    @DeleteMapping("/footprints/{id}")
+//    public Object deleteFootprint(@PathVariable Integer id){
+//        boolean result=footprintService.deleteFootprint(id);
+//        if(result){
+//            return ResponseUtil.ok();
+//        }
+//        else{
+//            return ResponseUtil.inValidateFootprint();
+//        }
+//    }
+
 }
+
+
+

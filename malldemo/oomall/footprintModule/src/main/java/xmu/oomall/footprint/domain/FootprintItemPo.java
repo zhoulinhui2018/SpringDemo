@@ -19,57 +19,17 @@ import java.time.LocalDateTime;
 public class FootprintItemPo {
     private Integer id;
 
-    public LocalDateTime getBirthTime() {
-        return birthTime;
-    }
-
-    public void setBirthTime(LocalDateTime birthTime) {
-        this.birthTime = birthTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public LocalDateTime getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(LocalDateTime gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
     /**
-    *创建时间
-    */
+     *创建时间
+     */
     private LocalDateTime birthTime;
     /**
-    *用户id
-    */
+     *用户id
+     */
     private Integer userId;
     /**
-    *商品id
-    */
+     *商品id
+     */
     private Integer goodsId;
     private LocalDateTime gmtCreate;
 }

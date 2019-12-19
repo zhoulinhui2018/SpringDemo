@@ -37,10 +37,10 @@ class FootprintDaoTest {
     @Test
     public void listFootprintByConditionTest()
     {
-        List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition(1,1);
+        List<FootprintItem> userFootprintList=footprintDao.listFootprintByCondition(1,100002);
         for(int i=0;i<userFootprintList.size();++i){
             FootprintItem footprint=userFootprintList.get(i);
-            System.out.println(footprint.getId());
+            System.out.println(footprint);
         }
     }
 
