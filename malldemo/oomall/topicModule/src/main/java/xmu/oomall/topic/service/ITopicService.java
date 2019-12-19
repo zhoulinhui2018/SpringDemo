@@ -15,13 +15,13 @@ import java.util.List;
  **/
 @Service
 public interface ITopicService {
-    public List<Topic> findTopicList(Integer page, Integer limit);
+    public List<Topic> findTopicList(Integer page, Integer limit) throws Exception;
 
-    public Integer adminAddTopic(TopicPo topicPo) throws MallException;
+    public Integer adminAddTopic(TopicPo topicPo) throws Exception;
 
-    public Topic findTopicById (Integer id);
+    public Topic findTopicById (Integer id) throws Exception;
 
-    public Integer adminUpdateTopicById(TopicPo topicPo);
+    public Integer adminUpdateTopicById(TopicPo topicPo) throws Exception;
 
-    public Integer adminDeleteTopicById(Integer id);
+    public Integer adminDeleteTopicById(Integer id) throws Exception ;
 }

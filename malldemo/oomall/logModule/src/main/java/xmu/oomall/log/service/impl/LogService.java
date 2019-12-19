@@ -26,7 +26,7 @@ public class LogService implements ILogService{
     //重写接口中的方法
 
     @Override
-    public List<Log> findLogListByAdminId(Integer page, Integer limit, Log newlog){
+    public List<Log> findLogListByAdminId(Integer page, Integer limit, Log newlog) throws Exception{
         PageHelper.startPage(page,limit);
         return logDao.findLogListByAdminId(newlog);
     }

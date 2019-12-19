@@ -6,6 +6,8 @@ import xmu.oomall.log.domain.Log;
 import xmu.oomall.log.service.impl.LogService;
 import xmu.oomall.log.util.ResponseUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,15 +31,35 @@ public class LogController {
      */
     @GetMapping("/logs")
     public Object findLogListByAdminId(@RequestParam(defaultValue = "1") Integer page,
-                                       @RequestParam(defaultValue = "10") Integer limit,Integer adminId){
+                                       @RequestParam(defaultValue = "10") Integer limit,
+                                       @RequestParam Integer adminId,
+                                       HttpServletRequest request){
 //                                       HttpServletRequest request) {
 //        if(request.getIntHeader("userId")==0){
 //            return ResponseUtil.unlogin();
 //        }
 //        List<Log> loglist = logService.findLogListByAdminId(page,limit,request.getIntHeader("userId"));
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查看日志列表");
+
         Log newlog = new Log();
         newlog.setId(adminId);
-        List<Log> loglist = logService.findLogListByAdminId(page,limit,newlog);
+        List<Log> loglist = new ArrayList<Log>();
+        try {
+            loglist = logService.findLogListByAdminId(page, limit, newlog);
+        }catch (Exception e){
+            log.setStatusCode(0);
+            logService.addLog(log);
+            return ResponseUtil.fail(901,"查看日志失败");
+        }
         return ResponseUtil.ok(loglist);
     }
 
