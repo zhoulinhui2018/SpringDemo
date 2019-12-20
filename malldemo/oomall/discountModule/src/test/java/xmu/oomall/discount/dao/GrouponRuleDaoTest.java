@@ -22,7 +22,9 @@ public class GrouponRuleDaoTest {
 
         GrouponRulePo grouponRulePo = null;
         try {
-            grouponRulePo = groupOnDao.findById(200001);
+            grouponRulePo = groupOnDao.findById(100000);
+            System.out.println("grouponrule");
+            System.out.println(grouponRulePo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,7 +39,7 @@ public class GrouponRuleDaoTest {
 
         GrouponRulePo groupOnDaoById = null;
         try {
-            groupOnDaoById = groupOnDao.findById(200001);
+            groupOnDaoById = groupOnDao.findById(100000);
         } catch (Exception e) {
             e.printStackTrace();
         }
