@@ -51,21 +51,54 @@
     <update id="updateCouponRuleById" parameterType="couponRulePo" >
         update oomall_coupon_rule
         <trim prefix="set" suffixOverrides=",">
-            <if test="name!=null">name=#{name},</if>
-            <if test="brief!=null">brief=#{brief},</if>
-            <if test="beginTime!=null">begin_time=#{beginTime},</if>
-            <if test="endTime!=null">end_time=#{endTime},</if>
-            <if test="picUrl!=null">pic_url=#{picUrl},</if>
-            <if test="validPeriod!=null">validPeriod=#{validPeriod},</if>
-            <if test="strategy!=null">strategy=#{strategy},</if>
-            <if test="total!=null">total=#{total},</if>
-            <if test="goodsList1!=null">goods_list1=#{goodsList1},</if>
-            <if test="goodsList2!=null">goods_list2=#{goodsList2},</if>
-            <if test="gmtCreate!=null">gmt_create=#{gmtCreate},</if>
-            <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
-            <if test="beDeleted!=null">is_deleted=#{beDeleted},</if>
-            <if test="collectedNum!=null">collected_num=#{collectedNum}</if>
-            <if test="status!=null">status=#{statusCode}</if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="brief != null">
+                brief=#{brief},
+            </if>
+            <if test="beginTime != null">
+                begin_time=#{beginTime},
+            </if>
+            <if test="endTime != null">
+                end_time=#{endTime},
+            </if>
+            <if test="picUrl != null">
+                pic_url=#{picUrl},
+            </if>
+            <if test="validPeriod != null">
+                validPeriod=#{validPeriod},
+            </if>
+            <if test="strategy != null">
+                strategy=#{strategy},
+            </if>
+            <if test="total != null">
+                total=#{total},
+            </if>
+            <if test="goodsList1 != null">
+                goods_list1=#{goodsList1},
+            </if>
+            <if test="goodsList2 != null">
+                goods_list2=#{goodsList2},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create=#{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified=#{gmtModified},
+            </if>
+            <if test="beDeleted != null">
+                is_deleted=#{beDeleted},
+            </if>
+            <if test="collectedNum != null">
+                collected_num=#{collectedNum},
+            </if>
+            <if test="statusCode==1">
+                status=true,
+            </if>
+            <if test="statusCode==0">
+                status=false
+            </if>
         </trim>
         WHERE id=#{id}
     </update>

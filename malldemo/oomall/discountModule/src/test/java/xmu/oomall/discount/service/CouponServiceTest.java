@@ -63,4 +63,15 @@ class CouponServiceTest {
             System.out.println("领取数加1");
         }
     }
+
+    @Test
+    public void updateTest()
+    {
+        CouponRulePo couponRulePo=new CouponRulePo();
+        couponRulePo.setId(100001);
+        couponRulePo.setName("五折");
+        couponRulePo.setPicUrl("aaaa");
+        int result=couponService.updateCouponRuleById(couponRulePo);
+        System.out.println(result);
+    }
 }

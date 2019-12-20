@@ -2,10 +2,7 @@ package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.Coupon;
@@ -19,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("")
@@ -27,25 +23,27 @@ public class CouponController {
     @Autowired
     private CouponServiceImpl couponService;
 
-    private Object validate(CouponRulePo couponRule) {
+    //判断优惠券规则是否有效
+    private Boolean validateCouponRule(CouponRulePo couponRule) {
         String name = couponRule.getName();
-        if (StringUtils.isEmpty(name)) {
-            return ResponseUtil.badArgument();
+        if (name==null) {
+            return false;
         }
-        return null;
+        return true;
     }
-    private Object validateCoupon(CouponPo coupon) {
+    //判断优惠券是否有效
+    private Boolean validateCoupon(CouponPo coupon) {
         String name = coupon.getName();
-        if (StringUtils.isEmpty(name)) {
-            return ResponseUtil.badArgument();
+        if (name==null) {
+            return false;
         }
-        return null;
+        return true;
     }
 
     /**
-     * @description 管理员获取优惠券列表
-     * @param page
-     * @param limit
+     * @description 管理员获取优惠券列表（测试已通过）
+     * @param page 第几页
+     * @param limit 最多几页
      * @return java.lang.Object[List<couponRulePo>]
      * @author Zhang Yaqing
      * @date 2019/12/10
@@ -78,28 +76,17 @@ public class CouponController {
         return ResponseUtil.ok(couponRulePoList);
     }
 
-    /**
-     * 用户查看优惠券列表
-     * @param page
-     * @param limit
-     * @return
-     */
-    @GetMapping("/couponRules")
-    public Object userlist(@RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer limit){
-        List<CouponRulePo> userList=couponService.getUserCouponRules(page,limit);
-        return ResponseUtil.ok(userList);
-    }
+
 
     /**
-     * 管理员新建优惠券（已修改）
-     * 修改内容如下：1.因为为管理员的操作，所以参数添加Http头部 2.添加了log 3.log中的actionId未填写
-     * @param couponRule
-     * @return
-     * postman测试通过
+     * @description 管理员新建优惠券规则（测试已通过，问题是validate函数需要重新写）
+     * @param couponRulePo 优惠券规则
+     * @return java.lang.Object[couponRulePo]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @PostMapping("/couponRules")
-    public Object create(@RequestBody CouponRulePo couponRule,HttpServletRequest request)
+    public Object create(@RequestBody CouponRulePo couponRulePo,HttpServletRequest request)
     {
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -110,32 +97,33 @@ public class CouponController {
         log.setIp(request.getRemoteAddr());
         log.setType(1);
         log.setStatusCode(1);
-        log.setActions("新增优惠券");
-        Object error=validate(couponRule);
+        log.setActions("新建优惠券规则");
+
         //couponRule内容不合理
-        if (error != null) {
+        if (!validateCouponRule(couponRulePo)) {
             log.setStatusCode(0);
             couponService.log(log);
-            return ResponseUtil.fail(712,"优惠券添加失败");
+            return ResponseUtil.invalidCouponRule();
         }
+
         try {
-            couponService.addCouponRule(couponRule);
+            couponService.addCouponRule(couponRulePo);
         }catch (Exception e){
-            return ResponseUtil.fail(712,"优惠券添加失败");
+            return ResponseUtil.addCouponRuleFailed();
         }
         couponService.log(log);
-        return ResponseUtil.ok(couponRule);
-
+        return ResponseUtil.ok(couponRulePo);
     }
 
     /**
-     * 管理员查看优惠券规则详情（已修改）
-     * 修改内容如下：1.新增Http的参数 2.添加log操作 3.出现非法id返回badArgumentValue()
+     * @description 管理员查看优惠券规则详情（测试已通过）
      * @param id
-     * @return
+     * @return java.lang.Object[couponRulePo]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @GetMapping("/couponRules/{id}")
-    public Object detail(@NotNull Integer id,HttpServletRequest request)
+    public Object detail(@PathVariable Integer id,HttpServletRequest request)
     {
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -148,26 +136,37 @@ public class CouponController {
         log.setStatusCode(1);
         log.setActionId(id);
         log.setActions("查看优惠券规则");
-        CouponRulePo couponRule=couponService.findCouponRuleById(id);
-        if(couponRule == null){
+        CouponRulePo couponRulePo;
+        try {
+            couponRulePo=couponService.findCouponRuleById(id);
+        }catch (Exception e){
             log.setStatusCode(0);
             couponService.log(log);
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.invalidPresaleRule();
         }
+
+        if(couponRulePo==null){
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.badArgument();
+        }
+
         couponService.log(log);
-        return ResponseUtil.ok(couponRule);
+        return ResponseUtil.ok(couponRulePo);
     }
 
     /**
-     * 管理员修改优惠券信息（已修改）
-     * 修改内容如下：1. 添加Http请求头部
-     * 管理员可以作废优惠卷，优惠卷作废后，所有领出未用的优惠卷也一并作废，已经使用的优惠卷不受影响
-     * @param id
-     * @param couponRule
-     * @return
+     * @description 管理员修改优惠券规则（测试已通过）
+     * @param id 被修改的优惠券规则id
+     * @param couponRulePo 新的优惠券规则Po
+     * @return java.lang.Object[couponRulePo]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @PutMapping("/couponRules/{id}")
-    public Object update(@PathVariable Integer id,@RequestBody CouponRulePo couponRule,HttpServletRequest request) {
+    public Object update(@PathVariable Integer id,
+                         @RequestBody CouponRulePo couponRulePo,
+                         HttpServletRequest request) {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -180,49 +179,122 @@ public class CouponController {
         log.setActionId(id);
         log.setActions("修改优惠券规则");
 
-        Object error = validate(couponRule);
-        if (error != null) {
+        couponRulePo.setId(id);
+        if (!validateCouponRule(couponRulePo)) {
             log.setStatusCode(0);
             couponService.log(log);
-            return ResponseUtil.fail(711,"优惠券规则修改失败");
+            return ResponseUtil.invalidCouponRule();
         }
-        couponRule.setId(id);
-        CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
 
-        boolean oldStatusCode=ruleInDB.getStatusCode();
-
-        LocalDateTime beginTime=ruleInDB.getBeginTime();
-        LocalDateTime endTime=ruleInDB.getEndTime();
-        Boolean inTime=false;
+        //管理员不能修改在起止时限内的优惠券
+        LocalDateTime beginTime=couponRulePo.getBeginTime();
+        LocalDateTime endTime=couponRulePo.getEndTime();
         LocalDateTime nowTime=LocalDateTime.now();
-        if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)){
-            inTime=true;
-        }
-        if(inTime==true && oldStatusCode==true && couponRule.getStatusCode()==false) {
-            //先修改预售状态
-            couponService.updateCouponRuleById(couponRule);
-            couponService.updateCouponStatus(id);
-            return ResponseUtil.ok(couponRule);
-            //再进行退款操作
-
-
-        }else if(inTime==false){
-            //预售未开始或者已经结束可以修改信息
-            if (couponService.updateCouponRuleById(couponRule) == 0) {
-                log.setStatusCode(0);
-                couponService.log(log);
-                return ResponseUtil.fail(711,"优惠券规则修改失败");
-            }
-            return ResponseUtil.ok(couponRule);
-
-        }else{
-            //在预售开始到结束时间内且未作废的情况，不能改动信息
+        boolean inTime=nowTime.isAfter(beginTime)&&nowTime.isBefore(endTime);
+        if(inTime){
             log.setStatusCode(0);
             couponService.log(log);
-            return ResponseUtil.fail(711,"优惠券规则修改失败");
+            return ResponseUtil.updateCouponRuleFailed();
         }
 
+        try{
+            couponService.updateCouponRuleById(couponRulePo);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.updateCouponRuleFailed();
+        }
+        couponService.log(log);
+        return ResponseUtil.ok(couponRulePo);
     }
+
+
+
+    /**
+     * @description 管理员下架优惠券规则
+     * @param id 被修改的优惠券规则id
+     * @return java.lang.Object[couponRulePo]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
+     */
+    @PostMapping("/couponRules/{id}/invalid")
+//    public Object invalidate(@PathVariable Integer id,
+//                         HttpServletRequest request) {
+//        String adminid= request.getHeader("id");
+//        if (adminid==null){
+//            return ResponseUtil.unlogin();
+//        }
+//        Log log=new Log();
+//        log.setAdminId(Integer.valueOf(adminid));
+//        log.setIp(request.getRemoteAddr());
+//        log.setType(2);
+//        log.setStatusCode(1);
+//        log.setActionId(id);
+//        log.setActions("下架优惠券规则");
+//
+//        CouponRulePo couponRulePo;
+//        //如果id不存在，抛出异常
+//        try{
+//            couponRulePo=couponService.findCouponRuleById(id);
+//        }catch (Exception e){
+//            log.setStatusCode(0);
+//            couponService.log(log);
+//            return ResponseUtil.badArgument();
+//        }
+//
+//        //管理员不能下架在起止时限内的优惠券规则
+//        LocalDateTime beginTime=couponRulePo.getBeginTime();
+//        LocalDateTime endTime=couponRulePo.getEndTime();
+//        LocalDateTime nowTime=LocalDateTime.now();
+//        boolean inTime=nowTime.isAfter(beginTime)&&nowTime.isBefore(endTime);
+//        if(inTime){
+//            log.setStatusCode(0);
+//            couponService.log(log);
+//            return ResponseUtil.updateCouponRuleFailed();
+//        }
+//        //优惠卷作废后，所有领出未用的优惠卷也一并作废，已经使用的优惠卷不受影响
+//
+//        if (!validateCouponRule(couponRulePo)) {
+//            log.setStatusCode(0);
+//            couponService.log(log);
+//            return ResponseUtil.invalidCouponRule();
+//        }
+//        couponRulePo.setId(id);
+//        CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
+//
+//        boolean oldStatusCode=ruleInDB.getStatusCode();
+//
+//
+//
+//        if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)){
+//            inTime=true;
+//        }
+//        if(inTime==true && oldStatusCode==true && couponRule.getStatusCode()==false) {
+//            //先修改预售状态
+//            couponService.updateCouponRuleById(couponRule);
+//            couponService.updateCouponStatus(id);
+//            return ResponseUtil.ok(couponRule);
+//            //再进行退款操作
+//
+//
+//        }else if(inTime==false){
+//            //预售未开始或者已经结束可以修改信息
+//            if (couponService.updateCouponRuleById(couponRule) == 0) {
+//                log.setStatusCode(0);
+//                couponService.log(log);
+//                return ResponseUtil.fail(711,"优惠券规则修改失败");
+//            }
+//            return ResponseUtil.ok(couponRule);
+//
+//        }else{
+//            //在预售开始到结束时间内且未作废的情况，不能改动信息
+//            log.setStatusCode(0);
+//            couponService.log(log);
+//            return ResponseUtil.fail(711,"优惠券规则修改失败");
+//        }
+//
+//    }
 
     /**
      * 管理员删除优惠券规则（已修改）
@@ -409,6 +481,18 @@ public class CouponController {
         return ResponseUtil.ok(canUsedCoupons);
     }
 
+    /**
+     * 用户查看优惠券列表
+     * @param page
+     * @param limit
+     * @return
+     */
+    @GetMapping("/couponRules")
+    public Object userlist(@RequestParam(defaultValue = "1") Integer page,
+                           @RequestParam(defaultValue = "10") Integer limit){
+        List<CouponRulePo> userList=couponService.getUserCouponRules(page,limit);
+        return ResponseUtil.ok(userList);
+    }
 
     //热门优惠券的抢购 消息队列吗？
     //管理员把优惠券规则置失效之后
