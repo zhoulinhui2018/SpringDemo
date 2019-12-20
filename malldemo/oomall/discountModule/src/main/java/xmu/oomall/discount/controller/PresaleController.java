@@ -217,7 +217,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/20
      */
-    @PutMapping("/presaleRules/{id}/invalid")
+    @PostMapping("/presaleRules/{id}/invalid")
     public Object invalidate(@PathVariable Integer id, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){

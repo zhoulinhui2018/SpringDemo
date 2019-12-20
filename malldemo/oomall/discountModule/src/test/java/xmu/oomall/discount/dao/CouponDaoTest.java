@@ -52,5 +52,15 @@ class CouponDaoTest {
         System.out.println(result);
     }
 
+    @Test
+    public void updateTest()
+    {
+        CouponRulePo couponRulePo=new CouponRulePo();
+        couponRulePo.setId(100001);
+        couponRulePo.setName("五折");
+        int result=couponDao.updateCouponRuleById(couponRulePo);
+        System.out.println(result);
+    }
+
 
 }
