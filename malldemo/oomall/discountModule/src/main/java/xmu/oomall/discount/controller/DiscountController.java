@@ -145,7 +145,7 @@ public class DiscountController {
         }
         if (grouponRulePo==null){
             groupOnRuleService.log(log);
-            ResponseUtil.fail(720,"团购修改失败");
+            ResponseUtil.fail(721,"团购修改失败");
         }
         LocalDateTime now = LocalDateTime.now();
         if (grouponRulePo.getStartTime().isBefore(now)&&grouponRulePo.getEndTime().isAfter(now)){
@@ -422,15 +422,13 @@ public class DiscountController {
                 if(groupOnRuleService.isGrouponOrder(goodsId)==true){
 
                     item.setItemType(2);
-//
                     orderItemList1.add(item);
                     order.setOrderItemList(orderItemList1);
                 }
                 else {
                     //判断是否是预售订单
-                    if (presaleService.isPresaleOrder(item) != null) {
-
-                        PresaleRuleVo ruleVo = presaleService.isPresaleOrder(item);
+                    PresaleRuleVo ruleVo = presaleService.isPresaleOrder(item);
+                    if ( ruleVo!= null) {
                         PresaleRule rule = ruleVo.getPresaleRule();
                         List<OrderItem> orderItemList2 = new ArrayList<>();
                         item.setItemType(1);
@@ -464,6 +462,9 @@ public class DiscountController {
             return ResponseUtil.badArgument();
         }
         if (StringUtils.isEmpty(grouponLevelStrategy)) {
+            return ResponseUtil.badArgument();
+        }
+        if (grouponRulePo.getStartTime().isAfter(grouponRulePo.getEndTime())){
             return ResponseUtil.badArgument();
         }
         return null;

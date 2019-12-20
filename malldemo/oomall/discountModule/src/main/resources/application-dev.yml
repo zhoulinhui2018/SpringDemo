@@ -1,11 +1,9 @@
-##自己本地
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+#    url: jdbc:mysql://localhost:3306/ooad2-2
 #    username: root
 #    password: 123456
-#
 #  application:
 #    name: discountService
 #

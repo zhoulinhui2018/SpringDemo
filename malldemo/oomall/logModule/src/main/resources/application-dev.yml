@@ -1,17 +1,37 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
-    username: root
-  #  password: Zhangyaqing123
-    password: 123456
-  application:
-    name: logService #服务名称--调用的时候根据名称来调用该服务的方法
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+#    username: root
+#    password: Zhangyaqing123
+#  #  password: 123456
+#  application:
+#    name: logService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8803
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
 
-server:
-  port: 8803
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+#周林辉
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=GMT
+#    username: user2_2
+#    #  password: Zhangyaqing123
+#    password: ooad2
+#  application:
+#    name: logService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8803
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: localhost:8761/eureka/

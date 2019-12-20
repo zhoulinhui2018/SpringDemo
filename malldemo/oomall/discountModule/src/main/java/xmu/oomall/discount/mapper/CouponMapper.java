@@ -88,6 +88,7 @@ public interface CouponMapper {
      */
     int updateUserCouponStatus(CouponPo couponPo);
 
-    void deleteAllCoupons(Integer id);
+    int deleteAllCoupons(Integer id);
 
+    int modifiedCouponRuleNum(Integer couponRuleId);
 }

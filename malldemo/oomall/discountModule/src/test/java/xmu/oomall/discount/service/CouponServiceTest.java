@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.coupon.CouponPo;
+import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 
 
@@ -46,5 +47,20 @@ class CouponServiceTest {
     public void findcouponByIdTest(){
         CouponPo couponPo=couponService.findCouponById(1);
         System.out.println(couponPo);
+    }
+
+    @Test
+    public void findCouponRuleTest(){
+
+       CouponRulePo couponRulePo=couponService.findCouponRuleById(1);
+        System.out.println(couponRulePo);
+    }
+
+    @Test
+    public void modifiedCouponRuleNumTest(){
+        int flag=couponService.modifiedCouponRuleNum(1);
+        if(flag==1){
+            System.out.println("领取数加1");
+        }
     }
 }

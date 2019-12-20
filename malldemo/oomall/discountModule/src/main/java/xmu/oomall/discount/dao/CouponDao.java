@@ -87,8 +87,9 @@ public class CouponDao {
      */
     public int deleteCouponRuleById(Integer id) {
         //需要级联删除所有使用此规则的优惠券
-        couponMapper.deleteAllCoupons(id);
-        return couponMapper.deleteCouponRuleById(id);
+       couponMapper.deleteAllCoupons(id);
+       return couponMapper.deleteCouponRuleById(id);
+
     }
 
     /**
@@ -463,5 +464,14 @@ public class CouponDao {
             }
         }
         return userList;
+    }
+
+    /**
+     * 修改优惠券规则里面的领取数
+     * @param couponRuleId
+     * @return
+     */
+    public int modifiedCouponRuleNum(Integer couponRuleId) {
+        return couponMapper.modifiedCouponRuleNum(couponRuleId);
     }
 }

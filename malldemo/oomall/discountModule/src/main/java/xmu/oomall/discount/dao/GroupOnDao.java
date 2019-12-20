@@ -65,6 +65,10 @@ public class GroupOnDao {
     }
 
     public int delete(GrouponRulePo grouponRulePo){
+        GrouponRulePo grouponRulePoNew=new GrouponRulePo();
+        grouponRulePoNew.setGmtModified(LocalDateTime.now());
+        grouponRulePoNew.setId(grouponRulePo.getId());
+        groupOnRuleMapper.updateById(grouponRulePoNew);
         return groupOnRuleMapper.delete(grouponRulePo);
     }
 
