@@ -52,7 +52,7 @@ public class AddressController {
     public Object getUserAddressList(HttpServletRequest request,
                                      @RequestParam(defaultValue = "1") Integer page,
                                      @RequestParam(defaultValue = "10") Integer limit){
-        Integer userId= Integer.valueOf(request.getHeader("userid"));
+        Integer userId= Integer.valueOf(request.getHeader("id"));
         if(userId==0){
             return ResponseUtil.unlogin();
         }

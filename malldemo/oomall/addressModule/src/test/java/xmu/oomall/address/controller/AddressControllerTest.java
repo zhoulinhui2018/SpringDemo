@@ -54,7 +54,7 @@ public class AddressControllerTest {
         addressPo.setAddressDetail("某街道");
         addressPo.setPostalCode("123456");
         addressPo.setMobile("19032");
-        addressPo.setBeDefault(0);
+        addressPo.setBeDefault(false);
         addressPo.setUserId(1);
         addressPo.setConsignee("张雅晴");
 
@@ -90,7 +90,7 @@ public class AddressControllerTest {
         address.setAddressDetail("某街道");
         address.setPostalCode("123456");
         address.setMobile("19032");
-        address.setBeDefault(0);
+        address.setBeDefault(false);
         address.setUserId(1);
         address.setCityId(0);
         Object addressObject=addressController.updateAddress(100001,address);

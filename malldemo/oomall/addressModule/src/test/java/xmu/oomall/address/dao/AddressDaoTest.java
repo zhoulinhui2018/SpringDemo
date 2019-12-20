@@ -55,7 +55,7 @@ class AddressDaoTest {
         address.setPostalCode("123456");
         address.setMobile("19032");
         address.setConsignee("zyq");
-        address.setBeDefault(1);
+        address.setBeDefault(false);
         address.setUserId(1);
         addressDao.addNewAddress(address);
         System.out.println(address);
@@ -74,7 +74,7 @@ class AddressDaoTest {
         address.setPostalCode("123456");
         address.setMobile("19032");
         address.setConsignee("zyq");
-        address.setBeDefault(1);
+        address.setBeDefault(false);
         address.setUserId(1);
         address.setId(3);
         addressDao.updateAddress(address);

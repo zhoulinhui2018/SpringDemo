@@ -35,18 +35,18 @@ public class PresaleController {
        Integer goodsId=presaleRule.getGoodsId();
        BigDecimal deposit=presaleRule.getDeposit();
        BigDecimal finalPayment=presaleRule.getFinalPayment();
-//       if (StringUtils.isEmpty(String.valueOf(startTime))) {
-//            return ResponseUtil.badArgument();
-//        }
-//        else if(StringUtils.isEmpty(String.valueOf(adEndTime))){
-//            return ResponseUtil.badArgument();
-//        }
-//        else if(StringUtils.isEmpty(String.valueOf(finalStartTime))){
-//            return ResponseUtil.badArgument();
-//        }
-//        else if(StringUtils.isEmpty(String.valueOf(endTime))){
-//            return ResponseUtil.badArgument();
-//        }
+       if (StringUtils.isEmpty(String.valueOf(startTime))) {
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(adEndTime))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(finalStartTime))){
+            return ResponseUtil.badArgument();
+        }
+        else if(StringUtils.isEmpty(String.valueOf(endTime))){
+            return ResponseUtil.badArgument();
+        }
         if(StringUtils.isEmpty(String.valueOf(statusCode))){
             return  ResponseUtil.badArgument();
         }
@@ -62,9 +62,9 @@ public class PresaleController {
 
         return null;
     }
+
     /**
-     * @Description: 管理员新增预售规则（已修改）
-     * 修改内容如下：1.新增Http请求 2.日志log 3.url修改为与保准组一致
+     * @Description: 管理员新增预售规则
      * @Param: [presaleRule]
      * @return: java.lang.Object
      * @Author: Zhang Yaqing
@@ -86,7 +86,7 @@ public class PresaleController {
         if (error != null) {
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(732,"预售规则添加失败");
+            return error;
         }
         try{
             presaleService.add(presaleRule);
@@ -94,7 +94,7 @@ public class PresaleController {
         catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(732,"预售规则添加失败");
+            return ResponseUtil.badArgumentValue();
         }
         presaleService.log(log);
         return ResponseUtil.ok(presaleRule);
@@ -124,7 +124,7 @@ public class PresaleController {
         if(presaleRule==null){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(730,"该预售规则是无效预售规则");
+            return ResponseUtil.badArgumentValue();
         }
         presaleService.log(log);
         return ResponseUtil.ok(presaleRule);
@@ -138,10 +138,6 @@ public class PresaleController {
     @GetMapping("/presaleRules/{id}")
     public Object getPresaleRuleById(@PathVariable Integer id){
         PresaleRuleVo presaleRuleVo=presaleService.findById(id);
-        if(presaleRuleVo==null)
-        {
-            return ResponseUtil.fail(730,"该预售规则是无效预售规则");
-        }
         return ResponseUtil.ok(presaleRuleVo);
     }
 
@@ -171,7 +167,7 @@ public class PresaleController {
         if (error != null) {
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(731,"预售规则修改失败");
+            return error;
         }
         presaleRule.setId(id);
 
@@ -194,7 +190,7 @@ public class PresaleController {
             if (presaleService.update(presaleRule) == 0) {
                 log.setStatusCode(0);
                 presaleService.log(log);
-                return ResponseUtil.fail(731,"预售规则修改失败");
+                return ResponseUtil.updatedDataFailed();
             }
             //再进行退款操作
             //传递presaleRule给订单
@@ -204,7 +200,7 @@ public class PresaleController {
         }else if(inTime==false){
             //预售未开始或者已经结束可以修改信息
             if (presaleService.update(presaleRule) == 0) {
-                return ResponseUtil.fail(731,"预售规则修改失败");
+                return ResponseUtil.updatedDataFailed();
             }
             presaleService.log(log);
             return ResponseUtil.ok(presaleRule);
@@ -213,7 +209,7 @@ public class PresaleController {
             //在预售开始到结束时间内且未作废的情况，不能改动信息
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(731,"预售规则修改失败");
+            return ResponseUtil.updatedDataFailed();
         }
     }
 
@@ -246,11 +242,11 @@ public class PresaleController {
         LocalDateTime nowTime=LocalDateTime.now();
         //预售规则未失效
         if(statusCode==true) {
-            //在预售开始到结束时间内不能删除预售规则
+            //在预售开始到结束时间内不能删除优惠券
             if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
                 log.setStatusCode(0);
                 presaleService.log(log);
-                return ResponseUtil.fail(733,"预售规则删除失败");
+                return ResponseUtil.fail();
             }
             presaleService.delete(id);
             log.setStatusCode(1);
@@ -260,7 +256,7 @@ public class PresaleController {
             if(presaleService.delete(id)==0){
                 log.setStatusCode(0);
                 presaleService.log(log);
-                return ResponseUtil.fail(733,"预售规则删除失败");
+                return ResponseUtil.badArgumentValue();
             }
             log.setStatusCode(1);
             presaleService.log(log);
@@ -278,9 +274,6 @@ public class PresaleController {
     @GetMapping("/presaleRules")
     public Object selectPresaleRule(@RequestParam Integer goodsId,@RequestParam Integer page,@RequestParam Integer limit){
         List<PresaleRuleVo> list=presaleService.findPresaleRule(goodsId,page,limit);
-        if(list.size()==0){
-            return ResponseUtil.fail(730,"该预售规则是无效预售规则");
-        }
         return ResponseUtil.ok(list);
     }
 
@@ -293,7 +286,6 @@ public class PresaleController {
     @GetMapping("/admins/presaleGoods")
     public Object findAllPresaleRules(@RequestParam Integer page,@RequestParam Integer limit){
         List<PresaleRuleVo> list=presaleService.findAllPresaleRules(page, limit);
-
         return ResponseUtil.ok(list);
     }
 
