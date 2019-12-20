@@ -100,7 +100,7 @@ public class ResponseUtil {
     }
 
     public static Object invalidPresaleRule() {
-        return fail(730, "该预售规则是无效团购规则（不在数据库里的或者逻辑删除）");
+        return fail(730, "该预售规则是无效团购规则");
     }
     public static Object updateFailed() {
         return fail(731, "预售规则修改失败");

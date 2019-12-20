@@ -1,5 +1,4 @@
 
-
 mybatis:
   #domain对象的包
   type-aliases-package: xmu.oomall.discount.domain
@@ -8,15 +7,6 @@ mybatis:
   configuration:
     #自动将SQL中查出来的带下划线的字段，转换为驼峰标志，再去匹配类中的属性
     map-underscore-to-camel-case: true
-
-#server:
-#  port: 8080
-
-#spring:
-#  application:
-#    name: ad
-#  profiles:
-#    active: dev
 
 management:
   endpoint:
@@ -53,33 +43,13 @@ management:
 
 
 #周林辉
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
-#    username: root
-#    #  password: Zhangyaqing123
-#    password: 123456
-#  application:
-#    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
-#
-#server:
-#  port: 8802
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
-
-
-#自己组
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=GMT
-    username: user2_2
-    #  password: Zhangyaqing123
-    password: ooad2
+    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+    username: root
+    password: Zhangyaqing123
+  #  password: 123456
   application:
     name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
 
@@ -89,4 +59,24 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://47.97.43.141:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
+
+
+#自己组
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=GMT
+#    username: user2_2
+#    #  password: Zhangyaqing123
+#    password: ooad2
+#  application:
+#    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8802
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.97.43.141:8761/eureka/

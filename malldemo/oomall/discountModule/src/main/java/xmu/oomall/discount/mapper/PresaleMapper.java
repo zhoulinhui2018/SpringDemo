@@ -50,5 +50,7 @@ public interface PresaleMapper {
      * 管理员查看预售商品列表
      * @return
      */
-    List<PresaleRule> findAllPresaleRules();
+    List<PresaleRule> findAllPresaleGoods();
+
+    int invalidate(Integer id);
 }
