@@ -37,11 +37,11 @@ public class GrouponRuleDaoTest {
 
         GrouponRulePo groupOnDaoById = null;
         try {
-            groupOnDaoById = groupOnDao.findById(200001);
+            groupOnDaoById = groupOnDao.findById(100000);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(groupOnDaoById, 0);
+        GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(groupOnDaoById, 41);
         System.out.println(accessStrategy.getRate());
     }
 }

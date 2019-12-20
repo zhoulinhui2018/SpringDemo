@@ -18,10 +18,7 @@ import java.util.List;
 @Service
 public interface ICouponService {
 
-    public List<Coupon> getMyCoupons0(Integer page,Integer limit,Integer userId);
-    public List<Coupon> getMyCoupons1(Integer page,Integer limit,Integer userId);
-    public List<Coupon> getMyCoupons2(Integer page,Integer limit,Integer userId);
-    public List<Coupon> getMyCoupons3(Integer page,Integer limit,Integer userId);
+//    public List<Coupon> showTypeCouponList(Integer page,Integer limit,Integer userId,Integer showType);
 
 
     /**
@@ -69,7 +66,7 @@ public interface ICouponService {
      * @param userId
      * @return
      */
-    List<CouponPo> getCouponMyList(Integer userId,Integer page,Integer limit);
+    List<CouponPo> getCouponMyList(Integer userId);
 
 
     /**
@@ -90,8 +87,9 @@ public interface ICouponService {
     /**
      * 用户领取一张优惠券
      * @param coupon
+     * @return
      */
-    void addCoupon(CouponPo coupon);
+    int addCoupon(CouponPo coupon);
 
     /**
      * 计算使用优惠券后的订单明细

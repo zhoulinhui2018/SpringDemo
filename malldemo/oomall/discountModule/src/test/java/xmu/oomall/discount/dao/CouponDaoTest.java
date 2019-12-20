@@ -9,6 +9,7 @@ import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -62,5 +63,27 @@ class CouponDaoTest {
         System.out.println(result);
     }
 
+    @Test
+    public void getCouponsTest()
+    {
+        List<CouponPo> list=couponDao.getCouponsByRuleId(100001);
+        for(int i=0;i<list.size();i++){
+            System.out.println(list.get(i));
+        }
+    }
+
+    @Test
+    public void invalidCoupons()
+    {
+        int result=couponDao.invalidateCouponById(100001);
+        System.out.println(result);
+    }
+
+    @Test
+    public void updateTimeTest()
+    {
+        LocalDateTime now=LocalDateTime.now();
+        couponDao.updateCouponRuleDeleteTime(100001,now);
+    }
 
 }
