@@ -170,7 +170,7 @@ public class DiscountController {
     }
 
     /**
-     * @Description: 管理员修改团购信息
+     * @Description: 管理员修改团购信息   要改
      * @Param: [id, grouponRulePo]
      * @return: java.lang.Object
      * @Author: Zhou Linhui
@@ -181,6 +181,9 @@ public class DiscountController {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
+        }
+        if (id<=0){
+            return ResponseUtil.fail();
         }
         Log log = LogUtil.newLog("修改团购", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
         Boolean inTime = false;
@@ -203,6 +206,9 @@ public class DiscountController {
         }
         Boolean statusCode = grouponRulePo1.getStatusCode();
 
+        if (inTime==true){
+            return ResponseUtil.fail(721,"团购规则修改失败");
+        }
 //        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
 //            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
 //            log.setStatusCode(1);

@@ -56,7 +56,7 @@ public class AddressServiceTest {
         address.setPostalCode("123456");
         address.setMobile("19032");
         address.setConsignee("虎大王");
-        address.setBeDefault(0);
+        address.setBeDefault(false);
         address.setUserId(1);
         addressService.addNewAddress(address);
         System.out.println(address);
@@ -75,7 +75,7 @@ public class AddressServiceTest {
         address.setPostalCode("123456");
         address.setMobile("19032");
         address.setConsignee("虎大王");
-        address.setBeDefault(0);
+        address.setBeDefault(false);
         address.setUserId(1);
         addressService.updateAddress(address);
         System.out.println(address);

@@ -76,10 +76,10 @@ management:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2-2?serverTimezone=GMT
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=GMT
     username: user2_2
     #  password: Zhangyaqing123
-    password: OOAD2
+    password: ooad2
   application:
     name: adService #服务名称--调用的时候根据名称来调用该服务的方法
 

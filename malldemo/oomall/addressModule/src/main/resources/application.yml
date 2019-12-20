@@ -1,11 +1,11 @@
-server:
-  port: 8805
-
-spring:
-  application:
-    name: address
-  profiles:
-    active: dev
+#server:
+#  port: 8805
+#
+#spring:
+#  application:
+#    name: address
+#  profiles:
+#    active: dev
 
 management:
   endpoint:
@@ -52,4 +52,21 @@ oomall:
   predeductQty: 3
 
 
+#潘朝旺组
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=GMT
+    username: user2_2
+    #  password: Zhangyaqing123
+    password: ooad2
+  application:
+    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
 
+server:
+  port: 8764
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.96.159.71:8888/eureka/
