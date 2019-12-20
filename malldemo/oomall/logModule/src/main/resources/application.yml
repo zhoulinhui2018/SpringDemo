@@ -78,7 +78,7 @@ spring:
     username: user2_2
     password: ooad2
   application:
-    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
+    name: logService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
   port: 8803

@@ -1,8 +1,9 @@
+-- oomall_brand
 
-INSERT INTO oomall_brand VALUES
+INSERT INTO `oomall_brand` VALUES
 (
 1001000,
-'MUJI制造商',oomall_admin
+'MUJI制造商',
 '严选精选了MUJI制造商和生产原料，\n用几乎零利润的价格，剔除品牌溢价，\n让用户享受原品牌的品质生活。',
 'http://yanxuan.nosdn.127.net/1541445967645114dd75f6b0edc4762d.png',
 '2018-02-01 00:00:00',
@@ -674,21 +675,16 @@ INSERT INTO `oomall_special_freight` VALUES
 INSERT INTO `oomall_share_rule` VALUES
 (
 1001000,
-'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},
-{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},
-{"lowerbound":"11", "upperbound":"30", "rate":"1"},
-{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"1"}',
+'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},{"lowerbound":"11", "upperbound":"30", "rate":"1"},{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"1"}',
 1006029,
 '2018-02-01 00:00:00',
 0,
 '2018-02-01 00:00:00'
 ),
+
 (
 1001002,
-'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},
-{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},
-{"lowerbound":"11", "upperbound":"30", "rate":"1"},
-{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"0"}',
+'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},{"lowerbound":"11", "upperbound":"30", "rate":"1"},{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"0"}',
 1006239,
 '2018-02-01 00:00:00',
 0,
@@ -697,10 +693,7 @@ INSERT INTO `oomall_share_rule` VALUES
 
 (
 1001003,
-'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},
-{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},
-{"lowerbound":"11", "upperbound":"30", "rate":"1"},
-{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"0"}',
+'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},{"lowerbound":"11", "upperbound":"30", "rate":"1"},{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"0"}',
 1006002,
 '2018-02-01 00:00:00',
 0,
@@ -709,10 +702,7 @@ INSERT INTO `oomall_share_rule` VALUES
 
 (
 1001004,
-'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},
-{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},
-{"lowerbound":"11", "upperbound":"30", "rate":"1"},
-{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"1"}',
+'{"strategy": [{"lowerbound":"0", "upperbound":"1", "rate":"0.5"},{"lowerbound":"2", "upperbound":"10", "rate":"0.7"},{"lowerbound":"11", "upperbound":"30", "rate":"1"},{"lowerbound":"31", "upperbound":"100", "rate":"1.5"}],"type":"1"}',
 1006019,
 '2018-02-01 00:00:00',
 0,
@@ -730,7 +720,7 @@ INSERT INTO `oomall_topic` VALUES
 '2018-02-01 00:00:00',
 '2018-02-01 00:00:00',
 0,
-'https://img.alicdn.com/tfs/TB1gWplnxtnkeRjSZSgXXXAuXXa-150-150.jpg',
+'{"pictures":["https://img.alicdn.com/tfs/TB1gWplnxtnkeRjSZSgXXXAuXXa-150-150.jpg"]}',
 '音响品牌日 天猫精灵限时优惠'
 ),
 
@@ -739,7 +729,7 @@ INSERT INTO `oomall_topic` VALUES
 '2018-02-01 00:00:00',
 '2018-02-01 00:00:00',
 0,
-'https://img.alicdn.com/tfs/TB1BV5De9f2gK0jSZFPXXXsopXa-150-150.jpg',
+'{"pictures":["https://img.alicdn.com/tfs/TB1BV5De9f2gK0jSZFPXXXsopXa-150-150.jpg"]}',
 '学生装备 精选好物'
 ),
 
@@ -748,7 +738,7 @@ INSERT INTO `oomall_topic` VALUES
 '2018-02-01 00:00:00',
 '2018-02-01 00:00:00',
 0,
-'https://img.alicdn.com/tfs/TB1BV5De9f2gK0jSZFPXXXsopXa-150-150.jpg',
+'{"pictures":["https://img.alicdn.com/tfs/TB1BV5De9f2gK0jSZFPXXXsopXa-150-150.jpg"]}',
 '手机馆 iPhone新品'
 ),
 
@@ -757,7 +747,7 @@ INSERT INTO `oomall_topic` VALUES
 '2018-02-01 00:00:00',
 '2018-02-01 00:00:00',
 0,
-'https://img.alicdn.com/tfs/TB1jLf0fHj1gK0jSZFOXXc7GpXa-150-150.jpg',
+'{"pictures":["https://img.alicdn.com/tfs/TB1jLf0fHj1gK0jSZFOXXc7GpXa-150-150.jpg"]}',
 '礼品馆 节日礼品精选'
 )
 ;
@@ -868,7 +858,7 @@ INSERT INTO `oomall_be_shared_item` VALUES
 
 -- oomall_comment
 
-INSERT INTO oomall_comment VALUES
+INSERT INTO `oomall_comment` VALUES
 (
     1,
 	10086,
@@ -907,7 +897,7 @@ INSERT INTO oomall_comment VALUES
 
 -- oomall_user
 
-INSERT INTO oomall_user values
+INSERT INTO `oomall_user` values
 (10086, '10086', '10086', 1, '1999-08-05', 13988888888, '10086', 0, 'https://ss3.bdstatic.com/yrwDcj7w0QhBkMak8IuT_XF5ehU5bvGh7c50/logopic/18ed73ece744554c67ed1b7897151e49_fullsize.jpg',
     '2018-02-01 00:00:00', '1.1.1.1', 1, 1, 'wx_open_id_10086', 'session_key_10086', '2018-02-01 00:00:00', '2018-02-01 00:00:00', 0),
 (10096, '10096', '10096', 1, '2000-01-01', 13988888888, '10096', 0, 'https://ss3.bdstatic.com/yrwDcj7w0QhBkMak8IuT_XF5ehU5bvGh7c50/logopic/18ed73ece744554c67ed1b7897151e49_fullsize.jpg',
@@ -991,7 +981,7 @@ INSERT INTO `oomall_coupon` VALUES
 	'2019-12-19 00:00:00',
 	'2020-01-01 00:00:00',
 	null,
-	'满100减5',
+	'满1件减10.01',
 	'https://l.xmu.edu.cn/mod/forum/discuss.php?d=6453',
 	'2018-02-01 00:00:00',
 	'2018-02-01 00:00:00',
@@ -1006,7 +996,7 @@ INSERT INTO `oomall_coupon` VALUES
 	'2019-12-19 00:00:00',
 	'2020-01-01 00:00:00',
 	null,
-	'满1000减50',
+	'满100减5',
 	'https://l.xmu.edu.cn/mod/forum/discuss.php',
 	'2018-02-01 00:00:00',
 	'2018-02-01 00:00:00',
@@ -1021,7 +1011,7 @@ INSERT INTO `oomall_coupon` VALUES
 	'2019-12-19 00:00:00',
 	'2020-01-01 00:00:00',
 	null,
-	'满1000减100',
+	'满150打8.8折',
 	'https://l.xmu.edu.cn/mod/forum/discuss',
 	'2018-02-01 00:00:00',
 	'2018-02-01 00:00:00',
@@ -1036,17 +1026,17 @@ INSERT INTO `oomall_coupon` VALUES
 INSERT INTO `oomall_coupon_rule` VALUES
 (
     1,
-	'满100减5',
+	'满1件减10.01',
 	'超值的优惠券',
 	'2019-12-19 00:00:00',
 	'2020-01-01 00:00:00',
-    1,
+	1,
 	'https://l.xmu.edu.cn/mod/forum/discuss.php?d=6453',
-	12,
-	'{"name":"xmu.oomall.discount.domain.coupon.CashOffStrategy", "obj":{"threshold":100, "offCash":5}}',
+	13,
+	'{"name":"NumberStrategy", "obj":{"threshold":1, "offCash":10.01}}',
 	100,
 	20,
-	'{"goodsIds": [274, 275, 276]}',
+	'{"goodsIds": [1006002, 1006003, 1006019]}',
 	null,
 	'2018-02-01 00:00:00',
 	'2018-02-01 00:00:00',
@@ -1054,17 +1044,17 @@ INSERT INTO `oomall_coupon_rule` VALUES
 ),
 (
     2,
-	'满1000减50',
+	'满100减5',
 	'超值的优惠券',
 	'2019-12-19 00:00:00',
 	'2020-01-01 00:00:00',
-    1,
+	1,
 	'https://l.xmu.edu.cn/mod/forum/discuss.php?d=6453',
-	12,
-	'{"name":"xmu.oomall.discount.domain.coupon.CashOffStrategy", "obj":{"threshold":1000, "offCash":50}}',
+	13,
+	'{"name":"CashOffStrategy", "obj":{"threshold":100, "offCash":5}}',
 	100,
 	30,
-	'{"goodsIds": [274,275,276]}',
+	'{"goodsIds": [1006002, 1006003, 1006239]}',
 	null,
 	'2018-02-01 00:00:00',
 	'2018-02-01 00:00:00',
@@ -1072,14 +1062,14 @@ INSERT INTO `oomall_coupon_rule` VALUES
 ),
 (
     3,
-	'满1000减100',
+	'满150打8.8折',
 	'超值的优惠券',
 	'2019-12-19 00:00:00',
 	'2020-01-01 00:00:00',
-    1,
+	1,
 	'https://l.xmu.edu.cn/mod/forum/discuss.php?d=6453',
-	12,
-	'{"name":"xmu.oomall.discount.domain.coupon.CashOffStrategy", "obj":{"threshold":1000, "offCash":100}}',
+	13,
+	'{"name":"PercentageStrategy", "obj":{"threshold":150, "percentage":0.88}}',
 	100,
 	20,
 	'{"goodsIds": [1006002, 1006003, 1006019]}',
@@ -1088,7 +1078,6 @@ INSERT INTO `oomall_coupon_rule` VALUES
 	'2018-02-01 00:00:00',
 	0
 );
-
 
 
 -- oomall_groupon_rule
