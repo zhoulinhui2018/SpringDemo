@@ -1,6 +1,7 @@
 package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
+import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -27,19 +29,40 @@ public class CouponController {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
-    private Object validate(CouponRulePo couponRule) {
+    private Boolean validate(CouponRulePo couponRule) {
+        Integer id=couponRule.getId();
         String name = couponRule.getName();
-        if (StringUtils.isEmpty(name)) {
-            return ResponseUtil.badArgument();
+        LocalDateTime beginTime=couponRule.getBeginTime();
+        LocalDateTime endTime=couponRule.getEndTime();
+        Boolean status=couponRule.getStatusCode();
+        Integer total=couponRule.getTotal();
+
+        if(id==null||name==null||beginTime==null||endTime==null||status==null||total==null)
+        {
+            return false;
         }
-        return null;
+        if(beginTime.isAfter(endTime))
+        {
+            return false;
+        }
+        return true;
     }
-    private Object validateCoupon(CouponPo coupon) {
-        String name = coupon.getName();
-        if (StringUtils.isEmpty(name)) {
-            return ResponseUtil.badArgument();
+    private Boolean validateCoupon(CouponPo coupon) {
+        Integer id=coupon.getId();
+        Integer userId=coupon.getUserId();
+        Integer couponRuleId=coupon.getCouponRuleId();
+        LocalDateTime beginTime=coupon.getBeginTime();
+        LocalDateTime endTime=coupon.getEndTime();
+        Integer status=coupon.getStatusCode();
+        if(id==null||userId==null||couponRuleId==null||beginTime==null||endTime==null||status==null)
+        {
+            return false;
         }
-        return null;
+        if(beginTime.isAfter(endTime))
+        {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -101,9 +124,9 @@ public class CouponController {
         log.setType(1);
         log.setStatusCode(1);
         log.setActions("新增优惠券");
-        Object error=validate(couponRule);
+        Boolean error=validate(couponRule);
         //couponRule内容不合理
-        if (error != null) {
+        if (error == false) {
             log.setStatusCode(0);
             couponService.log(log);
             return ResponseUtil.fail(712,"优惠券添加失败");
@@ -170,8 +193,8 @@ public class CouponController {
         log.setActionId(id);
         log.setActions("修改优惠券规则");
 
-        Object error = validate(couponRule);
-        if (error != null) {
+        Boolean error = validate(couponRule);
+        if (error == false) {
             log.setStatusCode(0);
             couponService.log(log);
             return ResponseUtil.fail(711,"优惠券规则修改失败");
@@ -343,10 +366,10 @@ public class CouponController {
     @PostMapping("/coupons")
     public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo coupon)
     {
-        Object error=validateCoupon(coupon);
-        if (error != null) {
+        Boolean error=validateCoupon(coupon);
+        if (error == false) {
             //这里error是badArgument 但是现在的错误码是要单独的
-            return error;
+            return ResponseUtil.fail(714,"领取优惠券失败");
         }
         String id=request.getHeader("id");
         Integer userId=Integer.valueOf(id);

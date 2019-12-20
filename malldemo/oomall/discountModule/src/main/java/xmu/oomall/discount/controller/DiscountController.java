@@ -427,9 +427,8 @@ public class DiscountController {
                 }
                 else {
                     //判断是否是预售订单
-                    if (presaleService.isPresaleOrder(item) != null) {
-
-                        PresaleRuleVo ruleVo = presaleService.isPresaleOrder(item);
+                    PresaleRuleVo ruleVo = presaleService.isPresaleOrder(item);
+                    if ( ruleVo!= null) {
                         PresaleRule rule = ruleVo.getPresaleRule();
                         List<OrderItem> orderItemList2 = new ArrayList<>();
                         item.setItemType(1);

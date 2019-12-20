@@ -87,11 +87,11 @@ public class PresaleServiceImpl implements IPresaleService {
         Integer goodsId=item.getProduct().getGoodsId();
 
         System.out.println("te");
-        if(presaleDao.isPresaleOrder(goodsId)==null){
+        PresaleRule rule=presaleDao.isPresaleOrder(goodsId);
+        if(rule==null){
             return null;
         }
         System.out.println("tes1");
-        PresaleRule rule=presaleDao.isPresaleOrder(goodsId);
         PresaleRuleVo ruleVo=new PresaleRuleVo();
         ruleVo.setPresaleRule(rule);
         GoodsPo goodsPo=item.getProduct().getGoods();
