@@ -54,7 +54,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/10
      */
-    @PostMapping("/admin/presaleRules")
+    @PostMapping("/presaleRules")
     public Object create(@RequestBody PresaleRule presaleRule, HttpServletRequest request) throws Exception{
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -90,7 +90,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/10
      */
-    @GetMapping("/admin/presaleRules/{id}")
+    @GetMapping("/presaleRules/{id}")
     public Object detail(@PathVariable Integer id,HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -129,7 +129,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/10
      */
-    @PutMapping("/admin/presaleRules/{id}")
+    @PutMapping("/presaleRules/{id}")
     public Object update(@PathVariable Integer id, @RequestBody PresaleRule presaleRule, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -163,7 +163,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/20
      */
-    @DeleteMapping("/admin/presaleRules/{id}")
+    @DeleteMapping("/presaleRules/{id}")
     public Object delete(@PathVariable Integer id,HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -217,7 +217,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/20
      */
-    @PutMapping("/admin/presaleRules/{id}/invalid")
+    @PutMapping("/presaleRules/{id}/invalid")
     public Object invalidate(@PathVariable Integer id, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -281,7 +281,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/10
      */
-    @GetMapping("/admin/presaleRules")
+    @GetMapping("/presaleRules")
     public Object getListByGoodsId(@RequestParam Integer goodsId,
                                      @RequestParam Integer page,
                                      @RequestParam Integer limit,
