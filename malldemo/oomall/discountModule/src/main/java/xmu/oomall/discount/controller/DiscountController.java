@@ -422,7 +422,6 @@ public class DiscountController {
                 if(groupOnRuleService.isGrouponOrder(goodsId)==true){
 
                     item.setItemType(2);
-//
                     orderItemList1.add(item);
                     order.setOrderItemList(orderItemList1);
                 }

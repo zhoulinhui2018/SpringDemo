@@ -21,8 +21,7 @@
     </select>
 
     <select id="findCouponRuleById" parameterType="Integer" resultMap="couponRuleType">
-            select *
-                    from oomall_coupon_rule where id = #{id}
+            select * from oomall_coupon_rule where id = #{id}
     </select>
 
 
@@ -43,6 +42,7 @@
     <delete id="deleteCouponRuleById" parameterType="Integer">
         update oomall_coupon_rule set is_deleted=1 where id = #{id}
     </delete>
+
     <delete id="deleteAllCoupons" parameterType="Integer">
         update oomall_coupon
         set is_deleted=1 where coupon_rule_id = #{id}
@@ -104,6 +104,14 @@
         </trim>
         where id=#{id} and user_id=#{userId}
     </update>
+
+    <!--modifiedCouponRuleNum-->
+    <update id="modifiedCouponRuleNum" parameterType="Integer" >
+        update oomall_coupon_rule
+        set collected_num=collected_num+1 where id = #{couponRuleId};
+    </update>
+
+
 
     <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
         <id column="id" property="id"/>

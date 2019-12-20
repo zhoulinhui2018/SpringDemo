@@ -123,4 +123,10 @@ public interface ICouponService {
      * @return
      */
     List<CouponRulePo> getUserCouponRules(Integer page, Integer limit);
+
+    /**
+     * 优惠券领取数量加一
+     * @param couponRuleId
+     */
+    int modifiedCouponRuleNum(Integer couponRuleId);
 }

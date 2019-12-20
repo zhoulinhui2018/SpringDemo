@@ -185,4 +185,9 @@ public class CouponServiceImpl implements ICouponService {
 
     }
 
+    @Override
+    public int modifiedCouponRuleNum(Integer couponRuleId){
+        return couponDao.modifiedCouponRuleNum(couponRuleId);
+    }
+
 }
