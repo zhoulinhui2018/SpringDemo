@@ -1,3 +1,4 @@
+#自己本地
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

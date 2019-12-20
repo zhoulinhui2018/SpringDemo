@@ -170,7 +170,7 @@ public class DiscountController {
     }
 
     /**
-     * @Description: 管理员修改团购信息
+     * @Description: 管理员修改团购信息   要改
      * @Param: [id, grouponRulePo]
      * @return: java.lang.Object
      * @Author: Zhou Linhui
@@ -182,6 +182,9 @@ public class DiscountController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        if (id<=0){
+            return ResponseUtil.fail();
+        }
         Log log = LogUtil.newLog("修改团购", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
         Boolean inTime = false;
         grouponRulePo.setId(id);
@@ -191,7 +194,7 @@ public class DiscountController {
             grouponRulePo1 = groupOnRuleService.findById(id);
         } catch (Exception e) {
             groupOnRuleService.log(log);
-            return ResponseUtil.fail(721,"该团购规则是无效团购规则");
+            return ResponseUtil.fail(721,"团购规则修改失败");
         }
         if (grouponRulePo1==null){
             groupOnRuleService.log(log);
@@ -203,6 +206,17 @@ public class DiscountController {
         }
         Boolean statusCode = grouponRulePo1.getStatusCode();
 
+        if (inTime==true){
+            return ResponseUtil.fail(721,"团购规则修改失败");
+        }
+
+        try {
+            groupOnRuleService.update(grouponRulePo);
+        } catch (Exception e) {
+            return ResponseUtil.fail(721,"团购规则修改失败");
+        }
+        log.setStatusCode(1);
+        groupOnRuleService.log(log);
 //        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
 //            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
 //            log.setStatusCode(1);
@@ -229,7 +243,7 @@ public class DiscountController {
 //            groupOnRuleService.log(log);
 //            return ResponseUtil.fail(721,"团购规则修改失败");
 //        }
-        return ResponseUtil.ok();
+        return ResponseUtil.ok(grouponRulePo);
     }
 
 

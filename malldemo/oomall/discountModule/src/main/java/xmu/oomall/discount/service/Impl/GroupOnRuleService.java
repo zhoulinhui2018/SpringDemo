@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.service.IGroupOnRuleService;
+import xmu.oomall.discount.util.JacksonUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -48,7 +49,7 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         System.out.println(instance.getHost());
         System.out.println(instance.getPort());
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
-        restTemplate.postForObject(reqURL,grouponRulePo,Boolean.class,rate);
+        restTemplate.postForObject(reqURL,grouponRulePo,Object.class,rate);
     }
 
     @Override
@@ -114,7 +115,9 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("orderService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/grouponOrders");
-        return restTemplate.getForObject(reqURL, Integer.class);
+        String object = restTemplate.getForObject(reqURL, String.class, grouponRulePo);
+        Integer num = JacksonUtil.parseObject(object, "data", Integer.class);
+        return num;
     }
 
     @Override
@@ -159,7 +162,18 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-        Goods goods = restTemplate.getForObject(reqURL, Goods.class,grouponRulePo.getGoodsId());
+
+
+        String object= restTemplate.getForObject(reqURL,String.class,grouponRulePo.getGoodsId());
+        System.out.println("接收到的字符串");
+        System.out.println(object);
+//        Goods goods = (Goods) object.get("data");
+        System.out.println("goods");
+//        System.out.println(object.get("data"));
+//        JacksonUtil.parseObject(object.toString(),,Goods.class)
+//        System.out.println(goods);
+        Goods goods = JacksonUtil.parseObject(object, "data", Goods.class);
+        System.out.println(goods);
         if (goods==null){
             return null;
         }
