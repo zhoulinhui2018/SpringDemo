@@ -145,7 +145,7 @@ public class DiscountController {
         }
         if (grouponRulePo==null){
             groupOnRuleService.log(log);
-            ResponseUtil.fail(720,"团购修改失败");
+            ResponseUtil.fail(721,"团购修改失败");
         }
         LocalDateTime now = LocalDateTime.now();
         if (grouponRulePo.getStartTime().isBefore(now)&&grouponRulePo.getEndTime().isAfter(now)){

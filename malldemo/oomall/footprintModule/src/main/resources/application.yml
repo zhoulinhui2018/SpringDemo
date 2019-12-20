@@ -1,11 +1,11 @@
-server:
-  port: 8806
+#server:
+#  port: 8806
 
-spring:
-  application:
-    name: footprint
-  profiles:
-    active: dev
+#spring:
+#  application:
+#    name: footprint
+#  profiles:
+#    active: dev
 
 management:
   endpoint:
@@ -51,5 +51,22 @@ oomall:
   #预提库存数量
   predeductQty: 3
 
+#我们组
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+    username: user2_2
+    password: ooad2
+  application:
+    name: footprintService #服务名称--调用的时候根据名称来调用该服务的方法
 
+server:
+  port: 8802
+  application:
+    name: footprint
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.97.43.141:8761/eureka/
 

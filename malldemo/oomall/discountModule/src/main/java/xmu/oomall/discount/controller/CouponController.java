@@ -1,10 +1,11 @@
 package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
-import io.netty.util.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.Coupon;
@@ -13,12 +14,12 @@ import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("")
@@ -26,57 +27,33 @@ public class CouponController {
     @Autowired
     private CouponServiceImpl couponService;
 
-    @Autowired
-    private LoadBalancerClient loadBalancerClient;
-
-    private Boolean validate(CouponRulePo couponRule) {
-        Integer id=couponRule.getId();
+    private Object validate(CouponRulePo couponRule) {
         String name = couponRule.getName();
-        LocalDateTime beginTime=couponRule.getBeginTime();
-        LocalDateTime endTime=couponRule.getEndTime();
-        Boolean status=couponRule.getStatusCode();
-        Integer total=couponRule.getTotal();
-
-        if(id==null||name==null||beginTime==null||endTime==null||status==null||total==null)
-        {
-            return false;
+        if (StringUtils.isEmpty(name)) {
+            return ResponseUtil.badArgument();
         }
-        if(beginTime.isAfter(endTime))
-        {
-            return false;
-        }
-        return true;
+        return null;
     }
-    private Boolean validateCoupon(CouponPo coupon) {
-        Integer id=coupon.getId();
-        Integer userId=coupon.getUserId();
-        Integer couponRuleId=coupon.getCouponRuleId();
-        LocalDateTime beginTime=coupon.getBeginTime();
-        LocalDateTime endTime=coupon.getEndTime();
-        Integer status=coupon.getStatusCode();
-        if(id==null||userId==null||couponRuleId==null||beginTime==null||endTime==null||status==null)
-        {
-            return false;
+    private Object validateCoupon(CouponPo coupon) {
+        String name = coupon.getName();
+        if (StringUtils.isEmpty(name)) {
+            return ResponseUtil.badArgument();
         }
-        if(beginTime.isAfter(endTime))
-        {
-            return false;
-        }
-        return true;
+        return null;
     }
 
     /**
-     * 管理员获取优惠券列表（第一次修改）
-     * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
-     * 4.返回值为ResponseUtil
-     * @return list<CouponRulePo>
-     *     postman测试成功
+     * @description 管理员获取优惠券列表
+     * @param page
+     * @param limit
+     * @return java.lang.Object[List<couponRulePo>]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @GetMapping("/admin/couponRules")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit,
-                       HttpServletRequest request)
-    {
+                       HttpServletRequest request) {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -87,8 +64,18 @@ public class CouponController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("查看优惠券规则列表");
-        List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
-        return ResponseUtil.ok(couponList);
+
+        List<CouponRulePo> couponRulePoList;
+        try{
+            couponRulePoList = couponService.getCouponList(page,limit);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.serious();
+        }
+        couponService.log(log);
+        return ResponseUtil.ok(couponRulePoList);
     }
 
     /**
@@ -124,9 +111,9 @@ public class CouponController {
         log.setType(1);
         log.setStatusCode(1);
         log.setActions("新增优惠券");
-        Boolean error=validate(couponRule);
+        Object error=validate(couponRule);
         //couponRule内容不合理
-        if (error == false) {
+        if (error != null) {
             log.setStatusCode(0);
             couponService.log(log);
             return ResponseUtil.fail(712,"优惠券添加失败");
@@ -193,8 +180,8 @@ public class CouponController {
         log.setActionId(id);
         log.setActions("修改优惠券规则");
 
-        Boolean error = validate(couponRule);
-        if (error == false) {
+        Object error = validate(couponRule);
+        if (error != null) {
             log.setStatusCode(0);
             couponService.log(log);
             return ResponseUtil.fail(711,"优惠券规则修改失败");
@@ -202,40 +189,36 @@ public class CouponController {
         couponRule.setId(id);
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
 
-        if(ruleInDB!=null) {
+        boolean oldStatusCode=ruleInDB.getStatusCode();
 
-            boolean oldStatusCode = ruleInDB.getStatusCode();
+        LocalDateTime beginTime=ruleInDB.getBeginTime();
+        LocalDateTime endTime=ruleInDB.getEndTime();
+        Boolean inTime=false;
+        LocalDateTime nowTime=LocalDateTime.now();
+        if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)){
+            inTime=true;
+        }
+        if(inTime==true && oldStatusCode==true && couponRule.getStatusCode()==false) {
+            //先修改预售状态
+            couponService.updateCouponRuleById(couponRule);
+            couponService.updateCouponStatus(id);
+            return ResponseUtil.ok(couponRule);
+            //再进行退款操作
 
-            LocalDateTime beginTime = ruleInDB.getBeginTime();
-            LocalDateTime endTime = ruleInDB.getEndTime();
-            Boolean inTime = false;
-            LocalDateTime nowTime = LocalDateTime.now();
-            if (beginTime.isBefore(nowTime) && endTime.isAfter(nowTime)) {
-                inTime = true;
-            }
-            if (inTime == true && oldStatusCode == true && couponRule.getStatusCode() == false) {
-                //先修改预售状态
-                couponService.updateCouponRuleById(couponRule);
-                couponService.updateCouponStatus(id);
-                return ResponseUtil.ok(couponRule);
 
-
-            } else if (inTime == false) {
-                //预售未开始或者已经结束可以修改信息
-                if (couponService.updateCouponRuleById(couponRule) == 0) {
-                    log.setStatusCode(0);
-                    couponService.log(log);
-                    return ResponseUtil.fail(711, "优惠券规则修改失败");
-                }
-                return ResponseUtil.ok(couponRule);
-
-            } else {
-                //在预售开始到结束时间内且未作废的情况，不能改动信息
+        }else if(inTime==false){
+            //预售未开始或者已经结束可以修改信息
+            if (couponService.updateCouponRuleById(couponRule) == 0) {
                 log.setStatusCode(0);
                 couponService.log(log);
-                return ResponseUtil.fail(711, "优惠券规则修改失败");
+                return ResponseUtil.fail(711,"优惠券规则修改失败");
             }
+            return ResponseUtil.ok(couponRule);
+
         }else{
+            //在预售开始到结束时间内且未作废的情况，不能改动信息
+            log.setStatusCode(0);
+            couponService.log(log);
             return ResponseUtil.fail(711,"优惠券规则修改失败");
         }
 
@@ -263,36 +246,30 @@ public class CouponController {
 
         CouponRulePo ruleInDB=couponService.findCouponRuleById(id);
         System.out.println(ruleInDB);
-        if(ruleInDB!=null)
-        {
-            Boolean statusCode = ruleInDB.getStatusCode();
-            LocalDateTime beginTime = ruleInDB.getBeginTime();
-            LocalDateTime endTime = ruleInDB.getEndTime();
-            LocalDateTime nowTime = LocalDateTime.now();
+        Boolean statusCode=ruleInDB.getStatusCode();
+        LocalDateTime beginTime=ruleInDB.getBeginTime();
+        LocalDateTime endTime=ruleInDB.getEndTime();
+        LocalDateTime nowTime=LocalDateTime.now();
 
-            Boolean inTime = (nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0);
+        Boolean inTime=(nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0);
 
-            //优惠规则已失效，或不在时间范围内，可以删除
-            if (statusCode == false || !inTime) {
-                int result = couponService.deleteCouponRuleById(id);
-                //出现非法id情况，删除失败
-                if (result == 0) {
-                    log.setStatusCode(0);
-                    couponService.log(log);
-                    return ResponseUtil.fail(713, "优惠券规则删除失败");
-                } else { //成功删除
-                    log.setStatusCode(1);
-                    couponService.log(log);
-                    return ResponseUtil.ok();
-                }
-            } else { //不能删除
+        //优惠规则已失效，或不在时间范围内，可以删除
+        if(statusCode==false||!inTime){
+            int result=couponService.deleteCouponRuleById(id);
+            if(result==0){ //出现非法id情况，删除失败
                 log.setStatusCode(0);
                 couponService.log(log);
-                return ResponseUtil.fail(713, "优惠券规则删除失败");
+                return ResponseUtil.fail(713,"优惠券规则删除失败");
+            }else{ //成功删除
+                log.setStatusCode(1);
+                couponService.log(log);
+                return ResponseUtil.ok();
             }
         }
-        else {
-            return ResponseUtil.fail(715, "该优惠券是无效优惠券");
+        else{ //不能删除
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.fail(713,"优惠券规则删除失败");
         }
     }
 
@@ -306,7 +283,10 @@ public class CouponController {
 
 
     @GetMapping("/coupons")
-    public Object mylist(HttpServletRequest request, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer limit, @RequestParam Integer showType)
+    public Object mylist(HttpServletRequest request,
+                                 @RequestParam(defaultValue = "1") Integer page,
+                                 @RequestParam(defaultValue = "10") Integer limit,
+                                 @RequestParam Integer showType)
     {
         String id=request.getHeader("id");
         Integer userId=Integer.valueOf(id);
@@ -315,22 +295,22 @@ public class CouponController {
         }
 
         if (showType==0){
-            List<Coupon> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
+            List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
             if (myCoupons0==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons0);
         }else if (showType==1){
-            List<Coupon> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
+            List<CouponPo> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
             if (myCoupons1==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons1);
         }else if (showType==2){
-            List<Coupon> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
+            List<CouponPo> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
             if (myCoupons2==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons2);
         }else{
-            List<Coupon> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
+            List<CouponPo> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
             if (myCoupons3==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons3);
@@ -344,17 +324,17 @@ public class CouponController {
      * @return
      * 备注：标准组没有该url
      */
-//    @GetMapping("/coupons/{id}")
-//    public Object readACoupon(Integer id)
-//    {
-//        CouponPo ACoupon=new CouponPo();
-//        try {
-//             ACoupon = couponService.findCouponById(id);
-//        }catch (Exception e){
-//           return ResponseUtil.fail();
-//        }
-//        return ResponseUtil.ok(ACoupon);
-//    }
+    @GetMapping("/coupons/{id}")
+    public Object readACoupon(Integer id)
+    {
+        CouponPo ACoupon=new CouponPo();
+        try {
+             ACoupon = couponService.findCouponById(id);
+        }catch (Exception e){
+           return ResponseUtil.fail();
+        }
+        return ResponseUtil.ok(ACoupon);
+    }
 
     /**
      * 用户领取一张新的优惠券
@@ -366,63 +346,44 @@ public class CouponController {
     @PostMapping("/coupons")
     public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo coupon)
     {
-        Boolean error=validateCoupon(coupon);
-        if (error == false) {
-            //这里error是badArgument 但是现在的错误码是要单独的
-            return ResponseUtil.fail(714,"领取优惠券失败");
+        Object error=validateCoupon(coupon);
+        if (error != null) {
+            return error;
         }
         String id=request.getHeader("id");
         Integer userId=Integer.valueOf(id);
         Integer couponRuleId=coupon.getCouponRuleId();
-        //判断该优惠券是否还有
-        CouponRulePo couponRulePo=couponService.findCouponRuleById(couponRuleId);
-        if(couponRulePo!=null){
-            Integer total=couponRulePo.getTotal();
-            Integer collectedNum=couponRulePo.getCollectedNum();
-            if(total-collectedNum>0){
-                //优惠券未被领完
-                //判断当前优惠券是否已经领取过
-                List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,100);
-                List<Integer> couponRuleIds=new ArrayList<>();
-                //获取已领取优惠券的ids
-                for(CouponPo couponPo:couponPos){
-                    couponRuleIds.add(couponPo.getCouponRuleId());
-                }
-                for(Integer eachId:couponRuleIds){
-                    if(couponRuleId.equals(eachId)){
-                        //优惠券已经领取过了
-                        return ResponseUtil.fail(714,"领取优惠券失败");
-                    }
-                }
-                LocalDateTime now=LocalDateTime.now();
-                LocalDateTime beginTime=coupon.getBeginTime();
-                LocalDateTime endTime=coupon.getEndTime();
-                //判断是否在起止期限内
-                if((now.compareTo(beginTime)>=0)&&(now.compareTo(endTime)<=0)){
-                    coupon.setStatusCode(0);
-                    try {
-                        couponService.addCoupon(coupon);
-                        //优惠券规则下的优惠券领取数量加一
-                        couponService.modifiedCouponRuleNum(couponRuleId);
-
-
-                    }catch (Exception e){
-                        ResponseUtil.fail(714,"领取优惠券失败");
-                    }
-
-                    return ResponseUtil.ok(coupon);
-                }
-                else{
-                    //优惠券过期了，无法领取
-                    return ResponseUtil.fail(714,"领取优惠券失败");
-                }
-            }
-            else{
+        //判断当前优惠券是否已经领取过
+        List<CouponPo> couponPos=couponService.getCouponMyList(userId,1,100);
+        List<Integer> couponRuleIds=new ArrayList<>();
+        //获取已领取优惠券的ids
+        for(CouponPo couponPo:couponPos){
+            couponRuleIds.add(couponPo.getCouponRuleId());
+        }
+        for(Integer eachId:couponRuleIds){
+            if(couponRuleId.equals(eachId)){
+                //优惠券已经领取过了
                 return ResponseUtil.fail(714,"领取优惠券失败");
             }
         }
+        LocalDateTime now=LocalDateTime.now();
+        LocalDateTime beginTime=coupon.getBeginTime();
+        LocalDateTime endTime=coupon.getEndTime();
+        //判断是否在起止期限内
+        if((now.compareTo(beginTime)>=0)&&(now.compareTo(endTime)<=0)){
+            coupon.setStatusCode(0);
+            try {
+                couponService.addCoupon(coupon);
+            }catch (Exception e){
+                ResponseUtil.fail(714,"领取优惠券失败");
+            }
+            return ResponseUtil.ok(coupon);
+        }
+        else{
+            //优惠券过期了，无法领取
+            return ResponseUtil.fail(714,"领取优惠券失败");
+        }
 
-        return ResponseUtil.fail(714,"领取优惠券失败");
     }
 
     /**

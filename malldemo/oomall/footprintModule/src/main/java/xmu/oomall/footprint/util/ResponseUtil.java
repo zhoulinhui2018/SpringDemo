@@ -40,14 +40,14 @@ import java.util.Map;
 public class ResponseUtil {
     public static Object ok() {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 200);
+        obj.put("errno", 0);
         obj.put("errmsg", "Success");
         return obj;
     }
 
     public static Object ok(Object data) {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 200);
+        obj.put("errno", 0);
         obj.put("errmsg", "Success");
         obj.put("data", data);
         return obj;
@@ -68,7 +68,7 @@ public class ResponseUtil {
     }
 
     public static Object badArgument() {
-        return fail(401, "参数不对");
+        return fail(580, "参数不对");
     }
 
     public static Object badArgumentValue() {

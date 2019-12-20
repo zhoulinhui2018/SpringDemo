@@ -40,14 +40,14 @@ import java.util.Map;
 public class ResponseUtil {
     public static Object ok() {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 200);
+        obj.put("errno", 0);
         obj.put("errmsg", "成功");
         return obj;
     }
 
     public static Object ok(Object data) {
         Map<String, Object> obj = new HashMap<String, Object>();
-        obj.put("errno", 200);
+        obj.put("errno", 0);
         obj.put("errmsg", "成功");
         obj.put("data", data);
         return obj;
@@ -99,23 +99,52 @@ public class ResponseUtil {
         return fail(506, "无操作权限");
     }
 
+    //预售
     public static Object invalidPresaleRule() {
         return fail(730, "该预售规则是无效团购规则");
     }
-    public static Object updateFailed() {
+    public static Object updatePresaleRuleFailed() {
         return fail(731, "预售规则修改失败");
     }
-    public static Object addFailed() {
+    public static Object addPresaleRuleFailed() {
         return fail(732, "预售规则添加失败");
     }
-    public static Object deleteFailed() {
-        return fail(733, "（团购规则存在数据库中，但是“不在支付定金时间内”等情形）");
+    public static Object deletePresaleRuleFailed() {
+        return fail(733, "预售规则删除失败");
     }
     public static Object cannotBuy() {
         return fail(734, "预售商品无法购买");
     }
     public static Object cannotPay() {
-        return fail(735, "预售商品无法支付尾款（团购规则存在数据库中，但是“不在支付尾款时间内”等情形）");
+        return fail(735, "预售商品无法支付尾款");
     }
+
+
+    //优惠券
+    public static Object invalidCouponRule() {
+        return fail(710, "该优惠券规则是无效优惠券规则(不在数据库里的或者逻辑删除)");
+    }
+    public static Object updateCouponRuleFailed() {
+        return fail(711, "优惠券规则修改失败");
+    }
+    public static Object addCouponRuleFailed() {
+        return fail(712, "优惠券规则添加失败");
+    }
+    public static Object deleteCouponRuleFailed() {
+        return fail(713, "优惠券规则删除失败");
+    }
+    public static Object getCouponFailed() {
+        return fail(714, "领取优惠券失败");
+    }
+    public static Object invalidCoupon() {
+        return fail(715, "该优惠券是无效优惠券(不在数据库里的或者逻辑删除)");
+    }
+    public static Object cannotUseCoupon() {
+        return fail(716, "该优惠券无法使用(存在数据库中，但是“不在使用时间内”等情形)");
+    }
+    public static Object getCouponRuleFailed() {
+        return fail(717, "查看优惠券规则失败");
+    }
+
 }
 
