@@ -98,5 +98,24 @@ public class ResponseUtil {
     public static Object unauthz() {
         return fail(506, "无操作权限");
     }
+
+    public static Object invalidPresaleRule() {
+        return fail(730, "该预售规则是无效团购规则");
+    }
+    public static Object updateFailed() {
+        return fail(731, "预售规则修改失败");
+    }
+    public static Object addFailed() {
+        return fail(732, "预售规则添加失败");
+    }
+    public static Object deleteFailed() {
+        return fail(733, "（团购规则存在数据库中，但是“不在支付定金时间内”等情形）");
+    }
+    public static Object cannotBuy() {
+        return fail(734, "预售商品无法购买");
+    }
+    public static Object cannotPay() {
+        return fail(735, "预售商品无法支付尾款（团购规则存在数据库中，但是“不在支付尾款时间内”等情形）");
+    }
 }
 

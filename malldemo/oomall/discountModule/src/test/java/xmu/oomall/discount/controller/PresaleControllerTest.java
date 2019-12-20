@@ -100,11 +100,6 @@ public class PresaleControllerTest {
         System.out.println(object.toString());
     }
 
-    @Test
-    public void findAllPresaleRulesTest(){
-        Object object=presaleController.findAllPresaleRules(1,10);
-        System.out.println(object.toString());
-    }
 
     @Test
     public void getPresaleRuleByIdTest(){

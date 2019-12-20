@@ -113,7 +113,7 @@ public class PresaleServiceImpl implements IPresaleService {
 
 
     @Override
-    public Boolean getPresaleRuleOrders(PresaleRule presaleRule) {
+    public Boolean dealRefund(PresaleRule presaleRule) {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("orderService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleRule/refund");
@@ -150,9 +150,9 @@ public class PresaleServiceImpl implements IPresaleService {
         return list;
     }
     @Override
-    public List<PresaleRuleVo> findAllPresaleRules(Integer page,Integer limit){
+    public List<PresaleRuleVo> findAllPresaleGoods(Integer page,Integer limit){
         PageHelper.startPage(page,limit);
-        List<PresaleRuleVo> list=presaleDao.findAllPresaleRules();
+        List<PresaleRuleVo> list=presaleDao.findAllPresaleGoods();
         return list;
     }
 
@@ -161,5 +161,10 @@ public class PresaleServiceImpl implements IPresaleService {
         PageHelper.startPage(page,limit);
         List<PresaleRuleVo> list=presaleDao.findOnPresaleRules();
         return list;
+    }
+
+    @Override
+    public int invalidate(Integer id) {
+        return presaleDao.invalidate(id);
     }
 }

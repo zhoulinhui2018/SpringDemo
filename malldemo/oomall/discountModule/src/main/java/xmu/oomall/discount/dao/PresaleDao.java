@@ -1,15 +1,13 @@
 package xmu.oomall.discount.dao;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
-import xmu.oomall.discount.domain.Goods;
-import xmu.oomall.discount.domain.Order;
-import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.Payment;
+import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
 import xmu.oomall.discount.mapper.PresaleMapper;
 
@@ -17,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PresaleDao {
@@ -26,6 +25,17 @@ public class PresaleDao {
 
     @Autowired
     private LoadBalancerClient loadBalancerClient;
+
+    public GoodsPo getGoodsPoById(Integer goodsId) {
+        RestTemplate restTemplate = new RestTemplate();
+        ServiceInstance instance = loadBalancerClient.choose("goodsService");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
+        Object result= restTemplate.getForObject(reqURL,Object.class);
+        Map<String,Object> haspMap=(Map<String,Object>)result;
+        ObjectMapper mapper = new ObjectMapper();
+        GoodsPo goodsPo = mapper.convertValue(haspMap.get("data"),GoodsPo.class);
+        return goodsPo;
+    }
 
     /**
      * 管理员添加预售规则
@@ -71,12 +81,7 @@ public class PresaleDao {
         PresaleRuleVo ruleVo=new PresaleRuleVo();
         ruleVo.setPresaleRule(rule);
         Integer goodsId=rule.getGoodsId();
-        //根据商品ID调用商品模块的服务获取GoodsPo
-        RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-        Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
-        ruleVo.setGoodsPo(goods);
+        ruleVo.setGoodsPo(getGoodsPoById(goodsId));
         return ruleVo;
     }
 
@@ -87,19 +92,12 @@ public class PresaleDao {
      */
     public List<PresaleRuleVo> findByGoodsId(Integer goodsId) {
         List<PresaleRule>  ruleList=presaleMapper.findByGoodsId(goodsId);
-
-        //根据商品ID调用商品模块的服务获取GoodsPo
-        RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-        Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
-
+        GoodsPo goodsPo= getGoodsPoById(goodsId);
         List<PresaleRuleVo> ruleVoList=new ArrayList<>();
         PresaleRuleVo ruleVo=new PresaleRuleVo();
-
         for(PresaleRule rule:ruleList){
             ruleVo.setPresaleRule(rule);
-            ruleVo.setGoodsPo(goods);
+            ruleVo.setGoodsPo(goodsPo);
             ruleVoList.add(ruleVo);
         }
         return ruleVoList;
@@ -172,22 +170,18 @@ public class PresaleDao {
 
 
     /**
-     * 管理员查看预售规则列表
+     * 管理员查看预售商品列表
      * @return
      */
-    public List<PresaleRuleVo> findAllPresaleRules(){
-        PresaleRuleVo ruleVo=new PresaleRuleVo();
+    public List<PresaleRuleVo> findAllPresaleGoods(){
         List<PresaleRuleVo> ruleVoList=new ArrayList<>();
-        List<PresaleRule> ruleList= presaleMapper.findAllPresaleRules();
+        PresaleRuleVo ruleVo=new PresaleRuleVo();
+        List<PresaleRule> ruleList= presaleMapper.findAllPresaleGoods();
         for(PresaleRule rule:ruleList){
             ruleVo.setPresaleRule(rule);
             Integer goodsId=rule.getGoodsId();
-            //根据商品ID调用商品模块的服务获取GoodsPo
-            RestTemplate restTemplate = new RestTemplate();
-            ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
-            String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-            Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
-            ruleVo.setGoodsPo(goods);
+            GoodsPo goodsPo= getGoodsPoById(goodsId);
+            ruleVo.setGoodsPo(goodsPo);
             ruleVoList.add(ruleVo);
         }
        return ruleVoList;
@@ -199,23 +193,23 @@ public class PresaleDao {
      * @return
      */
     public List<PresaleRuleVo> findOnPresaleRules() {
-        List<PresaleRule> ruleList=presaleMapper.findAllPresaleRules();
+        List<PresaleRule> ruleList=presaleMapper.findAllPresaleGoods();
         List<PresaleRuleVo> canUsedRuleVoList=new ArrayList<>();
         PresaleRuleVo ruleVo=new PresaleRuleVo();
         for(PresaleRule rule:ruleList){
-            LocalDateTime now=LocalDateTime.now();
-            if(now.isAfter(rule.getStartTime())&&(now.isBefore(rule.getEndTime()))){
+            //上架且没被删除
+            if(rule.getStatusCode() && !rule.getBeDeleted()){
                 ruleVo.setPresaleRule(rule);
                 Integer goodsId=rule.getGoodsId();
-                //根据商品ID调用商品模块的服务获取GoodsPo
-                RestTemplate restTemplate = new RestTemplate();
-                ServiceInstance instance = loadBalancerClient.choose("GoodsInfo");
-                String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-                Goods goods= restTemplate.getForObject(reqURL, Goods.class,goodsId);
-                ruleVo.setGoodsPo(goods);
+                GoodsPo goodsPo= getGoodsPoById(goodsId);
+                ruleVo.setGoodsPo(goodsPo);
                 canUsedRuleVoList.add(ruleVo);
             }
         }
         return canUsedRuleVoList;
+    }
+
+    public int invalidate(Integer id) {
+        return presaleMapper.invalidate(id);
     }
 }

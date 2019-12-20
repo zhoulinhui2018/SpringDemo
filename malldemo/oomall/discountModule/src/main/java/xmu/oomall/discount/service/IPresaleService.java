@@ -66,7 +66,7 @@ public interface IPresaleService {
      */
     PresaleRuleVo isPresaleOrder(OrderItem item);
 
-    Boolean getPresaleRuleOrders(PresaleRule presaleRule);
+    Boolean dealRefund(PresaleRule presaleRule);
 
     List<Payment> getPaymentList(List<Order> orderList);
 
@@ -87,7 +87,7 @@ public interface IPresaleService {
      * @param limit
      * @return
      */
-    List<PresaleRuleVo> findAllPresaleRules(Integer page,Integer limit);
+    List<PresaleRuleVo> findAllPresaleGoods(Integer page,Integer limit);
 
     /**
      * 用户查看所有上架预售规则
@@ -96,4 +96,6 @@ public interface IPresaleService {
      * @return
      */
     List<PresaleRuleVo> findOnPresaleRules(Integer page, Integer limit);
+
+    int invalidate(Integer id);
 }

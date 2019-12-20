@@ -1,6 +1,5 @@
 package xmu.oomall.discount.controller;
 
-import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
@@ -20,13 +19,14 @@ public class PresaleController {
     @Autowired
     private PresaleServiceImpl presaleService;
 
-
     /**
-     * 判断presaleRule是否符合规范
-     * @param presaleRule
-     * @return
+     * @description 判断presaleRule是否符合规范
+     * @param presaleRule 预售规则
+     * @return boolean
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
-    private Object validate(PresaleRule presaleRule) {
+    private Boolean validate(PresaleRule presaleRule) {
        LocalDateTime startTime=presaleRule.getStartTime();
        LocalDateTime adEndTime=presaleRule.getAdEndTime();
        LocalDateTime finalStartTime=presaleRule.getFinalStartTime();
@@ -35,42 +35,26 @@ public class PresaleController {
        Integer goodsId=presaleRule.getGoodsId();
        BigDecimal deposit=presaleRule.getDeposit();
        BigDecimal finalPayment=presaleRule.getFinalPayment();
-//       if (StringUtils.isEmpty(String.valueOf(startTime))) {
-//            return ResponseUtil.badArgument();
-//        }
-//        else if(StringUtils.isEmpty(String.valueOf(adEndTime))){
-//            return ResponseUtil.badArgument();
-//        }
-//        else if(StringUtils.isEmpty(String.valueOf(finalStartTime))){
-//            return ResponseUtil.badArgument();
-//        }
-//        else if(StringUtils.isEmpty(String.valueOf(endTime))){
-//            return ResponseUtil.badArgument();
-//        }
-        if(StringUtils.isEmpty(String.valueOf(statusCode))){
-            return  ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(goodsId))){
-            return ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(deposit))){
-            return ResponseUtil.badArgument();
-        }
-        else if(StringUtils.isEmpty(String.valueOf(finalPayment))){
-            return ResponseUtil.badArgument();
-        }
-
-        return null;
+       if (startTime==null||adEndTime==null||finalStartTime==null||endTime==null) {
+            return false;
+       }
+       if (statusCode==null||goodsId==null||deposit==null||finalPayment==null) {
+           return false;
+       }
+       if(startTime.isAfter(adEndTime)||finalStartTime.isAfter(endTime)){
+            return false;
+       }
+       return true;
     }
+
     /**
-     * @Description: 管理员新增预售规则（已修改）
-     * 修改内容如下：1.新增Http请求 2.日志log 3.url修改为与保准组一致
-     * @Param: [presaleRule]
-     * @return: java.lang.Object
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/10
+     * @description 管理员新增预售规则 （测试已通过）
+     * @param presaleRule 预售规则
+     * @return java.lang.Object[presaleRule]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
-    @PostMapping("/presaleRules")
+    @PostMapping("/admin/presaleRules")
     public Object create(@RequestBody PresaleRule presaleRule, HttpServletRequest request) throws Exception{
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -82,11 +66,10 @@ public class PresaleController {
         log.setType(1);
         log.setStatusCode(1);
         log.setActions("新增预售规则");
-        Object error=validate(presaleRule);
-        if (error != null) {
+        if (!validate(presaleRule)) {
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(732,"预售规则添加失败");
+            return ResponseUtil.invalidPresaleRule();
         }
         try{
             presaleService.add(presaleRule);
@@ -94,18 +77,18 @@ public class PresaleController {
         catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(732,"预售规则添加失败");
+            return ResponseUtil.addFailed();
         }
         presaleService.log(log);
         return ResponseUtil.ok(presaleRule);
     }
 
     /**
-     * @Description: 管理员查看某个预售规则详情
-     * @Param: [id]
-     * @return: java.lang.Object
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/10
+     * @description 管理员查看某个预售规则详情 （测试已通过）
+     * @param id 预售规则id
+     * @return java.lang.Object[PresaleRuleVo]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @GetMapping("/admin/presaleRules/{id}")
     public Object detail(@PathVariable Integer id,HttpServletRequest request){
@@ -120,42 +103,34 @@ public class PresaleController {
         log.setStatusCode(1);
         log.setActionId(id);
         log.setActions("查看预售规则详情");
-        PresaleRuleVo presaleRule = presaleService.findById(id);
-        if(presaleRule==null){
+        PresaleRuleVo presaleRuleVo;
+        try{
+            presaleRuleVo = presaleService.findById(id);
+        }
+        catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(730,"该预售规则是无效预售规则");
+            return ResponseUtil.serious();
+        }
+        if(presaleRuleVo==null){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.invalidPresaleRule();
         }
         presaleService.log(log);
-        return ResponseUtil.ok(presaleRule);
-    }
-
-    /**
-     * 用户根据ID查看预售规则详情
-     * @param id
-     * @return
-     */
-    @GetMapping("/presaleRules/{id}")
-    public Object getPresaleRuleById(@PathVariable Integer id){
-        PresaleRuleVo presaleRuleVo=presaleService.findById(id);
-        if(presaleRuleVo==null)
-        {
-            return ResponseUtil.fail(730,"该预售规则是无效预售规则");
-        }
         return ResponseUtil.ok(presaleRuleVo);
     }
 
     /**
-     * @Description: 管理员修改预售规则信息
-     * 附加：管理员可以作废预售活动，预售活动作废后，所有未付尾款的预售订单也一并作废，需要退定金
-     * @Param: [id, presaleRule]
-     * @return: java.lang.Object
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/16
+     * @description 管理员修改预售规则信息（测试已通过）
+     * @param id 预售规则id
+     * @param presaleRule 新预售规则
+     * @return java.lang.Object[PresaleRule]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
-
-    @PutMapping("/presaleRules/{id}")
-    public Object update(@PathVariable Integer id,PresaleRule presaleRule,HttpServletRequest request){
+    @PutMapping("/admin/presaleRules/{id}")
+    public Object update(@PathVariable Integer id, @RequestBody PresaleRule presaleRule, HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -166,65 +141,29 @@ public class PresaleController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActionId(id);
-        log.setActions("修改规则详情");
-        Object error = validate(presaleRule);
-        if (error != null) {
-            log.setStatusCode(0);
-            presaleService.log(log);
-            return ResponseUtil.fail(731,"预售规则修改失败");
-        }
+        log.setActions("修改预售规则");
+        /******* 遗留问题：如果修改后的预售规则不合法，如何回滚？目前无法保证修改后的规则中，时间一定正确 *******/
         presaleRule.setId(id);
-
-        PresaleRuleVo ruleVoInDB=presaleService.findById(id);
-        PresaleRule ruleInDB=ruleVoInDB.getPresaleRule();
-
-        Boolean oldStatusCode=ruleInDB.getStatusCode();
-        Boolean newStatusCode=presaleRule.getStatusCode();
-        LocalDateTime beginTime=ruleInDB.getStartTime();
-        LocalDateTime endTime=ruleInDB.getEndTime();
-        LocalDateTime nowTime=LocalDateTime.now();
-
-        Boolean inTime=(nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0);
-        Boolean changeStatus= (newStatusCode==false) && (oldStatusCode==true);
-
-
-        //作废
-        if(inTime==true&&changeStatus==true) {
-            //先修改预售状态
-            if (presaleService.update(presaleRule) == 0) {
-                log.setStatusCode(0);
-                presaleService.log(log);
-                return ResponseUtil.fail(731,"预售规则修改失败");
-            }
-            //再进行退款操作
-            //传递presaleRule给订单
-            Boolean flag=presaleService.getPresaleRuleOrders(presaleRule);
-            return ResponseUtil.ok(flag);
-
-        }else if(inTime==false){
-            //预售未开始或者已经结束可以修改信息
-            if (presaleService.update(presaleRule) == 0) {
-                return ResponseUtil.fail(731,"预售规则修改失败");
-            }
-            presaleService.log(log);
-            return ResponseUtil.ok(presaleRule);
-
-        }else{
-            //在预售开始到结束时间内且未作废的情况，不能改动信息
+        try{
+            presaleService.update(presaleRule);
+        }
+        catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.fail(731,"预售规则修改失败");
+            return ResponseUtil.updatedDataFailed();
         }
+        presaleService.log(log);
+        return ResponseUtil.ok(presaleRule);
     }
 
     /**
-     * @Description: 管理员删除预售规则
-     * @Param: [id, presaleRule]
-     * @return: java.lang.Object
-     * @Author: Zhang Yaqing
-     * @Date: 2019/12/10
+     * @description 管理员删除预售规则（测试已通过）
+     * @param id 预售规则id
+     * @return java.lang.Object
+     * @author Zhang Yaqing
+     * @date 2019/12/20
      */
-    @DeleteMapping("/presaleRules/{id}")
+    @DeleteMapping("/admin/presaleRules/{id}")
     public Object delete(@PathVariable Integer id,HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -236,79 +175,241 @@ public class PresaleController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActionId(id);
+        log.setActions("删除预售规则");
+
+        PresaleRule presaleRule;
+        //如果id不存在，抛出异常
+        try{
+            PresaleRuleVo presaleRuleVo=presaleService.findById(id);
+            presaleRule=presaleRuleVo.getPresaleRule();
+        }catch (Exception e){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.badArgument();
+        }
+        LocalDateTime beginTime=presaleRule.getStartTime();
+        LocalDateTime endTime=presaleRule.getEndTime();
+        LocalDateTime nowTime=LocalDateTime.now();
+        boolean inTime=nowTime.isAfter(beginTime)&&nowTime.isBefore(endTime);
+        Boolean statusCode=presaleRule.getStatusCode();
+        //如果已删除、或在预售时间内、或是未被下架，不能删除
+        if(presaleRule==null||presaleRule.getBeDeleted()||inTime||statusCode){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.deleteFailed();
+        }
+        try{
+            presaleService.delete(id);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.deleteFailed();
+        }
+        presaleService.log(log);
+        return ResponseUtil.ok();
+    }
+
+    /**
+     * @description 管理员下架预售规则 （测试已通过）
+     * @param id 预售规则id
+     * @return java.lang.Object
+     * @author Zhang Yaqing
+     * @date 2019/12/20
+     */
+    @PutMapping("/admin/presaleRules/{id}/invalid")
+    public Object invalidate(@PathVariable Integer id, HttpServletRequest request){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActionId(id);
         log.setActions("修改规则详情");
 
-        PresaleRuleVo ruleVoInDB=presaleService.findById(id);
-        PresaleRule ruleInDB=ruleVoInDB.getPresaleRule();
-        Boolean statusCode=ruleInDB.getStatusCode();
-        LocalDateTime beginTime=ruleInDB.getStartTime();
-        LocalDateTime endTime=ruleInDB.getEndTime();
-        LocalDateTime nowTime=LocalDateTime.now();
-        //预售规则未失效
-        if(statusCode==true) {
-            //在预售开始到结束时间内不能删除预售规则
-            if ((nowTime.compareTo(beginTime) >= 0) && (nowTime.compareTo(endTime) <= 0)) {
-                log.setStatusCode(0);
-                presaleService.log(log);
-                return ResponseUtil.fail(733,"预售规则删除失败");
-            }
-            presaleService.delete(id);
-            log.setStatusCode(1);
+        PresaleRule presaleRule;
+        //如果id不存在，抛出异常
+        try{
+            PresaleRuleVo presaleRuleVo=presaleService.findById(id);
+            presaleRule=presaleRuleVo.getPresaleRule();
+        }catch (Exception e){
+            log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.ok();
-        }else {//预售规则已失效
-            if(presaleService.delete(id)==0){
-                log.setStatusCode(0);
-                presaleService.log(log);
-                return ResponseUtil.fail(733,"预售规则删除失败");
-            }
-            log.setStatusCode(1);
-            presaleService.log(log);
-            return ResponseUtil.ok();
+            return ResponseUtil.badArgument();
         }
+        LocalDateTime beginTime=presaleRule.getStartTime();
+        LocalDateTime endTime=presaleRule.getEndTime();
+        LocalDateTime nowTime=LocalDateTime.now();
+        boolean inTime=nowTime.isAfter(beginTime)&&nowTime.isBefore(endTime);
+        Boolean statusCode=presaleRule.getStatusCode();
+        //如果不在预售时间内，或者预售已被下架，则本次操作不能下架
+        if(!inTime||!statusCode){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.badArgument();
+        }
+        //先修改预售状态
+        try{
+            presaleService.invalidate(id);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.updateFailed();
+        }
+        //再进行退款操作
+        try{
+            presaleService.dealRefund(presaleRule);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.serious();
+        }
+        presaleService.log(log);
+        return ResponseUtil.ok(presaleRule);
     }
 
     /**
-     * 用户根据商品ID搜索预售规则
-     * @param goodsId
-     * @param page
-     * @param limit
-     * @return
+     * @description 管理员根据商品id查询预售规则列表 （测试已通过）
+     * @param goodsId 预售规则id
+     * @return java.lang.Object[PresaleRuleVoList]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
+     */
+    @GetMapping("/admin/presaleRules")
+    public Object getListByGoodsId(@RequestParam Integer goodsId,
+                                     @RequestParam Integer page,
+                                     @RequestParam Integer limit,
+                                     HttpServletRequest request){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("根据条件查询预售规则列表");
+
+        List<PresaleRuleVo> presaleRuleVoList;
+        try{
+            presaleRuleVoList = presaleService.findPresaleRule(goodsId,page,limit);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.serious();
+        }
+        presaleService.log(log);
+        return ResponseUtil.ok(presaleRuleVoList);
+    }
+
+    /**
+     * @description 管理员查看预售商品列表
+     * @param page 分页大小
+     * @param limit 分页限制
+     * @return java.lang.Object[PresaleRuleVoList]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
+     */
+    @GetMapping("/admin/presaleGoods")
+    public Object findAllPresaleRules(@RequestParam Integer page,@RequestParam Integer limit,
+                                      HttpServletRequest request){
+
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        Log log=new Log();
+        log.setAdminId(Integer.valueOf(adminid));
+        log.setIp(request.getRemoteAddr());
+        log.setType(0);
+        log.setStatusCode(1);
+        log.setActions("查看预售商品列表");
+
+        List<PresaleRuleVo> presaleRuleVoList;
+        try{
+            presaleRuleVoList = presaleService.findAllPresaleGoods(page, limit);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            presaleService.log(log);
+            return ResponseUtil.serious();
+        }
+        presaleService.log(log);
+        return ResponseUtil.ok(presaleRuleVoList);
+
+    }
+
+    /**
+     * @description 用户根据ID查看预售规则详情（测试已通过）
+     * @param id 预售规则id
+     * @return java.lang.Object[PresaleRuleVo]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
+     */
+    @GetMapping("/presaleRules/{id}")
+    public Object getPresaleRuleById(@PathVariable Integer id){
+        PresaleRuleVo presaleRuleVo;
+        try{
+            presaleRuleVo=presaleService.findById(id);
+        }
+        catch (Exception e){
+            return ResponseUtil.serious();
+        }
+        if(presaleRuleVo==null){
+            return ResponseUtil.badArgument();
+        }
+        return ResponseUtil.ok(presaleRuleVo);
+    }
+
+
+    /**
+     * @description 用户根据商品ID搜索预售规则（测试已通过）
+     * @param goodsId 商品id
+     * @param page 分页大小
+     * @param limit 分页限制
+     * @return java.lang.Object[PresaleRuleVoList]
+     * @author Zhang Yaqing
+     * @date 2019/12/20
      */
     @GetMapping("/presaleRules")
-    public Object selectPresaleRule(@RequestParam Integer goodsId,@RequestParam Integer page,@RequestParam Integer limit){
-        List<PresaleRuleVo> list=presaleService.findPresaleRule(goodsId,page,limit);
-        if(list.size()==0){
-            return ResponseUtil.fail(730,"该预售规则是无效预售规则");
+    public Object selectPresaleRule(@RequestParam Integer goodsId,
+                                    @RequestParam Integer page,
+                                    @RequestParam Integer limit){
+        List<PresaleRuleVo> list;
+        try{
+            list= presaleService.findPresaleRule(goodsId,page,limit);
+        }
+        catch (Exception e){
+            return ResponseUtil.serious();
         }
         return ResponseUtil.ok(list);
     }
 
     /**
-     * 管理员查看预售规则列表
+     * 用户查看预售商品列表（测试已通过）
      * @param page
      * @param limit
-     * @return
-     */
-    @GetMapping("/admins/presaleGoods")
-    public Object findAllPresaleRules(@RequestParam Integer page,@RequestParam Integer limit){
-        List<PresaleRuleVo> list=presaleService.findAllPresaleRules(page, limit);
-
-        return ResponseUtil.ok(list);
-    }
-
-
-
-
-    /**
-     * 用户查看预售商品列表
-     * @param page
-     * @param limit
-     * @return
+     * @return java.lang.Object[PresaleRuleVoList]
+     * @author Zhang Yaqing
+     * @date 2019/12/20
      */
     @GetMapping("/presaleGoods")
     public Object getPresaleGoods(@RequestParam Integer page,@RequestParam Integer limit){
-        List<PresaleRuleVo> ruleVos=presaleService.findOnPresaleRules(page, limit);
-        return ResponseUtil.ok(ruleVos);
+        List<PresaleRuleVo> presaleRuleVoList;
+        try{
+            presaleRuleVoList = presaleService.findOnPresaleRules(page, limit);
+        }
+        catch (Exception e){
+            return ResponseUtil.serious();
+        }
+        return ResponseUtil.ok(presaleRuleVoList);
     }
 }

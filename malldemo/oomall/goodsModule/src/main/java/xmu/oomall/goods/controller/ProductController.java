@@ -72,7 +72,7 @@ public class ProductController {
     }
 
     @GetMapping("/inner/goods/{id}")
-    public GoodsPo getGoodsPoById(@PathVariable Integer id){
-        return productService.getGoodsPoById(id);
+    public Object getGoodsPoById(@PathVariable Integer id){
+        return ResponseUtil.ok(productService.getGoodsPoById(id));
     }
 }

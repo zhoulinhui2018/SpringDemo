@@ -163,43 +163,13 @@ public class GroupOnRuleService implements IGroupOnRuleService {
         ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
 
-
         String object= restTemplate.getForObject(reqURL,String.class,grouponRulePo.getGoodsId());
-        System.out.println("接收到的字符串");
-        System.out.println(object);
-//        Goods goods = (Goods) object.get("data");
-        System.out.println("goods");
-//        System.out.println(object.get("data"));
-//        JacksonUtil.parseObject(object.toString(),,Goods.class)
-//        System.out.println(goods);
         Goods goods = JacksonUtil.parseObject(object, "data", Goods.class);
         System.out.println(goods);
         if (goods==null){
             return null;
         }
-        GoodsPo goodsPo=new GoodsPo();
-        goodsPo.setId(goods.getId());
-        goodsPo.setGmtCreate(goods.getGmtCreate());
-        goodsPo.setGmtModified(goods.getGmtModified());
-        goodsPo.setName(goods.getName());
-        goodsPo.setGoodsSn(goods.getGoodsSn());
-        goodsPo.setShortName(goods.getShortName());
-        goodsPo.setDescription(goods.getDescription());
-        goodsPo.setBrief(goods.getBrief());
-        goodsPo.setPicUrl(goods.getPicUrl());
-        goodsPo.setDetail(goods.getDetail());
-        goodsPo.setStatusCode(goods.getStatusCode());
-        goodsPo.setShareUrl(goods.getShareUrl());
-        goodsPo.setGallery(goods.getGallery());
-        goodsPo.setGoodsCategoryId(goods.getGoodsCategoryId());
-        goodsPo.setBrandId(goods.getBrandId());
-        goodsPo.setBeDeleted(goods.getBeDeleted());
-        goodsPo.setWeight(goods.getWeight());
-        goodsPo.setVolume(goods.getVolume());
-        goodsPo.setSpecialFreightId(goods.getSpecialFreightId());
-        goodsPo.setBeSpecial(goods.getBeSpecial());
-        goodsPo.setPrice(goods.getPrice());
-        return goodsPo;
+        return goods;
     }
 
     @Override
