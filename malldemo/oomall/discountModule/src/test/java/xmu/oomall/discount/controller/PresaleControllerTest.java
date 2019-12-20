@@ -94,16 +94,6 @@ public class PresaleControllerTest {
 //        System.out.println(object.toString());
 //    }
 
-    @Test
-    public void selectPresaleRuleTest(){
-        Object object=presaleController.selectPresaleRule(600001,1,10);
-        System.out.println(object.toString());
-    }
 
 
-    @Test
-    public void getPresaleRuleByIdTest(){
-        Object object=presaleController.getPresaleRuleById(100001);
-        System.out.println(object.toString());
-    }
 }
