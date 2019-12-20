@@ -90,7 +90,7 @@ public class PresaleController {
      * @author Zhang Yaqing
      * @date 2019/12/10
      */
-    @GetMapping("/presaleRules/{id}")
+    @GetMapping("/admin/presaleRules/{id}")
     public Object detail(@PathVariable Integer id,HttpServletRequest request){
         String adminid= request.getHeader("id");
         if (adminid==null){
@@ -369,29 +369,29 @@ public class PresaleController {
         return ResponseUtil.ok(presaleRuleVo);
     }
 
-
-    /**
-     * @description 用户根据商品ID搜索预售规则（测试已通过）
-     * @param goodsId 商品id
-     * @param page 分页大小
-     * @param limit 分页限制
-     * @return java.lang.Object[PresaleRuleVoList]
-     * @author Zhang Yaqing
-     * @date 2019/12/20
-     */
-    @GetMapping("/presaleRules")
-    public Object selectPresaleRule(@RequestParam Integer goodsId,
-                                    @RequestParam Integer page,
-                                    @RequestParam Integer limit){
-        List<PresaleRuleVo> list;
-        try{
-            list= presaleService.findPresaleRule(goodsId,page,limit);
-        }
-        catch (Exception e){
-            return ResponseUtil.serious();
-        }
-        return ResponseUtil.ok(list);
-    }
+//
+//    /**
+//     * @description 用户根据商品ID搜索预售规则（测试已通过）
+//     * @param goodsId 商品id
+//     * @param page 分页大小
+//     * @param limit 分页限制
+//     * @return java.lang.Object[PresaleRuleVoList]
+//     * @author Zhang Yaqing
+//     * @date 2019/12/20
+//     */
+//    @GetMapping("/presaleRules")
+//    public Object selectPresaleRule(@RequestParam Integer goodsId,
+//                                    @RequestParam Integer page,
+//                                    @RequestParam Integer limit){
+//        List<PresaleRuleVo> list;
+//        try{
+//            list= presaleService.findPresaleRule(goodsId,page,limit);
+//        }
+//        catch (Exception e){
+//            return ResponseUtil.serious();
+//        }
+//        return ResponseUtil.ok(list);
+//    }
 
     /**
      * 用户查看预售商品列表（测试已通过）

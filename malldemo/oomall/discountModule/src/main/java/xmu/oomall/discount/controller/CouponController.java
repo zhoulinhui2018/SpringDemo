@@ -282,40 +282,40 @@ public class CouponController {
      */
 
 
-    @GetMapping("/coupons")
-    public Object mylist(HttpServletRequest request,
-                                 @RequestParam(defaultValue = "1") Integer page,
-                                 @RequestParam(defaultValue = "10") Integer limit,
-                                 @RequestParam Integer showType)
-    {
-        String id=request.getHeader("id");
-        Integer userId=Integer.valueOf(id);
-        if (userId==null){
-            return ResponseUtil.unlogin();
-        }
+//    @GetMapping("/coupons")
+//    public Object mylist(HttpServletRequest request,
+//                                 @RequestParam(defaultValue = "1") Integer page,
+//                                 @RequestParam(defaultValue = "10") Integer limit,
+//                                 @RequestParam Integer showType)
+//    {
+//        String id=request.getHeader("id");
+//        Integer userId=Integer.valueOf(id);
+//        if (userId==null){
+//            return ResponseUtil.unlogin();
+//        }
 
-        if (showType==0){
-            List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
-            if (myCoupons0==null){
-                return ResponseUtil.ok();
-            }return ResponseUtil.ok(myCoupons0);
-        }else if (showType==1){
-            List<CouponPo> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
-            if (myCoupons1==null){
-                return ResponseUtil.ok();
-            }return ResponseUtil.ok(myCoupons1);
-        }else if (showType==2){
-            List<CouponPo> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
-            if (myCoupons2==null){
-                return ResponseUtil.ok();
-            }return ResponseUtil.ok(myCoupons2);
-        }else{
-            List<CouponPo> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
-            if (myCoupons3==null){
-                return ResponseUtil.ok();
-            }return ResponseUtil.ok(myCoupons3);
-        }
-    }
+//        if (showType==0){
+//            List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
+//            if (myCoupons0==null){
+//                return ResponseUtil.ok();
+//            }return ResponseUtil.ok(myCoupons0);
+//        }else if (showType==1){
+//            List<CouponPo> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
+//            if (myCoupons1==null){
+//                return ResponseUtil.ok();
+//            }return ResponseUtil.ok(myCoupons1);
+//        }else if (showType==2){
+//            List<CouponPo> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
+//            if (myCoupons2==null){
+//                return ResponseUtil.ok();
+//            }return ResponseUtil.ok(myCoupons2);
+//        }else{
+//            List<CouponPo> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
+//            if (myCoupons3==null){
+//                return ResponseUtil.ok();
+//            }return ResponseUtil.ok(myCoupons3);
+//        }
+//    }
 
     /**
      * 根据id查询coupon表（已修改）
