@@ -53,3 +53,19 @@ mybatis:
 #
 
 
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+    username: user2_2
+    password: ooad2
+  application:
+    name: topicService #服务名称--调用的时候根据名称来调用该服务的方法
+
+server:
+  port: 8804
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.97.43.141:8761/eureka/

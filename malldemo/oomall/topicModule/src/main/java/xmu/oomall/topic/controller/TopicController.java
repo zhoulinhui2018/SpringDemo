@@ -11,8 +11,7 @@ import xmu.oomall.topic.service.impl.LogService;
 import xmu.oomall.topic.service.impl.TopicService;
 import xmu.oomall.topic.util.FileUploadUtil;
 import xmu.oomall.topic.util.IdUtil;
-import xmu.oomall.topic.util.MallException;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.topic.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;

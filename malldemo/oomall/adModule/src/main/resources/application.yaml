@@ -56,20 +56,20 @@ management:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
     username: user2_2
-    #  password: Zhangyaqing123
     password: ooad2
   application:
     name: adService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
-  port: 8801
-
+  port: 8871
+#  port: 8801
 eureka:
   client:
     serviceUrl:
-      defaultZone: localhost:8761/eureka/
+      defaultZone: http://148.70.28.112:8761/eureka #刘仁帅
+#      defaultZone: http://47.97.43.141:8761/eureka/  #自己
 
 
 #潘朝旺
