@@ -14,8 +14,8 @@ import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.ICouponService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Author: Ming Qiu
@@ -33,27 +33,51 @@ public class CouponServiceImpl implements ICouponService {
 
 
     @Override
-    public List<CouponPo> getMyCoupons0(Integer page, Integer limit, Integer userId) {
+    public List<Coupon> getMyCoupons0(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        return couponDao.getMyCoupons0(userId);
+        List<CouponPo> myCoupons0 = couponDao.getMyCoupons0(userId);
+        List<Coupon> coupons=new ArrayList<>();
+        for (CouponPo couponPo : myCoupons0) {
+            Coupon coupon = couponDao.convertToCoupon(couponPo);
+            coupons.add(coupon);
+        }
+        return coupons;
     }
 
     @Override
-    public List<CouponPo> getMyCoupons1(Integer page, Integer limit, Integer userId) {
+    public List<Coupon> getMyCoupons1(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        return couponDao.getMyCoupons1(userId);
+        List<CouponPo> myCoupons1 = couponDao.getMyCoupons1(userId);
+        List<Coupon> coupons=new ArrayList<>();
+        for (CouponPo couponPo : myCoupons1) {
+            Coupon coupon = couponDao.convertToCoupon(couponPo);
+            coupons.add(coupon);
+        }
+        return coupons;
     }
 
     @Override
-    public List<CouponPo> getMyCoupons2(Integer page, Integer limit, Integer userId) {
+    public List<Coupon> getMyCoupons2(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        return couponDao.getMyCoupons2(userId);
+        List<CouponPo> myCoupons2 = couponDao.getMyCoupons2(userId);
+        List<Coupon> coupons=new ArrayList<>();
+        for (CouponPo couponPo : myCoupons2) {
+            Coupon coupon = couponDao.convertToCoupon(couponPo);
+            coupons.add(coupon);
+        }
+        return coupons;
     }
 
     @Override
-    public List<CouponPo> getMyCoupons3(Integer page, Integer limit, Integer userId) {
+    public List<Coupon> getMyCoupons3(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        return couponDao.getMyCoupons3(userId);
+        List<CouponPo> myCoupons3 = couponDao.getMyCoupons3(userId);
+        List<Coupon> coupons=new ArrayList<>();
+        for (CouponPo couponPo : myCoupons3) {
+            Coupon coupon = couponDao.convertToCoupon(couponPo);
+            coupons.add(coupon);
+        }
+        return coupons;
     }
 
     @Override

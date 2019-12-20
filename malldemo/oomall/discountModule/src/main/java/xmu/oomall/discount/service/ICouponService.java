@@ -8,7 +8,6 @@ import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Author: Ming Qiu
@@ -19,10 +18,10 @@ import java.util.Set;
 @Service
 public interface ICouponService {
 
-    public List<CouponPo> getMyCoupons0(Integer page,Integer limit,Integer userId);
-    public List<CouponPo> getMyCoupons1(Integer page,Integer limit,Integer userId);
-    public List<CouponPo> getMyCoupons2(Integer page,Integer limit,Integer userId);
-    public List<CouponPo> getMyCoupons3(Integer page,Integer limit,Integer userId);
+    public List<Coupon> getMyCoupons0(Integer page,Integer limit,Integer userId);
+    public List<Coupon> getMyCoupons1(Integer page,Integer limit,Integer userId);
+    public List<Coupon> getMyCoupons2(Integer page,Integer limit,Integer userId);
+    public List<Coupon> getMyCoupons3(Integer page,Integer limit,Integer userId);
 
 
     /**

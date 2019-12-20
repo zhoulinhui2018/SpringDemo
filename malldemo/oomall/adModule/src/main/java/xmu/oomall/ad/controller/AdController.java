@@ -33,6 +33,9 @@ public class AdController {
         if (StringUtils.isEmpty(content)) {
             return ResponseUtil.badArgument();
         }
+        if (newAd.getStartTime().isAfter(newAd.getEndTime())){
+            return ResponseUtil.badArgument();
+        }
         return null;
     }
 

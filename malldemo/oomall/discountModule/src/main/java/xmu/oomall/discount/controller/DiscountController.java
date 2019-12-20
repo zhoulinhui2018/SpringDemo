@@ -466,6 +466,9 @@ public class DiscountController {
         if (StringUtils.isEmpty(grouponLevelStrategy)) {
             return ResponseUtil.badArgument();
         }
+        if (grouponRulePo.getStartTime().isAfter(grouponRulePo.getEndTime())){
+            return ResponseUtil.badArgument();
+        }
         return null;
     }
 

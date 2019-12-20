@@ -2,10 +2,8 @@ package xmu.oomall.discount.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.domain.CartItem;
 import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.Coupon;
@@ -19,7 +17,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("")
@@ -288,22 +285,22 @@ public class CouponController {
         }
 
         if (showType==0){
-            List<CouponPo> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
+            List<Coupon> myCoupons0 = couponService.getMyCoupons0(page, limit, userId);
             if (myCoupons0==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons0);
         }else if (showType==1){
-            List<CouponPo> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
+            List<Coupon> myCoupons1 = couponService.getMyCoupons1(page, limit, userId);
             if (myCoupons1==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons1);
         }else if (showType==2){
-            List<CouponPo> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
+            List<Coupon> myCoupons2 = couponService.getMyCoupons2(page, limit, userId);
             if (myCoupons2==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons2);
         }else{
-            List<CouponPo> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
+            List<Coupon> myCoupons3 = couponService.getMyCoupons3(page, limit, userId);
             if (myCoupons3==null){
                 return ResponseUtil.ok();
             }return ResponseUtil.ok(myCoupons3);
