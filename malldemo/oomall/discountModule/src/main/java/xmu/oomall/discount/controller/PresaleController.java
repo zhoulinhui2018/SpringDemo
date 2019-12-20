@@ -77,7 +77,7 @@ public class PresaleController {
         catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.addFailed();
+            return ResponseUtil.addPresaleRuleFailed();
         }
         presaleService.log(log);
         return ResponseUtil.ok(presaleRule);
@@ -196,7 +196,7 @@ public class PresaleController {
         if(presaleRule==null||presaleRule.getBeDeleted()||inTime||statusCode){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.deleteFailed();
+            return ResponseUtil.deletePresaleRuleFailed();
         }
         try{
             presaleService.delete(id);
@@ -204,7 +204,7 @@ public class PresaleController {
         catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.deleteFailed();
+            return ResponseUtil.deletePresaleRuleFailed();
         }
         presaleService.log(log);
         return ResponseUtil.ok();
@@ -259,7 +259,7 @@ public class PresaleController {
         catch (Exception e){
             log.setStatusCode(0);
             presaleService.log(log);
-            return ResponseUtil.updateFailed();
+            return ResponseUtil.updatePresaleRuleFailed();
         }
         //再进行退款操作
         try{

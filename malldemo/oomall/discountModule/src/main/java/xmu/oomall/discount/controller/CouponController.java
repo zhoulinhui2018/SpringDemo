@@ -27,9 +27,6 @@ public class CouponController {
     @Autowired
     private CouponServiceImpl couponService;
 
-    @Autowired
-    private LoadBalancerClient loadBalancerClient;
-
     private Object validate(CouponRulePo couponRule) {
         String name = couponRule.getName();
         if (StringUtils.isEmpty(name)) {
@@ -46,17 +43,17 @@ public class CouponController {
     }
 
     /**
-     * 管理员获取优惠券列表（第一次修改）
-     * 修改内容如下：1.修改url与标准组一直 2.修改返回值为Object 3.增加一个参数为HttpServletRequest
-     * 4.返回值为ResponseUtil
-     * @return list<CouponRulePo>
-     *     postman测试成功
+     * @description 管理员获取优惠券列表
+     * @param page
+     * @param limit
+     * @return java.lang.Object[List<couponRulePo>]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @GetMapping("/admin/couponRules")
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit,
-                       HttpServletRequest request)
-    {
+                       HttpServletRequest request) {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -67,8 +64,18 @@ public class CouponController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("查看优惠券规则列表");
-        List<CouponRulePo> couponList=couponService.getCouponList(page,limit);
-        return ResponseUtil.ok(couponList);
+
+        List<CouponRulePo> couponRulePoList;
+        try{
+            couponRulePoList = couponService.getCouponList(page,limit);
+        }
+        catch (Exception e){
+            log.setStatusCode(0);
+            couponService.log(log);
+            return ResponseUtil.serious();
+        }
+        couponService.log(log);
+        return ResponseUtil.ok(couponRulePoList);
     }
 
     /**
