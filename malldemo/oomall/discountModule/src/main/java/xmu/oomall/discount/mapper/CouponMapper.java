@@ -1,11 +1,11 @@
 package xmu.oomall.discount.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRule;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,12 +17,13 @@ import java.util.List;
  **/
 
 @Mapper
+@Service
 public interface CouponMapper {
 
-    public List<CouponPo> getMyCoupons0(Integer userId);
+    public List<CouponPo> showTypeCouponList(Integer userId,Integer showType);
 
-    public List<CouponPo> getMyCoupons1(Integer userId);
-    public List<CouponPo> getMyCoupons2(Integer userId);
+//    public List<CouponPo> getMyCoupons1(Integer userId);
+//    public List<CouponPo> getMyCoupons2(Integer userId);
 
 
     /**
@@ -39,7 +40,7 @@ public interface CouponMapper {
     void addCouponRule(CouponRulePo couponRule);
 
     /**
-     * 获取优惠劵列表
+     * 获取优惠劵规则列表
      * @return List<CouponRule>
      */
     List<CouponRulePo> getCouponList();
@@ -66,7 +67,7 @@ public interface CouponMapper {
     CouponPo findCouponById(Integer id);
 
 
-    void addCoupon(CouponPo coupon);
+    int addCoupon(CouponPo coupon);
 
     /**
      * 根据couponRuleId更改coupon状态
@@ -88,7 +89,18 @@ public interface CouponMapper {
      */
     int updateUserCouponStatus(CouponPo couponPo);
 
-    int deleteAllCoupons(Integer id);
+    int deleteAllCoupons(Integer couponRuleId);
 
     int modifiedCouponRuleNum(Integer couponRuleId);
+
+    int invalidate(Integer couponRuleId);
+
+    List<CouponPo> getCouponsByRuleId(Integer couponRuleId);
+
+    int invalidateCoupon(Integer id);
+
+    int updateCouponRuleDeleteTime(Integer couponRuleId, LocalDateTime time);
+
+    int updateCouponDeleteTime(Integer couponRuleId, LocalDateTime time);
+
 }

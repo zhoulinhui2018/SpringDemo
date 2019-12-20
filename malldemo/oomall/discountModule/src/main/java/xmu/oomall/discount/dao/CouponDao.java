@@ -7,16 +7,12 @@ import org.springframework.stereotype.Repository;
 import xmu.oomall.discount.domain.Goods;
 import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.*;
-import xmu.oomall.discount.domain.goods.GoodsInfo;
 import xmu.oomall.discount.mapper.CouponMapper;
 import xmu.oomall.discount.util.JacksonUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-
 
 
 /**
@@ -32,30 +28,16 @@ public class CouponDao {
     @Autowired
     private CouponMapper couponMapper;
 
-
-    public List<CouponPo> getMyCoupons0(Integer userId){
-        return couponMapper.getMyCoupons0(userId);
-    }
-
-    public List<CouponPo> getMyCoupons1(Integer userId){
-        return couponMapper.getMyCoupons1(userId);
-    }
-
-    public List<CouponPo> getMyCoupons2(Integer userId){
-        return couponMapper.getMyCoupons2(userId);
-    }
-
-    public List<CouponPo> getMyCoupons3(Integer userId){
-        List<CouponPo> couponMyList = couponMapper.getCouponMyList(userId);
-        Iterator<CouponPo> iterator = couponMyList.iterator();
-        while (iterator.hasNext()){
-            CouponPo next = iterator.next();
-            if (next.getEndTime().isBefore(LocalDateTime.now())){
-                iterator.remove();
-            }
-        }
-        return couponMyList;
-    }
+    ///这里这个方法没有写完！！！！超超看这里！！！
+//    public List<CouponPo> showTypeCouponList(Integer userId,Integer showType){
+//
+//        if(showType==3){
+//            LocalDateTime now=LocalDateTime.now();
+//
+//        }else{
+//            return couponMapper.showTypeCouponList(userId,showType);
+//        }
+//    }
 
 
     /**
@@ -88,10 +70,19 @@ public class CouponDao {
     public int deleteCouponRuleById(Integer id) {
         //需要级联删除所有使用此规则的优惠券
        couponMapper.deleteAllCoupons(id);
+       updateCouponDeleteTime(id,LocalDateTime.now());
+       updateCouponRuleDeleteTime(id,LocalDateTime.now());
        return couponMapper.deleteCouponRuleById(id);
 
     }
 
+    public int updateCouponRuleDeleteTime(Integer couponRuleId,LocalDateTime time){
+        return couponMapper.updateCouponRuleDeleteTime(couponRuleId,time);
+    }
+
+    public int updateCouponDeleteTime(Integer couponRuleId,LocalDateTime time){
+        return couponMapper.updateCouponDeleteTime(couponRuleId,time);
+    }
     /**
      * 管理员更新优惠券规则
      * @param couponRule
@@ -103,7 +94,7 @@ public class CouponDao {
     }
 
     /**
-     * 根据id搜索优惠券规则
+     * 根据id获取优惠券规则
      * @param id
      * @return
      */
@@ -152,9 +143,10 @@ public class CouponDao {
     /**
      * 用户领取一张优惠券
      * @param coupon
+     * @return
      */
-    public void addCoupon(CouponPo coupon) {
-        couponMapper.addCoupon(coupon);
+    public int addCoupon(CouponPo coupon) {
+        return couponMapper.addCoupon(coupon);
     }
 
 
@@ -459,7 +451,10 @@ public class CouponDao {
             LocalDateTime now=LocalDateTime.now();
             LocalDateTime beginTime=rule.getBeginTime();
             LocalDateTime endTime=rule.getEndTime();
-            if(now.isAfter(beginTime)&&now.isBefore(endTime)){
+            boolean inTime=now.isAfter(beginTime)&&now.isBefore(endTime);
+            Boolean statusCode=rule.getStatusCode();
+            Boolean isDeleted=rule.getBeDeleted();
+            if(inTime&&statusCode&&!isDeleted){
                 userList.add(rule);
             }
         }
@@ -474,4 +469,23 @@ public class CouponDao {
     public int modifiedCouponRuleNum(Integer couponRuleId) {
         return couponMapper.modifiedCouponRuleNum(couponRuleId);
     }
+
+    public int invalidate(Integer couponRuleId) {
+        return couponMapper.invalidate(couponRuleId);
+    }
+
+    public int invalidateCoupons(Integer couponRuleId) {
+        return 0;
+    }
+
+    public List<CouponPo> getCouponsByRuleId(Integer couponRuleId){
+        List<CouponPo> list=couponMapper.getCouponsByRuleId(couponRuleId);
+        return list;
+    }
+
+    //根据coupon的id下架coupon
+    public int invalidateCouponById(Integer id){
+        return couponMapper.invalidateCoupon(id);
+    }
+
 }

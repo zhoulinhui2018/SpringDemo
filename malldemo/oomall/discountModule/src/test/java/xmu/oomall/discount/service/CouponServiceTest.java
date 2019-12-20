@@ -8,6 +8,8 @@ import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
 
+import java.util.List;
+
 
 @SpringBootTest(classes = DiscountApplication.class)
 class CouponServiceTest {
@@ -74,4 +76,15 @@ class CouponServiceTest {
         int result=couponService.updateCouponRuleById(couponRulePo);
         System.out.println(result);
     }
+
+    @Test
+    public void userCouponRules()
+    {
+        List<CouponRulePo> list=couponService.getUserCouponRules(1,10);
+        for(CouponRulePo rule:list){
+            System.out.println(rule);
+        }
+    }
+
+
 }

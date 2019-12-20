@@ -2,23 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
-    <select id="getMyCoupons0" parameterType="integer" resultMap="couponType">
+    <select id="showTypeCouponList" resultMap="couponType">
         select *
         from oomall_coupon
-        where is_deleted=0 and user_id = #{userId} and  status = 0
+        where
+        <if test="showType==0">
+            status=0 and user_id=#{param1}
+        </if>
+        <if test="showType==1">
+            status=1 and user_id=#{param1}
+        </if>
+        <if test="showType==2">
+            status=2 and user_id=#{param1}
+        </if>
+        <if test="showType==3">
+            status=1 and user_id=#{param1}
+        </if>
+
+
+        is_deleted=0 and user_id = #{userId} and  status = 0
     </select>
 
-    <select id="getMyCoupons1" parameterType="integer" resultMap="couponType">
-        select *
-        from oomall_coupon
-        where is_deleted=0 and user_id = #{userId} and  status = 1
-    </select>
+        <select id="listFootprintByCondition" resultMap="footprintItemResultMap">
+            select oomall_footprint_item.id,
+            oomall_footprint_item.gmt_create,
+            oomall_footprint_item.birth_time,
+            oomall_footprint_item.user_id,
+            oomall_footprint_item.goods_id
+            from oomall_footprint_item,oomall_goods,oomall_user
+            where
+            <if test="goodsName!=null and goodsName!=''">
+                (oomall_footprint_item.goods_id=(select oomall_goods.id from oomall_goods where oomall_goods.name=#{goodsName})) and
+            </if>
+            <if test="userName!=null and userName!=''">
+                (oomall_footprint_item.user_id=(select oomall_user.id from oomall_user where oomall_user.name=#{userName})) and
+            </if>
+            true
+            order by oomall_footprint_item.birth_time desc
+        </select>
 
-    <select id="getMyCoupons2" parameterType="integer" resultMap="couponType">
-        select *
-        from oomall_coupon
-        where is_deleted=0 and user_id = #{userId} and  status = 2
-    </select>
+
+<!--    <select id="getMyCoupons1" parameterType="integer" resultMap="couponType">-->
+<!--        select *-->
+<!--        from oomall_coupon-->
+<!--        where is_deleted=0 and user_id = #{userId} and  status = 1-->
+<!--    </select>-->
+
+<!--    <select id="getMyCoupons2" parameterType="integer" resultMap="couponType">-->
+<!--        select *-->
+<!--        from oomall_coupon-->
+<!--        where is_deleted=0 and user_id = #{userId} and  status = 2-->
+<!--    </select>-->
 
     <select id="findCouponRuleById" parameterType="Integer" resultMap="couponRuleType">
             select * from oomall_coupon_rule where id = #{id}
@@ -45,7 +79,7 @@
 
     <delete id="deleteAllCoupons" parameterType="Integer">
         update oomall_coupon
-        set is_deleted=1 where coupon_rule_id = #{id}
+        set is_deleted=1 where coupon_rule_id = #{couponRuleId}
     </delete>
 
     <update id="updateCouponRuleById" parameterType="couponRulePo" >
@@ -143,7 +177,11 @@
         update oomall_coupon_rule
         set collected_num=collected_num+1 where id = #{couponRuleId};
     </update>
-
+    <update id="invalidate">
+        update oomall_coupon_rule
+        set status=0
+        where id = #{couponRuleId}
+    </update>
 
 
     <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
@@ -185,7 +223,28 @@
         select *
         from oomall_coupon_rule where is_deleted=0 and status=true;
     </select>
+    <select id="getCouponsByRuleId" resultMap="CouponType">
+        select *
+        from oomall_coupon
+        where coupon_rule_id=#{couponRuleId}
+    </select>
 
+
+    <update id="invalidateCoupon" parameterType="Integer" >
+        update oomall_coupon
+        set status=2
+        where id=#{id}
+    </update>
+    <update id="updateCouponRuleDeleteTime">
+        update oomall_coupon_rule
+        set gmt_modified=#{param2}
+        where id=#{param1}
+    </update>
+    <update id="updateCouponDeleteTime">
+        update oomall_coupon
+        set gmt_modified=#{param2}
+        where coupon_rule_id=#{param1}
+    </update>
     <resultMap id="CouponRuleResultType" type="xmu.oomall.discount.domain.coupon.CouponRulePo">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
@@ -204,5 +263,21 @@
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
         <result column="status" property="statusCode"/>
+    </resultMap>
+    <resultMap id="CouponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="coupon_rule_id" property="couponRuleId"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="coupon_sn" property="couponSn"/>
+        <result column="used_time" property="usedTime"/>
+        <result column="name" property="name"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="status" property="statusCode"/>
+
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="is_deleted" property="beDeleted"/>
     </resultMap>
 </mapper>

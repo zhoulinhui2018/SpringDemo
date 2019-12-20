@@ -43,7 +43,7 @@ public class GrouponRuleDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(groupOnDaoById, 0);
+        GrouponRuleStrategy accessStrategy = groupOnRuleService.getAccessStrategy(groupOnDaoById, 41);
         System.out.println(accessStrategy.getRate());
     }
 }

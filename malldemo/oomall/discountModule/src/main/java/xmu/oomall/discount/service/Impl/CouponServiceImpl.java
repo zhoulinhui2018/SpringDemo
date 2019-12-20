@@ -32,53 +32,20 @@ public class CouponServiceImpl implements ICouponService {
     private LoadBalancerClient loadBalancerClient;
 
 
-    @Override
-    public List<Coupon> getMyCoupons0(Integer page, Integer limit, Integer userId) {
-        PageHelper.startPage(page,limit);
-        List<CouponPo> myCoupons0 = couponDao.getMyCoupons0(userId);
-        List<Coupon> coupons=new ArrayList<>();
-        for (CouponPo couponPo : myCoupons0) {
-            Coupon coupon = couponDao.convertToCoupon(couponPo);
-            coupons.add(coupon);
-        }
-        return coupons;
-    }
+    //这里没有写完！！！超超看这里！！！
+//    @Override
+//    public List<Coupon> showTypeCouponList(Integer page, Integer limit, Integer userId, Integer showType) {
+//        PageHelper.startPage(page,limit);
+//
+//        List<CouponPo> couponPoList = couponDao.showTypeCouponList(userId,showType);
+//        List<Coupon> couponList=new ArrayList<>();
+//        for (CouponPo couponPo : couponPoList) {
+//            Coupon coupon = couponDao.convertToCoupon(couponPo);
+//            couponList.add(coupon);
+//        }
+//        return couponList;
+//    }
 
-    @Override
-    public List<Coupon> getMyCoupons1(Integer page, Integer limit, Integer userId) {
-        PageHelper.startPage(page,limit);
-        List<CouponPo> myCoupons1 = couponDao.getMyCoupons1(userId);
-        List<Coupon> coupons=new ArrayList<>();
-        for (CouponPo couponPo : myCoupons1) {
-            Coupon coupon = couponDao.convertToCoupon(couponPo);
-            coupons.add(coupon);
-        }
-        return coupons;
-    }
-
-    @Override
-    public List<Coupon> getMyCoupons2(Integer page, Integer limit, Integer userId) {
-        PageHelper.startPage(page,limit);
-        List<CouponPo> myCoupons2 = couponDao.getMyCoupons2(userId);
-        List<Coupon> coupons=new ArrayList<>();
-        for (CouponPo couponPo : myCoupons2) {
-            Coupon coupon = couponDao.convertToCoupon(couponPo);
-            coupons.add(coupon);
-        }
-        return coupons;
-    }
-
-    @Override
-    public List<Coupon> getMyCoupons3(Integer page, Integer limit, Integer userId) {
-        PageHelper.startPage(page,limit);
-        List<CouponPo> myCoupons3 = couponDao.getMyCoupons3(userId);
-        List<Coupon> coupons=new ArrayList<>();
-        for (CouponPo couponPo : myCoupons3) {
-            Coupon coupon = couponDao.convertToCoupon(couponPo);
-            coupons.add(coupon);
-        }
-        return coupons;
-    }
 
     @Override
     public void log(Log log){
@@ -121,13 +88,12 @@ public class CouponServiceImpl implements ICouponService {
     }
 
     @Override
-    public void addCoupon(CouponPo coupon) {
-        couponDao.addCoupon(coupon);
+    public int addCoupon(CouponPo coupon) {
+        return couponDao.addCoupon(coupon);
     }
 
     @Override
-    public List<CouponPo> getCouponMyList(Integer userId,Integer page,Integer limit){
-        PageHelper.startPage(page,limit);
+    public List<CouponPo> getCouponMyList(Integer userId){
         List<CouponPo> mylist=couponDao.getCouponMyList(userId);
         return mylist;
     }
@@ -188,6 +154,23 @@ public class CouponServiceImpl implements ICouponService {
     @Override
     public int modifiedCouponRuleNum(Integer couponRuleId){
         return couponDao.modifiedCouponRuleNum(couponRuleId);
+    }
+
+    public int invalidate(Integer couponRuleId) {
+        return couponDao.invalidate(couponRuleId);
+    }
+
+    public int invalidateCoupons(Integer couponRuleId) {
+        List<CouponPo> couponPoList=couponDao.getCouponsByRuleId(couponRuleId);
+        //所有领出未用的优惠券也一并作废，已经使用的优惠卷不受影响
+        for(int i=0;i<couponPoList.size();i++){
+            CouponPo couponPo=couponPoList.get(i);
+            System.out.println("第"+i+"个："+couponPo);
+            if(couponPo.getStatusCode()==0){
+                couponDao.invalidateCouponById(couponPo.getId());
+            }
+        }
+        return 1;
     }
 
 }
