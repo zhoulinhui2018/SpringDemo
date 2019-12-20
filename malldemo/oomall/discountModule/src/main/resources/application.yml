@@ -53,13 +53,32 @@ management:
 
 
 #周林辉
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=GMT
+    username: root
+    password: 12345678
+  #    password: Zhangyaqing123
+  application:
+    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
+
+server:
+  port: 8885
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
+##自己组
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
-#    username: root
-#    #  password: Zhangyaqing123
-#    password: 123456
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+#    username: user2_2
+#    password: ooad2
 #  application:
 #    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
 #
@@ -69,26 +88,7 @@ management:
 #eureka:
 #  client:
 #    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
-
-
-#自己组
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=Asia/Shanghai
-    username: root
-    password: 12345678
-  application:
-    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
-
-server:
-  port: 8769
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://148.70.28.112:8761/eureka/
+#      defaultZone: http://47.97.43.141:8761/eureka/
 
 #孔祥威李鹏程组
 #spring:
