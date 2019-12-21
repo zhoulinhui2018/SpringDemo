@@ -20,10 +20,13 @@ import java.util.List;
 @Service
 public interface CouponMapper {
 
-    public List<CouponPo> showTypeCouponList(Integer userId,Integer showType);
-
-//    public List<CouponPo> getMyCoupons1(Integer userId);
-//    public List<CouponPo> getMyCoupons2(Integer userId);
+//    /**
+//     *
+//     * @param userId
+//     * @param showType
+//     * @return
+//     */
+//    List<CouponPo> showTypeCouponList(Integer userId,Integer showType);
 
 
     /**

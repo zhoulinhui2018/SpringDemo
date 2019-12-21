@@ -32,19 +32,19 @@ public class CouponServiceImpl implements ICouponService {
     private LoadBalancerClient loadBalancerClient;
 
 
-    //这里没有写完！！！超超看这里！！！
-//    @Override
-//    public List<Coupon> showTypeCouponList(Integer page, Integer limit, Integer userId, Integer showType) {
-//        PageHelper.startPage(page,limit);
-//
-//        List<CouponPo> couponPoList = couponDao.showTypeCouponList(userId,showType);
-//        List<Coupon> couponList=new ArrayList<>();
-//        for (CouponPo couponPo : couponPoList) {
-//            Coupon coupon = couponDao.convertToCoupon(couponPo);
-//            couponList.add(coupon);
-//        }
-//        return couponList;
-//    }
+
+    @Override
+    public List<Coupon> showTypeCouponList(Integer page, Integer limit, Integer userId, Integer showType) {
+        PageHelper.startPage(page,limit);
+
+        List<CouponPo> couponPoList = couponDao.showTypeCouponList(userId,showType);
+        List<Coupon> couponList=new ArrayList<>();
+        for (CouponPo couponPo : couponPoList) {
+            Coupon coupon = couponDao.convertToCoupon(couponPo);
+            couponList.add(coupon);
+        }
+        return couponList;
+    }
 
 
     @Override
