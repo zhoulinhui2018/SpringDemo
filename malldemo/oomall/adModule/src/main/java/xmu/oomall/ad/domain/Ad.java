@@ -168,11 +168,11 @@ public class Ad {
         this.gmtModified = gmtModified;
     }
 
-    public Boolean getBeDelete() {
+    public Boolean getBeDeleted() {
         return beDeleted;
     }
 
-    public void setBeDelete(Boolean beDelete) {
-        this.beDeleted = beDelete;
+    public void setBeDeleted(Boolean beDeleted) {
+        this.beDeleted = beDeleted;
     }
 }
