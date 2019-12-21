@@ -66,6 +66,12 @@ public class LogController {
         return ResponseUtil.ok(logList);
     }
 
+    /**
+     * 新增日志
+     * @return ResponseUtil.ok()
+     * @author Ren tianhe
+     * @date 2019/12/12
+     */
     @PostMapping("/logs")
     public Object addLog(@RequestBody Log newlog){
         System.out.println("telalllalalalallala");

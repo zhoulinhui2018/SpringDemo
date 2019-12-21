@@ -52,14 +52,15 @@ public class AddressController {
     public Object getUserAddressList(HttpServletRequest request,
                                      @RequestParam(defaultValue = "1") Integer page,
                                      @RequestParam(defaultValue = "10") Integer limit){
-        Integer userId= Integer.valueOf(request.getHeader("id"));
-        if(userId==0){
+        String id= request.getHeader("id");
+        if(id==null){
             return ResponseUtil.unlogin();
         }
         if (page<=0||limit<=0){
             return ResponseUtil.fail(580,"参数不对");
         }
         List<Address> addressList;
+        Integer userId= Integer.valueOf(id);
         try{
             addressList=addressService.getUserAddresslist(page,limit,userId);
         }catch (Exception e){
@@ -104,8 +105,8 @@ public class AddressController {
         Integer provinceId=addressPo.getProvinceId();
         Integer cityId=addressPo.getCityId();
         Integer userId=addressPo.getUserId();
-        String address_detail=addressPo.getAddressDetail();
-        String postal_code=addressPo.getPostalCode();
+        String addressDetail=addressPo.getAddressDetail();
+        String postalCode=addressPo.getPostalCode();
         String mobile=addressPo.getMobile();
         String consignee=addressPo.getConsignee();
 
@@ -118,10 +119,10 @@ public class AddressController {
             return 1;
         }
         //判断各个string字段是否为空
-        if (StringUtils.isEmpty(address_detail)) {
+        if (StringUtils.isEmpty(addressDetail)) {
             return 1;
         }
-        if (StringUtils.isEmpty(postal_code)) {
+        if (StringUtils.isEmpty(postalCode)) {
             return 1;
         }
         if (StringUtils.isEmpty(mobile)) {
@@ -155,7 +156,7 @@ public class AddressController {
         if(!FomatUtil.isValidateMobile(mobile)){
             return 2;
         }
-        if(!FomatUtil.isValidatePostcode(postal_code)){
+        if(!FomatUtil.isValidatePostcode(postalCode)){
             return 2;
         }
         return 0;
