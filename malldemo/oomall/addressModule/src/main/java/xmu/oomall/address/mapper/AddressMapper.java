@@ -13,17 +13,17 @@ import java.util.List;
 @Mapper
 public interface AddressMapper {
 
-    public List<Address> adminFindUserAddress(Integer userId, String name);
+    List<Address> adminFindUserAddress(Integer userId, String name);
 
-    public List<Address> getUserAddressList(Integer userId);
+    List<Address> getUserAddressList(Integer userId);
 
-    public boolean addNewAddress(AddressPo address);
+    boolean addNewAddress(AddressPo address);
 
-    public boolean updateAddress(AddressPo address);
+    boolean updateAddress(AddressPo address);
 
-    public Address getAddressDetail(Integer id);
+    Address getAddressDetail(Integer id);
 
-    public Region getRegion(Integer id);
+    Region getRegion(Integer id);
 
     void setDefaultAddress(Integer id);
 }

@@ -38,10 +38,11 @@ public class FootprintController {
     public Object getUserFootprintList(HttpServletRequest request,
                                        @RequestParam(defaultValue = "1") Integer page,
                                        @RequestParam(defaultValue = "10") Integer limit){
-        Integer userId= Integer.valueOf(request.getHeader("userid"));
-        if(userId==0){
+        String id= request.getHeader("id");
+        if(id==null){
             return ResponseUtil.unlogin();
         }
+        Integer userId= Integer.valueOf(id);
         List<FootprintItem> footprintList;
         try {
             footprintList= footprintService.getUserFootprintList(page,limit,userId);
