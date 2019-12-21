@@ -24,20 +24,24 @@ public class LogController {
 
     /**
      * 管理员根据条件查看日志
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/12
+     * @param page
+     * @param limit
+     * @param adminId
+     * @return java.lang.Object.List
+     * @author Ren tianhe
+     * @date 2019/12/12
      */
     @GetMapping("/logs")
     public Object findLogListByAdminId(@RequestParam(defaultValue = "1") Integer page,
                                        @RequestParam(defaultValue = "10") Integer limit,
                                        @RequestParam Integer adminId,
                                        HttpServletRequest request){
-//        if(request.getIntHeader("userId")==0){
-//            return ResponseUtil.unlogin();
-//        }
-//        List<Log> loglist = logService.findLogListByAdminId(page,limit,request.getIntHeader("userId"));
+        if(adminId<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
+        if(page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();

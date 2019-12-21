@@ -104,7 +104,9 @@ public class DiscountController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
-
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
         Log log = LogUtil.newLog("查看团购详情", id, Integer.valueOf(adminid), 0, request.getRemoteAddr());
 
         GrouponRuleVo grouponRuleVo= new GrouponRuleVo();
@@ -133,6 +135,9 @@ public class DiscountController {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
+        }
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
         }
         Log log = LogUtil.newLog("下架团购", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
         Boolean inTime=false;
@@ -204,7 +209,6 @@ public class DiscountController {
         if (grouponRulePo1.getStartTime().isBefore(now)&&grouponRulePo1.getEndTime().isAfter(now)){
             inTime=true;
         }
-        Boolean statusCode = grouponRulePo1.getStatusCode();
 
         if (inTime==true){
             return ResponseUtil.fail(721,"团购规则修改失败");
@@ -217,32 +221,6 @@ public class DiscountController {
         }
         log.setStatusCode(1);
         groupOnRuleService.log(log);
-//        if(inTime==true && statusCode==true && grouponRulePo.getStatusCode()==false) {
-//            groupOnRuleService.returnBackRate(grouponRulePo,new BigDecimal(1));
-//            log.setStatusCode(1);
-//            groupOnRuleService.log(log);
-//            groupOnRuleService.update(grouponRulePo);
-//            //如果是下架操作的话究竟更不更改其他信息这个点不明确
-//            return ResponseUtil.ok(grouponRulePo);
-//        }else if(inTime==false){
-//            //预售未开始或者已经结束可以修改信息
-//
-//            try {
-//                if (groupOnRuleService.update(grouponRulePo) == 0) {
-//                    groupOnRuleService.log(log);
-//                    return ResponseUtil.fail(721,"团购规则修改失败");
-//                }
-//            } catch (Exception e) {
-//                return ResponseUtil.fail(721,"团购规则修改失败");
-//            }
-//            log.setStatusCode(1);
-//            groupOnRuleService.log(log);
-//            return ResponseUtil.ok(grouponRulePo);
-//        }else{
-//            //在预售开始到结束时间内且未作废的情况，不能改动信息
-//            groupOnRuleService.log(log);
-//            return ResponseUtil.fail(721,"团购规则修改失败");
-//        }
         return ResponseUtil.ok(grouponRulePo);
     }
 
@@ -307,7 +285,9 @@ public class DiscountController {
     @GetMapping("/grouponRules/{id}")
     public Object userdetail(@PathVariable Integer id){
         GrouponRuleVo grouponRuleVo= new GrouponRuleVo();
-
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
         GrouponRulePo grouponRulePo = null;
         try {
             grouponRulePo = groupOnRuleService.findById(id);
@@ -334,6 +314,9 @@ public class DiscountController {
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit) {
 
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
+        }
         List<GrouponRulePo> rulesList = groupOnRuleService.findGrouponRulePos(page,limit);
         List<GrouponRuleVo> grouponRuleVoList=new ArrayList<>();
         if (rulesList.size() == 0){
@@ -356,6 +339,9 @@ public class DiscountController {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
+        }
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
         }
         List<GrouponRulePo> rulesList = groupOnRuleService.adminFindGrouponRulePos(page,limit);
         Log log = LogUtil.newLog("查看团购商品", null, Integer.valueOf(adminid), 0, request.getRemoteAddr());

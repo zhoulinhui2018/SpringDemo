@@ -92,6 +92,9 @@ public class PresaleController {
      */
     @GetMapping("/admin/presaleRules/{id}")
     public Object detail(@PathVariable Integer id,HttpServletRequest request){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -131,6 +134,9 @@ public class PresaleController {
      */
     @PutMapping("/presaleRules/{id}")
     public Object update(@PathVariable Integer id, @RequestBody PresaleRule presaleRule, HttpServletRequest request){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -165,6 +171,9 @@ public class PresaleController {
      */
     @DeleteMapping("/presaleRules/{id}")
     public Object delete(@PathVariable Integer id,HttpServletRequest request){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -219,6 +228,9 @@ public class PresaleController {
      */
     @PostMapping("/presaleRules/{id}/invalid")
     public Object invalidate(@PathVariable Integer id, HttpServletRequest request){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -286,6 +298,9 @@ public class PresaleController {
                                      @RequestParam Integer page,
                                      @RequestParam Integer limit,
                                      HttpServletRequest request){
+        if(goodsId<=0||page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -321,7 +336,9 @@ public class PresaleController {
     @GetMapping("/admin/presaleGoods")
     public Object findAllPresaleRules(@RequestParam Integer page,@RequestParam Integer limit,
                                       HttpServletRequest request){
-
+        if(page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -356,6 +373,9 @@ public class PresaleController {
      */
     @GetMapping("/presaleRules/{id}")
     public Object getPresaleRuleById(@PathVariable Integer id){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         PresaleRuleVo presaleRuleVo;
         try{
             presaleRuleVo=presaleService.findById(id);
@@ -403,6 +423,9 @@ public class PresaleController {
      */
     @GetMapping("/presaleGoods")
     public Object getPresaleGoods(@RequestParam Integer page,@RequestParam Integer limit){
+        if(page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         List<PresaleRuleVo> presaleRuleVoList;
         try{
             presaleRuleVoList = presaleService.findOnPresaleRules(page, limit);

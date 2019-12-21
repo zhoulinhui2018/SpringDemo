@@ -25,41 +25,83 @@ mybatis:
     #自动将SQL中查出来的带下划线的字段，转换为驼峰标志，再去匹配类中的属性
     map-underscore-to-camel-case: true
 
-logging:
-  #设置日志打印级别
-  level:
-    #Spring框架中的日志级别
-    org.springframework.web: info
-    root: error
-    #自己项目包名下的日志级别
-    xmu.oomall.controller: debug
-    xmu.oomall.service: debug
-    xmu.oomall.dao: debug
-    xmu.oomall.mapper: error
-    xmu.oomall.domain: debug
-    xmu.oomall.util: debug
-  #使用logback日志，取代默认的common日志
-  file:
-    path: C:\Users\Ming Qiu\log
-  config: classpath:logback-spring.xml
-
-oomall:
-  #最大付款时间, 单位分钟
-  maxpaytime: 30
-  #redis缓存失效时间，单位分钟
-  redisexpiretime: 1
-  #预提库存数量
-  predeductQty: 3
+#logging:
+#  #设置日志打印级别
+#  level:
+#    #Spring框架中的日志级别
+#    org.springframework.web: info
+#    root: error
+#    #自己项目包名下的日志级别
+#    xmu.oomall.controller: debug
+#    xmu.oomall.service: debug
+#    xmu.oomall.dao: debug
+#    xmu.oomall.mapper: error
+#    xmu.oomall.domain: debug
+#    xmu.oomall.util: debug
+#  #使用logback日志，取代默认的common日志
+#  file:
+#    path: C:\Users\Ming Qiu\log
+#  config: classpath:logback-spring.xml
+#
+#oomall:
+#  #最大付款时间, 单位分钟
+#  maxpaytime: 30
+#  #redis缓存失效时间，单位分钟
+#  redisexpiretime: 1
+#  #预提库存数量
+#  predeductQty: 3
 
 
 #潘朝旺组
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
+#    username: user2_2
+#    #  password: Zhangyaqing123
+#    password: ooad2
+#  application:
+#    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8764
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.96.159.71:8888/eureka/
+
+
+#潘朝旺  我们数据库
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 12345678
+#
+#  application:
+#    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8764
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.96.159.71:8888/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8764
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
     username: user2_2
-    #  password: Zhangyaqing123
     password: ooad2
+
   application:
     name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
 
@@ -70,3 +112,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://47.96.159.71:8888/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 47.97.43.141
+    non-secure-port: 8764

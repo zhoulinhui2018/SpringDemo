@@ -11,8 +11,7 @@ import xmu.oomall.topic.service.impl.LogService;
 import xmu.oomall.topic.service.impl.TopicService;
 import xmu.oomall.topic.util.FileUploadUtil;
 import xmu.oomall.topic.util.IdUtil;
-import xmu.oomall.topic.util.MallException;
-import xmu.oomall.topic.util.ResponseUtil;
+import xmu.oomall.topic.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -20,10 +19,8 @@ import java.util.List;
 
 /**
  * Topic模块
- *
- * @param
- * @Author Ren tianhe
- * @Date 2019/12/17
+ * @author Ren tianhe
+ * @date 2019/12/17
  */
 @RestController
 @RequestMapping("")
@@ -35,11 +32,8 @@ public class TopicController {
     private LogService logService;
 
     /**
-     * 如果传入的newtopic中图片url和content都为空，则认为这是个不好的请求
-     */
-    /**
      * 专题内容合理性判断函数
-     * @Author Ren tianhe
+     * @author Ren tianhe
      * @date 2019/12/15
      */
     private Object validate(TopicPo newtopic) {
@@ -56,11 +50,10 @@ public class TopicController {
 
 
     /**
-     * 管理员上传话题的图片（未测试）
-     * @param file
-     * @return
-     * @throws Exception
-     * @Author Ren tianhe
+     * 管理员上传话题的图片（不需要）
+     * @param  file 上传的图片
+     * @throws Exception e
+     * @author Ren tianhe
      * @date 2019/12/15
      */
     @RequestMapping(value="/pics",method = RequestMethod.POST)
@@ -81,15 +74,19 @@ public class TopicController {
 
     /**
      * 用户查看所有专题（重测已通过）
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/13
+     * @param limit 页数
+     * @param page 条数
+     * @return 专题列表
+     * @author Ren tianhe
+     * @date 2019/12/13
      */
     @GetMapping("/topics")
     public Object userFindTopicList(@RequestParam(defaultValue = "1") Integer page,
                                     @RequestParam(defaultValue = "10") Integer limit
                                ) {
+        if(page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         List<Topic> topics = new ArrayList<Topic>();
         try{
             topics = topicService.findTopicList(page,limit);
@@ -101,15 +98,19 @@ public class TopicController {
 
     /**
      * 管理员查看所有专题 （重测已通过）
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/13
+     * @param page 页数
+     * @param limit 条数
+     * @return 专题列表
+     * @author Ren tianhe
+     * @date 2019/12/13
      */
     @GetMapping("/admin/topics")
     public Object adminFindTopicList(@RequestParam(defaultValue = "1") Integer page,
                                      @RequestParam(defaultValue = "10") Integer limit
                                  ,HttpServletRequest request) {
+        if(page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String id= request.getHeader("id");
         if (id==null){
             return ResponseUtil.unlogin();
@@ -133,10 +134,11 @@ public class TopicController {
     }
 
     /**
-     * 管理员添加专题（重测已通过）
-     * 添加了@RequestBody后使用Json测试
-     * @Author Ren tianhe
-     * @Date 2019/12/13
+     * 管理员添加专题
+     * @param topicPo 添加的专题信息
+     * @return java.lang.Object.TopicPo
+     * @author Ren tianhe
+     * @date 2019/12/13
      */
     @PostMapping("/topics")
     public Object adminAddTopic(@RequestBody TopicPo topicPo, HttpServletRequest request) {
@@ -171,19 +173,22 @@ public class TopicController {
 
     /**
      * 管理员查看专题详情 (已通过)
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/13
+     * @param id 所查看专题的id
+     * @return java.lang.Object.Topic
+     * @author Ren tianhe
+     * @date 2019/12/13
      */
     @GetMapping("/admin/topics/{id}")
     public Object adminFindTopicById(@PathVariable Integer id, HttpServletRequest request){
-        String adminid= request.getHeader("id");
-        if (adminid==null){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
+        String adminId= request.getHeader("id");
+        if (adminId==null){
             return ResponseUtil.unlogin();
         }
         Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
+        log.setAdminId(Integer.valueOf(adminId));
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
@@ -192,12 +197,7 @@ public class TopicController {
         Topic topicById = new Topic();
         try{
             topicById = topicService.findTopicById(id);
-            if(topicById ==null){
-                log.setStatusCode(0);
-                logService.addlog(log);
-                return ResponseUtil.fail(654,"话题查看失败");
-            }
-            if (topicById.getDeleted()){
+            if (topicById==null||topicById.getDeleted()){
                 log.setStatusCode(0);
                 logService.addlog(log);
                 return ResponseUtil.fail(650,"该话题是无效话题");
@@ -214,20 +214,20 @@ public class TopicController {
 
     /**
      * 用户查看专题详情 已通过
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/13
+     * @param id 所查看专题的id
+     * @return java.lang.Object.Topic
+     * @author Ren tianhe
+     * @date 2019/12/13
      */
     @GetMapping("/topics/{id}")
     public Object userFindTopicById(@PathVariable Integer id){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         Topic topic = new Topic();
         try{
             topic = topicService.findTopicById(id);
-            if(topic==null){
-                return ResponseUtil.fail(654,"话题查看失败");
-            }
-            if(topic.getDeleted()){
+            if(topic==null||topic.getDeleted()){
             return ResponseUtil.fail(650,"该话题是无效话题");
         }
         }catch (Exception e){
@@ -238,13 +238,16 @@ public class TopicController {
 
     /**
      * 管理员编辑专题（用body测是可行的）
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/17
+     * @param id 被删除话题的id
+     * return java.lang.Object
+     * @author Ren tianhe
+     * @date 2019/12/17
      */
     @PutMapping("/topics/{id}")
     public Object adminUpdateTopicById(@PathVariable Integer id, @RequestBody TopicPo topicPo, HttpServletRequest request){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -264,11 +267,6 @@ public class TopicController {
             return error;
         }
         topicPo.setId(id);
-//        if(topicService.adminUpdateTopicById(topicPo)==0){
-//            log.setStatusCode(0);
-//            logService.addlog(log);
-//            return ResponseUtil.fail(651,"话题更新失败");
-//        }
         try{
             if(topicService.adminUpdateTopicById(topicPo)==0){
                 log.setStatusCode(0);
@@ -287,13 +285,16 @@ public class TopicController {
 
     /**
      * 管理员删除专题 （测试通过）
-     *
-     * @param
-     * @Author Ren tianhe
-     * @Date 2019/12/17
+     * @param id 所删除专题的id
+     * @return 空
+     * @author Ren tianhe
+     * @date 2019/12/17
      */
     @DeleteMapping("/topics/{id}")
     public Object adminDeleteTopicById(@PathVariable Integer id,HttpServletRequest request){
+        if(id<=0){
+            return ResponseUtil.fail(580,"参数不合法");
+        }
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -305,11 +306,6 @@ public class TopicController {
         log.setStatusCode(1);
         log.setActions("删除话题");
         log.setActionId(id);
-//        if(topicService.adminDeleteTopicById(id)==0){
-//            log.setStatusCode(0);
-//            logService.addlog(log);
-//            return ResponseUtil.fail(653,"话题删除失败");
-//        }
         try{
             if(topicService.adminDeleteTopicById(id)==0){
                 log.setStatusCode(0);

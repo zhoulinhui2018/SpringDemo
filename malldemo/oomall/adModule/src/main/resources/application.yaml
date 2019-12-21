@@ -53,24 +53,27 @@ management:
 
 
 #周林辉
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
-    username: user2_2
-    #  password: Zhangyaqing123
-    password: ooad2
-  application:
-    name: adService #服务名称--调用的时候根据名称来调用该服务的方法
-
-server:
-  port: 8801
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: localhost:8761/eureka/
-
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+#    username: user2_2
+#    password: ooad2
+#  application:
+#    name: adService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+##  port: 8871
+#  port: 8801
+#eureka:
+#  client:
+#    serviceUrl:
+##      defaultZone: http://148.70.28.112:8761/eureka #刘仁帅
+#      defaultZone: http://47.97.43.141:8761/eureka/  #自己
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8801
 
 #潘朝旺
 #spring:
@@ -90,3 +93,90 @@ eureka:
 #  client:
 #    serviceUrl:
 #      defaultZone: http://47.96.159.71:8888/eureka/
+
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 12345678
+#  application:
+#    name: adService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8770
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://148.70.28.112:8761/eureka/
+
+##潘朝旺
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 12345678
+#
+#  application:
+#    name: adService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8762
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.96.159.71:8888/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8762
+
+##周林辉最新
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+#    username: user2_2
+#    password: ooad2
+#
+#  application:
+#    name: adService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8801
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.97.43.141:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8801
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+    username: user2_2
+    password: ooad2
+
+  application:
+    name: adService #服务名称--调用的时候根据名称来调用该服务的方法
+
+server:
+  port: 8762
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.96.159.71:8888/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 47.97.43.141
+    non-secure-port: 8762

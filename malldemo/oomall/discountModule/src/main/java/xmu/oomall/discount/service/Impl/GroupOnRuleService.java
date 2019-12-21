@@ -1,5 +1,6 @@
 package xmu.oomall.discount.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GroupOnRuleService implements IGroupOnRuleService {
@@ -159,17 +161,15 @@ public class GroupOnRuleService implements IGroupOnRuleService {
 
     @Override
     public GoodsPo getGrouponGoods(GrouponRulePo grouponRulePo) {
+        Integer goodsId=grouponRulePo.getGoodsId();
         RestTemplate restTemplate = new RestTemplate();
-        ServiceInstance instance = loadBalancerClient.choose("goodsInfoService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/goods/{id}");
-
-        String object= restTemplate.getForObject(reqURL,String.class,grouponRulePo.getGoodsId());
-        Goods goods = JacksonUtil.parseObject(object, "data", Goods.class);
-        System.out.println(goods);
-        if (goods==null){
-            return null;
-        }
-        return goods;
+        ServiceInstance instance = loadBalancerClient.choose("goodsService");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
+        Object result= restTemplate.getForObject(reqURL,Object.class);
+        Map<String,Object> haspMap=(Map<String,Object>)result;
+        ObjectMapper mapper = new ObjectMapper();
+        GoodsPo goodsPo = mapper.convertValue(haspMap.get("data"),GoodsPo.class);
+        return goodsPo;
     }
 
     @Override

@@ -2,7 +2,6 @@ package xmu.oomall.footprint.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -10,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.footprint.dao.FootprintDao;
-import xmu.oomall.footprint.domain.*;
+import xmu.oomall.footprint.domain.FootprintItem;
+import xmu.oomall.footprint.domain.FootprintItemPo;
+import xmu.oomall.footprint.domain.GoodsPo;
+import xmu.oomall.footprint.domain.Log;
 import xmu.oomall.footprint.service.IFootprintService;
-import xmu.oomall.util.JacksonUtil;
 
 import java.util.List;
 import java.util.Map;

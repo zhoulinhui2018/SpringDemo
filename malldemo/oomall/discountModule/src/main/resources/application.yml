@@ -9,8 +9,6 @@ mybatis:
     #自动将SQL中查出来的带下划线的字段，转换为驼峰标志，再去匹配类中的属性
     map-underscore-to-camel-case: true
 
-
-
 #server:
 #  port: 8080
 
@@ -58,9 +56,29 @@ management:
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=GMT
 #    username: root
-#    password: 123456
+#    password: 12345678
+#  #    password: Zhangyaqing123
+#  application:
+#    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8885
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+
+
+##自己组
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+#    username: user2_2
+#    password: ooad2
 #  application:
 #    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
 #
@@ -70,30 +88,7 @@ management:
 #eureka:
 #  client:
 #    serviceUrl:
-#      defaultZone: http://localhost:8761/eureka/
-
-#周林辉
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
-    username: user2_2
-    password: ooad2
-
-  application:
-    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
-
-server:
-  port: 8802
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://47.97.43.141:8761/eureka/
-  instance:
-    prefer-ip-address: true
-    ip-address: 47.97.43.141
-    non-secure-port: 8802
+#      defaultZone: http://47.97.43.141:8761/eureka/
 
 #孔祥威李鹏程组
 #spring:
@@ -116,3 +111,27 @@ eureka:
 #    prefer-ip-address: true
 #    ip-address: 47.97.43.141
 #    non-secure-port: 8766
+
+
+#潘朝旺
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+    username: user2_2
+    password: ooad2
+
+  application:
+    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
+
+server:
+  port: 8763
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.96.159.71:8888/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 47.97.43.141
+    non-secure-port: 8763
