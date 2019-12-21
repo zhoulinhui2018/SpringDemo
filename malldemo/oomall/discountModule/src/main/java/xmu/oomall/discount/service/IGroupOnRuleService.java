@@ -8,6 +8,10 @@ import java.util.List;
 
 @Service
 public interface IGroupOnRuleService {
+
+
+    public List<GrouponRulePo> findGrouponRuleByGoodsId(Integer goodsId,Integer page,Integer limit);
+
     /** 
     * @Description: 判断可以插入吗 
     * @Param: [grouponRulePo] 

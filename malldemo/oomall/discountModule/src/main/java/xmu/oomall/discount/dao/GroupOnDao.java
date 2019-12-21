@@ -23,6 +23,7 @@ public class GroupOnDao {
         return groupOnRuleMapper.findGrouponByGoodsId(goodsId);
     }
 
+
     public GrouponRule getStrategy(GrouponRulePo grouponRulePo){
         System.out.println("getStrategy参数：");
         String jsonString = grouponRulePo.getGrouponLevelStrategy();

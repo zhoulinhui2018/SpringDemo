@@ -16,6 +16,14 @@ import xmu.oomall.ad.util.ResponseUtil;
 import javax.servlet.http.HttpServletRequest;
 
 
+
+/** 
+* @Description: ad controller 
+* @Param:  
+* @return:  
+* @Author: Zhou Linhui
+* @Date: 2019/12/21 
+*/ 
 @RestController
 @RequestMapping("")
 @Validated

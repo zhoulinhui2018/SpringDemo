@@ -75,7 +75,7 @@
     <select id="findGrouponByGoodsId" parameterType="integer" resultMap="GrouponRuleType">
         select *
         from oomall_groupon_rule
-        where goods_id=#{goodsId}
+        where goods_id=#{goodsId} and is_deleted=0
     </select>
 
     <insert id="add" parameterType="GrouponRulePo" useGeneratedKeys="true" keyProperty="id">

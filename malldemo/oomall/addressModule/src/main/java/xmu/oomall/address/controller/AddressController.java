@@ -56,6 +56,9 @@ public class AddressController {
         if(id==null){
             return ResponseUtil.unlogin();
         }
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
+        }
         List<Address> addressList;
         Integer userId= Integer.valueOf(id);
         try{
@@ -78,11 +81,11 @@ public class AddressController {
      */
     @GetMapping("/addresses/{id}")
     public Object getAddressDetail(@PathVariable Integer id){
-        if(id<=0){
-            return ResponseUtil.badArgument();
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
         }
         Address address=addressService.getAddressDetail(id);
-        if(address==null||address.getBeDeleted()){
+        if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
         }else{
             changePoToAddress(address);
@@ -193,11 +196,11 @@ public class AddressController {
      */
     @DeleteMapping("/addresses/{id}")
     public Object deleteAddress(@PathVariable Integer id){
-        if(id<=0){
-            return ResponseUtil.badArgument();
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
         }
         Address address=addressService.getAddressDetail(id);
-        if(address==null||address.getBeDeleted()){
+        if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
         }else{
             address.setBeDeleted(true);
@@ -221,8 +224,8 @@ public class AddressController {
      */
     @PutMapping("/addresses/{id}")
     public Object updateAddress(@PathVariable Integer id, @RequestBody AddressPo addressPo){
-        if(id<=0){
-            return ResponseUtil.badArgument();
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
         }
         if(validate(addressPo)==1){
             return ResponseUtil.updateAddressFailed();
