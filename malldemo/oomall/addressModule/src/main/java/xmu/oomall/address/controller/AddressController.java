@@ -52,11 +52,12 @@ public class AddressController {
     public Object getUserAddressList(HttpServletRequest request,
                                      @RequestParam(defaultValue = "1") Integer page,
                                      @RequestParam(defaultValue = "10") Integer limit){
-        Integer userId= Integer.valueOf(request.getHeader("id"));
-        if(userId==0){
+        String id= request.getHeader("id");
+        if(id==null){
             return ResponseUtil.unlogin();
         }
         List<Address> addressList;
+        Integer userId= Integer.valueOf(id);
         try{
             addressList=addressService.getUserAddresslist(page,limit,userId);
         }catch (Exception e){
@@ -77,8 +78,11 @@ public class AddressController {
      */
     @GetMapping("/addresses/{id}")
     public Object getAddressDetail(@PathVariable Integer id){
+        if(id<=0){
+            return ResponseUtil.badArgument();
+        }
         Address address=addressService.getAddressDetail(id);
-        if(address==null||address.getBeDeleted()==true){
+        if(address==null||address.getBeDeleted()){
             return ResponseUtil.addressNotExist();
         }else{
             changePoToAddress(address);
@@ -98,8 +102,8 @@ public class AddressController {
         Integer provinceId=addressPo.getProvinceId();
         Integer cityId=addressPo.getCityId();
         Integer userId=addressPo.getUserId();
-        String address_detail=addressPo.getAddressDetail();
-        String postal_code=addressPo.getPostalCode();
+        String addressDetail=addressPo.getAddressDetail();
+        String postalCode=addressPo.getPostalCode();
         String mobile=addressPo.getMobile();
         String consignee=addressPo.getConsignee();
 
@@ -112,10 +116,10 @@ public class AddressController {
             return 1;
         }
         //判断各个string字段是否为空
-        if (StringUtils.isEmpty(address_detail)) {
+        if (StringUtils.isEmpty(addressDetail)) {
             return 1;
         }
-        if (StringUtils.isEmpty(postal_code)) {
+        if (StringUtils.isEmpty(postalCode)) {
             return 1;
         }
         if (StringUtils.isEmpty(mobile)) {
@@ -149,7 +153,7 @@ public class AddressController {
         if(!FomatUtil.isValidateMobile(mobile)){
             return 2;
         }
-        if(!FomatUtil.isValidatePostcode(postal_code)){
+        if(!FomatUtil.isValidatePostcode(postalCode)){
             return 2;
         }
         return 0;
@@ -189,8 +193,11 @@ public class AddressController {
      */
     @DeleteMapping("/addresses/{id}")
     public Object deleteAddress(@PathVariable Integer id){
+        if(id<=0){
+            return ResponseUtil.badArgument();
+        }
         Address address=addressService.getAddressDetail(id);
-        if(address==null||address.getBeDeleted()==true){
+        if(address==null||address.getBeDeleted()){
             return ResponseUtil.addressNotExist();
         }else{
             address.setBeDeleted(true);
@@ -214,6 +221,9 @@ public class AddressController {
      */
     @PutMapping("/addresses/{id}")
     public Object updateAddress(@PathVariable Integer id, @RequestBody AddressPo addressPo){
+        if(id<=0){
+            return ResponseUtil.badArgument();
+        }
         if(validate(addressPo)==1){
             return ResponseUtil.badArgument();
         }
