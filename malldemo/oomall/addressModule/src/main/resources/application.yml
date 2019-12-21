@@ -105,7 +105,7 @@ mybatis:
 #    password: ooad2
 #
 #  application:
-#    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
+#    name: addressService #服务名称--调用的时候z根据名称来调用该服务的方法
 #
 #server:
 #  port: 8764
