@@ -29,7 +29,7 @@ public class AdService implements IAdService {
         ServiceInstance instance = loadBalancerClient.choose("logService");
         System.out.println(instance.getHost());
         System.out.println(instance.getPort());
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
+        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/log");
         restTemplate.postForObject(reqURL,log,Log.class);
     }
 
