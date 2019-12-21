@@ -130,6 +130,14 @@ public class DiscountController {
         return ResponseUtil.ok(grouponRuleVo);
     }
 
+
+    /**
+    * @Description: 管理员下架团购
+    * @Param: [request, id]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/21
+    */
     @PostMapping("/grouponRules/{id}/invalid")
     public Object invalid(HttpServletRequest request,@PathVariable Integer id){
         String adminid= request.getHeader("id");
@@ -332,6 +340,13 @@ public class DiscountController {
         return ResponseUtil.ok(grouponRuleVoList);
     }
 
+    /**
+    * @Description: 管理员获得团购规则及对应商品
+    * @Param: [request, page, limit]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/21
+    */
     @GetMapping("/admin/grouponGoods")
     public Object adminList(HttpServletRequest request,
                             @RequestParam(defaultValue = "1") Integer page,
@@ -362,6 +377,13 @@ public class DiscountController {
         return ResponseUtil.ok(grouponRuleVoList);
     }
 
+    /**
+    * @Description: 计算订单支付价格和更新订单状态
+    * @Param: [order]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/21
+    */
     @PostMapping("/discount/orders")
     public Object discountOrder(@RequestBody Order order){
         Integer couponId=order.getCouponId();
@@ -437,6 +459,46 @@ public class DiscountController {
             }
         }
         return ResponseUtil.ok(order);
+    }
+
+    /** 
+    * @Description: 管理员根据商品id查询团购商品和规则 
+    * @Param: [goodsId, page, limit] 
+    * @return: java.lang.Object 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/21 
+    */ 
+    @GetMapping("/grouponRules")
+    public Object getGrouponRules(HttpServletRequest request,@RequestParam Integer goodsId, @RequestParam Integer page, @RequestParam Integer limit){
+        String adminid= request.getHeader("id");
+        if (adminid==null){
+            return ResponseUtil.unlogin();
+        }
+        if (goodsId<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
+        }
+        Log log = LogUtil.newLog("查看团购商品", null, Integer.valueOf(adminid), 0, request.getRemoteAddr());
+
+        List<GrouponRulePo> grouponRuleByGoodsId = groupOnRuleService.findGrouponRuleByGoodsId(goodsId,page,limit);
+        if (grouponRuleByGoodsId.size()==0){
+            log.setStatusCode(1);
+            groupOnRuleService.log(log);
+            return ResponseUtil.ok();
+        }
+        List<GrouponRuleVo> grouponRuleVoList=new ArrayList<>();
+        for (GrouponRulePo grouponRulePo : grouponRuleByGoodsId) {
+            GoodsPo grouponGoods = groupOnRuleService.getGrouponGoods(grouponRulePo);
+            GrouponRuleVo grouponRuleVo=new GrouponRuleVo();
+            grouponRuleVo.setGrouponRulePo(grouponRulePo);
+            grouponRuleVo.setGoodsPo(grouponGoods);
+            grouponRuleVoList.add(grouponRuleVo);
+        }
+        log.setStatusCode(1);
+        groupOnRuleService.log(log);
+        return ResponseUtil.ok(grouponRuleVoList);
     }
 
     private Object validate(GrouponRulePo grouponRulePo) {

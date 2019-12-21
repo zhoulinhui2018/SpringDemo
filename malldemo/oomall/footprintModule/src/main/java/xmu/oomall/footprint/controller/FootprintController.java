@@ -75,6 +75,9 @@ public class FootprintController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
+        }
         Log log=new Log();
         log.setAdminId(Integer.valueOf(adminid));
         log.setIp(request.getRemoteAddr());

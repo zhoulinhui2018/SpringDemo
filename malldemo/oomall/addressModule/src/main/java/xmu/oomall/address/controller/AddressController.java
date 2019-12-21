@@ -56,6 +56,9 @@ public class AddressController {
         if(userId==0){
             return ResponseUtil.unlogin();
         }
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
+        }
         List<Address> addressList;
         try{
             addressList=addressService.getUserAddresslist(page,limit,userId);
@@ -77,6 +80,9 @@ public class AddressController {
      */
     @GetMapping("/addresses/{id}")
     public Object getAddressDetail(@PathVariable Integer id){
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
         Address address=addressService.getAddressDetail(id);
         if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
@@ -189,6 +195,9 @@ public class AddressController {
      */
     @DeleteMapping("/addresses/{id}")
     public Object deleteAddress(@PathVariable Integer id){
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
         Address address=addressService.getAddressDetail(id);
         if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
@@ -214,6 +223,9 @@ public class AddressController {
      */
     @PutMapping("/addresses/{id}")
     public Object updateAddress(@PathVariable Integer id, @RequestBody AddressPo addressPo){
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
         if(validate(addressPo)==1){
             return ResponseUtil.badArgument();
         }

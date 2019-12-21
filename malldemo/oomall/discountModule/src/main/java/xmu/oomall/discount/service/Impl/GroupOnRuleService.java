@@ -28,6 +28,12 @@ public class GroupOnRuleService implements IGroupOnRuleService {
     private LoadBalancerClient loadBalancerClient;
 
     @Override
+    public List<GrouponRulePo> findGrouponRuleByGoodsId(Integer goodsId,Integer page,Integer limit) {
+        PageHelper.startPage(page,limit);
+        return groupOnDao.findGrouponByGoodsId(goodsId);
+    }
+
+    @Override
     public Boolean canAdd(GrouponRulePo grouponRulePo) {
         Integer goodsId = grouponRulePo.getGoodsId();
         LocalDateTime now=LocalDateTime.now();
