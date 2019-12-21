@@ -67,6 +67,13 @@ public class ResponseUtil {
         return obj;
     }
 
+    public static Object invalidArgumentValue() {
+        Map<String, Object> obj = new HashMap<String, Object>();
+        obj.put("errno", 580);
+        obj.put("errmsg", "参数不合法");
+        return obj;
+    }
+
     public static Object badArgument() {
         return fail(580, "参数不对");
     }

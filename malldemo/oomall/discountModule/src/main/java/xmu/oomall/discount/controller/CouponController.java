@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("AlibabaClassMustHaveAuthor")
 @RestController
 @RequestMapping("")
 public class CouponController {
@@ -25,16 +26,46 @@ public class CouponController {
 
     //判断优惠券规则是否有效
     private Boolean validateCouponRule(CouponRulePo couponRule) {
+        Integer id=couponRule.getId();
         String name = couponRule.getName();
-        if (name==null) {
+        LocalDateTime beginTime=couponRule.getBeginTime();
+        LocalDateTime endTime=couponRule.getEndTime();
+        Boolean status=couponRule.getStatusCode();
+        Integer total=couponRule.getTotal();
+        Integer collectedNum=couponRule.getCollectedNum();
+
+        if(id==null||name==null||beginTime==null||endTime==null)
+        {
+            return false;
+        }
+        if(status==null||total==null||collectedNum==null)
+        {
+            return false;
+        }
+        if(beginTime.isAfter(endTime))
+        {
             return false;
         }
         return true;
     }
     //判断优惠券是否有效
     private Boolean validateCoupon(CouponPo coupon) {
-        String name = coupon.getName();
-        if (name==null) {
+        Integer id=coupon.getId();
+        Integer userId=coupon.getUserId();
+        Integer couponRuleId=coupon.getCouponRuleId();
+        LocalDateTime beginTime=coupon.getBeginTime();
+        LocalDateTime endTime=coupon.getEndTime();
+        Integer status=coupon.getStatusCode();
+        if(id==null||userId==null||couponRuleId==null)
+        {
+            return false;
+        }
+        if( beginTime==null||endTime==null||status==null)
+        {
+            return false;
+        }
+        if(beginTime.isAfter(endTime))
+        {
             return false;
         }
         return true;
@@ -52,12 +83,17 @@ public class CouponController {
     public Object list(@RequestParam(defaultValue = "1") Integer page,
                        @RequestParam(defaultValue = "10") Integer limit,
                        HttpServletRequest request) {
-        String adminid= request.getHeader("id");
-        if (adminid==null){
+        if(page<0||limit<0)
+        {
+            return ResponseUtil.invalidArgumentValue();
+        }
+
+        String adminId= request.getHeader("id");
+        if (adminId==null){
             return ResponseUtil.unlogin();
         }
         Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
+        log.setAdminId(Integer.valueOf(adminId));
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
@@ -88,12 +124,12 @@ public class CouponController {
     @PostMapping("/couponRules")
     public Object create(@RequestBody CouponRulePo couponRulePo,HttpServletRequest request)
     {
-        String adminid= request.getHeader("id");
-        if (adminid==null){
+        String adminId= request.getHeader("id");
+        if (adminId==null){
             return ResponseUtil.unlogin();
         }
         Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
+        log.setAdminId(Integer.valueOf(adminId));
         log.setIp(request.getRemoteAddr());
         log.setType(1);
         log.setStatusCode(1);
@@ -125,12 +161,17 @@ public class CouponController {
     @GetMapping("/couponRules/{id}")
     public Object detail(@PathVariable Integer id,HttpServletRequest request)
     {
-        String adminid= request.getHeader("id");
-        if (adminid==null){
+        if(id<0){
+
+            return ResponseUtil.invalidArgumentValue();
+        }
+
+        String adminId= request.getHeader("id");
+        if (adminId==null){
             return ResponseUtil.unlogin();
         }
         Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
+        log.setAdminId(Integer.valueOf(adminId));
         log.setIp(request.getRemoteAddr());
         log.setType(0);
         log.setStatusCode(1);
@@ -167,6 +208,11 @@ public class CouponController {
     public Object update(@PathVariable Integer id,
                          @RequestBody CouponRulePo couponRulePo,
                          HttpServletRequest request) {
+        if(id<0)
+        {
+            return ResponseUtil.invalidArgumentValue();
+        }
+
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
@@ -219,14 +265,19 @@ public class CouponController {
      * @date 2019/12/20
      */
     @PostMapping("/couponRules/{id}/invalid")
-    public Object invalidate(@PathVariable Integer id,
+    public Object inValidate(@PathVariable Integer id,
                          HttpServletRequest request) {
-        String adminid= request.getHeader("id");
-        if (adminid==null){
+        if(id<0)
+        {
+            return ResponseUtil.invalidArgumentValue();
+        }
+
+        String adminId= request.getHeader("id");
+        if (adminId==null){
             return ResponseUtil.unlogin();
         }
         Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
+        log.setAdminId(Integer.valueOf(adminId));
         log.setIp(request.getRemoteAddr());
         log.setType(2);
         log.setStatusCode(1);
@@ -285,14 +336,20 @@ public class CouponController {
      * @author Zhang Yaqing
      * @date 2019/12/10
      */
+
     @DeleteMapping("/couponRules/{id}")
     public Object delete(@PathVariable Integer id,HttpServletRequest request){
-        String adminid= request.getHeader("id");
-        if (adminid==null){
+        if(id<0)
+        {
+            return ResponseUtil.invalidArgumentValue();
+        }
+
+        String adminId= request.getHeader("id");
+        if (adminId==null){
             return ResponseUtil.unlogin();
         }
         Log log=new Log();
-        log.setAdminId(Integer.valueOf(adminid));
+        log.setAdminId(Integer.valueOf(adminId));
         log.setIp(request.getRemoteAddr());
         log.setType(3);
         log.setStatusCode(1);
@@ -336,6 +393,11 @@ public class CouponController {
     public Object userGetCouponRules(@RequestParam(defaultValue = "1") Integer page,
                                      @RequestParam(defaultValue = "10") Integer limit,
                                      HttpServletRequest request){
+        if(page<0||limit<0)
+        {
+            return ResponseUtil.invalidArgumentValue();
+        }
+
         String id=request.getHeader("id");
         Integer userId=Integer.valueOf(id);
         if (userId==null){
@@ -361,46 +423,51 @@ public class CouponController {
      * @return java.lang.Object[List<coupon>]
      * @author Zhang Yaqing
      * @date 2019/12/10
+     * 待测试！！！
      */
     @GetMapping("/coupons")
-    public Object mylist(@RequestParam Integer showType,
+    public Object myList(@RequestParam Integer showType,
                          @RequestParam(defaultValue = "1") Integer page,
                          @RequestParam(defaultValue = "10") Integer limit,
                          HttpServletRequest request) {
+        if(showType!=0&&showType!=1&&showType!=2&&showType!=3){
+            return ResponseUtil.invalidArgumentValue();
+        }
+        if(page<0||limit<0){
+            return ResponseUtil.invalidArgumentValue();
+        }
+
         String id=request.getHeader("id");
         if (id==null){
             return ResponseUtil.unlogin();
         }
         Integer userId=Integer.valueOf(id);
-        //获取相应的couponList
-        //***** 注意这里！！！！*******/////
-        //下层进行查找和封装，在dao层分两种情况：
-        // 1、当showType=0/1/2时，直接用status搜索
-        // 2、当showType=3时，在dao层先获取user的所有couponPo，判断是否已失效，再加入列表返回
 
-        //另外关于封装问题，Coupon=CouponPo+CouponRule，CouponRule=CouponRule+CouponStrategy
-        //最后需要的是Coupon，所以需要双层的封装，记得在下层实现好！！
         List<Coupon> couponList;
-//        try{
-//            couponList=couponService.showTypeCouponList(page,limit,userId,showType);
-//        }
-//        catch (Exception e){
-//            return ResponseUtil.serious();
-//        }
-//        return ResponseUtil.ok(couponList);
-        return null;
+        try{
+            couponList=couponService.showTypeCouponList(page,limit,userId,showType);
+        }
+        catch (Exception e){
+            return ResponseUtil.serious();
+        }
+        return ResponseUtil.ok(couponList);
+
     }
 
     /**
-     * 根据id查询coupon表（已修改）
-     * 修改内容如下：1.对于非法id的判断
-     * @param id
-     * @return
-     * 备注：标准组没有该url
+     * @description 用户查看优惠券
+     * @param id 优惠券id
+     * @return java.lang.Object[Coupon]
+     * @author Zhang Yaqing
+     * @date 2019/12/10
      */
     @GetMapping("/coupons/{id}")
     public Object readACoupon(Integer id)
     {
+        if(id<0)
+        {
+            return ResponseUtil.invalidArgumentValue();
+        }
         CouponPo ACoupon=new CouponPo();
         try {
              ACoupon = couponService.findCouponById(id);
@@ -417,74 +484,98 @@ public class CouponController {
      * @return java.lang.Object[couponPo]
      * @author Zhang Yaqing
      * @date 2019/12/10
+     * 增加了对couponRule中优惠券领取张数的判断和修改！！！
      */
     @PostMapping("/coupons")
-    public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo couponPo)
-    {
-        String id=request.getHeader("id");
-        if(id==null){
+    public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo couponPo) {
+        String id = request.getHeader("id");
+        if (id == null) {
             return ResponseUtil.unlogin();
         }
         if (!validateCoupon(couponPo)) {
             return ResponseUtil.invalidCoupon();
         }
+        //判断该优惠券是否还有
+
+
 //        判断是否在可领取时间内、是否已删除等
-        LocalDateTime beginTime=couponPo.getBeginTime();
-        LocalDateTime endTime=couponPo.getEndTime();
-        LocalDateTime nowTime=LocalDateTime.now();
-        boolean inTime=nowTime.isAfter(beginTime)&&nowTime.isBefore(endTime);
-        Boolean isDeleted=couponPo.getBeDeleted();
-        if(!inTime||isDeleted){
+        LocalDateTime beginTime = couponPo.getBeginTime();
+        LocalDateTime endTime = couponPo.getEndTime();
+        LocalDateTime nowTime = LocalDateTime.now();
+        boolean inTime = nowTime.isAfter(beginTime) && nowTime.isBefore(endTime);
+        Boolean isDeleted = couponPo.getBeDeleted();
+        if (!inTime || isDeleted) {
             return ResponseUtil.invalidCoupon();
         }
 
-        Integer userId=Integer.valueOf(id);
-        Integer couponRuleId=couponPo.getCouponRuleId();
+        Integer userId = Integer.valueOf(id);
+        Integer couponRuleId = couponPo.getCouponRuleId();
 
-        System.out.println("userId:"+userId);
-        System.out.println("couponRuleId:"+couponRuleId);
-        System.out.println("couponPo:"+couponPo);
+        System.out.println("userId:" + userId);
+        System.out.println("couponRuleId:" + couponRuleId);
+        System.out.println("couponPo:" + couponPo);
 
+        CouponRulePo couponRulePo = couponService.findCouponRuleById(couponRuleId);
+        if (couponRulePo != null) {
+            Integer total = couponRulePo.getTotal();
+            Integer collectedNum = couponRulePo.getCollectedNum();
+            if (total - collectedNum > 0) {
+                //判断此couponRuleId的优惠券是否已经领取过，即是否在coupon表中有
+                //获取该用户所有的优惠券，遍历列表，如果有领过，返回错误
+                List<CouponPo> userAllCouponPos = couponService.getCouponMyList(userId);
+                for (CouponPo coupon : userAllCouponPos) {
+                    if (couponRuleId.equals(coupon.getCouponRuleId())) {
+                        return ResponseUtil.getCouponFailed();
+                    }
+                }
 
-        //判断此couponRuleId的优惠券是否已经领取过，即是否在coupon表中有
-        //获取该用户所有的优惠券，遍历列表，如果有领过，返回错误
-        List<CouponPo> userAllCouponPos=couponService.getCouponMyList(userId);
-        for(CouponPo coupon:userAllCouponPos){
-            if(couponRuleId.equals(coupon.getCouponRuleId())){
-                return ResponseUtil.getCouponFailed();
+                //如果没有领过，调用service层的领取优惠券，新增优惠券po
+                try {
+                    couponService.addCoupon(couponPo);
+                    //优惠券规则下的优惠券领取数量加一
+                    couponService.modifiedCouponRuleNum(couponRuleId);
+
+                } catch (Exception e) {
+                    ResponseUtil.getCouponFailed();
+                }
+                return ResponseUtil.ok(couponPo);
             }
-        }
 
-        //如果没有领过，调用service层的领取优惠券，新增优惠券po
-        try {
-            couponService.addCoupon(couponPo);
-        }catch (Exception e){
-            ResponseUtil.getCouponFailed();
         }
-        return ResponseUtil.ok(couponPo);
+        return ResponseUtil.getCouponFailed();
     }
 
     /**
-     * 用户查看当前购物车下单商品订单可用优惠券
-     * userId不能直接使用！！！
+     * @description 查看所有可用优惠券
+     * @param cartItems 传来的购物车明细
      * @param request
-     * @param cartItems
-     * @return
+     * @return java.lang.Object[List<Coupon>]
+     * @author Xu Huangchao
+     * @date 2019/12/21
+     * 待测试！！！
      */
+
     @GetMapping("/coupons/availableCoupons")
     public Object selectAvailableCoupons(HttpServletRequest request,List<CartItem> cartItems){
-        String Id=request.getHeader("id");
-        Integer userId=Integer.valueOf(Id);
+        String id=request.getHeader("id");
+        if(id==null)
+        {
+            return ResponseUtil.unlogin();
+        }
+        Integer userId=Integer.valueOf(id);
 
         List<Integer> goodsIdList=new ArrayList<>();
         Integer goodsId;
-        for(CartItem item:cartItems){
-            goodsId=item.getProduct().getGoodsId();
-            goodsIdList.add(goodsId);
-        }
-        List<Coupon> canUsedCoupons= couponService.getCanUsedCoupons(goodsIdList, userId);
+        if(cartItems.size()!=0) {
+            for (CartItem item : cartItems) {
+                goodsId = item.getProduct().getGoodsId();
+                goodsIdList.add(goodsId);
+            }
+            List<Coupon> canUsedCoupons = couponService.getCanUsedCoupons(goodsIdList, userId);
 
-        return ResponseUtil.ok(canUsedCoupons);
+            return ResponseUtil.ok(canUsedCoupons);
+        }
+        return ResponseUtil.badArgumentValue();
     }
 
     //热门优惠券的抢购 消息队列吗？

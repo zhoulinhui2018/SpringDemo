@@ -127,4 +127,14 @@ public interface ICouponService {
      * @param couponRuleId
      */
     int modifiedCouponRuleNum(Integer couponRuleId);
+
+    /**
+     * 根据不同种类划分优惠券
+     * @param page
+     * @param limit
+     * @param userId
+     * @param showType
+     * @return
+     */
+    List<Coupon> showTypeCouponList(Integer page, Integer limit, Integer userId, Integer showType);
 }

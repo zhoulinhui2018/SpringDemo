@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.oomall.discount.mapper.CouponMapper">
 
-    <select id="showTypeCouponList" resultMap="couponType">
+    <select id="showTypeCouponList" resultMap="CouponType">
         select *
         from oomall_coupon
         where
@@ -23,25 +23,6 @@
         is_deleted=0 and user_id = #{userId} and  status = 0
     </select>
 
-        <select id="listFootprintByCondition" resultMap="footprintItemResultMap">
-            select oomall_footprint_item.id,
-            oomall_footprint_item.gmt_create,
-            oomall_footprint_item.birth_time,
-            oomall_footprint_item.user_id,
-            oomall_footprint_item.goods_id
-            from oomall_footprint_item,oomall_goods,oomall_user
-            where
-            <if test="goodsName!=null and goodsName!=''">
-                (oomall_footprint_item.goods_id=(select oomall_goods.id from oomall_goods where oomall_goods.name=#{goodsName})) and
-            </if>
-            <if test="userName!=null and userName!=''">
-                (oomall_footprint_item.user_id=(select oomall_user.id from oomall_user where oomall_user.name=#{userName})) and
-            </if>
-            true
-            order by oomall_footprint_item.birth_time desc
-        </select>
-
-
 <!--    <select id="getMyCoupons1" parameterType="integer" resultMap="couponType">-->
 <!--        select *-->
 <!--        from oomall_coupon-->
@@ -54,7 +35,7 @@
 <!--        where is_deleted=0 and user_id = #{userId} and  status = 2-->
 <!--    </select>-->
 
-    <select id="findCouponRuleById" parameterType="Integer" resultMap="couponRuleType">
+    <select id="findCouponRuleById" parameterType="Integer" resultMap="CouponRuleResultType">
             select * from oomall_coupon_rule where id = #{id}
     </select>
 
@@ -69,7 +50,7 @@
         values (#{userId},#{couponRuleId},#{couponSn},#{beginTime},#{endTime},#{usedTime},#{name},#{picUrl},#{gmtCreate},#{gmtModified},#{beDeleted},#{statusCode})
     </insert>
 
-    <select id="getCouponList" resultMap="couponRuleType">
+    <select id="getCouponList" resultMap="CouponRuleResultType">
         select * from oomall_coupon_rule
     </select>
 
@@ -137,18 +118,18 @@
         WHERE id=#{id}
     </update>
 
-    <select id="getCouponMyList" parameterType="Integer" resultMap="couponType">
+    <select id="getCouponMyList" parameterType="Integer" resultMap="CouponType">
         select *
         from oomall_coupon
         where user_id=#{userId} and is_deleted = 0
     </select>
 
-    <select id="getCouponRule" parameterType="Integer" resultMap="couponRuleType">
+    <select id="getCouponRule" parameterType="Integer" resultMap="CouponRuleResultType">
         select *
         from oomall_coupon_rule where id=#{couponRuleId};
     </select>
 
-    <select id="findCouponById" parameterType="Integer" resultMap="couponType">
+    <select id="findCouponById" parameterType="Integer" resultMap="CouponType">
         select * from oomall_coupon where id = #{id}
     </select>
 
@@ -182,42 +163,6 @@
         set status=0
         where id = #{couponRuleId}
     </update>
-
-
-    <resultMap id="couponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
-        <id column="id" property="id"/>
-        <result column="user_id" property="userId"/>
-        <result column="coupon_rule_id" property="couponRuleId"/>
-        <result column="coupon_sn" property="couponSn"/>
-        <result column="begin_time" property="beginTime"/>
-        <result column="end_time" property="endTime"/>
-        <result column="name" property="name"/>
-        <result column="pic_url" property="picUrl"/>
-        <result column="gmt_create" property="gmtCreate"/>
-        <result column="gmt_modified" property="gmtModified"/>
-        <result column="is_deleted" property="beDeleted"/>
-        <result column="status" property="statusCode"/>
-        <result column="used_time" property="usedTime"/>
-    </resultMap>
-
-    <resultMap id="couponRuleType" type="xmu.oomall.discount.domain.coupon.CouponRulePo">
-        <id column="id" property="id"/>
-        <result column="brief" property="brief"/>
-        <result column="valid_period" property="validPeriod"/>
-        <result column="strategy" property="strategy"/>
-        <result column="begin_time" property="beginTime"/>
-        <result column="end_time" property="endTime"/>
-        <result column="name" property="name"/>
-        <result column="pic_url" property="picUrl"/>
-        <result column="gmt_create" property="gmtCreate"/>
-        <result column="gmt_modified" property="gmtModified"/>
-        <result column="is_deleted" property="beDeleted"/>
-        <result column="status" property="statusCode"/>
-        <result column="goods_list1" property="goodsList1"/>
-        <result column="goods_list2" property="goodsList2"/>
-        <result column="total" property="total"/>
-        <result column="collected_num" property="collectedNum"/>
-    </resultMap>
 
     <select id="findCouponRulesAvailable" resultMap="CouponRuleResultType">
         select *
@@ -258,12 +203,12 @@
         <result column="collected_num" property="collectedNum"/>
         <result column="goods_list1" property="goodsList1"/>
         <result column="goods_list2" property="goodsList2"/>
-
         <result column="gmt_create" property="gmtCreate"/>
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>
         <result column="status" property="statusCode"/>
     </resultMap>
+
     <resultMap id="CouponType" type="xmu.oomall.discount.domain.coupon.CouponPo">
         <id column="id" property="id"/>
         <result column="user_id" property="userId"/>
@@ -275,7 +220,6 @@
         <result column="name" property="name"/>
         <result column="pic_url" property="picUrl"/>
         <result column="status" property="statusCode"/>
-
         <result column="gmt_create" property="gmtCreate"/>
         <result column="gmt_modified" property="gmtModified"/>
         <result column="is_deleted" property="beDeleted"/>

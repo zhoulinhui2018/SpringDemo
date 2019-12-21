@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
+import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
 import xmu.oomall.discount.service.Impl.CouponServiceImpl;
@@ -86,5 +87,17 @@ class CouponServiceTest {
         }
     }
 
+    @Test
+    public void showTypeCouponListTest(){
+        List<Coupon> couponList0=couponService.showTypeCouponList(1,10,100001,0);
+        System.out.println("未使用优惠券："+couponList0);
+        List<Coupon> couponList1=couponService.showTypeCouponList(1,10,100001,1);
+        System.out.println("已使用优惠券："+couponList1);
+        List<Coupon> couponList2=couponService.showTypeCouponList(1,10,100001,2);
+        System.out.println("已失效优惠券："+couponList2);
+        List<Coupon> couponList3=couponService.showTypeCouponList(1,10,100001,3);
+        System.out.println("已过期优惠券："+couponList3);
+
+    }
 
 }

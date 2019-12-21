@@ -488,4 +488,55 @@ public class CouponDao {
         return couponMapper.invalidateCoupon(id);
     }
 
+    /**
+     * 根据showType的类型查找优惠券
+     * @param userId
+     * @param showType
+     * 0未使用，1已使用，2已失效，3已过期
+     * @return
+     */
+    public List<CouponPo> showTypeCouponList(Integer userId, Integer showType) {
+
+        List<CouponPo> userAllCoupons = couponMapper.getCouponMyList(userId);
+        List<CouponPo> unUsedCoupons = new ArrayList<>();
+        List<CouponPo> usedCoupons = new ArrayList<>();
+        List<CouponPo> invalidCoupons = new ArrayList<>();
+        List<CouponPo> expiredCoupons = new ArrayList<>();
+        for (CouponPo couponPo : userAllCoupons) {
+            Integer statusCode = couponPo.getStatusCode();
+            if (statusCode == 0) {
+                unUsedCoupons.add(couponPo);
+            }
+            if (statusCode == 1) {
+                usedCoupons.add(couponPo);
+            }
+            if (statusCode == 2) {
+                usedCoupons.add(couponPo);
+            }
+            LocalDateTime endTime = couponPo.getEndTime();
+            LocalDateTime nowTime = LocalDateTime.now();
+            if (nowTime.isAfter(endTime)) {
+                expiredCoupons.add(couponPo);
+            }
+        }
+        if (showType == 0) {
+            //未使用
+            return unUsedCoupons;
+        }
+        if (showType == 1) {
+            //已使用
+            return usedCoupons;
+        }
+        if (showType == 2) {
+            //已失效
+            return invalidCoupons;
+        }
+        if (showType == 4) {
+            //已过期
+            return expiredCoupons;
+        }
+        //没有其他的选项
+        return null;
+    }
+
 }
