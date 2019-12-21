@@ -169,10 +169,10 @@ public class AddressController {
     @PostMapping("/addresses")
     public Object addNewAddress(@RequestBody AddressPo addressPo){
         if(validate(addressPo)==1){
-            return ResponseUtil.badArgument();
+            return ResponseUtil.addAddressFailed();
         }
         if(validate(addressPo)==2){
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.addAddressFailed();
         }
         AddressPo newAddressPo;
 
@@ -225,10 +225,10 @@ public class AddressController {
             return ResponseUtil.badArgument();
         }
         if(validate(addressPo)==1){
-            return ResponseUtil.badArgument();
+            return ResponseUtil.updateAddressFailed();
         }
         if(validate(addressPo)==2){
-            return ResponseUtil.badArgumentValue();
+            return ResponseUtil.updateAddressFailed();
         }
         addressPo.setId(id);
         AddressPo newAddressPo=addressService.updateAddress(addressPo);
