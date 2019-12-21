@@ -72,7 +72,7 @@ public class ResponseUtil {
     }
 
     public static Object badArgumentValue() {
-        return fail(402, "参数值不对");
+        return fail(580, "参数值不对");
     }
 
     public static Object unlogin() {
