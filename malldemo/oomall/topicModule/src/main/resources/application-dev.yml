@@ -16,24 +16,3 @@
 #      defaultZone: http://localhost:8761/eureka/
 
 
-#孔祥威李鹏程组
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
-    username: user2_2
-    password: ooad2
-  application:
-    name: topicService
-
-server:
-  port: 8804
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://47.97.43.141:8761/eureka/
-#  instance:
-#    prefer-ip-address: true
-#    ip-address: 47.97.43.141
-#    non-secure-port: 8804

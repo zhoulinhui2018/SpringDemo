@@ -11,8 +11,7 @@ import xmu.oomall.topic.service.impl.LogService;
 import xmu.oomall.topic.service.impl.TopicService;
 import xmu.oomall.topic.util.FileUploadUtil;
 import xmu.oomall.topic.util.IdUtil;
-import xmu.oomall.topic.util.MallException;
-import xmu.oomall.topic.util.ResponseUtil;
+import xmu.oomall.topic.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -198,12 +197,7 @@ public class TopicController {
         Topic topicById = new Topic();
         try{
             topicById = topicService.findTopicById(id);
-            if(topicById ==null){
-                log.setStatusCode(0);
-                logService.addlog(log);
-                return ResponseUtil.fail(654,"话题查看失败");
-            }
-            if (topicById.getDeleted()){
+            if (topicById==null||topicById.getDeleted()){
                 log.setStatusCode(0);
                 logService.addlog(log);
                 return ResponseUtil.fail(650,"该话题是无效话题");
@@ -233,10 +227,7 @@ public class TopicController {
         Topic topic = new Topic();
         try{
             topic = topicService.findTopicById(id);
-            if(topic==null){
-                return ResponseUtil.fail(654,"话题查看失败");
-            }
-            if(topic.getDeleted()){
+            if(topic==null||topic.getDeleted()){
             return ResponseUtil.fail(650,"该话题是无效话题");
         }
         }catch (Exception e){
