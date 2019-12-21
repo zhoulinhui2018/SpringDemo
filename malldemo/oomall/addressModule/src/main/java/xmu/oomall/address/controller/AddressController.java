@@ -100,7 +100,7 @@ public class AddressController {
      * @author Zhang Yaqing
      * @date 2019/12/12
      */
-    private Integer validate(@RequestBody AddressPo addressPo){
+    private Integer validate(AddressPo addressPo){
         Integer countryId=addressPo.getCountyId();
         Integer provinceId=addressPo.getProvinceId();
         Integer cityId=addressPo.getCityId();
