@@ -531,7 +531,7 @@ public class CouponDao {
             //已失效
             return invalidCoupons;
         }
-        if (showType == 4) {
+        if (showType == 3) {
             //已过期
             return expiredCoupons;
         }

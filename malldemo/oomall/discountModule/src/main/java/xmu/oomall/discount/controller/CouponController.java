@@ -555,8 +555,9 @@ public class CouponController {
      * 待测试！！！
      */
 
-    @GetMapping("/coupons/availableCoupons")
-    public Object selectAvailableCoupons(HttpServletRequest request,List<CartItem> cartItems){
+    @PostMapping("/coupons/availableCoupons")
+    public Object selectAvailableCoupons(HttpServletRequest request,
+                                         @RequestBody List<CartItem> cartItems){
         String id=request.getHeader("id");
         if(id==null)
         {
