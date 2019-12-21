@@ -169,10 +169,10 @@ public class AdController {
         }
         Log log = LogUtil.newLog("修改广告内容", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
 
-        Object error=validate(newAd);
-        if (error != null) {
-            return ResponseUtil.fail(682,"修改广告失败");
-        }
+//        Object error=validate(newAd);
+//        if (error != null) {
+//            return ResponseUtil.fail(682,"修改广告失败");
+//        }
         newAd.setId(id);
         try {
             Integer integer = adService.updateAdById(newAd);
