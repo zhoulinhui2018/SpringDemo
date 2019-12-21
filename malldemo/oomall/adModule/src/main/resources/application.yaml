@@ -187,7 +187,7 @@ management:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_1?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://47.52.88.176:3306/DB2_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: user2_1
     password: ooad1
     hikari:
@@ -213,9 +213,9 @@ eureka:
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
-#    username: user2_2
-#    password: ooad2
+#    url: jdbc:mysql://47.52.88.176:3306/DB3_8?serverTimezone=Asia/Shanghai
+#    username: user3_8
+#    password: ooad8
 #    hikari:
 #      maximum-pool-size: 10
 #  application:
