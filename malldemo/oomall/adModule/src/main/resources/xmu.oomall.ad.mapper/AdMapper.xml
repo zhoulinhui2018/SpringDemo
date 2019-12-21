@@ -78,8 +78,19 @@
             <if test="link!=null">link=#{link},</if>
             <if test="content!=null">content=#{content},</if>
             <if test="picUrl!=null">pic_url=#{picUrl},</if>
-            <if test="beDefault!=null">is_default=#{beDefault},</if>
-            <if test="beEnabled!=null">is_enabled=#{beEnabled},</if>
+            <if test="beDefault==true">
+                is_default=1,
+            </if>
+            <if test="beDefault==false">
+                is_default=0,
+            </if>
+            <if test="beEnabled==true">
+                is_default=1,
+            </if>
+            <if test="beEnabled==false">
+                is_default=0,
+            </if>
+            
             <if test="startTime!=null">start_time=#{startTime},</if>
             <if test="endTime!=null">end_time=#{endTime},</if>
             <if test="gmtModified!=null">gmt_modified=#{gmtModified},</if>
