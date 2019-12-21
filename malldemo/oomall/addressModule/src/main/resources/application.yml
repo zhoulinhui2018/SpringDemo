@@ -106,13 +106,13 @@ spring:
     name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
-  port: 8805
+  port: 8764
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://47.97.43.141:8761/eureka/
+      defaultZone: http://47.96.159.71:8888/eureka/
   instance:
     prefer-ip-address: true
     ip-address: 47.97.43.141
-    non-secure-port: 8805
+    non-secure-port: 8764

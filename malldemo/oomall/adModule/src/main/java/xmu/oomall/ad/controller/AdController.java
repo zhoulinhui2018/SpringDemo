@@ -80,6 +80,9 @@ public class AdController {
         if (id==null){
             return ResponseUtil.unlogin();
         }
+        if (page<=0||limit<=0){
+            return ResponseUtil.fail(580,"参数不对");
+        }
         Log log = LogUtil.newLog("查询广告列表", null, Integer.valueOf(id), 0, request.getRemoteAddr());
         log.setStatusCode(1);
         adService.log(log);
@@ -116,6 +119,9 @@ public class AdController {
         if (adminid==null){
             return ResponseUtil.unlogin();
         }
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
+        }
         Log log = LogUtil.newLog("搜索广告详情", id, Integer.valueOf(adminid), 0, request.getRemoteAddr());
         Ad adById = new Ad();
         try{
@@ -149,6 +155,9 @@ public class AdController {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
+        }
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
         }
         Log log = LogUtil.newLog("修改广告内容", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
 
@@ -186,6 +195,9 @@ public class AdController {
         String adminid= request.getHeader("id");
         if (adminid==null){
             return ResponseUtil.unlogin();
+        }
+        if (id<=0){
+            return ResponseUtil.fail(580,"参数错误");
         }
         Log log = LogUtil.newLog("删除广告", id, Integer.valueOf(adminid), 3, request.getRemoteAddr());
         if (id == null) {
