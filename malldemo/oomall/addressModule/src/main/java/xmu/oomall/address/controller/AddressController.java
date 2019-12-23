@@ -246,38 +246,4 @@ public class AddressController {
         }
     }
 
-//    /**
-//     * 管理员根据条件查找地址
-//     * @param
-//     * @return 全部地址列表
-//     * @Author: Zhang Yaqing
-//     * @Date: 2019/12/12
-//     */
-//    @GetMapping("/admin/addresses")
-//    public Object adminFindUserAddress(HttpServletRequest request,
-//                                       @RequestParam Integer userId,
-//                                       @RequestParam String name,
-//                                       @RequestParam(defaultValue = "1") Integer page,
-//                                       @RequestParam(defaultValue = "10") Integer limit){
-//        String adminid= request.getHeader("id");
-//        if (adminid==null){
-//            return ResponseUtil.unlogin();
-//        }
-//        Log log=new Log();
-//        log.setAdminId(Integer.valueOf(adminid));
-//        log.setIp(request.getRemoteAddr());
-//        log.setType(0);
-//        log.setStatusCode(1);
-//        log.setActions("获取根据条件查找地址");
-//        List<Address> addressList;
-//        try {
-//            addressList=addressService.adminFindUserAddress(page,limit,userId,name);
-//        } catch (Exception e) {
-//            log.setStatusCode(0);
-//            addressService.log(log);
-//            return ResponseUtil.updatedDataFailed();
-//        }
-//        addressService.log(log);
-//        return ResponseUtil.ok(addressList);
-//    }
 }
