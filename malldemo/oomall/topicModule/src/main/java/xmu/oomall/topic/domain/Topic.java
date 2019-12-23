@@ -26,7 +26,7 @@ public class Topic extends TopicPo{
         this.pictures = pictures;
     }
 
-    //专题所包含的照片
+
     private List<String> pictures;
 
     public Topic(TopicPo topicPo){
@@ -50,7 +50,7 @@ public class Topic extends TopicPo{
                 ", pictures="+pictures+
                 '}';
     }
-    //用pic_url_list字段设置
+
     public void setPictures() {
         String picturesJson =this.getPicUrlList();
         JSONObject jsonObject = JSON.parseObject(picturesJson);
@@ -58,9 +58,7 @@ public class Topic extends TopicPo{
         this.pictures = JSON.parseArray(picture,String.class);
     }
 
-    //返回pictures这个list
 
-    //得到this.pictures
     public List<String> getPictures()
     {
         return this.pictures;

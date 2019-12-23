@@ -6,6 +6,11 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * RestConfig
+ * @author Ren tianhe
+ * @date 2019/12/17
+ */
 @Configuration
 public class RestConfig {
 

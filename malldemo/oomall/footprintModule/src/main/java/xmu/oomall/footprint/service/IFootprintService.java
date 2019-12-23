@@ -7,9 +7,21 @@ import xmu.oomall.footprint.domain.Log;
 
 import java.util.List;
 
+/**
+ * IFootprintService
+ * @author Zhang Yaqing
+ * @date 2019/12/18
+ */
 @Service
 public interface IFootprintService {
 
+    /**
+     * 新增日志
+     * @param log
+     * @return void
+     * @Author: Zhang Yaqing
+     * @Date: 2019/12/14
+     */
     void log(Log log);
 
     /**
