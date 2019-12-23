@@ -6,7 +6,7 @@
     <select id="findPromotionByGoodsId" resultType="promotionPo" parameterType="Integer">
         select id, begin_time, end_time, promotion_sn, pay_strategy, add_time, update_time, be_deleted, descr
         from promotion
-        where goods_id = #{id}
+        where goodsId = #{id}
     </select>
 
     <select id="findGroupOnRuleById" resultType="GroupOnRule" parameterType="Integer">
@@ -41,7 +41,7 @@
                 groupon_level_strategy=#{grouponLevelStrategy},
             </if>
             <if test="goodsId != null">
-                goods_id=#{goodsId},
+                goodsId=#{goodsId},
             </if>
         </trim>
         where id=#{id}
@@ -50,13 +50,13 @@
     <select id="searchGrouponGoods" resultType="GroupOnRule" parameterType="Integer">
         select *
         from groupon_rule
-        where goods_id=#{goodsId}
+        where goodsId=#{goodsId}
     </select>
 
     <insert id="add" parameterType="GroupOnRule" useGeneratedKeys="true" keyProperty="id">
         insert into groupon_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, statusCode,
-        groupon_level_strategy, goods_id)
+        groupon_level_strategy, goodsId)
         values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
         #{startTime}, #{endTime}, #{statusCode},
         #{grouponLevelStrategy}, #{goodsId})

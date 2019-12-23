@@ -52,7 +52,7 @@ public class CouponControllerTest {
 //        coupon.setGmtModified(LocalDateTime.now());
 //        coupon.setBeDeleted(false);
 //        coupon.setStatusCode(false);
-//        couponController.createACoupon(coupon);
+//        couponController.createCoupon(coupon);
 //        System.out.println("插入一条数据成功");
 //
 //    }
@@ -91,7 +91,7 @@ public class CouponControllerTest {
 //    @Test
 //    public void findCouponTest()
 //    {
-//        Object object=couponController.readACoupon(1000001);
+//        Object object=couponController.readCoupon(1000001);
 //        System.out.println(object.toString());
 //    }
 

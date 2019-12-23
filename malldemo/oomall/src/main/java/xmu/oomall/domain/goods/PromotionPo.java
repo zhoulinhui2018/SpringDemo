@@ -43,7 +43,7 @@ public class PromotionPo implements Serializable {
     /**
      * 适用的商品id
      */
-    private Integer goods_id;
+    private Integer goodsId;
 
     private LocalDateTime addTime;
     private LocalDateTime updateTime = Common.DEFAULT_TIME;
@@ -133,12 +133,12 @@ public class PromotionPo implements Serializable {
         this.payStrategy = payStrategy;
     }
 
-    public Integer getGoods_id() {
-        return goods_id;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
-    public void setGoods_id(Integer goods_id) {
-        this.goods_id = goods_id;
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 
     public LocalDateTime getAddTime() {

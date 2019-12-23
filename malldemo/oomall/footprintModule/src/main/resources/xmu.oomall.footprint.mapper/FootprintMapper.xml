@@ -11,7 +11,7 @@
 
     <insert id="addFootprint" parameterType="xmu.oomall.footprint.domain.FootprintItem" useGeneratedKeys="true" keyProperty="id">
       insert into oomall_footprint_item
-      (gmt_create, birth_time,user_id,goods_id)
+      (gmt_create, birth_time,user_id,goodsId)
         values (#{gmtCreate}, #{birthTime},#{userId},#{goodsId});
     </insert>
 
@@ -26,18 +26,18 @@
         <result property="gmtCreate" column="gmt_create"/>
         <result property="birthTime" column="birth_time"/>
         <result property="userId" column="user_id"/>
-        <result property="goodsId" column="goods_id"/>
+        <result property="goodsId" column="goodsId"/>
     </resultMap>
 <!--    <select id="listFootprintByCondition" resultMap="footprintItemResultMap">-->
 <!--        select oomall_footprint_item.id,-->
 <!--        oomall_footprint_item.gmt_create,-->
 <!--        oomall_footprint_item.birth_time,-->
 <!--        oomall_footprint_item.user_id,-->
-<!--        oomall_footprint_item.goods_id-->
+<!--        oomall_footprint_item.goodsId-->
 <!--        from oomall_footprint_item,oomall_goods,oomall_user-->
 <!--        where-->
 <!--        <if test="goodsName!=null and goodsName!=''">-->
-<!--            (oomall_footprint_item.goods_id=(select oomall_goods.id from oomall_goods where oomall_goods.name=#{goodsName})) and-->
+<!--            (oomall_footprint_item.goodsId=(select oomall_goods.id from oomall_goods where oomall_goods.name=#{goodsName})) and-->
 <!--        </if>-->
 <!--        <if test="userName!=null and userName!=''">-->
 <!--            (oomall_footprint_item.user_id=(select oomall_user.id from oomall_user where oomall_user.name=#{userName})) and-->
@@ -51,7 +51,7 @@
             from oomall_footprint_item
             where
             <if test="goodsId!=0">
-                goods_id=#{goodsId} and
+                goodsId=#{goodsId} and
             </if>
             <if test="userId!=0">
                 user_id=#{userId} and

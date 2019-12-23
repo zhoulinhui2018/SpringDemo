@@ -32,8 +32,8 @@ public class PresaleServiceImplImpl implements IPresaleServiceImpl {
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("logService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
-        restTemplate.postForObject(reqURL,log,Log.class);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
+        restTemplate.postForObject(reqUrl,log,Log.class);
     }
 
     /**
@@ -115,8 +115,8 @@ public class PresaleServiceImplImpl implements IPresaleServiceImpl {
     public Boolean dealRefund(PresaleRule presaleRule) {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("orderService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleRule/refund");
-        Boolean flag = restTemplate.postForObject(reqURL,presaleRule,Boolean.class);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleRule/refund");
+        Boolean flag = restTemplate.postForObject(reqUrl,presaleRule,Boolean.class);
         return flag;
     }
 
@@ -124,22 +124,22 @@ public class PresaleServiceImplImpl implements IPresaleServiceImpl {
     @Override
     public List<Payment> getPaymentList(List<Order> orderList) {
         //遍历orderList，生成payment，设置price
-        List<Payment> PaymentList=new ArrayList<>();
+        List<Payment> paymentList=new ArrayList<>();
         for(int i=0;i<orderList.size();i++){
             Payment newPayment=new Payment();
             BigDecimal refund=orderList.get(i).getOrderItemList().get(0).getDealPrice();
             newPayment.setActualPrice(refund.negate());
-            PaymentList.add(newPayment);
+            paymentList.add(newPayment);
         }
-        return PaymentList;
+        return paymentList;
     }
 
     @Override
     public void presaleRefund(List<Payment> paymentList) {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("paymentService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders/refund");
-        restTemplate.getForObject(reqURL,List.class,paymentList);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/presaleOrders/refund");
+        restTemplate.getForObject(reqUrl,List.class,paymentList);
     }
 
     @Override

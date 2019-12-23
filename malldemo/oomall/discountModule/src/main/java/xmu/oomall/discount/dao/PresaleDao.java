@@ -29,8 +29,8 @@ public class PresaleDao {
     public GoodsPo getGoodsPoById(Integer goodsId) {
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("goodsService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
-        Object result= restTemplate.getForObject(reqURL,Object.class);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
+        Object result= restTemplate.getForObject(reqUrl,Object.class);
         Map<String,Object> haspMap=(Map<String,Object>)result;
         ObjectMapper mapper = new ObjectMapper();
         GoodsPo goodsPo = mapper.convertValue(haspMap.get("data"),GoodsPo.class);

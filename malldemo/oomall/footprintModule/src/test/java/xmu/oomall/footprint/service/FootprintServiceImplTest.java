@@ -1,27 +1,26 @@
 package xmu.oomall.footprint.service;
 
-import com.github.pagehelper.PageHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.footprint.FootprintApplication;
 import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.GoodsPo;
-import xmu.oomall.footprint.service.impl.FootprintService;
+import xmu.oomall.footprint.service.impl.FootprintServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest(classes = FootprintApplication.class)
-public class FootprintServiceTest {
+public class FootprintServiceImplTest {
 
     @Autowired
-    private FootprintService footprintService;
+    private FootprintServiceImpl footprintServiceImpl;
 
     @Test
     public void getUserFootprintListTest()
     {
-        List<FootprintItem> userFootprintList=footprintService.getUserFootprintList(1,10,1);
+        List<FootprintItem> userFootprintList= footprintServiceImpl.getUserFootprintList(1,10,1);
         for(int i=0;i<userFootprintList.size();++i){
             FootprintItem footprint=userFootprintList.get(i);
             System.out.println(footprint);
@@ -31,14 +30,14 @@ public class FootprintServiceTest {
     @Test
     public void deleteFootprintTest()
     {
-        boolean result=footprintService.deleteFootprint(1);
+        boolean result= footprintServiceImpl.deleteFootprint(1);
         System.out.println(result);
     }
 
     @Test
     public void listFootprintByConditionTest()
     {
-        List<FootprintItem> userFootprintList=footprintService.listFootprintByCondition(1,10,1,1);
+        List<FootprintItem> userFootprintList= footprintServiceImpl.listFootprintByCondition(1,10,1,1);
         for(int i=0;i<userFootprintList.size();++i){
             FootprintItem footprint=userFootprintList.get(i);
             System.out.println(footprint);
@@ -57,7 +56,7 @@ public class FootprintServiceTest {
         GoodsPo goodsPo=new GoodsPo();
         goodsPo.setId(500005);
         footprint.setGoodsPo(goodsPo);
-        boolean result=footprintService.addFootprint(footprint);
+        boolean result= footprintServiceImpl.addFootprint(footprint);
         System.out.println(result);
     }
 

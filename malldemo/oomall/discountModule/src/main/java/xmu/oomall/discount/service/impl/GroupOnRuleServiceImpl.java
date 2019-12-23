@@ -56,16 +56,16 @@ public class GroupOnRuleServiceImpl implements IGroupOnRuleServiceImpl {
         ServiceInstance instance = loadBalancerClient.choose("orderService");
         System.out.println(instance.getHost());
         System.out.println(instance.getPort());
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
-        restTemplate.postForObject(reqURL,grouponRulePo,Object.class,rate);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/order/grouponOrders/refund");
+        restTemplate.postForObject(reqUrl,grouponRulePo,Object.class,rate);
     }
 
     @Override
     public void log(Log log){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("logService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
-        restTemplate.postForObject(reqURL,log,Log.class);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
+        restTemplate.postForObject(reqUrl,log,Log.class);
     }
 
 
@@ -122,8 +122,8 @@ public class GroupOnRuleServiceImpl implements IGroupOnRuleServiceImpl {
     public Integer getGrouponNum(GrouponRulePo grouponRulePo){
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("orderService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/grouponOrders");
-        String object = restTemplate.getForObject(reqURL, String.class, grouponRulePo);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/orders/grouponOrders");
+        String object = restTemplate.getForObject(reqUrl, String.class, grouponRulePo);
         Integer num = JacksonUtil.parseObject(object, "data", Integer.class);
         return num;
     }
@@ -170,8 +170,8 @@ public class GroupOnRuleServiceImpl implements IGroupOnRuleServiceImpl {
         Integer goodsId=grouponRulePo.getGoodsId();
         RestTemplate restTemplate = new RestTemplate();
         ServiceInstance instance = loadBalancerClient.choose("goodsService");
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
-        Object result= restTemplate.getForObject(reqURL,Object.class);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/inner/goods/"+goodsId);
+        Object result= restTemplate.getForObject(reqUrl,Object.class);
         Map<String,Object> haspMap=(Map<String,Object>)result;
         ObjectMapper mapper = new ObjectMapper();
         GoodsPo goodsPo = mapper.convertValue(haspMap.get("data"),GoodsPo.class);

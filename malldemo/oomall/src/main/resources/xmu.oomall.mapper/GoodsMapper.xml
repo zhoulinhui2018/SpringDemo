@@ -17,17 +17,17 @@
            add_time,
            update_time,
            be_deleted,
-           goods_id
+           goodsId
         from product where id = #{id}
     </select>
 
     <select id="findPromotionByGoodsId" resultType="promotionPo" parameterType="Integer">
         select id, begin_time, end_time, promotion_sn, pay_strategy, add_time, update_time, be_deleted, descr
         from promotion
-        where goods_id = #{id}
+        where goodsId = #{id}
     </select>
 
-    <select id="getStockInDB" resultType="Integer" parameterType="Integer">
+    <select id="getStock" resultType="Integer" parameterType="Integer">
         select stock
         from product where id = #{id}
     </select>
@@ -43,7 +43,7 @@
             <if test="addTime!=null">add_time=#{addTime},</if>
             <if test="updateTime!=null">update_time=#{updateTime},</if>
             <if test="beDeleted!=null">be_delete=#{beDeleted},</if>
-            <if test="goodsId!=null">goods_id=#{goodsId},</if>
+            <if test="goodsId!=null">goodsId=#{goodsId},</if>
         </trim>
         WHERE id=#{id}
     </update>
@@ -74,7 +74,7 @@
         where id=#{id}
     </update>
 
-    <select id="getGoodList" resultType="Goods">
+    <select id="getGoodList" resultType="xmu.oomall.domain.goods.Goods">
         select *
         from goodsInfo;
     </select>

@@ -461,19 +461,19 @@ public class CouponController {
      * @date 2019/12/10
      */
     @GetMapping("/coupons/{id}")
-    public Object readACoupon(Integer id)
+    public Object readCoupon(Integer id)
     {
         if(id<0)
         {
             return ResponseUtil.invalidArgumentValue();
         }
-        CouponPo ACoupon=new CouponPo();
+        CouponPo aCoupon=new CouponPo();
         try {
-             ACoupon = couponService.findCouponById(id);
+             aCoupon = couponService.findCouponById(id);
         }catch (Exception e){
            return ResponseUtil.fail();
         }
-        return ResponseUtil.ok(ACoupon);
+        return ResponseUtil.ok(aCoupon);
     }
 
 
@@ -486,7 +486,7 @@ public class CouponController {
      * 增加了对couponRule中优惠券领取张数的判断和修改！！！
      */
     @PostMapping("/coupons")
-    public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo couponPo) {
+    public Object createCoupon(HttpServletRequest request, @RequestBody CouponPo couponPo) {
         String id = request.getHeader("id");
         if (id == null) {
             return ResponseUtil.unlogin();

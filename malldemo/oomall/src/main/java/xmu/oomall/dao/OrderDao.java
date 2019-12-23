@@ -98,7 +98,7 @@ public class OrderDao {
 //     */
 //    private boolean fetchFromDB(Integer productId, String key) {
 //        logger.debug("fetchFromDB参数：productId = "+productId +" key = "+key);
-//        Integer stockInDB = goodsService.getStockInDB(productId);
+//        Integer stockInDB = goodsService.getStock(productId);
 //        if (stockInDB == 0){
 //            logger.debug("fetchFromDB返回：false" );
 //            return false;

@@ -36,7 +36,7 @@
                 groupon_level_strategy=#{grouponLevelStrategy},
             </if>
             <if test="goodsId != null">
-                goods_id=#{goodsId},
+                goodsId=#{goodsId},
             </if>
         </trim>
         where id=#{id}
@@ -51,13 +51,13 @@
         <result column="end_time" property="endTime"/>
         <result column="status" property="statusCode"/>
         <result column="groupon_level_strategy" property="grouponLevelStrategy"/>
-        <result column="goods_id" property="goodsId"/>
+        <result column="goodsId" property="goodsId"/>
     </resultMap>
 
     <select id="searchGrouponGoods" resultMap="GrouponRuleType" parameterType="Integer">
         select *
         from oomall_groupon_rule
-        where goods_id=#{goodsId}
+        where goodsId=#{goodsId}
     </select>
 
     <select id="findAvailableGrouponRules" resultMap="GrouponRuleType">
@@ -75,13 +75,13 @@
     <select id="findGrouponByGoodsId" parameterType="integer" resultMap="GrouponRuleType">
         select *
         from oomall_groupon_rule
-        where goods_id=#{goodsId} and is_deleted=0
+        where goodsId=#{goodsId} and is_deleted=0
     </select>
 
     <insert id="add" parameterType="GrouponRulePo" useGeneratedKeys="true" keyProperty="id">
         insert into oomall_groupon_rule (gmt_create, gmt_modified, is_deleted,
         start_time, end_time, status,
-        groupon_level_strategy, goods_id)
+        groupon_level_strategy, goodsId)
         values (#{gmtCreate}, #{gmtModified}, #{beDeleted},
         #{startTime}, #{endTime}, #{statusCode},
         #{grouponLevelStrategy}, #{goodsId})

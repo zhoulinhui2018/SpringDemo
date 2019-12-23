@@ -4,19 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.ad.AdApplication;
-import xmu.oomall.ad.service.impl.AdService;
+import xmu.oomall.ad.service.impl.AdServiceImpl;
 
 @SpringBootTest(classes = AdApplication.class)
-public class AdServiceTest {
+public class AdServiceImplTest {
 
     @Autowired
-    private AdService adService;
+    private AdServiceImpl adServiceImpl;
 
     @Test
     public void test(){
         System.out.println("test zhou");
-        if (adService.findAdById(1)!=null){
-            System.out.println(adService.findAdById(1));
+        if (adServiceImpl.findAdById(1)!=null){
+            System.out.println(adServiceImpl.findAdById(1));
         }else {
             System.out.println("查无此项");
         }

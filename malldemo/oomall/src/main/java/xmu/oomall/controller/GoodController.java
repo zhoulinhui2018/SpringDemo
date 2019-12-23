@@ -26,8 +26,8 @@ public class GoodController {
     @GetMapping("/goods")
     public Object list()
     {
-       List<Goods> AllGoods=goodsService.getGoodsList();
-       return AllGoods;
+       List<Goods> allGoods=goodsService.getGoodsList();
+       return allGoods;
     }
 
     /**

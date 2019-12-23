@@ -21,8 +21,8 @@ public interface GoodsMapper {
      * @param
      * @return 商品列表
      */
-    public List<Goods> getGoodList();
-    Integer getStockInDB(Integer id);
+    List<Goods> getGoodList();
+    Integer getStock(Integer id);
 
     /**
      * 更新货品对象

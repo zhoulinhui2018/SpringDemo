@@ -39,8 +39,8 @@ public class GoodsDao {
      */
     public List<Goods> getGoodList()
     {
-        List<Goods> AllGoods=goodsMapper.getGoodList();
-        return AllGoods;
+        List<Goods> allGoods=goodsMapper.getGoodList();
+        return allGoods;
 
     }
     /**
@@ -75,8 +75,8 @@ public class GoodsDao {
      */
     public List<GoodsCategory> getAllGoodsCategories()
     {
-        List<GoodsCategory> AllGoodsCategory=goodsMapper.getAllGoodsCategories();
-        return AllGoodsCategory;
+        List<GoodsCategory> allGoodsCategory=goodsMapper.getAllGoodsCategories();
+        return allGoodsCategory;
     }
 
     /**
@@ -96,8 +96,8 @@ public class GoodsDao {
      */
     public List<GoodsCategory> getFirstLevelCategories()
     {
-        List<GoodsCategory> FirstLevelCategories=goodsMapper.getFirstLevelCategories();
-        return FirstLevelCategories;
+        List<GoodsCategory> firstLevelCategories=goodsMapper.getFirstLevelCategories();
+        return firstLevelCategories;
     }
 
     /**
@@ -107,8 +107,8 @@ public class GoodsDao {
      */
     public List<GoodsCategory> getSecondLevelCategories(Integer pid)
     {
-        List<GoodsCategory> SecondLevelCategories=goodsMapper.getSecondLevelCategories(pid);
-        return SecondLevelCategories;
+        List<GoodsCategory> secondLevelCategories=goodsMapper.getSecondLevelCategories(pid);
+        return secondLevelCategories;
     }
 
     /**
