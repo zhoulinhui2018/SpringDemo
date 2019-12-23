@@ -13,8 +13,9 @@ public class FomatUtil {
      * 验证手机号是否合法
      * @return boolean
      */
+    static final int LEN_11= 11;
     public static boolean isValidateMobile(String mobile){
-        if (mobile.length() != 11)
+        if (mobile.length() != LEN_11)
         {
             return false;
         }else{

@@ -1,4 +1,4 @@
-package xmu.oomall.discount.util;
+package xmu.oomall.goods.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

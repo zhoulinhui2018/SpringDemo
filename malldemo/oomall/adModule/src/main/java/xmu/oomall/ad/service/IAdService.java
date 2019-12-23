@@ -6,41 +6,81 @@ import xmu.oomall.ad.domain.Log;
 
 import java.util.List;
 
+/**
+ * Demo class IAdService
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Service
 public interface IAdService {
-
-    public void log(Log log);
-
     /**
-    * @Description: 根据ID查找广告
-    * @Param: [id]
-    * @return: xmu.oomall.domain.Ad
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/4
-    */
-    public Ad findAdById(Integer id);
-
-    /**
-    * @Description: 返回所有Ads
-    * @Param: []
-    * @return: java.util.List<xmu.oomall.domain.Ad>
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/5
-    */
-    public List<Ad> findAllAds();
-
-    public Integer deleteAdbyId(Integer id) throws Exception;
-
-    public Integer addAds(Ad ad) throws Exception;
-
-    /**
-     * @Description: 修改ad的信息
-     * @Param: [id]
-     * @return: xmu.oomall.domain.Ad
-     * @Author: Xu Huangchao
-     * @Date: 2019/12/5
+     * 新增log
+     * @param  log true
+     * @author Zhou Linhui
+     * @date 2019/12/18
      */
-    public Integer updateAdById(Ad newAd) throws Exception;
-    public List<Ad> adminFindAllAds(Integer page, Integer limit,Ad ad);
-    public List<Ad> findUserAds();
+    void log(Log log);
+
+    /**
+     * 根据ID查找广告
+     * @param  id id
+     * @return ad
+     * @author Zhou Linhui
+     * @date 2019/12/4
+     */
+    Ad findAdById(Integer id);
+
+    /**
+     * 返回所有Ads
+     * @return ad List
+     * @author Zhou Linhui
+     * @date 2019/12/5
+     */
+    List<Ad> findAllAds();
+
+    /**
+     * 删除Ad
+     * @param  id id
+     * @return int
+     * @author Zhou Linhui
+     * @date 2019/12/5
+     */
+    Integer deleteAdById(Integer id) throws Exception;
+
+
+    /**
+     * 新增广告
+     * @param  ad 广告
+     * @author Zhou Linhui
+     * @date 2019/12/5
+     */
+    void addAds(Ad ad) throws Exception;
+
+    /**
+     * 更新广告
+     * @param  newAd 广告
+     * @return int
+     * @author Zhou Linhui
+     * @date 2019/12/5
+     */
+    Integer updateAdById(Ad newAd) throws Exception;
+
+    /**
+     * adminFindAllAds
+     * @param  page 页
+     * @param  limit 页
+     * @param  ad ad
+     * @return List<Ad>
+     * @author Zhou Linhui
+     * @date 2019/12/5
+     */
+    List<Ad> adminFindAllAds(Integer page, Integer limit,Ad ad);
+    /**
+     * findUserAds
+     * @return List<Ad>
+     * @author Zhou Linhui
+     * @date 2019/12/5
+     */
+    List<Ad> findUserAds();
 }

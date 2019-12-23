@@ -9,13 +9,18 @@ import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.PresaleDao;
 import xmu.oomall.discount.domain.*;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
 import xmu.oomall.discount.service.IPresaleServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Demo class PresaleServiceImplImpl
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Service
 public class PresaleServiceImplImpl implements IPresaleServiceImpl {
     @Autowired

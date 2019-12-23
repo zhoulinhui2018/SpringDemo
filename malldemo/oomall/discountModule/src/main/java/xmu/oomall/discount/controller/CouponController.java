@@ -7,7 +7,7 @@ import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
-import xmu.oomall.discount.service.impl.CouponServiceImplImpl;
+import xmu.oomall.discount.service.impl.CouponServiceImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +15,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo class CouponController
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @SuppressWarnings("AlibabaClassMustHaveAuthor")
 @RestController
 @RequestMapping("")
 public class CouponController {
     @Autowired
-    private CouponServiceImplImpl couponService;
+    private CouponServiceImpl couponService;
 
+    static final int TYPE_0= 0;
+    static final int TYPE_1= 1;
+    static final int TYPE_2= 2;
+    static final int TYPE_3= 3;
 
     private Boolean validateCouponRule(CouponRulePo couponRule) {
         Integer id=couponRule.getId();
@@ -429,7 +439,7 @@ public class CouponController {
                          @RequestParam(defaultValue = "1") Integer page,
                          @RequestParam(defaultValue = "10") Integer limit,
                          HttpServletRequest request) {
-        if(showType!=0&&showType!=1&&showType!=2&&showType!=3){
+        if(showType!=TYPE_0&&showType!=TYPE_1&&showType!=TYPE_2&&showType!=TYPE_3){
             return ResponseUtil.invalidArgumentValue();
         }
         if(page<0||limit<0){

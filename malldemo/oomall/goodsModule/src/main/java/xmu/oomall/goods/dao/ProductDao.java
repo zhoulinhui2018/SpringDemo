@@ -8,6 +8,12 @@ import xmu.oomall.goods.mapper.ProductMapper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo class ProductDao
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Repository
 public class ProductDao {
     @Autowired

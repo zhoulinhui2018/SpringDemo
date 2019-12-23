@@ -2,11 +2,7 @@ package xmu.oomall.log.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.log.dao.LogDao;
 import xmu.oomall.log.service.ILogService;
@@ -36,7 +32,7 @@ public class LogServiceImpl implements ILogService{
     }
 
     @Override
-    public Integer addLog(Log newlog) {
-        return logDao.addLog(newlog);
+    public void addLog(Log newLog) {
+        logDao.addLog(newLog);
     }
 }

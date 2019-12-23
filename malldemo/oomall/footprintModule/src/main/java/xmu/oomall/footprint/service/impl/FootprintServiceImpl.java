@@ -18,7 +18,13 @@ import xmu.oomall.footprint.service.IFootprintService;
 import java.util.List;
 import java.util.Map;
 
-@Transactional
+/**
+ * Demo class FootprintServiceImpl
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
+@Transactional(rollbackFor=Exception.class)
 @Service
 public class FootprintServiceImpl implements IFootprintService {
     @Autowired

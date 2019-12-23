@@ -14,7 +14,13 @@ import xmu.oomall.ad.service.IAdService;
 
 import java.util.List;
 
-@Transactional
+/**
+ * Demo class AdServiceImpl
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
+@Transactional(rollbackFor=Exception.class)
 @Service
 public class AdServiceImpl implements IAdService {
     @Autowired
@@ -45,13 +51,12 @@ public class AdServiceImpl implements IAdService {
     }
 
     @Override
-    public Integer addAds(Ad ad) throws Exception{
+    public void addAds(Ad ad) throws Exception{
         Integer id =adDao.addAds(ad);
-        return id;
     }
 
     @Override
-    public Integer deleteAdbyId(Integer id) throws Exception{
+    public Integer deleteAdById(Integer id) throws Exception{
         Ad ad=new Ad();
         ad.setId(id);
         adDao.updateAdById(ad);

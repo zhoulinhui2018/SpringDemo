@@ -2,6 +2,12 @@ package xmu.oomall.discount.domain;
 
 import java.math.BigDecimal;
 
+/**
+ * Demo class GrouponRuleStrategy
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 public class GrouponRuleStrategy {
     private Integer lowerbound;
     private Integer upperbound;

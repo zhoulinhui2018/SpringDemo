@@ -52,7 +52,7 @@ public class AdDaoTest {
 //
 //    @Test
 //    public void deleteAdbyIdTest(){
-//        adDao.deleteAdbyId(200005);
+//        adDao.deleteAdById(200005);
 //        System.out.println("删除成功");
 //    }
 

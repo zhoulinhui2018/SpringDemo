@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.*;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
 import xmu.oomall.discount.mapper.PresaleMapper;
 
 import java.math.BigDecimal;
@@ -17,6 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Demo class PresaleDao
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Repository
 public class PresaleDao {
     @Autowired

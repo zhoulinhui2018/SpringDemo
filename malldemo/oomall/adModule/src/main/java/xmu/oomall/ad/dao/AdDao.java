@@ -9,6 +9,12 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Demo class AdDao
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Repository
 public class AdDao {
     @Autowired

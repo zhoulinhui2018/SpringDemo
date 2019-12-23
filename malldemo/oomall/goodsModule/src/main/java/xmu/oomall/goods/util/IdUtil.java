@@ -1,10 +1,10 @@
-package xmu.oomall.topic.util;
+package xmu.oomall.goods.util;
 
 import java.util.Random;
 
 /**
  * Demo class IdUtil
- * 各种id生成策略
+ *
  * @author Zhang Yaqing
  * @date 2019/12/20
  */

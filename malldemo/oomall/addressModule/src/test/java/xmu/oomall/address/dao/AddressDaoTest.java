@@ -18,7 +18,7 @@ class AddressDaoTest {
    @Test
    public void getUserAdresslistTest()
    {
-       List<Address> addressList=addressDao.getUserAddresslist(1);
+       List<Address> addressList=addressDao.getUserAddressList(1);
        for(int i=0;i<addressList.size();++i){
            Address address=addressList.get(i);
            System.out.println(address);

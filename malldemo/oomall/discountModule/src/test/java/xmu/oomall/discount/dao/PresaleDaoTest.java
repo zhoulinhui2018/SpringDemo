@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
-
-import java.util.List;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
 
 
 @SpringBootTest(classes = DiscountApplication.class)

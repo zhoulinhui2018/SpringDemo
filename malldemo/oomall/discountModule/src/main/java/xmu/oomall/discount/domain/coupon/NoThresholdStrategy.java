@@ -3,6 +3,12 @@ package xmu.oomall.discount.domain.coupon;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Demo class NoThresholdStrategy
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 public class NoThresholdStrategy extends AbstractCouponStrategy {
 
     private BigDecimal offCash = BigDecimal.ZERO;

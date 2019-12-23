@@ -34,7 +34,7 @@ public class AdServiceImplTest {
 //
 //    @Test
 //    public void deleteAdbyIdTest(){
-//        adService.deleteAdbyId(300002);
+//        adService.deleteAdById(300002);
 //    }
 
 }

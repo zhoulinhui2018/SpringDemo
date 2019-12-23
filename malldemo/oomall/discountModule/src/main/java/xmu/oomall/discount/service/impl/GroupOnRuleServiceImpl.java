@@ -19,6 +19,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Demo class GroupOnRuleServiceImpl
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Service
 public class GroupOnRuleServiceImpl implements IGroupOnRuleServiceImpl {
     @Autowired

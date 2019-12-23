@@ -78,8 +78,6 @@ public class OrderItemPo {
         this.setProductId(cartItem.getProductId());
         this.setGmtCreate(cartItem.getGmtCreate());
         this.setGmtModified(cartItem.getGmtModified());
-        //BigDecimal price=cartItemController.getProductPrice(cartItem.getProductId());
-        //this.setPrice(price);
         this.beDeleted=false;
 
     }

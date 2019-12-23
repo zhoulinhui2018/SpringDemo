@@ -9,8 +9,8 @@ import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
-import xmu.oomall.discount.service.impl.CouponServiceImplImpl;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
+import xmu.oomall.discount.service.impl.CouponServiceImpl;
 import xmu.oomall.discount.service.impl.GroupOnRuleServiceImpl;
 import xmu.oomall.discount.service.impl.PresaleServiceImplImpl;
 import xmu.oomall.discount.util.LogUtil;
@@ -22,6 +22,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo class DiscountController
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @RestController
 @RequestMapping("")
 public class DiscountController {
@@ -29,7 +35,7 @@ public class DiscountController {
     private GroupOnRuleServiceImpl groupOnRuleService;
 
     @Autowired
-    private CouponServiceImplImpl couponService;
+    private CouponServiceImpl couponService;
 
     @Autowired
     private PresaleServiceImplImpl presaleService;

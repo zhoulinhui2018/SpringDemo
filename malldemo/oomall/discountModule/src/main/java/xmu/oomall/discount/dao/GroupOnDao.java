@@ -14,6 +14,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Demo class GroupOnDao
+ *
+ * @author Zhou Linhui
+ * @date 2019/12/15
+ */
 @Repository
 public class GroupOnDao {
     @Autowired
@@ -25,24 +31,13 @@ public class GroupOnDao {
 
 
     public GrouponRule getStrategy(GrouponRulePo grouponRulePo){
-        System.out.println("getStrategy参数：");
         String jsonString = grouponRulePo.getGrouponLevelStrategy();
-        System.out.println("jsonString = "+ jsonString);
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        System.out.println("test");
-        Map classmap = new HashMap<>();
+        Map classmap = new HashMap<>(10);
         classmap.put("strategy", GrouponRuleStrategy.class);
-        System.out.println("test2");
 
         GrouponRule grouponRule= (GrouponRule) JSONObject.toBean(jsonObject, GrouponRule.class, classmap);
-        System.out.println("test3");
 
-        for (int i = 0; i < grouponRule.getStrategy().size(); i++) {
-            GrouponRuleStrategy strategy =  grouponRule.getStrategy().get(i);
-            System.out.println("lower bound"+strategy.getLowerbound());
-            System.out.println("upper bound"+strategy.getUpperbound());
-            System.out.println("rate"+strategy.getRate());
-        }
         return grouponRule;
     }
 

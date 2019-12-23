@@ -7,19 +7,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo class BeanToJson
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 public class BeanToJson {
     public static void main(String[] args) {
-//        List<OrderItem> orderItems=new ArrayList<>();
-//        User user=new User();
-//        Order order=new Order();
-//        Address address=new Address();
-//
-//        order.setCouponId(1);
-//        order.setOrderItemList(orderItems);
-//
-//        String json = JacksonUtil.toJson(order);
-//        System.out.println(json);
-
         List<CartItem> cartItems=new ArrayList<>();
         CartItem item=new CartItem();
         item.setId(1);

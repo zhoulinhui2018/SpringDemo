@@ -1,4 +1,4 @@
-package xmu.oomall.address.util;
+package xmu.oomall.goods.util;
 
 
 import java.util.HashMap;
@@ -37,23 +37,25 @@ import java.util.Map;
  * 具体见litemall-wx-api模块的WxResponseCode。
  * </ul>
  */
+
 /**
- * ResponseUtil
- * @author: Zhang Yaqing
- * @date: 2019/12/12
+ * Demo class ResponseUtil
+ *
+ * @author 标准组
+ * @date 2019/12/20
  */
 public class ResponseUtil {
     public static Object ok() {
         Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", 0);
-        obj.put("errmsg", "Success");
+        obj.put("errmsg", "成功");
         return obj;
     }
 
     public static Object ok(Object data) {
         Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", 0);
-        obj.put("errmsg", "Success");
+        obj.put("errmsg", "成功");
         obj.put("data", data);
         return obj;
     }
@@ -73,11 +75,11 @@ public class ResponseUtil {
     }
 
     public static Object badArgument() {
-        return fail(580, "参数不对");
+        return fail(401, "参数不对");
     }
 
     public static Object badArgumentValue() {
-        return fail(580, "参数值不对");
+        return fail(402, "参数值不对");
     }
 
     public static Object unlogin() {
@@ -100,19 +102,8 @@ public class ResponseUtil {
         return fail(505, "更新数据失败");
     }
 
-    public static Object addAddressFailed() {
-        return fail(751, "地址新增失败");
+    public static Object unauthz() {
+        return fail(506, "无操作权限");
     }
-
-    public static Object updateAddressFailed() {
-        return fail(752, "地址修改失败");
-    }
-    public static Object deleteAddressFailed() {
-        return fail(743, "地址删除失败");
-    }
-    public static Object addressNotExist() {
-        return fail(744, "地址不存在");
-    }
-
 }
 

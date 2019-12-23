@@ -5,78 +5,76 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * @Author: 数据库与对象模型标准组
- * @Description:商品信息
- * @Data:Created in 14:50 2019/11/29
- * @Modified By:
+ * @author  数据库与对象模型标准组
+ * @description 商品信息
+ * @date 2019/11/29
  **/
-
 public class GoodsInfo {
     private Integer id;
 
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
-    /*
+    /**
     *商品名称
     * */
     private String name;
-    /*
+    /**
     *商品序列号
     * */
     private String nameSn;
-    /*
+    /**
     *商品简称
     * */
     private String shortName;
-    /*
+    /**
     *商品描述
     * */
     private String description;
-    /*
+    /**
     *商品简介
     * */
     private String brief;
-    /*
+    /**
     *图片链接
     * */
     private String picUrl;
-    /*
+    /**
     *商品详情
     * */
     private String detail;
-    /*
+    /**
     * 0：上架 1：下架
     * */
     private Boolean status;
-    /*
+    /**
     * 分享链接
     * */
     private String shareUrl;
-    /*
+    /**
     * 商品图片展示廊，就是像淘宝点进商品，滚动展示很多图片
     * */
     private String gallery;
-    /*
+    /**
     *商品分类ID
     * */
     private Integer goodsCategoryId;
-    /*
+    /**
     *品牌ID
     * */
     private Integer brandId;
-    /*
+    /**
     *商品重量
     * */
     private BigDecimal weight;
-    /*
+    /**
     *商品体积
     * */
     private String volume;
-    /*
+    /**
     *特殊邮费计算模板ID
     * */
     private Integer specialFreightId;
-    /*
+    /**
     *0：默认模板计算邮费 1：特殊模板计算邮费
     * */
     private Boolean beSpecial;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.domain.Log;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
 import xmu.oomall.discount.service.impl.PresaleServiceImplImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
@@ -13,6 +13,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Demo class PresaleController
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @RestController
 @RequestMapping("")
 public class PresaleController {

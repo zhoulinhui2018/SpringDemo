@@ -10,10 +10,6 @@ import java.util.Objects;
  * @date: Created in 18:00 2019/11/10
  **/
 public final class CashOffStrategy extends AbstractCouponStrategy {
-    /**
-     * JSON格式
-     *{"name":“CashOffStrategy","obj":{"threshold":xxx, "offCash":xxx}}
-     */
 
     /**
      *满

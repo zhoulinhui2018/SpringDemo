@@ -3,7 +3,7 @@
 <mapper namespace="xmu.oomall.discount.mapper.PresaleMapper">
 
 
-    <insert id="add" parameterType="PresaleRule" useGeneratedKeys="true" keyProperty="id">
+    <insert id="add" parameterType="xmu.oomall.discount.domain.promotion.PresaleRule" useGeneratedKeys="true" keyProperty="id">
         insert into oomall_presale_rule(id,goodsId,start_time,ad_end_time,final_start_time,end_time,
                                   status,gmt_create, gmt_modified, is_deleted,deposit,final_payment)
         values (#{id},#{goodsId},#{startTime},#{adEndTime},#{finalStartTime},#{endTime},
@@ -33,7 +33,7 @@
         from oomall_presale_rule
     </select>
 
-    <update id="updateById"  parameterType="presaleRule" >
+    <update id="updateById"  parameterType="xmu.oomall.discount.domain.promotion.PresaleRule" >
         update oomall_presale_rule
         <trim prefix="set" suffixOverrides=",">
             <if test="gmtCreate != null">
@@ -76,7 +76,7 @@
     </update>
 
 
-    <resultMap id="PresaleRuleResultType" type="xmu.oomall.discount.domain.Promotion.PresaleRule">
+    <resultMap id="PresaleRuleResultType" type="xmu.oomall.discount.domain.promotion.PresaleRule">
         <id column="id" property="id"/>
         <result column="goodsId" property="goodsId"/>
         <result column="start_time" property="startTime"/>

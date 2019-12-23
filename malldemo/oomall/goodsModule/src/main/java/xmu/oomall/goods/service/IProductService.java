@@ -15,14 +15,31 @@ import java.util.List;
 @Service
 public interface IProductService {
 
+    /**
+     * 描述
+     * @param newproduct 1
+     */
     public void addProductByGoodsId(Product newproduct);
 
+    /**
+     * 描述
+     * @param newproduct 1
+     * @return int
+     */
     public int updateProductById(Product newproduct);
 
-
+    /**
+     * 描述
+     * @param id 1
+     * @return int
+     */
     public int deleteProductById(Integer id);
 
-
+    /**
+     * 描述
+     * @param id 1
+     * @return List<Product>
+     */
     public List<Product> listProductByGoodsId(Integer id);
 
 

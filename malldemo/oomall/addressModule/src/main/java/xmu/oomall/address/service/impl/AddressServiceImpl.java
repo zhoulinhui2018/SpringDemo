@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.address.dao.AddressDao;
 import xmu.oomall.address.domain.Address;
@@ -18,21 +17,23 @@ import java.util.List;
 
 /**
  * Address模块Service层
- * @return void
- * @Author: Zhang Yaqing
- * @Date: 2019/12/12
+ * @author Zhang Yaqing
+ * @date 2019/12/12
  */
 @Service
 public class AddressServiceImpl implements IAddressService {
-    @Autowired
-    private AddressDao addressDao;
+    private final AddressDao addressDao;
 
-    @Autowired
-    private LoadBalancerClient loadBalancerClient;
+    private final LoadBalancerClient loadBalancerClient;
+
+    public AddressServiceImpl(AddressDao addressDao, LoadBalancerClient loadBalancerClient) {
+        this.addressDao = addressDao;
+        this.loadBalancerClient = loadBalancerClient;
+    }
 
     /**
      * 管理员操作日志
-     * @param log
+     * @param log 1
      */
     @Override
     public void log(Log log){
@@ -48,7 +49,7 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getUserAddresslist(Integer page, Integer limit, Integer userId) {
         PageHelper.startPage(page,limit);
-        return addressDao.getUserAddresslist(userId);
+        return addressDao.getUserAddressList(userId);
     }
     @Override
     public Address getAddressDetail(Integer id) {
