@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xmu.oomall.ad.domain.Ad;
 import xmu.oomall.ad.domain.Log;
-import xmu.oomall.ad.service.impl.AdService;
+import xmu.oomall.ad.service.impl.AdServiceImpl;
 import xmu.oomall.ad.util.FileUploadUtil;
 import xmu.oomall.ad.util.IdUtil;
 import xmu.oomall.ad.util.LogUtil;
@@ -29,8 +29,15 @@ import javax.servlet.http.HttpServletRequest;
 @Validated
 public class AdController {
     @Autowired
-    private AdService adService;
+    private AdServiceImpl adServiceImpl;
 
+    /**
+    * @Description: 合法性检测
+    * @Param: [newAd]
+    * @return: java.lang.Object
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/23
+    */
     private Object validate(Ad newAd) {
         String name=newAd.getName();
         if(StringUtils.isEmpty(name))
@@ -93,11 +100,11 @@ public class AdController {
         }
         Log log = LogUtil.newLog("查询广告列表", null, Integer.valueOf(id), 0, request.getRemoteAddr());
         log.setStatusCode(1);
-        adService.log(log);
+        adServiceImpl.log(log);
         Ad ad=new Ad();
         ad.setName(adTitle);
         ad.setContent(adContent);
-        return ResponseUtil.ok(adService.adminFindAllAds(page,limit,ad));
+        return ResponseUtil.ok(adServiceImpl.adminFindAllAds(page,limit,ad));
     }
 
     /**
@@ -110,7 +117,7 @@ public class AdController {
     @GetMapping("/ads")
     public Object userFindAdsList(){
         System.out.println("test");
-        return ResponseUtil.ok(adService.findUserAds());
+        return ResponseUtil.ok(adServiceImpl.findUserAds());
     }
 
 
@@ -130,19 +137,19 @@ public class AdController {
         Log log = LogUtil.newLog("搜索广告详情", id, Integer.valueOf(adminid), 0, request.getRemoteAddr());
         Ad adById = new Ad();
         try{
-            adById = adService.findAdById(id);
+            adById = adServiceImpl.findAdById(id);
             if(adById==null||adById.getBeDeleted()){
                 log.setStatusCode(0);
-                adService.log(log);
+                adServiceImpl.log(log);
                 return ResponseUtil.fail(680,"获取广告失败");
             }
         }catch (Exception e){
             log.setStatusCode(0);
-            adService.log(log);
+            adServiceImpl.log(log);
             return ResponseUtil.fail(680,"获取广告失败");
         }
         log.setStatusCode(1);
-        adService.log(log);
+        adServiceImpl.log(log);
         return  ResponseUtil.ok(adById);
     }
 
@@ -166,24 +173,21 @@ public class AdController {
         }
         Log log = LogUtil.newLog("修改广告内容", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
 
-//        Object error=validate(newAd);
-//        if (error != null) {
-//            return ResponseUtil.fail(682,"修改广告失败");
-//        }
+
         newAd.setId(id);
         try {
-            Integer integer = adService.updateAdById(newAd);
+            Integer integer = adServiceImpl.updateAdById(newAd);
             if (integer==0){
                 log.setStatusCode(0);
-                adService.log(log);
+                adServiceImpl.log(log);
                 return ResponseUtil.fail(682,"修改广告失败");
             }
         } catch (Exception e) {
             log.setStatusCode(0);
-            adService.log(log);
+            adServiceImpl.log(log);
             return ResponseUtil.fail(682,"修改广告失败");
         }
-        adService.log(log);
+        adServiceImpl.log(log);
         return ResponseUtil.ok(newAd);
     }
 
@@ -207,23 +211,23 @@ public class AdController {
         Log log = LogUtil.newLog("删除广告", id, Integer.valueOf(adminid), 3, request.getRemoteAddr());
         if (id == null) {
             log.setStatusCode(0);
-            adService.log(log);
+            adServiceImpl.log(log);
             return ResponseUtil.fail(683,"删除广告失败");
         }
         try {
-            Integer integer = adService.deleteAdbyId(id);
+            Integer integer = adServiceImpl.deleteAdbyId(id);
             if (integer==0){
                 log.setStatusCode(0);
-                adService.log(log);
+                adServiceImpl.log(log);
                 return ResponseUtil.fail(683,"删除广告失败");
             }
         } catch (Exception e) {
             log.setStatusCode(0);
-            adService.log(log);
+            adServiceImpl.log(log);
             return ResponseUtil.fail(683,"删除广告失败");
         }
         log.setStatusCode(1);
-        adService.log(log);
+        adServiceImpl.log(log);
         return ResponseUtil.ok();
     }
 
@@ -250,19 +254,19 @@ public class AdController {
         Object error = validate(ad);
         if (error != null) {
             log.setStatusCode(0);
-            adService.log(log);
+            adServiceImpl.log(log);
             return ResponseUtil.fail(681,"创建广告失败");
         }
         System.out.println("test1");
         try {
-            adService.addAds(ad);
+            adServiceImpl.addAds(ad);
         } catch (Exception e) {
             log.setStatusCode(0);
-            adService.log(log);
+            adServiceImpl.log(log);
             return ResponseUtil.fail(681,"创建广告失败");
         }
         System.out.println("test2");
-        adService.log(log);
+        adServiceImpl.log(log);
         return ResponseUtil.ok(ad);
     }
 

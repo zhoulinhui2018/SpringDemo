@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.ad.dao.AdDao;
 import xmu.oomall.ad.domain.Ad;
@@ -14,9 +13,15 @@ import xmu.oomall.ad.service.IAdService;
 
 import java.util.List;
 
-@Transactional
+/** 
+* @Description: sfdfa 
+* @Param:  
+* @return:  
+* @Author: Zhou Linhui
+* @Date: 2019/12/23 
+*/ 
 @Service
-public class AdService implements IAdService {
+public class AdServiceImpl implements IAdService {
     @Autowired
     private AdDao adDao;
 
@@ -29,8 +34,8 @@ public class AdService implements IAdService {
         ServiceInstance instance = loadBalancerClient.choose("logService");
         System.out.println(instance.getHost());
         System.out.println(instance.getPort());
-        String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/log");
-        restTemplate.postForObject(reqURL,log,Log.class);
+        String reqUrl = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/log");
+        restTemplate.postForObject(reqUrl,log,Log.class);
     }
 
     @Override

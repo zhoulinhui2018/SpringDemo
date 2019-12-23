@@ -14,6 +14,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/** 
+* @Description:  
+* @Param:  
+* @return:  
+* @Author: Zhou Linhui
+* @Date: 2019/12/23 
+*/ 
 @Repository
 public class GroupOnDao {
     @Autowired
@@ -30,7 +37,7 @@ public class GroupOnDao {
         System.out.println("jsonString = "+ jsonString);
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         System.out.println("test");
-        Map classmap = new HashMap<>();
+        Map classmap = new HashMap<>(16);
         classmap.put("strategy", GrouponRuleStrategy.class);
         System.out.println("test2");
 

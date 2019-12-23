@@ -9,6 +9,14 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
+
+/** 
+* @Description:  
+* @Param:  
+* @return:  
+* @Author: Zhou Linhui
+* @Date: 2019/12/23 
+*/ 
 @Repository
 public class AdDao {
     @Autowired
@@ -18,6 +26,13 @@ public class AdDao {
     }
 
 
+    /** 
+    * @Description:  
+    * @Param: [ad] 
+    * @return: java.lang.Integer 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/23 
+    */ 
     public Integer addAds(Ad ad) throws Exception{
         ad.setGmtCreate(LocalDateTime.now());
         ad.setGmtModified(LocalDateTime.now());
@@ -25,6 +40,13 @@ public class AdDao {
         return adMapper.addAds(ad);
     }
 
+    /** 
+    * @Description:  
+    * @Param: [id] 
+    * @return: xmu.oomall.ad.domain.Ad 
+    * @Author: Zhou Linhui
+    * @Date: 2019/12/23 
+    */ 
     public Ad findAdById(Integer id){
         Ad ad = adMapper.findAdById(id);
         return ad;
@@ -61,8 +83,8 @@ public class AdDao {
             }
         }
         if (allAds.size()==0){
-            List<Ad> DefaultAds=adMapper.findDefaultAds();
-            return DefaultAds;
+            List<Ad> defaultAds=adMapper.findDefaultAds();
+            return defaultAds;
         }
         return allAds;
     }
