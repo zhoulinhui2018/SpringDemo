@@ -122,11 +122,8 @@ public class AdController {
     * @Date: 2019/12/5
     */
     @GetMapping("/ads/{id}")
-    public Object adminFindAdById(HttpServletRequest request,@PathVariable Integer id){
+    public Object adminFindAdById(HttpServletRequest request, @PathVariable Integer id){
         String adminid= request.getHeader("id");
-        if (adminid==null){
-            return ResponseUtil.unlogin();
-        }
         if (id<=0){
             return ResponseUtil.fail(580,"参数错误");
         }
@@ -134,7 +131,7 @@ public class AdController {
         Ad adById = new Ad();
         try{
             adById = adService.findAdById(id);
-            if(adById==null||adById.getBeDelete()){
+            if(adById==null||adById.getBeDeleted()){
                 log.setStatusCode(0);
                 adService.log(log);
                 return ResponseUtil.fail(680,"获取广告失败");

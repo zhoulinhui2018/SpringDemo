@@ -21,7 +21,7 @@ public class AdDao {
     public Integer addAds(Ad ad) throws Exception{
         ad.setGmtCreate(LocalDateTime.now());
         ad.setGmtModified(LocalDateTime.now());
-        ad.setBeDelete(false);
+        ad.setBeDeleted(false);
         return adMapper.addAds(ad);
     }
 
