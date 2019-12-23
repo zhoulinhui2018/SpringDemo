@@ -6,13 +6,18 @@ import xmu.oomall.topic.domain.Log;
 import java.util.List;
 
 /**
- * @Author: Ming Qiu
- * @Description: 商品有关的服务
+ * @Author: Ren Tianhe
+ * 添加日志
  * @Date: Created in 15:47 2019/11/5
- * @Modified By:
  **/
 @Service
 public interface ILogService {
-//    Integer addLog(Integer adminId, String ip, Integer type, Integer actionId, String action, Integer statusCode);
+      /**
+       * 添加日志
+       * @param newlog
+       * @return void
+       * @author Ren tianhe
+       * @date 2019/12/13
+       */
       void addlog(Log newlog);
 }

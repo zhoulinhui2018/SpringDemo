@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 
+/**
+ * FootprintApplication
+ * @author Zhang Yaqing
+ * @date 2019/12/18
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 public class FootprintApplication {

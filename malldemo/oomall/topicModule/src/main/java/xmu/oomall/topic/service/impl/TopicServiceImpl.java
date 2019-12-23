@@ -15,15 +15,19 @@ import xmu.oomall.topic.util.MallException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Transactional
+/**
+ * Topic模块
+ * @author Ren tianhe
+ * @date 2019/12/17
+ */
 @Service
-public class TopicService implements ITopicService{
+public class TopicServiceImpl implements ITopicService{
     @Autowired
     private TopicDao topicDao;
 
     @Autowired
     RestTemplate restTemplate;
-    //重写接口中的方法
+
 
     @Override
     public List<Topic> findTopicList(Integer page, Integer limit) throws Exception{
@@ -41,13 +45,13 @@ public class TopicService implements ITopicService{
         return topicDao.findTopicById(id);
     }
 
-    //管理员更新专题信息
+
     @Override
     public Integer adminUpdateTopicById(TopicPo topicPo) throws Exception {
         return topicDao.adminUpdateTopicById(topicPo);
     }
 
-    //管理员删除专题
+
     @Override
     public Integer adminDeleteTopicById(Integer id) throws Exception{
         TopicPo topicPo = new TopicPo();

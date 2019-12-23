@@ -6,21 +6,25 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.address.domain.Address;
 import xmu.oomall.address.domain.AddressPo;
-//import xmu.oomall.address.domain.Log;
 import xmu.oomall.address.domain.Region;
-import xmu.oomall.address.service.impl.AddressService;
+import xmu.oomall.address.service.impl.AddressServiceImpl;
 import xmu.oomall.address.util.FomatUtil;
 import xmu.oomall.address.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Address模块
+ * @author Zhang Yaqing
+ * @date 2019/12/18
+ */
 @RestController
 @RequestMapping("")
 @Validated
 public class AddressController {
     @Autowired
-    private AddressService addressService;
+    private AddressServiceImpl addressServiceImpl;
 
     /**
      * 由AddressPo生成Address
@@ -32,9 +36,9 @@ public class AddressController {
             Integer countyId=address.getCountyId();
             Integer provinceId=address.getProvinceId();
             Integer cityId=address.getCityId();
-            String county=addressService.getRegion(countyId).getName();
-            String province=addressService.getRegion(provinceId).getName();
-            String city=addressService.getRegion(cityId).getName();
+            String county= addressServiceImpl.getRegion(countyId).getName();
+            String province= addressServiceImpl.getRegion(provinceId).getName();
+            String city= addressServiceImpl.getRegion(cityId).getName();
             address.setCity(city);
             address.setProvince(province);
             address.setCounty(county);
@@ -62,7 +66,7 @@ public class AddressController {
         List<Address> addressList;
         Integer userId= Integer.valueOf(id);
         try{
-            addressList=addressService.getUserAddresslist(page,limit,userId);
+            addressList= addressServiceImpl.getUserAddresslist(page,limit,userId);
         }catch (Exception e){
             return ResponseUtil.serious();
         }
@@ -84,7 +88,7 @@ public class AddressController {
         if (id<=0){
             return ResponseUtil.fail(580,"参数错误");
         }
-        Address address=addressService.getAddressDetail(id);
+        Address address= addressServiceImpl.getAddressDetail(id);
         if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
         }else{
@@ -133,9 +137,9 @@ public class AddressController {
         }
 
         //判断省市县是否合法，且有正确的层级关系
-        Region provinceRegion=addressService.getRegion(provinceId);
-        Region cityRegion=addressService.getRegion(cityId);
-        Region countryRegion=addressService.getRegion(countryId);
+        Region provinceRegion= addressServiceImpl.getRegion(provinceId);
+        Region cityRegion= addressServiceImpl.getRegion(cityId);
+        Region countryRegion= addressServiceImpl.getRegion(countryId);
         if(provinceRegion.getType()!=1){
             return 2;
         }
@@ -180,7 +184,7 @@ public class AddressController {
         AddressPo newAddressPo;
 
         try {
-            newAddressPo=addressService.addNewAddress(addressPo);
+            newAddressPo= addressServiceImpl.addNewAddress(addressPo);
         } catch (Exception e) {
             return ResponseUtil.addAddressFailed();
         }
@@ -199,13 +203,13 @@ public class AddressController {
         if (id<=0){
             return ResponseUtil.fail(580,"参数错误");
         }
-        Address address=addressService.getAddressDetail(id);
+        Address address= addressServiceImpl.getAddressDetail(id);
         if(address==null||address.getBeDeleted()==true){
             return ResponseUtil.addressNotExist();
         }else{
             address.setBeDeleted(true);
             address.setBeDefault(false);
-            AddressPo newAddressPo=addressService.updateAddress(address);
+            AddressPo newAddressPo= addressServiceImpl.updateAddress(address);
             if(newAddressPo==null) {
                 return ResponseUtil.deleteAddressFailed();
             }else{
@@ -234,7 +238,7 @@ public class AddressController {
             return ResponseUtil.updateAddressFailed();
         }
         addressPo.setId(id);
-        AddressPo newAddressPo=addressService.updateAddress(addressPo);
+        AddressPo newAddressPo= addressServiceImpl.updateAddress(addressPo);
         if(newAddressPo==null) {
             return ResponseUtil.updateAddressFailed();
         }else{

@@ -37,6 +37,11 @@ import java.util.Map;
  * 具体见litemall-wx-api模块的WxResponseCode。
  * </ul>
  */
+/**
+ * Footprint模块
+ * @author Ming Qiu
+ * @date 2019/12/18
+ */
 public class ResponseUtil {
     public static Object ok() {
         Map<String, Object> obj = new HashMap<String, Object>();

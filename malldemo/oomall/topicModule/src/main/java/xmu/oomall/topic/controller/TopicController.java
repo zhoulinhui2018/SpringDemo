@@ -7,8 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 import xmu.oomall.topic.domain.Log;
 import xmu.oomall.topic.domain.Topic;
 import xmu.oomall.topic.domain.TopicPo;
-import xmu.oomall.topic.service.impl.LogService;
-import xmu.oomall.topic.service.impl.TopicService;
+import xmu.oomall.topic.service.impl.LogServiceImpl;
+import xmu.oomall.topic.service.impl.TopicServiceImpl;
 import xmu.oomall.topic.util.FileUploadUtil;
 import xmu.oomall.topic.util.IdUtil;
 import xmu.oomall.topic.util.*;
@@ -26,10 +26,10 @@ import java.util.List;
 @RequestMapping("")
 public class TopicController {
     @Autowired
-    private TopicService topicService;
+    private TopicServiceImpl topicServiceImpl;
 
     @Autowired
-    private LogService logService;
+    private LogServiceImpl logServiceImpl;
 
     /**
      * 专题内容合理性判断函数
@@ -89,7 +89,7 @@ public class TopicController {
         }
         List<Topic> topics = new ArrayList<Topic>();
         try{
-            topics = topicService.findTopicList(page,limit);
+            topics = topicServiceImpl.findTopicList(page,limit);
         }catch (Exception e){
             return ResponseUtil.fail(654,"话题查看失败");
         }
@@ -121,13 +121,13 @@ public class TopicController {
         log.setType(0);
         log.setStatusCode(1);
         log.setActions("查询话题列表");
-        logService.addlog(log);
+        logServiceImpl.addlog(log);
         List<Topic> topics = new ArrayList<Topic>();
         try{
-            topics = topicService.findTopicList(page,limit);
+            topics = topicServiceImpl.findTopicList(page,limit);
         }catch (Exception e){
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return ResponseUtil.fail(654,"话题查看失败");
         }
         return ResponseUtil.ok(topics);
@@ -156,18 +156,18 @@ public class TopicController {
         Object error=validate(topicPo);
         if (error != null) {
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return error;
         }
         try {
-            topicService.adminAddTopic(topicPo);
+            topicServiceImpl.adminAddTopic(topicPo);
             log.setActionId(topicPo.getId());
         }catch (Exception e){
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return ResponseUtil.fail(602,"话题添加失败");
         }
-        logService.addlog(log);
+        logServiceImpl.addlog(log);
         return ResponseUtil.ok(topicPo);
     }
 
@@ -196,19 +196,19 @@ public class TopicController {
         log.setActionId(id);
         Topic topicById = new Topic();
         try{
-            topicById = topicService.findTopicById(id);
+            topicById = topicServiceImpl.findTopicById(id);
             if (topicById==null||topicById.getDeleted()){
                 log.setStatusCode(0);
-                logService.addlog(log);
+                logServiceImpl.addlog(log);
                 return ResponseUtil.fail(650,"该话题是无效话题");
             }
         }catch (Exception e){
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return ResponseUtil.fail(654,"话题查看失败");
         }
         log.setStatusCode(1);
-        logService.addlog(log);
+        logServiceImpl.addlog(log);
         return ResponseUtil.ok(topicById);
     }
 
@@ -226,7 +226,7 @@ public class TopicController {
         }
         Topic topic = new Topic();
         try{
-            topic = topicService.findTopicById(id);
+            topic = topicServiceImpl.findTopicById(id);
             if(topic==null||topic.getDeleted()){
             return ResponseUtil.fail(650,"该话题是无效话题");
         }
@@ -263,23 +263,23 @@ public class TopicController {
         Object error=validate(topicPo);
         if (error != null) {
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return error;
         }
         topicPo.setId(id);
         try{
-            if(topicService.adminUpdateTopicById(topicPo)==0){
+            if(topicServiceImpl.adminUpdateTopicById(topicPo)==0){
                 log.setStatusCode(0);
-                logService.addlog(log);
+                logServiceImpl.addlog(log);
                 return ResponseUtil.fail(651,"话题更新失败");
             }
         }catch (Exception e){
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return ResponseUtil.fail(653,"话题更新失败");
         }
         log.setStatusCode(1);
-        logService.addlog(log);
+        logServiceImpl.addlog(log);
         return ResponseUtil.ok();
     }
 
@@ -307,18 +307,18 @@ public class TopicController {
         log.setActions("删除话题");
         log.setActionId(id);
         try{
-            if(topicService.adminDeleteTopicById(id)==0){
+            if(topicServiceImpl.adminDeleteTopicById(id)==0){
                 log.setStatusCode(0);
-                logService.addlog(log);
+                logServiceImpl.addlog(log);
                 return ResponseUtil.fail(653,"话题删除失败");
             }
         }catch (Exception e){
             log.setStatusCode(0);
-            logService.addlog(log);
+            logServiceImpl.addlog(log);
             return ResponseUtil.fail(653,"话题删除失败");
         }
         log.setStatusCode(1);
-        logService.addlog(log);
+        logServiceImpl.addlog(log);
         return ResponseUtil.ok();
     }
 }

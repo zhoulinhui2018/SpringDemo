@@ -1,14 +1,19 @@
 package xmu.oomall.footprint.util;
 
+/**
+ * MallException
+ * @author Zhang Yaqing
+ * @date 2019/12/18
+ */
 public class MallException extends Exception{
     private Object code = null;
 
-    //获取状态码
+
     public MallException(Object object){
         this.code = code;
     }
 
-    //得到错误状态码
+
     public Object getErrorCode(){
         return code;
     }

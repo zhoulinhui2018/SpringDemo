@@ -16,9 +16,14 @@ import xmu.oomall.address.service.IAddressService;
 
 import java.util.List;
 
-@Transactional
+/**
+ * Address模块Service层
+ * @return void
+ * @Author: Zhang Yaqing
+ * @Date: 2019/12/12
+ */
 @Service
-public class AddressService implements IAddressService {
+public class AddressServiceImpl implements IAddressService {
     @Autowired
     private AddressDao addressDao;
 

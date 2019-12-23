@@ -3,11 +3,10 @@ package xmu.oomall.log.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.log.domain.Log;
-import xmu.oomall.log.service.impl.LogService;
+import xmu.oomall.log.service.impl.LogServiceImpl;
 import xmu.oomall.log.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public class LogController {
     @Autowired
-    private LogService logService;
+    private LogServiceImpl logServiceImpl;
 
     /**
      * 管理员根据条件查看日志
@@ -57,10 +56,10 @@ public class LogController {
         newlog.setId(adminId);
         List<Log> logList;
         try {
-            logList = logService.findLogListByAdminId(page, limit, newlog);
+            logList = logServiceImpl.findLogListByAdminId(page, limit, newlog);
         }catch (Exception e){
             log.setStatusCode(0);
-            logService.addLog(log);
+            logServiceImpl.addLog(log);
             return ResponseUtil.fail(901,"查看日志失败");
         }
         return ResponseUtil.ok(logList);
@@ -75,7 +74,7 @@ public class LogController {
     @PostMapping("/logs")
     public Object addLog(@RequestBody Log newlog){
         System.out.println("telalllalalalallala");
-        logService.addLog(newlog);
+        logServiceImpl.addLog(newlog);
         return ResponseUtil.ok();
     }
 }

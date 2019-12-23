@@ -13,6 +13,12 @@ import xmu.oomall.footprint.util.ResponseUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+
+/**
+ * Footprint模块
+ * @author Zhang Yaqing
+ * @date 2019/12/18
+ */
 @RestController
 @RequestMapping("")
 @Validated

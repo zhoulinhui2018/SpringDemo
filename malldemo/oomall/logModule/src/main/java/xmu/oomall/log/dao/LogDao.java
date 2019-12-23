@@ -8,15 +8,17 @@ import xmu.oomall.log.mapper.LogMapper;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * LogDao
+ * @author Ren tianhe
+ * @date 2019/12/17
+ */
 @Repository
 public class LogDao {
     @Autowired
     private LogMapper logMapper;
 
-    //传入username，先通过mapper层查user表，找到对于的userid，然后通过userid到log表中，返回loglist
-    //ligmapper中的对应的接口，就是可以调用mapper文件里对应的xml语句
-    //错误的情况可能有：
-    //未查询到结果
+
     public List<Log> findLogListByAdminId(Log newlog) throws Exception{
         List<Log> loglist=logMapper.findLogListByAdminId(newlog);
         return loglist;

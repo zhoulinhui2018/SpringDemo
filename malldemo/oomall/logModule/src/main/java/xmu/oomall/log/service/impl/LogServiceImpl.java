@@ -13,9 +13,13 @@ import xmu.oomall.log.service.ILogService;
 import xmu.oomall.log.domain.Log;
 import java.util.List;
 
-@Transactional
+/**
+ * LogServiceImpl
+ * @author Ren tianhe
+ * @date 2019/12/17
+ */
 @Service
-public class LogService implements ILogService{
+public class LogServiceImpl implements ILogService{
     private static String logAPI= "http://localhost:8803/log";
 
     @Autowired
@@ -23,7 +27,7 @@ public class LogService implements ILogService{
 
     @Autowired
     RestTemplate restTemplate;
-    //重写接口中的方法
+
 
     @Override
     public List<Log> findLogListByAdminId(Integer page, Integer limit, Log newlog) throws Exception{
