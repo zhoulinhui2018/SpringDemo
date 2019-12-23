@@ -1,4 +1,4 @@
-package xmu.oomall.discount.service.Impl;
+package xmu.oomall.discount.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import xmu.oomall.discount.domain.OrderItem;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
-import xmu.oomall.discount.service.ICouponService;
+import xmu.oomall.discount.service.ICouponServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
  * @Modified By:
  **/
 @Service
-public class CouponServiceImpl implements ICouponService {
+public class CouponServiceImplImpl implements ICouponServiceImpl {
     @Autowired
     private CouponDao couponDao;
 

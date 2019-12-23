@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.GrouponRulePo;
-import xmu.oomall.discount.service.Impl.GroupOnRuleService;
+import xmu.oomall.discount.service.impl.GroupOnRuleServiceImpl;
 
 @SpringBootTest(classes = DiscountApplication.class)
 @AutoConfigureMockMvc
@@ -17,7 +17,7 @@ public class DiscountControllerTest {
     private DiscountController discountController;
 
     @Autowired
-    private GroupOnRuleService groupOnRuleService;
+    private GroupOnRuleServiceImpl groupOnRuleService;
 
     @Test
     public void DiscountOrderTest1() throws Exception{

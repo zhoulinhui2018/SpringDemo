@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 @Service
-public interface IPresaleService {
+public interface IPresaleServiceImpl {
 
     /**
      * 管理员操作添加Log

@@ -16,7 +16,7 @@ import java.util.List;
  * @Modified By:
  **/
 @Service
-public interface ICouponService {
+public interface ICouponServiceImpl {
 
 //    public List<Coupon> showTypeCouponList(Integer page,Integer limit,Integer userId,Integer showType);
 

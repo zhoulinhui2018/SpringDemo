@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public interface IGroupOnRuleService {
+public interface IGroupOnRuleServiceImpl {
 
 
     public List<GrouponRulePo> findGrouponRuleByGoodsId(Integer goodsId,Integer page,Integer limit);
