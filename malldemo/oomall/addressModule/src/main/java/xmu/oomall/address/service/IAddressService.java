@@ -8,8 +8,21 @@ import xmu.oomall.address.domain.Region;
 
 import java.util.List;
 
+/**
+ * Address模块Service层
+ * @Author: Zhang Yaqing
+ * @Date: 2019/12/12
+ */
 @Service
 public interface IAddressService {
+
+    /**
+     * 添加日志
+     * @param log
+     * @return void
+     * @Author: Zhang Yaqing
+     * @Date: 2019/12/12
+     */
     void log(Log log);
 
     /**
@@ -64,6 +77,13 @@ public interface IAddressService {
      */
     public List<Address> adminFindUserAddress(Integer page, Integer limit, Integer userId, String name);
 
-
+    /**
+     * 获得地区
+     * @param
+     * @param id
+     * @return 全部地址列表
+     * @Author: Zhang Yaqing
+     * @Date: 2019/12/12
+     */
     Region getRegion(Integer id);
 }

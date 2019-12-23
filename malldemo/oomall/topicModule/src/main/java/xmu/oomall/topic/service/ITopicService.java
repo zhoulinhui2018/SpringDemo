@@ -15,13 +15,55 @@ import java.util.List;
  **/
 @Service
 public interface ITopicService {
+
+    /**
+     * 用户查看专题列表
+     * @param page
+     * @param limit
+     * @throws Exception
+     * @return List<TopicPo>
+     * @author Ren tianhe
+     * @date 2019/12/13
+     */
     public List<Topic> findTopicList(Integer page, Integer limit) throws Exception;
 
+    /**
+     * 管理员添加专题
+     * @param topicPo
+     * @throws Exception
+     * @return TopicPo
+     * @author Ren tianhe
+     * @date 2019/12/13
+     */
     public Integer adminAddTopic(TopicPo topicPo) throws Exception;
 
+    /**
+     * 查看专题详情
+     * @param id
+     * @throws Exception
+     * @return TopicPo
+     * @author Ren tianhe
+     * @date 2019/12/13
+     */
     public Topic findTopicById (Integer id) throws Exception;
 
+    /**
+     * 管理员更新专题
+     * @param topicPo
+     * @throws Exception
+     * @return TopicPo
+     * @author Ren tianhe
+     * @date 2019/12/13
+     */
     public Integer adminUpdateTopicById(TopicPo topicPo) throws Exception;
 
+    /**
+     * 管理员删除专题
+     * @throws Exception
+     * @param id
+     * @return TopicPo
+     * @author Ren tianhe
+     * @date 2019/12/13
+     */
     public Integer adminDeleteTopicById(Integer id) throws Exception ;
 }

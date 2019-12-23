@@ -15,9 +15,13 @@ import xmu.oomall.topic.service.ILogService;
 
 import java.util.List;
 
-@Transactional
+/**
+ * 调用log服务
+ * @author Ren tianhe
+ * @date 2019/12/17
+ */
 @Service
-public class LogService implements ILogService{
+public class LogServiceImpl implements ILogService{
     private static String logAPI= "http://localhost:8803/logs";
 
 
@@ -37,19 +41,4 @@ public class LogService implements ILogService{
         String reqURL = String.format("http://%s:%s", instance.getHost(), instance.getPort() + "/logs");
         restTemplate.postForObject(reqURL,log,Log.class);
     }
-//    @Override
-//    public Integer addLog(Integer adminId, String ip, Integer type, Integer actionId, String action, Integer statusCode) {
-//        Log log = new Log();
-//        log.setAdminId(adminId);
-//        log.setIp(ip);
-//        log.setType(type);
-//        log.setActions(action);
-//        log.setStatusCode(statusCode);
-//        log.setActionId(actionId);
-//        MultiValueMap<String, Object> multiValueMap = new LinkedMultiValueMap<>();
-//        multiValueMap.add("log", log);
-//        HttpEntity httpEntity = new HttpEntity(multiValueMap, null);
-//        restTemplate.postForObject(logAPI , httpEntity, Log.class);
-//        return 1;
-//    }
 }
