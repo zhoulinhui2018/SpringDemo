@@ -5,7 +5,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.domain.Ad;
-import xmu.oomall.service.impl.AdService;
+import xmu.oomall.service.impl.AdServiceImpl;
 import xmu.oomall.util.ResponseUtil;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import java.util.List;
 @Validated
 public class AdController {
     @Autowired
-    private AdService adService;
+    private AdServiceImpl adService;
 
     private Object validate(Ad newAd) {
         String name=newAd.getName();

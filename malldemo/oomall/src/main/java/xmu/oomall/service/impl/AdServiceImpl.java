@@ -10,7 +10,7 @@ import xmu.oomall.service.IAdService;
 import java.util.List;
 @Transactional
 @Service
-public class AdService implements IAdService {
+public class AdServiceImpl implements IAdService {
     @Autowired
     private AdDao adDao;
 
