@@ -1,4 +1,4 @@
-package xmu.oomall.discount.service.Impl;
+package xmu.oomall.discount.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
-import xmu.oomall.discount.service.IGroupOnRuleService;
+import xmu.oomall.discount.service.IGroupOnRuleServiceImpl;
 import xmu.oomall.discount.util.JacksonUtil;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class GroupOnRuleService implements IGroupOnRuleService {
+public class GroupOnRuleServiceImpl implements IGroupOnRuleServiceImpl {
     @Autowired
     private GroupOnDao groupOnDao;
 

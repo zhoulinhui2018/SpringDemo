@@ -55,16 +55,10 @@ public abstract class AbstractCouponStrategy {
      */
     public List<OrderItem> cacuDiscount(List<OrderItem> validItems, int couponId) {
         System.out.println("cacuDiscount的参数： validItems" + validItems + " couponId = " + couponId);
-        //优惠商品的总价和数量
         BigDecimal totalPrice = BigDecimal.ZERO;
         Integer totalQuantity = 0;
-
-        //优惠的货品
         List<OrderItem> discountItems = new ArrayList<>();
-
-
         System.out.println("validItem的数量为"+validItems.size());
-
         if(validItems.size()!=0) {
             for (OrderItem item : validItems) {
                 System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
@@ -76,13 +70,9 @@ public abstract class AbstractCouponStrategy {
                 discountItems.add(item);
             }
         }
-
         System.out.println("总价 totalPrice=" + totalPrice + " 总数 totalQuantitiy = " + totalQuantity);
-        //判断是否达到优惠门槛
         boolean enough = this.isEnough(totalPrice, totalQuantity);
         System.out.println("优惠门槛 enough = " + enough);
-
-        //计算优惠后的价格
         List<OrderItem> newItems = new ArrayList<>();
         BigDecimal dealTotalPrice = BigDecimal.ZERO;
 
@@ -91,7 +81,6 @@ public abstract class AbstractCouponStrategy {
             Iterator<OrderItem> iterator = discountItems.iterator();
             while (iterator.hasNext()){
                 OrderItem item = iterator.next();
-                //按照比例分配，可能会出现精度误差，在后面补偿到第一个货品上
                 BigDecimal dealPrice = this.getDealPrice(item.getPrice(), totalPrice);
                 System.out.println("优惠价格 dealPrice=" + dealPrice);
                 item.setDealPrice(dealPrice);

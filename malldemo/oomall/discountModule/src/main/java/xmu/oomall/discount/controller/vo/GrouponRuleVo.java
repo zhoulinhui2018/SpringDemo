@@ -3,6 +3,7 @@ package xmu.oomall.discount.controller.vo;
 import xmu.oomall.discount.domain.GoodsPo;
 import xmu.oomall.discount.domain.GrouponRulePo;
 
+
 public class GrouponRuleVo {
     private GrouponRulePo grouponRulePo;
     private GoodsPo goodsPo;

@@ -1,7 +1,6 @@
-package xmu.oomall.discount.service.Impl;
+package xmu.oomall.discount.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import net.sf.ezmorph.array.BooleanObjectArrayMorpher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -11,14 +10,14 @@ import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.PresaleDao;
 import xmu.oomall.discount.domain.*;
 import xmu.oomall.discount.domain.Promotion.PresaleRule;
-import xmu.oomall.discount.service.IPresaleService;
+import xmu.oomall.discount.service.IPresaleServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PresaleServiceImpl implements IPresaleService {
+public class PresaleServiceImplImpl implements IPresaleServiceImpl {
     @Autowired
     private PresaleDao presaleDao;
 

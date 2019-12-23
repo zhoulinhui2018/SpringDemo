@@ -1,6 +1,5 @@
 package xmu.oomall.discount.controller;
 
-import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.domain.CartItem;
@@ -8,11 +7,10 @@ import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
-import xmu.oomall.discount.service.Impl.CouponServiceImpl;
+import xmu.oomall.discount.service.impl.CouponServiceImplImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +20,9 @@ import java.util.List;
 @RequestMapping("")
 public class CouponController {
     @Autowired
-    private CouponServiceImpl couponService;
+    private CouponServiceImplImpl couponService;
 
-    //判断优惠券规则是否有效
+
     private Boolean validateCouponRule(CouponRulePo couponRule) {
         Integer id=couponRule.getId();
         String name = couponRule.getName();
@@ -48,7 +46,7 @@ public class CouponController {
         }
         return true;
     }
-    //判断优惠券是否有效
+
     private Boolean validateCoupon(CouponPo coupon) {
         Integer id=coupon.getId();
         Integer userId=coupon.getUserId();
@@ -154,6 +152,7 @@ public class CouponController {
     /**
      * @description 管理员查看优惠券规则详情（测试已通过）
      * @param id
+     * @param request
      * @return java.lang.Object[couponRulePo]
      * @author Zhang Yaqing
      * @date 2019/12/10

@@ -7,7 +7,7 @@ import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
-import xmu.oomall.discount.service.Impl.CouponServiceImpl;
+import xmu.oomall.discount.service.impl.CouponServiceImplImpl;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 class CouponServiceTest {
 
     @Autowired
-    private CouponServiceImpl couponService;
+    private CouponServiceImplImpl couponService;
 
 
 //    @Test
