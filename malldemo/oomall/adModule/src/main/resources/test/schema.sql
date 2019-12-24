@@ -261,7 +261,7 @@ CREATE TABLE `product` (
   `add_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `be_deleted` int(11) DEFAULT NULL,
-  `goods_id` bigint(20) DEFAULT NULL,
+  `goodsId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -292,10 +292,10 @@ CREATE TABLE `promotion` (
   `add_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `be_deleted` int(11) DEFAULT NULL,
-  `goods_id` bigint(20) DEFAULT NULL,
+  `goodsId` bigint(20) DEFAULT NULL,
   `descr` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `promotion_goods_id_index` (`goods_id`)
+  KEY `promotion_goods_id_index` (`goodsId`)
 );
 /*!40101 SET character_set_client = @saved_cs_client */;
 

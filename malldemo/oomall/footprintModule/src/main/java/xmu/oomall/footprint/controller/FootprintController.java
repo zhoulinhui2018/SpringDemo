@@ -7,7 +7,7 @@ import xmu.oomall.footprint.domain.FootprintItem;
 import xmu.oomall.footprint.domain.FootprintItemPo;
 import xmu.oomall.footprint.domain.GoodsPo;
 import xmu.oomall.footprint.domain.Log;
-import xmu.oomall.footprint.service.impl.FootprintService;
+import xmu.oomall.footprint.service.impl.FootprintServiceImpl;
 import xmu.oomall.footprint.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +24,11 @@ import java.util.List;
 @Validated
 public class FootprintController {
     @Autowired
-    private FootprintService footprintService;
+    private FootprintServiceImpl footprintServiceImpl;
 
     private void changePoToFootprintItem(FootprintItem footprintItem){
         Integer goodsId=footprintItem.getGoodsId();
-        GoodsPo goodsPo=footprintService.getGoodsPoById(goodsId);
+        GoodsPo goodsPo= footprintServiceImpl.getGoodsPoById(goodsId);
         footprintItem.setGoodsPo(goodsPo);
     }
     /**
@@ -51,7 +51,7 @@ public class FootprintController {
         Integer userId= Integer.valueOf(id);
         List<FootprintItem> footprintList;
         try {
-            footprintList= footprintService.getUserFootprintList(page,limit,userId);
+            footprintList= footprintServiceImpl.getUserFootprintList(page,limit,userId);
         } catch (Exception e) {
             return ResponseUtil.serious();
         }
@@ -95,13 +95,13 @@ public class FootprintController {
 
         List<FootprintItem> footprintList;
         try {
-            footprintList=footprintService.listFootprintByCondition(page,limit,userId,goodsId);
+            footprintList= footprintServiceImpl.listFootprintByCondition(page,limit,userId,goodsId);
         } catch (Exception e) {
             log.setStatusCode(0);
-            footprintService.log(log);
+            footprintServiceImpl.log(log);
             return ResponseUtil.inValidateFootprint();
         }
-        footprintService.log(log);
+        footprintServiceImpl.log(log);
         for(int i=0;i<footprintList.size();i++){
             changePoToFootprintItem(footprintList.get(i));
         }
@@ -148,7 +148,7 @@ public class FootprintController {
     @PostMapping("/footprints")
     public Object addFootprint( FootprintItemPo footprintItemPo){
         try {
-            footprintService.addFootprint(footprintItemPo);
+            footprintServiceImpl.addFootprint(footprintItemPo);
         } catch (Exception e) {
             return ResponseUtil.addFootprintFailed();
         }

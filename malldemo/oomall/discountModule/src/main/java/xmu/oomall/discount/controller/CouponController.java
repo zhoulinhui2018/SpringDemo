@@ -1,6 +1,5 @@
 package xmu.oomall.discount.controller;
 
-import com.alibaba.druid.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xmu.oomall.discount.domain.CartItem;
@@ -8,15 +7,20 @@ import xmu.oomall.discount.domain.Log;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
-import xmu.oomall.discount.service.Impl.CouponServiceImpl;
+import xmu.oomall.discount.service.impl.CouponServiceImpl;
 import xmu.oomall.discount.util.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo class CouponController
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @SuppressWarnings("AlibabaClassMustHaveAuthor")
 @RestController
 @RequestMapping("")
@@ -24,7 +28,11 @@ public class CouponController {
     @Autowired
     private CouponServiceImpl couponService;
 
-    //判断优惠券规则是否有效
+    static final int TYPE_0= 0;
+    static final int TYPE_1= 1;
+    static final int TYPE_2= 2;
+    static final int TYPE_3= 3;
+
     private Boolean validateCouponRule(CouponRulePo couponRule) {
         Integer id=couponRule.getId();
         String name = couponRule.getName();
@@ -48,7 +56,7 @@ public class CouponController {
         }
         return true;
     }
-    //判断优惠券是否有效
+
     private Boolean validateCoupon(CouponPo coupon) {
         Integer id=coupon.getId();
         Integer userId=coupon.getUserId();
@@ -154,6 +162,7 @@ public class CouponController {
     /**
      * @description 管理员查看优惠券规则详情（测试已通过）
      * @param id
+     * @param request
      * @return java.lang.Object[couponRulePo]
      * @author Zhang Yaqing
      * @date 2019/12/10
@@ -430,7 +439,7 @@ public class CouponController {
                          @RequestParam(defaultValue = "1") Integer page,
                          @RequestParam(defaultValue = "10") Integer limit,
                          HttpServletRequest request) {
-        if(showType!=0&&showType!=1&&showType!=2&&showType!=3){
+        if(showType!=TYPE_0&&showType!=TYPE_1&&showType!=TYPE_2&&showType!=TYPE_3){
             return ResponseUtil.invalidArgumentValue();
         }
         if(page<0||limit<0){
@@ -462,19 +471,19 @@ public class CouponController {
      * @date 2019/12/10
      */
     @GetMapping("/coupons/{id}")
-    public Object readACoupon(Integer id)
+    public Object readCoupon(Integer id)
     {
         if(id<0)
         {
             return ResponseUtil.invalidArgumentValue();
         }
-        CouponPo ACoupon=new CouponPo();
+        CouponPo aCoupon=new CouponPo();
         try {
-             ACoupon = couponService.findCouponById(id);
+             aCoupon = couponService.findCouponById(id);
         }catch (Exception e){
            return ResponseUtil.fail();
         }
-        return ResponseUtil.ok(ACoupon);
+        return ResponseUtil.ok(aCoupon);
     }
 
 
@@ -487,7 +496,7 @@ public class CouponController {
      * 增加了对couponRule中优惠券领取张数的判断和修改！！！
      */
     @PostMapping("/coupons")
-    public Object createACoupon(HttpServletRequest request,@RequestBody CouponPo couponPo) {
+    public Object createCoupon(HttpServletRequest request, @RequestBody CouponPo couponPo) {
         String id = request.getHeader("id");
         if (id == null) {
             return ResponseUtil.unlogin();

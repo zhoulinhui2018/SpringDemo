@@ -1,14 +1,24 @@
 package xmu.oomall.address.util;
 
+/**
+ * MallException
+ * @author: Zhang Yaqing
+ * @date: 2019/12/12
+ */
 public class MallException extends Exception{
     private Object code = null;
 
-    //获取状态码
+    /**
+     * MallException
+     * @param object
+     * @author: Zhang Yaqing
+     * @date: 2019/12/12
+     */
     public MallException(Object object){
         this.code = code;
     }
 
-    //得到错误状态码
+
     public Object getErrorCode(){
         return code;
     }

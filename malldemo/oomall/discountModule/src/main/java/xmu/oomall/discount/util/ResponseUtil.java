@@ -37,16 +37,22 @@ import java.util.Map;
  * 具体见litemall-wx-api模块的WxResponseCode。
  * </ul>
  */
+/**
+ * Demo class ResponseUtil
+ *
+ * @author 标准组
+ * @date 2019/12/20
+ */
 public class ResponseUtil {
     public static Object ok() {
-        Map<String, Object> obj = new HashMap<String, Object>();
+        Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", 0);
         obj.put("errmsg", "成功");
         return obj;
     }
 
     public static Object ok(Object data) {
-        Map<String, Object> obj = new HashMap<String, Object>();
+        Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", 0);
         obj.put("errmsg", "成功");
         obj.put("data", data);
@@ -54,21 +60,21 @@ public class ResponseUtil {
     }
 
     public static Object fail() {
-        Map<String, Object> obj = new HashMap<String, Object>();
+        Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", -1);
         obj.put("errmsg", "Failure");
         return obj;
     }
 
     public static Object fail(int errno, String errmsg) {
-        Map<String, Object> obj = new HashMap<String, Object>();
+        Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", errno);
         obj.put("errmsg", errmsg);
         return obj;
     }
 
     public static Object invalidArgumentValue() {
-        Map<String, Object> obj = new HashMap<String, Object>();
+        Map<String, Object> obj = new HashMap<String, Object>(3);
         obj.put("errno", 580);
         obj.put("errmsg", "参数不合法");
         return obj;
@@ -106,7 +112,6 @@ public class ResponseUtil {
         return fail(506, "无操作权限");
     }
 
-    //预售
     public static Object invalidPresaleRule() {
         return fail(730, "该预售规则是无效团购规则");
     }
@@ -127,7 +132,6 @@ public class ResponseUtil {
     }
 
 
-    //优惠券
     public static Object invalidCouponRule() {
         return fail(710, "该优惠券规则是无效优惠券规则(不在数据库里的或者逻辑删除)");
     }

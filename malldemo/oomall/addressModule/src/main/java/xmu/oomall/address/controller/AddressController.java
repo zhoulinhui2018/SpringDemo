@@ -26,6 +26,9 @@ public class AddressController {
     @Autowired
     private AddressServiceImpl addressServiceImpl;
 
+    static final int TYPE_1= 1;
+    static final int TYPE_2= 2;
+    static final int TYPE_3= 3;
     /**
      * 由AddressPo生成Address
      * @param address
@@ -116,52 +119,52 @@ public class AddressController {
 
         //判断省市县是否为空
         if(countryId==0||provinceId==0||cityId==0) {
-            return 1;
+            return TYPE_1;
         }
         //判断userId是否为空
         if(userId==0){
-            return 1;
+            return TYPE_1;
         }
         //判断各个string字段是否为空
         if (StringUtils.isEmpty(addressDetail)) {
-            return 1;
+            return TYPE_1;
         }
         if (StringUtils.isEmpty(postalCode)) {
-            return 1;
+            return TYPE_1;
         }
         if (StringUtils.isEmpty(mobile)) {
-            return 1;
+            return TYPE_1;
         }
         if (StringUtils.isEmpty(consignee)) {
-            return 1;
+            return TYPE_1;
         }
 
         //判断省市县是否合法，且有正确的层级关系
         Region provinceRegion= addressServiceImpl.getRegion(provinceId);
         Region cityRegion= addressServiceImpl.getRegion(cityId);
         Region countryRegion= addressServiceImpl.getRegion(countryId);
-        if(provinceRegion.getType()!=1){
-            return 2;
+        if(provinceRegion.getType()!=TYPE_1){
+            return TYPE_2;
         }
-        if(cityRegion.getType()!=2){
-            return 2;
+        if(cityRegion.getType()!=TYPE_2){
+            return TYPE_2;
         }
-        if(countryRegion.getType()!=3){
-            return 2;
+        if(countryRegion.getType()!=TYPE_3){
+            return TYPE_2;
         }
         if(!cityRegion.getPid().equals(provinceRegion.getId())){
-            return 2;
+            return TYPE_2;
         }
         if(!countryRegion.getPid().equals(cityRegion.getId())){
-            return 2;
+            return TYPE_2;
         }
 
         //判断电话号码、邮政编码是否合法
         if(!FomatUtil.isValidateMobile(mobile)){
-            return 2;
+            return TYPE_2;
         }
         if(!FomatUtil.isValidatePostcode(postalCode)){
-            return 2;
+            return TYPE_2;
         }
         return 0;
     }
@@ -175,10 +178,10 @@ public class AddressController {
      */
     @PostMapping("/addresses")
     public Object addNewAddress(@RequestBody AddressPo addressPo){
-        if(validate(addressPo)==1){
+        if(validate(addressPo)==TYPE_1){
             return ResponseUtil.addAddressFailed();
         }
-        if(validate(addressPo)==2){
+        if(validate(addressPo)==TYPE_2){
             return ResponseUtil.addAddressFailed();
         }
         AddressPo newAddressPo;
@@ -231,10 +234,10 @@ public class AddressController {
         if (id<=0){
             return ResponseUtil.fail(580,"参数错误");
         }
-        if(validate(addressPo)==1){
+        if(validate(addressPo)==TYPE_1){
             return ResponseUtil.updateAddressFailed();
         }
-        if(validate(addressPo)==2){
+        if(validate(addressPo)==TYPE_2){
             return ResponseUtil.updateAddressFailed();
         }
         addressPo.setId(id);
@@ -246,38 +249,4 @@ public class AddressController {
         }
     }
 
-//    /**
-//     * 管理员根据条件查找地址
-//     * @param
-//     * @return 全部地址列表
-//     * @Author: Zhang Yaqing
-//     * @Date: 2019/12/12
-//     */
-//    @GetMapping("/admin/addresses")
-//    public Object adminFindUserAddress(HttpServletRequest request,
-//                                       @RequestParam Integer userId,
-//                                       @RequestParam String name,
-//                                       @RequestParam(defaultValue = "1") Integer page,
-//                                       @RequestParam(defaultValue = "10") Integer limit){
-//        String adminid= request.getHeader("id");
-//        if (adminid==null){
-//            return ResponseUtil.unlogin();
-//        }
-//        Log log=new Log();
-//        log.setAdminId(Integer.valueOf(adminid));
-//        log.setIp(request.getRemoteAddr());
-//        log.setType(0);
-//        log.setStatusCode(1);
-//        log.setActions("获取根据条件查找地址");
-//        List<Address> addressList;
-//        try {
-//            addressList=addressService.adminFindUserAddress(page,limit,userId,name);
-//        } catch (Exception e) {
-//            log.setStatusCode(0);
-//            addressService.log(log);
-//            return ResponseUtil.updatedDataFailed();
-//        }
-//        addressService.log(log);
-//        return ResponseUtil.ok(addressList);
-//    }
 }

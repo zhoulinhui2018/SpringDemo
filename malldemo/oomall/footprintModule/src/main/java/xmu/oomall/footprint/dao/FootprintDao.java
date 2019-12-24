@@ -14,23 +14,41 @@ import java.util.List;
  */
 @Repository
 public class FootprintDao {
-    @Autowired
-    private FootprintMapper footprintMapper;
+    private final FootprintMapper footprintMapper;
 
-    public List<FootprintItem> getUserFootprintList(Integer userId) {
-        List<FootprintItem> userFootprintList=footprintMapper.getUserFootprintList(userId);
-        return userFootprintList;
+    public FootprintDao(FootprintMapper footprintMapper) {
+        this.footprintMapper = footprintMapper;
     }
-
+    /**
+     * 用户查询足迹信息
+     * @param userId 用户id
+     * @return 足迹列表
+     */
+    public List<FootprintItem> getUserFootprintList(Integer userId) {
+        return footprintMapper.getUserFootprintList(userId);
+    }
+    /**
+     * 用户删除足迹信息
+     * @param id 足迹id
+     * @return 用boolean表示删除操作是否成功
+     */
     public boolean deleteFootprint(Integer id) {
         return footprintMapper.deleteFootprint(id);
     }
-
+    /**
+     * 管理员按条件查询足迹信息
+     * @param userId 查询的用户id
+     * @param goodsId 查询的商品id
+     * @return 足迹列表
+     */
     public List<FootprintItem> listFootprintByCondition(Integer userId, Integer goodsId) {
-        List<FootprintItem> userFootprintList=footprintMapper.listFootprintByCondition(userId,goodsId);
-        return userFootprintList;
+        return footprintMapper.listFootprintByCondition(userId,goodsId);
     }
-
+    /**
+     * 内部接口：增加足迹
+     * @param footprintItemPo 足迹项
+     * @return 足迹列表
+     */
     public boolean addFootprint(FootprintItemPo footprintItemPo) {
         return footprintMapper.addFootprint(footprintItemPo);
     }

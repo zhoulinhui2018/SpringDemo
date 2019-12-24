@@ -2,19 +2,24 @@ package xmu.oomall.goods.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import xmu.oomall.goods.domain.GoodsPo;
 import xmu.oomall.goods.domain.Product;
-import xmu.oomall.goods.service.impl.ProductService;
-import xmu.oomall.util.ResponseUtil;
+import xmu.oomall.goods.service.impl.ProductServiceImpl;
+import xmu.oomall.goods.util.ResponseUtil;
 
 import java.util.List;
 
 
+/**
+ * Demo class ProductController
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @RestController
 @RequestMapping("")
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productService;
 
     /**
      *管理员查询商品下的产品

@@ -7,7 +7,7 @@ import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.coupon.Coupon;
 import xmu.oomall.discount.domain.coupon.CouponPo;
 import xmu.oomall.discount.domain.coupon.CouponRulePo;
-import xmu.oomall.discount.service.Impl.CouponServiceImpl;
+import xmu.oomall.discount.service.impl.CouponServiceImpl;
 
 import java.util.List;
 

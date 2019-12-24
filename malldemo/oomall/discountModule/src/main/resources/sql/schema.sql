@@ -111,7 +111,7 @@ CREATE TABLE `oomall_aftersales_service` (
 DROP TABLE IF EXISTS `oomall_be_shared_item`;
 CREATE TABLE `oomall_be_shared_item` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   `sharer_id` bigint(9) unsigned DEFAULT NULL,
   `status` tinyint(2) DEFAULT NULL,
   `birthtime` datetime DEFAULT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE `oomall_cart_item` (
 DROP TABLE IF EXISTS `oomall_collect_item`;
 CREATE TABLE `oomall_collect_item` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   `user_id` bigint(9) unsigned DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
@@ -271,7 +271,7 @@ CREATE TABLE `oomall_footprint_item` (
   `gmt_create` datetime(2) DEFAULT NULL,
   `birth_time` datetime(2) DEFAULT NULL,
   `user_id` bigint(9) unsigned DEFAULT NULL,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -332,7 +332,7 @@ CREATE TABLE `oomall_groupon_rule` (
   `end_time` datetime(2) DEFAULT NULL,
   `status` tinyint(2) unsigned DEFAULT NULL,
   `groupon_level_strategy` varchar(255) DEFAULT NULL,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -400,7 +400,7 @@ CREATE TABLE `oomall_order_item` (
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '0',
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   `pic_url` varchar(255) DEFAULT NULL,
   `name_with_specifications` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -434,7 +434,7 @@ CREATE TABLE `oomall_product` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
   `pic_url` varchar(255) DEFAULT NULL,
   `specifications` varchar(1000) DEFAULT NULL,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `safety_stock` int(11) unsigned DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
@@ -463,7 +463,7 @@ DROP TABLE IF EXISTS `oomall_share_item`;
 CREATE TABLE `oomall_share_item` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(9) unsigned DEFAULT NULL,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   `success_num` bigint(9) unsigned DEFAULT '0', 
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
@@ -478,7 +478,7 @@ DROP TABLE IF EXISTS `oomall_share_rule`;
 CREATE TABLE `oomall_share_rule` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
   `share_level_strategy` varchar(255) DEFAULT NULL,
-  `goods_id` bigint(9) unsigned DEFAULT NULL,
+  `goodsId` bigint(9) unsigned DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '0',
   `gmt_create` datetime(2) DEFAULT NULL,
@@ -547,7 +547,7 @@ CREATE TABLE `oomall_user` (
 DROP TABLE IF EXISTS `oomall_presale_rule`;
 CREATE TABLE `oomall_presale_rule` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` bigint(9) unsigned NOT NULL,
+  `goodsId` bigint(9) unsigned NOT NULL,
   `start_time` datetime DEFAULT NULL,
   `ad_end_time` datetime DEFAULT NULL,
   `final_start_time` datetime DEFAULT NULL,

@@ -9,10 +9,10 @@ import xmu.oomall.discount.controller.vo.GrouponRuleVo;
 import xmu.oomall.discount.controller.vo.PresaleRuleVo;
 import xmu.oomall.discount.dao.GroupOnDao;
 import xmu.oomall.discount.domain.*;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
-import xmu.oomall.discount.service.Impl.CouponServiceImpl;
-import xmu.oomall.discount.service.Impl.GroupOnRuleService;
-import xmu.oomall.discount.service.Impl.PresaleServiceImpl;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
+import xmu.oomall.discount.service.impl.CouponServiceImpl;
+import xmu.oomall.discount.service.impl.GroupOnRuleServiceImpl;
+import xmu.oomall.discount.service.impl.PresaleServiceImplImpl;
 import xmu.oomall.discount.util.LogUtil;
 import xmu.oomall.discount.util.ResponseUtil;
 
@@ -22,24 +22,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 
-* @Description:  
-* @Param:  
-* @return:  
-* @Author: Zhou Linhui
-* @Date: 2019/12/23 
-*/ 
+/**
+ * Demo class DiscountController
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @RestController
 @RequestMapping("")
 public class DiscountController {
     @Autowired
-    private GroupOnRuleService groupOnRuleService;
+    private GroupOnRuleServiceImpl groupOnRuleService;
 
     @Autowired
     private CouponServiceImpl couponService;
 
     @Autowired
-    private PresaleServiceImpl presaleService;
+    private PresaleServiceImplImpl presaleService;
 
     @Autowired
     private GroupOnDao groupOnDao;

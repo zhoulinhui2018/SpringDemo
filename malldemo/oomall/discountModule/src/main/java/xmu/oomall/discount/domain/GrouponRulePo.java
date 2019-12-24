@@ -16,23 +16,23 @@ public class GrouponRulePo {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
     private Boolean beDeleted;
-    /*
+    /**
      *团购开始时间
      * */
     private LocalDateTime startTime;
-    /*
+    /**
      *团购结束时间
      * */
     private LocalDateTime endTime;
-    /*
+    /**
     *判断团购是否还在进行中
     * */
     private Boolean statusCode;
-    /*
+    /**
     * 团购等级（满多少人组团多少折扣）
     * */
     private String grouponLevelStrategy;
-    /*
+    /**
     *团购产品id
     * */
     private Integer goodsId;

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import xmu.oomall.ad.dao.AdDao;
 import xmu.oomall.ad.domain.Ad;
@@ -13,13 +14,13 @@ import xmu.oomall.ad.service.IAdService;
 
 import java.util.List;
 
-/** 
-* @Description: sfdfa 
-* @Param:  
-* @return:  
-* @Author: Zhou Linhui
-* @Date: 2019/12/23 
-*/ 
+/**
+ * Demo class AdServiceImpl
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
+@Transactional(rollbackFor=Exception.class)
 @Service
 public class AdServiceImpl implements IAdService {
     @Autowired
@@ -50,13 +51,12 @@ public class AdServiceImpl implements IAdService {
     }
 
     @Override
-    public Integer addAds(Ad ad) throws Exception{
+    public void addAds(Ad ad) throws Exception{
         Integer id =adDao.addAds(ad);
-        return id;
     }
 
     @Override
-    public Integer deleteAdbyId(Integer id) throws Exception{
+    public Integer deleteAdById(Integer id) throws Exception{
         Ad ad=new Ad();
         ad.setId(id);
         adDao.updateAdById(ad);

@@ -121,7 +121,7 @@ CREATE TABLE `cart_item` (
 DROP TABLE IF EXISTS `collect_item`;
 CREATE TABLE `collect_item` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
-  `goods_id` bigint(11) unsigned DEFAULT NULL,
+  `goodsId` bigint(11) unsigned DEFAULT NULL,
   `user_id` bigint(11) unsigned DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
@@ -233,7 +233,7 @@ CREATE TABLE `footprint_item` (
   `gmt_create` datetime(2) DEFAULT NULL,
   `birth_time` datetime(2) DEFAULT NULL,
   `user_id` bigint(11) unsigned DEFAULT NULL,
-  `goods_id` bigint(11) unsigned DEFAULT NULL,
+  `goodsId` bigint(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -292,7 +292,7 @@ CREATE TABLE `groupon_rule` (
   `end_time` datetime(2) DEFAULT NULL,
   `statusCode` tinyint(2) unsigned DEFAULT NULL,
   `groupon_level_strategy` varchar(255) DEFAULT NULL,
-  `goods_id` bigint(11) unsigned DEFAULT NULL,
+  `goodsId` bigint(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -393,7 +393,7 @@ CREATE TABLE `product` (
   `product_ids` varchar(255) DEFAULT NULL,
   `pic_url` varchar(255) DEFAULT NULL,
   `specifications` varchar(1000) DEFAULT NULL,
-  `goods_id` bigint(11) unsigned DEFAULT NULL,
+  `goodsId` bigint(11) unsigned DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `safty_stock` int(11) unsigned DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
@@ -422,7 +422,7 @@ DROP TABLE IF EXISTS `share_item`;
 CREATE TABLE `share_item` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(11) unsigned DEFAULT NULL,
-  `goods_id` bigint(11) unsigned DEFAULT NULL,
+  `goodsId` bigint(11) unsigned DEFAULT NULL,
   `statusCode` tinyint(2) unsigned DEFAULT NULL,
   `gmt_create` datetime(2) DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
@@ -439,7 +439,7 @@ CREATE TABLE `share_rule` (
   `begin_time` datetime(2) DEFAULT NULL,
   `end_time` datetime(2) DEFAULT NULL,
   `share_level_strategy` varchar(255) DEFAULT NULL,
-  `goods_id` bigint(11) unsigned DEFAULT NULL,
+  `goodsId` bigint(11) unsigned DEFAULT NULL,
   `gmt_modified` datetime(2) DEFAULT NULL,
   `is_deleted` tinyint(1) unsigned DEFAULT '0',
   `gmt_create` datetime(2) DEFAULT NULL,

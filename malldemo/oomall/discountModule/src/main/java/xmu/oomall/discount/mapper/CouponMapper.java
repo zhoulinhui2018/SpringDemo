@@ -38,7 +38,7 @@ public interface CouponMapper {
 
     /**
      * 管理员增加优惠券
-     * @param couponRule
+     * @param couponRule 1
      */
     void addCouponRule(CouponRulePo couponRule);
 
@@ -50,60 +50,112 @@ public interface CouponMapper {
 
     /**
      * 删除优惠券
-     * @param id
-     * @return
+     * @param id 1
+     * @return 1
      */
     int deleteCouponRuleById(Integer id);
 
     /**
      * 更新优惠券信息
-     * @param couponRule
-     * @return
+     * @param couponRule 1
+     * @return 1
      */
     int updateCouponRuleById(CouponRulePo couponRule);
 
+    /**
+     * 更新优惠券信息
+     * @param userId 1
+     * @return 1
+     */
     List<CouponPo> getCouponMyList(Integer userId);
 
-
+    /**
+     * 更新优惠券信息
+     * @param couponRuleId 1
+     * @return 1
+     */
     CouponRule getCouponRule(Integer couponRuleId);
 
+    /**
+     * 更新优惠券信息
+     * @param id 1
+     * @return 1
+     */
     CouponPo findCouponById(Integer id);
 
-
+    /**
+     * 更新优惠券信息
+     * @param coupon 1
+     * @return 1
+     */
     int addCoupon(CouponPo coupon);
 
     /**
      * 根据couponRuleId更改coupon状态
-     * @param id
-     * @return
+     * @param id 1
+     * @return 1
      */
     int updateCouponStatus(Integer id);
 
     /**
      * 找到用户端可显示的优惠券规则
-     * @return
+     * @return CouponRulePo
      */
     List<CouponRulePo> findCouponRulesAvailable();
 
     /**
      * 用户使用优惠券后更改状态
-     * @param couponPo
-     * @return
+     * @param couponPo 1
+     * @return 1
      */
     int updateUserCouponStatus(CouponPo couponPo);
 
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponRuleId 1
+     * @return 1
+     */
     int deleteAllCoupons(Integer couponRuleId);
 
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponRuleId 1
+     * @return 1
+     */
     int modifiedCouponRuleNum(Integer couponRuleId);
 
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponRuleId 1
+     * @return 1
+     */
     int invalidate(Integer couponRuleId);
 
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponRuleId 1
+     * @return CouponPo
+     */
     List<CouponPo> getCouponsByRuleId(Integer couponRuleId);
-
+    /**
+     * 用户使用优惠券后更改状态
+     * @param id 1
+     * @return 1
+     */
     int invalidateCoupon(Integer id);
-
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponRuleId 1
+     * @param time 1
+     * @return 1
+     */
     int updateCouponRuleDeleteTime(Integer couponRuleId, LocalDateTime time);
-
+    /**
+     * 用户使用优惠券后更改状态
+     * @param couponRuleId 1
+     * @param time 1
+     * @return 1
+     */
     int updateCouponDeleteTime(Integer couponRuleId, LocalDateTime time);
 
 }

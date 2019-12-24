@@ -123,7 +123,7 @@ mybatis:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB2_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://47.52.88.176:3306/DB2_1?serverTimezone=Asia/Shanghai
     username: user2_1
     password: ooad1
     hikari:
@@ -145,65 +145,15 @@ eureka:
     non-secure-port: 8768
 
 
-##潘朝旺
+#潘朝旺
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.52.88.176:3306/DB2_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-#    username: user2_1
-#    password: ooad1
+#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
+#    username: user2_2
+#    password: ooad2
 #    hikari:
 #      maximum-pool-size: 10
-#
-#  application:
-#    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
-#
-#server:
-#  port: 8764
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://47.96.159.71:8888/eureka/
-#  instance:
-#    prefer-ip-address: true
-#    ip-address: 47.97.43.141
-#    non-secure-port: 8764
-
-
-
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.52.88.176:3306/DB2_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-#    username: user3_8
-#    password: ooad8
-#    hikari:
-#      maximum-pool-size: 10
-#
-#  application:
-#    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法
-#
-#server:
-#  port: 8764
-#
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://47.100.32.48:8761/eureka/
-#  instance:
-#    prefer-ip-address: true
-#    ip-address: 47.97.43.141
-#    non-secure-port: 8764
-
-
-#pcw
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.52.88.176:3306/DB3_8?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-#    username: user3_8
-#    password: ooad8
 #
 #  application:
 #    name: addressService #服务名称--调用的时候根据名称来调用该服务的方法

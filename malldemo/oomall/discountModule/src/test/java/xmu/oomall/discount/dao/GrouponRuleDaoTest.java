@@ -7,7 +7,7 @@ import xmu.oomall.discount.DiscountApplication;
 import xmu.oomall.discount.domain.GrouponRule;
 import xmu.oomall.discount.domain.GrouponRulePo;
 import xmu.oomall.discount.domain.GrouponRuleStrategy;
-import xmu.oomall.discount.service.Impl.GroupOnRuleService;
+import xmu.oomall.discount.service.impl.GroupOnRuleServiceImpl;
 
 @SpringBootTest(classes = DiscountApplication.class)
 public class GrouponRuleDaoTest {
@@ -15,7 +15,7 @@ public class GrouponRuleDaoTest {
     private GroupOnDao groupOnDao;
 
     @Autowired
-    private GroupOnRuleService groupOnRuleService;
+    private GroupOnRuleServiceImpl groupOnRuleService;
 
     @Test
     public void getStrategyTest(){

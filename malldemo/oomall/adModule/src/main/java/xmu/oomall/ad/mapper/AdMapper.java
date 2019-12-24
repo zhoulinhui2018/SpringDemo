@@ -6,94 +6,64 @@ import xmu.oomall.ad.domain.Ad;
 
 import java.util.List;
 
-/** 
-* @Description:  
-* @Param:  
-* @return:  
-* @Author: Zhou Linhui
-* @Date: 2019/12/23 
-*/ 
+/**
+ * Demo class AdMapper
+ *
+ * @author Zhang Yaqing
+ * @date 2019/12/20
+ */
 @Service
 @Mapper
 public interface AdMapper {
     /**
-    * @Description:  fsadfdsafa
-    * @Param: id
-    * @return: xmu.oomall.ad.domain.Ad
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
-    public Ad findAdById(Integer id);
+     * 通过id查找ad
+     * @param id Ad的id
+     * @return Ad
+     */
+    Ad findAdById(Integer id);
 
     /**
-    * @Description:  dadfadsfadf
-    * @Param: ad
-    * @return: java.util.List<xmu.oomall.ad.domain.Ad>
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 通过对象查找ad
+     * @param ad Ad
+     * @return Ad list
+     */
     public List<Ad> adminFindAllAds(Ad ad);
-
     /**
-    * @Description:  dfdfadsfsa
-    * @Param:
-    * @return: java.util.List<xmu.oomall.ad.domain.Ad>
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 通过id查找ad
+     * @return Ad list
+     */
     public List<Ad> findAdsDefault();
-
     /**
-    * @Description:  dfadfasf
-    * @Param:
-    * @return: java.util.List<xmu.oomall.ad.domain.Ad>
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 某描述
+     * @return Ad list
+     */
     public List<Ad> findAllAds();
-
     /**
-    * @Description:  dfadfasdfasf
-    * @Param:
-    * @return: java.util.List<xmu.oomall.ad.domain.Ad>
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 某描述
+     * @return Ad list
+     */
     public List<Ad> findAllAdsAvailable();
-
     /**
-    * @Description:  dfadfasdfaf
-    * @Param: id
-    * @return: java.lang.Integer
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 某描述
+     * @param id Ad的id
+     * @return Ad list
+     */
     public Integer deleteAdbyId(Integer id);
-
     /**
-    * @Description:  dfadfasfd
-    * @Param: ad
-    * @return: java.lang.Integer
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 某描述
+     * @param ad Ad
+     * @return Ad list
+     */
     public Integer addAds(Ad ad);
-
     /**
-    * @Description: afsdgadgadga
-    * @Param: newAd
-    * @return: java.lang.Integer
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 某描述
+     * @param newAd Ad
+     * @return Ad list
+     */
     public Integer updateAdById(Ad newAd);
-
     /**
-    * @Description:  dffadfadf
-    * @Param: []
-    * @return: java.util.List<xmu.oomall.ad.domain.Ad>
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
+     * 某描述
+     * @return Ad list
+     */
     public List<Ad> findDefaultAds();
 }

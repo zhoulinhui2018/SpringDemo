@@ -4,11 +4,11 @@
     <select id="listProductByGoodsId" parameterType="Integer" resultType="xmu.oomall.goods.domain.Product">
             select *
 
-            from product where goods_id = #{goodsId}
+            from product where goodsId = #{goodsId}
     </select>
 
     <insert id="addProductByGoodsId" parameterType="Product" useGeneratedKeys="true" keyProperty="id">
-        insert into product (goods_id,product_ids,pic_url,specifications,price,safety_stock,gmt_create,gmt_modified,is_deleted)
+        insert into product (goodsId,product_ids,pic_url,specifications,price,safety_stock,gmt_create,gmt_modified,is_deleted)
         values (#{goodsId}, #{productIds},
         #{picUrl}, #{specifications},
         #{price}, #{saftyStock},
@@ -18,7 +18,7 @@
     <update id="updateProductById" parameterType="Product">
         update product
         <trim prefix="set" suffixOverrides=",">
-            <if test="goodsId !=null"> goods_id =#{goodsId},</if>
+            <if test="goodsId !=null"> goodsId =#{goodsId},</if>
             <if test="productIds !=null"> product_ids = #{productIds},</if>
             <if test="picUrl!=null"> pic_url = #{picUrl},</if>
             <if test="specifications !=null"> specifications = #{specifications},</if>

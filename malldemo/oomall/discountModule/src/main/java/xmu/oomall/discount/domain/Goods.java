@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import xmu.oomall.discount.domain.Promotion.PresaleRule;
+import xmu.oomall.discount.domain.promotion.PresaleRule;
 
 import java.util.List;
 

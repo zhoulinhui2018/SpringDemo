@@ -31,13 +31,6 @@ public class AdController {
     @Autowired
     private AdServiceImpl adServiceImpl;
 
-    /**
-    * @Description: 合法性检测
-    * @Param: [newAd]
-    * @return: java.lang.Object
-    * @Author: Zhou Linhui
-    * @Date: 2019/12/23
-    */
     private Object validate(Ad newAd) {
         String name=newAd.getName();
         if(StringUtils.isEmpty(name))
@@ -173,7 +166,6 @@ public class AdController {
         }
         Log log = LogUtil.newLog("修改广告内容", id, Integer.valueOf(adminid), 2, request.getRemoteAddr());
 
-
         newAd.setId(id);
         try {
             Integer integer = adServiceImpl.updateAdById(newAd);
@@ -215,7 +207,7 @@ public class AdController {
             return ResponseUtil.fail(683,"删除广告失败");
         }
         try {
-            Integer integer = adServiceImpl.deleteAdbyId(id);
+            Integer integer = adServiceImpl.deleteAdById(id);
             if (integer==0){
                 log.setStatusCode(0);
                 adServiceImpl.log(log);

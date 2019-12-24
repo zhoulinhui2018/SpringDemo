@@ -28,18 +28,10 @@ public class CouponDao {
     @Autowired
     private CouponMapper couponMapper;
 
-    ///这里这个方法没有写完！！！！超超看这里！！！
-//    public List<CouponPo> showTypeCouponList(Integer userId,Integer showType){
-//
-//        if(showType==3){
-//            LocalDateTime now=LocalDateTime.now();
-//
-//        }else{
-//            return couponMapper.showTypeCouponList(userId,showType);
-//        }
-//    }
-
-
+    static final int TYPE_0= 0;
+    static final int TYPE_1= 1;
+    static final int TYPE_2= 2;
+    static final int TYPE_3= 3;
     /**
      * 管理员增加优惠券规则
      * @param couponRule
@@ -483,7 +475,11 @@ public class CouponDao {
         return list;
     }
 
-    //根据coupon的id下架coupon
+    /**
+     * 根据coupon的id下架coupon
+     * @param id
+     * @return int
+     */
     public int invalidateCouponById(Integer id){
         return couponMapper.invalidateCoupon(id);
     }
@@ -504,13 +500,13 @@ public class CouponDao {
         List<CouponPo> expiredCoupons = new ArrayList<>();
         for (CouponPo couponPo : userAllCoupons) {
             Integer statusCode = couponPo.getStatusCode();
-            if (statusCode == 0) {
+            if (statusCode == TYPE_0) {
                 unUsedCoupons.add(couponPo);
             }
-            if (statusCode == 1) {
+            if (statusCode == TYPE_1) {
                 usedCoupons.add(couponPo);
             }
-            if (statusCode == 2) {
+            if (statusCode == TYPE_2) {
                 usedCoupons.add(couponPo);
             }
             LocalDateTime endTime = couponPo.getEndTime();
@@ -519,19 +515,19 @@ public class CouponDao {
                 expiredCoupons.add(couponPo);
             }
         }
-        if (showType == 0) {
+        if (showType == TYPE_0) {
             //未使用
             return unUsedCoupons;
         }
-        if (showType == 1) {
+        if (showType == TYPE_1) {
             //已使用
             return usedCoupons;
         }
-        if (showType == 2) {
+        if (showType == TYPE_2) {
             //已失效
             return invalidCoupons;
         }
-        if (showType == 3) {
+        if (showType == TYPE_3) {
             //已过期
             return expiredCoupons;
         }
