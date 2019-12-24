@@ -56,18 +56,18 @@ management:
 #    non-secure-port: 8769
 
 #周林辉
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=GMT
-#    username: root
-#    password: 12345678
-#  #    password: Zhangyaqing123
-#  application:
-#    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
-#
-#server:
-#  port: 8885
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.97.43.141:3306/ooad1?serverTimezone=GMT
+    username: root
+    password: 12345678
+  #    password: Zhangyaqing123
+  application:
+    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
+
+server:
+  port: 8885
 #
 #eureka:
 #  client:
@@ -117,44 +117,44 @@ management:
 
 
 #联辉
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.52.88.176:3306/DB1_8?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-    username: user1_8
-    password: ooad8
-    hikari:
-      maximum-pool-size: 10
-
-  application:
-    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
-
-server:
-  port: 8700
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://139.196.212.100:8761/eureka/
-  instance:
-    prefer-ip-address: true
-    ip-address: 47.97.43.141
-    non-secure-port: 8700
-
-#周林辉最新
 #spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.52.88.176:3306/DB2_2?serverTimezone=Asia/Shanghai
-#    username: user2_2
-#    password: ooad2
+#    url: jdbc:mysql://47.52.88.176:3306/DB1_8?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+#    username: user1_8
+#    password: ooad8
+#    hikari:
+#      maximum-pool-size: 10
 #
 #  application:
 #    name: discountService #服务名称--调用的时候根据名称来调用该服务的方法
 #
 #server:
-#  port: 8802
+#  port: 8700
+
+#eureka:
+##  client:
+#    serviceUrl:
+#      defaultZone: http://139.196.212.100:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    ip-address: 47.97.43.141
+#    non-secure-port: 8700
+
+#周林辉最新
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+#    username: root
+#  #  password: Zhangyaqing123
+#    password: 123456
+#  application:
+#    name: discountService #服名称来调用该服务的方法
 #
+#server:
+#  port: 8802
+
 #eureka:
 #  client:
 #    serviceUrl:

@@ -18,19 +18,44 @@ management:
         include: health, info
 
 
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
+#    username: root
+#    password: Zhangyaqing123
+#  application:
+#    name: logService #服务名称--调用的时候根据名称来调用该服务的方法
+#
+#server:
+#  port: 8803
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+
+#联辉
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ooad2-2?serverTimezone=GMT
-    username: root
-    password: Zhangyaqing123
+    url: jdbc:mysql://47.52.88.176:3306/DB1_8?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: user1_8
+    password: ooad8
+    hikari:
+      maximum-pool-size: 10
+
   application:
     name: logService #服务名称--调用的时候根据名称来调用该服务的方法
 
 server:
-  port: 8803
+  port: 8701
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://139.196.212.100:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 47.97.43.141
+    non-secure-port: 8701
