@@ -4,19 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import xmu.oomall.address.AddressApplication;
 import xmu.oomall.address.domain.Address;
-import xmu.oomall.address.domain.AddressPo;
-import xmu.oomall.util.JacksonUtil;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = AddressApplication.class)
 @Transactional
