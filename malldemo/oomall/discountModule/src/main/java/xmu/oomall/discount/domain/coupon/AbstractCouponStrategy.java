@@ -3,7 +3,6 @@ package xmu.oomall.discount.domain.coupon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xmu.oomall.discount.domain.OrderItem;
-import xmu.oomall.discount.domain.OrderItemPo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.List;
  * @author XuHuangchao
  * @date 2019/12/11
  * */
-@Deprecated
 public abstract class AbstractCouponStrategy {
     private Logger logger = LoggerFactory.getLogger(AbstractCouponStrategy.class);
 
