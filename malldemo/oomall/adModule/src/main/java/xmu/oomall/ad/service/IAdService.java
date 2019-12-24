@@ -42,6 +42,7 @@ public interface IAdService {
     /**
      * 删除Ad
      * @param  id id
+     * @throws Exception
      * @return int
      * @author Zhou Linhui
      * @date 2019/12/5
@@ -52,6 +53,7 @@ public interface IAdService {
     /**
      * 新增广告
      * @param  ad 广告
+     * @throws Exception
      * @author Zhou Linhui
      * @date 2019/12/5
      */
@@ -60,6 +62,7 @@ public interface IAdService {
     /**
      * 更新广告
      * @param  newAd 广告
+     * @throws Exception
      * @return int
      * @author Zhou Linhui
      * @date 2019/12/5

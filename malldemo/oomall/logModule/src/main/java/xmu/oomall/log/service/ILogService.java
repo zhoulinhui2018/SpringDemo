@@ -17,6 +17,7 @@ public interface ILogService {
      * @param  page 1
      * @param  newlog 广告
      * @param  limit 1
+     * @throws Exception
      * @return List<Log>
      * @author Zhou Linhui
      * @date 2019/12/5

@@ -106,6 +106,7 @@ public interface IGroupOnRuleServiceImpl {
     /**
     * : 管理员新增团购规则
      * @param grouponRulePo 1
+     * @throws Exception
      * @author Zhou Linhui
      * @date 2019/12/18
     */
@@ -114,6 +115,7 @@ public interface IGroupOnRuleServiceImpl {
     /**
     * : 查询单张优惠券
      * @param id 1
+     * @throws Exception
      * @return GrouponRulePo
      * @author Zhou Linhui
      * @date 2019/12/18
